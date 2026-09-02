@@ -18,4 +18,5 @@ pmid,title,abstract,year,year_source,record_type
 1018,An early-online paper issued inside the window,Posted online in 2014 and assigned to a 2015 issue. It names MRI.,2014,ArticleDate,PubmedArticle
 1019,MRI radiomics with genomic profiling,RNA-seq and electronic health record covariates were modelled jointly.,2025,ArticleDate,PubmedArticle
 1020,Endoscopy and CT staging of gastric cancer,Endoscopic video was combined with computed tomography.,2024,PubDate,PubmedArticle
+1021,Virtual staining predicts spatial transcriptomics from H&E,A model trained on whole slide imaging infers spatial transcriptomics without sequencing.,2026,ArticleDate,PubmedArticle
 ,An article with no PMID,It names CT but cannot be identified.,2025,PubDate,PubmedArticle

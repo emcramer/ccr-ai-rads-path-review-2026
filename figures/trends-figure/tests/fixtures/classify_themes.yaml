@@ -45,6 +45,20 @@ categories:
     exclude: []
     notes: "A bare phrase."
 
+  virtual_staining:
+    label: "Virtual Staining"
+    type: null
+    include:
+      - pattern: "(?i)\\bvirtual(ly)? (stain|H&E|immunostain)"
+        kind: regex
+      - pattern: "stain transfer"
+        kind: phrase
+    exclude: []
+    notes: >
+      Models that predict molecular or stained signal from an unstained or H&E
+      image. Its papers should carry he_histology, and should NOT carry genomics:
+      the molecular signal is the model's output, not its input.
+
   clinical_fda:
     label: "Clinical Applications / FDA Approval"
     type: null

@@ -92,11 +92,13 @@ def matches(dictionary: classify.TermDictionary, text: str) -> set[str]:
 def test_fixture_dictionaries_load(themes, modalities):
     """Both fixture files compile and report what they hold."""
     assert themes.version == 7
-    assert themes.keys == classify.THEME_KEYS
+    # Declared out of canonical order on purpose: order in the file is not the
+    # figure's order, and the loader must not care.
+    assert set(themes.keys) == set(classify.THEME_KEYS)
     assert modalities.version == 4
     assert set(modalities.keys) == set(classify.MODALITY_KEYS)
     assert len(themes.sha256) == 64
-    assert themes.n_patterns == 7  # six includes and one exclude
+    assert themes.n_patterns == 9  # eight includes and one exclude
     assert len(modalities.categories["other"].include) == 2  # additive: it has patterns
 
 
@@ -325,11 +327,11 @@ def test_conjunctive_pattern_reads_title_and_abstract_as_one_string(modalities):
 
 def test_record_filters_are_counted(result):
     """Book records, blank PMIDs, and yearless records are dropped and reported."""
-    assert result.n_records_in == 20
+    assert result.n_records_in == 21
     assert result.exclusions == {
         "book_records": 1, "missing_pmid": 1, "missing_year": 1, "outside_date_range": 0,
     }
-    assert result.n_records_out == 17
+    assert result.n_records_out == 18
     assert "1013" not in set(result.labels["pmid"])  # the book record
 
 
@@ -569,7 +571,7 @@ def test_report_names_the_counts_a_reader_needs(result, themes, modalities):
     text = classify.format_report(
         result, themes, modalities, aggregate.build_combination_counts(result.labels)
     )
-    assert "records analysed :      17" in text
+    assert "records analysed :      18" in text
     assert "book_records" in text
     assert "MOST FREQUENTLY FIRING PATTERNS" in text
     assert "PATTERNS THAT NEVER FIRED" in text
@@ -628,10 +630,10 @@ def test_cli_writes_every_output(tmp_path, capsys):
         assert (output / name).exists(), name
 
     data = io.load_figure_data(output)
-    assert data.n_papers_total == 17
+    assert data.n_papers_total == 18
 
     manifest = json.loads((output / "run_manifest.json").read_text())
-    assert manifest["counts"]["records_in"] == 20
+    assert manifest["counts"]["records_in"] == 21
     assert manifest["counts"]["exclusions"]["book_records"] == 1
     assert manifest["config"]["themes"]["version"] == 7
     assert len(manifest["config"]["themes"]["sha256"]) == 64
@@ -660,7 +662,7 @@ def test_cli_takes_the_partial_year_from_the_corpus_config(tmp_path):
     assert not (output / "pattern_hits.csv").exists()
     # The same date range bounds the corpus: 2014 below, 2026 above.
     assert manifest["year_range_applied"] == {"first": 2015, "last": 2025}
-    assert manifest["counts"]["exclusions"]["outside_date_range"] == 4
+    assert manifest["counts"]["exclusions"]["outside_date_range"] == 5
 
     flagged = pd.read_csv(output / "theme_year_counts.csv", comment="#")
     assert set(flagged.loc[flagged["partial_year"] == 1, "year"]) == {2025}
@@ -777,7 +779,7 @@ def test_records_outside_the_date_window_are_dropped(records, themes, modalities
     )
     assert windowed.exclusions["outside_date_range"] == 1
     assert 2014 not in set(windowed.labels["year"])
-    assert windowed.n_records_out == 16
+    assert windowed.n_records_out == 17
 
 
 def test_no_window_keeps_every_year(result):

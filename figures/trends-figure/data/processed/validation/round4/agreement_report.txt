@@ -1,0 +1,94 @@
+ROUND FOUR — VIRTUAL STAINING CENSUS
+==============================================================================
+STATUS          : MEASURED THEMES v7. SUPERSEDED BY v8.
+                  The repair this census identified shipped as v8 and the corpus
+                  was reclassified. The row is now 65 papers at 63/65 = 96.9%
+                  (route 1 70.5% -> 93.9%, route 2 unchanged at 100%). Eleven
+                  papers were removed, all read here, all biomarker-status; no
+                  genuine paper was lost. Authoritative counts and the per-year
+                  series come from data/processed/theme_year_counts.csv, never
+                  from a recount of this file.
+                  This report is kept unchanged as the evidence that produced
+                  the repair.
+config          : themes v7 (modalities v4)
+design          : CENSUS. All 76 papers of the virtual_staining row were read.
+                  Reading order shuffled with seed 20260905; pattern identifiers
+                  withheld from the reading sheet so no judgment was anchored on
+                  the matching phrase. Not blind to membership: a census of a row
+                  cannot be, since every paper in it is rule-positive by
+                  construction.
+standard        : the author's, verbatim - "any models that predict spatial
+                  proteomics or spatial transcriptomics from H&E stained tissue
+                  slides".
+
+PRECISION
+------------------------------------------------------------------------------
+in theme                    63 of 76   83%  (95% CI 73-90%)
+out of theme                13 of 76
+
+  11 of the 13 are one class: prediction of a slide-level biomarker STATUS or
+  SCORE from H&E (HER2, PD-L1, Ki67/ER/PR, KRAS/NRAS/BRAF, BAP1). These predict
+  a molecular label, not a spatially resolved molecular map, and they are a
+  large adjacent literature.
+  The other 2 use "virtual multiplexing" to mean co-registering REAL serial IHC
+  onto H&E - no molecular signal is predicted from morphology at all.
+
+PER-PATTERN PRECISION
+------------------------------------------------------------------------------
+include[0]  17/19   89%      include[5]  11/22   50%   <-- the whole problem
+include[1]   6/6   100%      include[6]  25/25  100%
+include[2]   4/4   100%      include[7]   8/8   100%
+include[3]   5/5   100%      include[8]   6/6   100%
+include[4]   2/2   100%      include[9]   6/6   100%
+
+  include[5] contributes 11 of the 13 false positives. Its verb list includes
+  `predict\w+`, which cannot separate "generate a virtual HER2 stain from H&E"
+  from "predict HER2 status from H&E".
+
+MEASURED REPAIR
+------------------------------------------------------------------------------
+Dropping `predict\w+` from include[5]'s verb list, keeping generat/synthes/impute:
+  63 of 65  =  97%   removes all 11 status-prediction false positives
+                     and loses ZERO genuine papers.
+Two alternatives were measured and are worse: requiring a stain/image noun costs
+3 genuine papers for the same benefit.
+Caveat: measured within the 76 the current patterns select. It cannot measure a
+paper outside the row that uses "predict" generatively and is caught by nothing
+else.
+
+TWO DISJOINT LITERATURES — CONFIRMED, AND STRONGER THAN REPORTED
+------------------------------------------------------------------------------
+Objective test, on which include patterns fired:
+  route 1 only (virtual-staining vocabulary, molecular target)   44
+  route 2 only (spatial-omic prediction from histology)          32
+  BOTH routes                                                     0
+Zero overlap across all 76, not just the 54 originally read. Either route alone
+would have found roughly half the theme.
+
+  Precision differs sharply by route, which the pooled figure hides:
+    route 1   31/44 =  70%    every false positive is here
+    route 2   32/32 = 100%
+
+THE THREE REQUESTED CHECKS
+------------------------------------------------------------------------------
+1. REVERSE DIRECTION. Records generating virtual H&E FROM a label-free source:
+   37 candidates found, 3 in the theme, 34 excluded. The 3 that are in are in
+   because they produce a MOLECULAR target (HER2 IHC, an mIF panel, ERG/PanCK),
+   not because they produce virtual H&E. The structural exclusion works as
+   designed. Confirmed correct in both directions.
+2. LABEL-FREE SOURCE. Independently identified the same 5 PMIDs: 37850170,
+   39154539, 39636222, 41676162, 41933080. All five predict a spatially resolved
+   MOLECULAR signal; only the source is unstained tissue rather than H&E.
+   Removing them changes precision by ~1 point (63/76 = 83% to 58/71 = 82%),
+   so this is a definitional choice, not a quality problem.
+3. GENOMICS INPUT-ONLY RULE. Exactly 2 of 76 carry mod_genomics, as reported.
+   41588694 (His-MMDM) legitimately consumes omics as well as producing signal.
+   32953248 is a genomics mention-not-input error - and it is ALSO out of theme
+   here, so that one record is wrong twice.
+
+CORROBORATED INDEPENDENTLY
+------------------------------------------------------------------------------
+  row size            76 (matches the corrected figure)
+  yearly 2019-2026    2, 3, 2, 4, 6, 13, 24, 22 (matches; 2026 partial)
+  he_histology        73/76 = 96%
+  domain = pathology  75/76

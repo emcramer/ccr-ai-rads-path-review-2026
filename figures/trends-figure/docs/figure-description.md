@@ -44,25 +44,43 @@ applications and FDA approval, 16.1%. The twelve largest columns of the multimod
 integration block are mostly single modalities, and its remainder column is its largest
 bar: the multimodality of that literature is dispersed across hundreds of small
 combinations rather than concentrated in a few large ones.
-**B,** Papers per year carrying each theme label, drawn as two stacked plots that share
-one x axis and carry separate linear y axes. The upper plot holds foundation models and
-multimodal integration; the lower plot holds digital twins and the two clinical lines. The
-themes differ in size by two orders of magnitude, 4,654 papers for multimodal integration
-against 56 for digital twins, and on a single axis the small themes draw as flat lines on
-the floor. **The two y axes are not the same scale.** The lower plot's axis is about 43
-times finer than the upper plot's, and the dashed rule near
-the foot of the upper plot marks the lower plot's entire range. Counts are per year
-throughout, neither cumulative nor logarithmic. The Clinical Applications / FDA Approval
-theme is split into radiology and pathology papers, drawn in one color with different
-dashes. The two lines are not additive and do not sum to the theme total: the radiology
-line holds 63 papers and the pathology line 16, three papers use modalities from both
-domains and count in each line, and 17 of the theme's 93 papers carry no radiologic or
-pathologic modality, 16 of them labeled only Other, so they appear on neither line.
-Mammography and radiography count as radiologic, per the modality grouping in **A**.
-Pathology is exactly zero in every year from 2015 through 2021, drawn as seven plotted
-points on the zero line rather than as a line beginning in 2022; where two lines both sit
-at zero, only the upper of the two is visible. Lines are labeled at their right-hand ends.
-Every line carries its own dash pattern and marker, so the figure reads in grayscale.
+**B,** Papers per year, drawn as two stacked plots that share one x axis and carry
+separate linear y axes. Ten series are drawn. The upper plot holds foundation models and
+multimodal integration, each divided by clinical domain; the lower plot holds digital twins,
+virtual staining, and the two clinical-applications domain lines. The series differ in size by
+two orders of magnitude — 2,835 papers for multimodal integration in radiology against 13 for
+clinical applications in pathology — and on a single axis the small ones draw as flat lines on
+the floor. **The two y axes are not the same scale.** The lower plot's axis is about 26 times
+finer than the upper plot's, and the dashed rule near the foot of the upper plot marks the
+lower plot's entire range. Counts are per year throughout, neither cumulative nor logarithmic.
+
+**Color and marker denote clinical domain; dash pattern denotes theme.** Radiology is
+`#0072B2` with a circle, pathology `#8F4B73` with a square, cross-specialty `#4B4B4B` with a
+triangle, and the two undivided series carry a diamond. Domain is therefore legible in
+grayscale, where hue is lost but marker shape survives; a test asserts that dash and marker
+alone separate every series within a plot, with no color at all.
+
+**Domain is derived from the modality labels**: radiology where a paper carries a radiologic
+modality and no pathologic one, pathology for the reverse, cross-specialty where it carries
+both. Mammography and radiography count as radiologic, per the modality grouping in **A**.
+The four domain values partition each theme exactly, so `radiology + pathology +
+cross-specialty + none` equals the theme total — but the drawn lines do not, because papers
+with no domain are drawn nowhere. That omission is 257 of foundation models' 1,226 papers and
+721 of multimodal integration's 4,654: papers whose only labels are genomics, clinical data,
+or Other.
+
+Clinical applications is divided into radiology (60 papers) and pathology (13); its three
+cross-specialty papers and 17 no-domain papers are drawn on neither line. Digital twins and
+virtual staining are drawn undivided — the first is too small to divide three ways at 56
+papers, the second is 75 of 76 pathologic and so has nothing to divide. Virtual staining is
+nonetheless drawn in the pathology hue and marker, because that is a true statement about its
+papers and because ink would have put it in the same stroke as digital twins, which it crosses
+in 2024 and 2025.
+
+Pathology in the clinical theme is exactly zero in every year from 2015 through 2021, drawn as
+seven plotted points on the zero line rather than as a line beginning in 2022; where two lines
+both sit at zero, only the upper of the two is visible. Lines are labeled at their right-hand
+ends.
 
 The lower plot magnifies themes of 93 and 56 papers, and their year-to-year movement is
 largely sampling noise. Clinical radiology runs 13, 9, and 21 papers across 2024, 2025,
@@ -169,7 +187,7 @@ most oncologic PET is acquired as PET/CT; that overlap is real and is not suppre
   by every block, and the sentence about composition against volume comes out. The run
   summary records which scale drew the file, so a PDF cannot be traced to the wrong one.
 - **`docs/figure-spec.md` has been corrected to match the measured data**: pathology zero
-  for seven years, 2015–2021, and clinical radiology 13, 9, 21 across 2024–2026. Where the
+  for seven years, 2015–2021, and clinical clinical radiology 13, 8, 19 across 2024–2026. Where the
   two ever disagree again, the legend follows the data and the spec is the stale copy.
 - **The count of clinical papers on neither Panel B line is 17, not 16.** All 94 clinical
   papers carry at least one modality label. Seventeen carry no radiologic and no

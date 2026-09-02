@@ -9,33 +9,42 @@ limitation those numbers carry is in `figure-description.md`.
 pathology, 2015–2026.**
 **A,** Modality combinations used by papers in each of four research themes. Rows are the
 fifteen data modalities, colored by modality group; a filled dot marks a modality present in
-a combination, and joined dots mark modalities used together. Bar height is that combination's share of the theme's
-own papers, and the hatched column holds all remaining combinations, so the bars sum to the
-theme total. **B,** Papers per year carrying each theme label, in two plots with separate
-linear y axes: the lower axis is about 43 times finer than the upper, and the dashed rule
-marks the lower plot's full range. The two clinical lines are not additive, and pathology is
-exactly zero in every year from 2015 through 2021.
+a combination, and joined dots mark modalities used together. Bar height is that
+combination's share of the theme's own papers, and the hatched column holds all remaining
+combinations, so the bars sum to the theme total. **B,** Papers per year, in two plots with
+separate linear y axes: the lower axis is about 26 times finer than the upper, and the dashed
+rule marks the lower plot's full range. Foundation models and multimodal integration are each
+divided by clinical domain — radiology, pathology, or cross-specialty for papers using both —
+as is clinical applications. Color and marker denote domain; dash pattern denotes theme.
+Papers using no imaging or report data carry no domain and appear on no divided line, so the
+divided lines do not sum to their theme. Pathology in the clinical theme is exactly zero in
+every year from 2015 through 2021.
 
 Papers were retrieved from PubMed on 1 September 2026 and labelled by matching a versioned
 term dictionary against each title and abstract (n = 44,533). Labelling is multi-label, so
-theme totals exceed the corpus, and a mark records the data an abstract reports, making
-every count an upper bound on demonstrated use. The digital-twins theme counts engagement
-with the concept rather than construction: of its 56 papers, 18 describe a patient-specific
-model. 2026 is partial, covering papers indexed through 1 September, and is shaded.
+theme totals exceed the corpus, and a mark records the data an abstract reports, making every
+count an upper bound on demonstrated use. Two themes count intent rather than achievement:
+digital twins counts papers engaging with the concept, of which 18 of 56 describe a
+patient-specific model; virtual staining counts models predicting spatially resolved
+molecular signal from H&E slides, and excludes prediction of a biomarker status. 2026 is
+partial, covering papers indexed through 1 September, and is shaded.
 
 ---
 
 ## Notes for the authors
 
-- About 221 words. If it must come down further, cut the last sentence of the first
-  paragraph and the digital-twins sentence. Do not cut the multi-label sentence or the
-  upper-bound sentence: they are what keep the counts honest.
-- Two caveats were cut from the figure itself and now rest on this legend alone — the
-  change of scale between the plots, and that counts below about 100 papers a year move by
-  a few papers between adjacent years without meaning. If the legend is shortened further,
-  the second one should move into the body text rather than disappear.
-- Any accuracy figure quoted in a methods section must be per-category. Precision ranges
-  from about 45% to 96% across categories, and no single number describes this classifier.
-  See `validation.md`.
+- About 296 words, up from 221 when Panel B carried five lines rather than ten. If it must
+  come down, cut the virtual-staining clause and the "color and marker denote domain"
+  sentence — the first is recoverable from the theme's name, the second by looking at the
+  figure. Do not cut the multi-label sentence, the upper-bound sentence, or the sentence
+  about papers with no domain: those three are what keep the counts honest.
+- Three caveats rest on this legend alone, having been removed from the artwork: the change
+  of scale between the plots, the pathology zero run, and that counts below about 100 papers
+  a year move by a few papers between adjacent years without meaning. That third one is not
+  in the text above and should be added if the body text does not carry it.
+- Any accuracy figure quoted in a methods section must be per-category. Precision ranges from
+  about 45% to 97% across categories, and no single number describes this classifier. See
+  `validation.md`.
 - Every number here is written by `plot.py` into `figures/trends_figure_summary.txt` on each
-  build. Refill from that file rather than reading the picture.
+  build. Refill from that file rather than reading the picture — the scale ratio alone has
+  moved three times as the data changed.

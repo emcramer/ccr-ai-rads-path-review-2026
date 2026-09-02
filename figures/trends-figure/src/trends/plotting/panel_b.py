@@ -82,17 +82,32 @@ from matplotlib.figure import Figure
 
 from . import style
 
-#: Series drawn in the upper plot, in drawing order.
+#: Series drawn in the upper plot, in drawing order. Both large themes are split
+#: by clinical domain, per the 2026-09-02 specification: the review's question is
+#: *where* each theme is being pursued, not only how large it is. Cross-specialty
+#: (stored as ``both``) is small -- 39 foundation-model papers and 276 multimodal
+#: ones -- but it is the integrative case the review argues about, so it is drawn
+#: rather than folded into either side.
+#:
+#: Papers whose only labels are non-imaging carry no domain and appear on no
+#: line here, so these six do not sum to the two theme totals. The legend says so.
 UPPER_SERIES: tuple[tuple[str, str], ...] = (
-    ("foundation_models", "all"),
-    ("multimodal_integration", "all"),
+    ("foundation_models", "radiology"),
+    ("foundation_models", "pathology"),
+    ("foundation_models", "both"),
+    ("multimodal_integration", "radiology"),
+    ("multimodal_integration", "pathology"),
+    ("multimodal_integration", "both"),
 )
 
-#: Series drawn in the lower plot, in drawing order. The clinical lines are drawn
-#: last so that where two series sit on zero together, the clinical marker is the
-#: one on top; the eight-year zero run is the panel's point.
+#: Series drawn in the lower plot, in drawing order. Digital twins is too small
+#: to split three ways and virtual staining is pathologic by definition, so both
+#: are drawn undivided. The clinical lines are drawn last so that where two
+#: series sit on zero together, the clinical marker is the one on top; the
+#: seven-year pathology zero run is the panel's point.
 LOWER_SERIES: tuple[tuple[str, str], ...] = (
     ("digital_twins", "all"),
+    ("virtual_staining", "all"),
     ("clinical_fda", "radiology"),
     ("clinical_fda", "pathology"),
 )
@@ -108,7 +123,7 @@ GAP_IN: float = 0.20
 GAP_IN_WITH_NOTES: float = 0.34
 
 #: Share of the plotting height, gap excluded, given to the upper plot.
-UPPER_SHARE: float = 0.56
+UPPER_SHARE: float = 0.58
 
 #: Fraction of a plot's range left below zero, so a series sitting on zero is
 #: drawn clear of the bottom spine instead of on top of it.
@@ -172,17 +187,43 @@ class PanelB:
         return tuple(ax for ax in (self.upper, self.lower) if ax is not None)
 
 
-def _partition(theme_years: pd.DataFrame) -> tuple[list[tuple[str, str]], list[tuple[str, str]]]:
-    """Split the series present into the upper plot's and the lower plot's.
+class UnknownTheme(ValueError):
+    """``theme_year_counts.csv`` names a theme the figure has no place for."""
 
-    A series the specification does not name is drawn in the lower plot, on the
-    assumption that an unexpected series is more likely small than large: putting
-    it above would rescale the upper plot around a line nobody asked for.
+
+def _partition(theme_years: pd.DataFrame) -> tuple[list[tuple[str, str]], list[tuple[str, str]]]:
+    """Select the series each plot draws, and ignore every other row.
+
+    This is a **filter**, not a fallback. ``theme_year_counts.csv`` carries every
+    (theme, domain) combination by design -- five themes times five domains,
+    300 rows on the current corpus -- because the table is the record and the
+    figure decides what to draw. An earlier version of this function appended
+    any unrecognised (theme, domain) pair to the lower plot, which on that table
+    would have drawn about nineteen lines nobody asked for, silently.
+
+    A row the specification does not name is therefore skipped. Skipping is safe
+    because the rows are a partition and the drawn subset is chosen deliberately:
+    the clinical theme has a ``both`` row of three papers that the spec does not
+    draw, and every theme has ``none`` and ``all`` rows that no line uses.
+
+    The one thing that is *not* skipped is an unknown theme. That means the
+    canonical key list has moved and this module has not caught up, which is a
+    bug rather than a data variation, so it raises.
+
+    Raises:
+        UnknownTheme: If a theme outside :data:`style.THEME_ORDER` is present.
     """
+    themes = set(theme_years["theme"].astype(str))
+    unknown = sorted(themes - set(style.THEME_ORDER))
+    if unknown:
+        raise UnknownTheme(
+            f"theme_year_counts.csv names theme(s) the figure does not know: "
+            f"{', '.join(unknown)}. Add them to style.THEME_ORDER and decide "
+            "which plot they belong in, in UPPER_SERIES or LOWER_SERIES."
+        )
     present = set(map(tuple, theme_years[["theme", "domain"]].drop_duplicates().to_numpy()))
     upper = [pair for pair in UPPER_SERIES if pair in present]
     lower = [pair for pair in LOWER_SERIES if pair in present]
-    lower += [tuple(pair) for pair in sorted(present - set(_SERIES_ORDER))]
     return upper, lower
 
 
@@ -323,8 +364,8 @@ def _draw_plot(
         x = frame["year"].to_numpy()
         y = frame["n_papers"].to_numpy()
         colour = style.series_color(theme, domain)
-        dashes = style.SERIES_DASHES.get((theme, domain), (0, ()))
-        marker = style.SERIES_MARKERS.get((theme, domain), "o")
+        dashes = style.series_dash(theme, domain)
+        marker = style.series_marker(theme, domain)
 
         complete = x <= (partial_year - 1 if partial_year is not None else last_year)
         ax.plot(

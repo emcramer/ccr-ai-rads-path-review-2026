@@ -138,6 +138,20 @@ _TEMPLATES: dict[str, list[tuple[tuple[str, ...], float]]] = {
         (("clinical_data",), 4),
         (("genomics",), 2),
     ],
+    # Virtual staining predicts a spatial assay from an H&E slide, so almost
+    # every paper carries H&E plus one of the two spatial rows. It is pathologic
+    # by definition: nothing here should produce a radiologic domain, which is
+    # what lets Panel B draw the series undivided.
+    "virtual_staining": [
+        (("he_histology", "spatial_transcriptomics"), 14),
+        (("he_histology", "spatial_proteomics"), 11),
+        (("he_histology",), 9),
+        (("he_histology", "ihc"), 6),
+        (("he_histology", "genomics", "spatial_transcriptomics"), 4),
+        (("he_histology", "ihc", "spatial_proteomics"), 3),
+        (("spatial_transcriptomics",), 2),
+        (("he_histology", "pathology_report"), 2),
+    ],
 }
 
 # Relative frequency of each modality when a rare tail combination is drawn.
@@ -180,6 +194,10 @@ def _theme_probability(theme: str, year: int) -> float:
         return float(0.004 + 0.030 * _logistic(year, 2023.6, 1.2))
     if theme == "clinical_fda":
         return float(0.17 + 0.21 * _logistic(year, 2021.0, 2.0))
+    if theme == "virtual_staining":
+        # Nothing before about 2019, then a late and still-small ramp, which is
+        # the shape of the measured series.
+        return float(0.001 + 0.028 * _logistic(year, 2023.8, 1.1))
     raise KeyError(theme)
 
 
@@ -310,26 +328,35 @@ def tabulate_combinations(papers: pd.DataFrame) -> pd.DataFrame:
     return pd.concat(frames, ignore_index=True)
 
 
+#: Domain rows written for every theme, matching ``aggregate.DOMAIN_SERIES``.
+#: The four split values partition the theme -- ``radiology`` means radiologic
+#: and *not* pathologic, and a cross-specialty paper sits in ``both`` rather
+#: than in each side -- so ``radiology + pathology + both + none == all``.
+DOMAIN_SERIES: tuple[str, ...] = ("all", "radiology", "pathology", "both", "none")
+
+
 def tabulate_theme_years(papers: pd.DataFrame) -> pd.DataFrame:
     """Tabulate ``theme_year_counts.csv`` from a paper table.
 
-    Themes other than the clinical one get a single ``all`` series. The clinical
-    theme is split into ``radiology`` and ``pathology``; a paper whose domain is
-    ``both`` counts in each, and one whose domain is ``none`` counts in neither.
-    Years with no papers are written as zeros so the lines stay continuous.
+    Every theme gets every row in :data:`DOMAIN_SERIES`, whether or not the
+    figure draws it: the table is the record, and which series are drawn is the
+    figure's decision, made in ``panel_b.UPPER_SERIES`` and ``LOWER_SERIES``.
+
+    The split is a partition, not an overlap. Before 2026-09-02 the clinical
+    theme's ``radiology`` row counted cross-specialty papers on both sides, and
+    the two lines did not sum to the theme. They now do, with ``both`` carrying
+    the cross-specialty papers as a series of its own.
+
+    Years with no papers are written as zeros so the lines stay continuous, and
+    so that a run of true zeros -- which is the point of the clinical pathology
+    series -- reads as measured years rather than as a line that has not started.
     """
     years = list(range(FIRST_YEAR, LAST_YEAR + 1))
     rows: list[dict] = []
     for theme in style.THEME_ORDER:
         subset = papers.loc[papers[f"theme_{theme}"] == 1]
-        if theme == "clinical_fda":
-            series = {
-                "radiology": subset.loc[subset["domain"].isin(["radiology", "both"])],
-                "pathology": subset.loc[subset["domain"].isin(["pathology", "both"])],
-            }
-        else:
-            series = {"all": subset}
-        for domain, frame in series.items():
+        for domain in DOMAIN_SERIES:
+            frame = subset if domain == "all" else subset.loc[subset["domain"] == domain]
             per_year = frame.groupby("year").size().to_dict()
             for year in years:
                 rows.append(

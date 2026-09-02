@@ -30,20 +30,32 @@ from matplotlib.figure import Figure  # noqa: E402
 from .plotting import io, panel_a, panel_b, style  # noqa: E402
 
 #: Figure size in inches. The width fits a single manuscript page; the height is
-#: whatever the thirteen matrix rows and a readable Panel B require. Nothing is
+#: whatever the fifteen matrix rows and a readable Panel B require. Nothing is
 #: shrunk to hide crowding. The height grew from 8.3 in when the modality list
 #: went from eleven rows to thirteen, so that the matrix row pitch stayed near
-#: 13.5 pt, and from 8.7 in when Panel B became two stacked plots. Panel A keeps
-#: its absolute size across that second change; the extra height is all Panel B's.
-FIGURE_SIZE: tuple[float, float] = (7.5, 9.2)
+#: 13.5 pt; from 8.7 in when Panel B became two stacked plots; and from 9.2 in on
+#: 2026-09-02, when Panel B went from five lines to ten.
+#:
+#: That last growth is bought entirely for Panel B's end-of-line labels. Panel B
+#: labels its lines directly rather than with a legend box, and six labels now
+#: stack beside the upper plot, most of them two lines deep: about 1.8 in of type
+#: that has to sit near the line ends rather than in a solid block. Panel A keeps
+#: its absolute size across all of these -- 4.92 in -- so every added inch is
+#: Panel B's. The alternative was type below the floors ``tests/test_plot.py``
+#: pins, which is not on the table.
+FIGURE_SIZE: tuple[float, float] = (7.5, 10.0)
 
 #: Base name of the output files, before the optional tag.
 OUTPUT_STEM = "trends_figure"
 
-# Figure-fraction geometry. Panel A's left edge is where the matrix begins; the
+# Figure-fraction geometry. These are fractions of a canvas whose height changed
+# on 2026-09-02, so read them as the inches they stand for: Panel A is 4.92 in
+# tall, unchanged, and Panel B is 4.18 in, up from 3.39 in.
+#
+# Panel A's left edge is where the matrix begins; the
 # space to its left holds the modality row labels and the bar axis, and so must
-# be at least as wide as the longest modality label plus its tick pad -- 1.41 in
-# for "Genomics / Transcriptomics" at 7 pt, which is why the gutter widened when
+# be at least as wide as the longest modality label plus its tick pad -- 1.42 in
+# for "Genomics / Transcriptomics" at 7.5 pt, which is why the gutter widened when
 # the modality list went from thirteen rows to fifteen. Panel B's
 # rectangle covers both of its stacked plots and the gap between them; the space
 # to its right holds the end-of-line labels and the space below it the shared
@@ -54,8 +66,8 @@ OUTPUT_STEM = "trends_figure"
 # count underneath, centred: at full width that caption ran off the paper and
 # still rendered. ``tests/test_plot.py`` now measures every label against the
 # canvas, so the next thing to overflow fails instead of printing half.
-_PANEL_A_RECT = (0.192, 0.453, 0.786, 0.535)
-_PANEL_B_RECT = (0.096, 0.045, 0.706, 0.368)
+_PANEL_A_RECT = (0.192, 0.4968, 0.786, 0.4922)
+_PANEL_B_RECT = (0.096, 0.0414, 0.706, 0.4184)
 
 
 @dataclass(frozen=True)
@@ -108,7 +120,7 @@ def build_figure(
     # Panel letters: bold serif in ink, and the largest type on the page, per
     # section 2 of ``../ink_style_guide.md``. They are the only element of the
     # figure that has to be findable before anything is read.
-    for letter, y in (("A", 0.995), ("B", 0.432)):
+    for letter, y in (("A", 0.995), ("B", 0.479)):
         figure.text(
             0.012,
             y,
@@ -167,7 +179,7 @@ def summary_text(
         "Papers are multi-label: the theme totals above sum to more than the corpus size.",
         "",
         "Panel B — two stacked plots, per-year counts, separate linear y axes",
-        f"  upper plot       : {', '.join(theme for theme, _ in panel_b.UPPER_SERIES)}",
+        f"  upper plot       : {', '.join(f'{theme}/{domain}' for theme, domain in panel_b.UPPER_SERIES)}",
         f"  lower plot       : {', '.join(f'{theme}/{domain}' for theme, domain in panel_b.LOWER_SERIES)}",
     ]
     if panel is not None:

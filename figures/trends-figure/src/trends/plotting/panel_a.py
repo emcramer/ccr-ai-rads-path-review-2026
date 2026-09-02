@@ -218,7 +218,7 @@ def column_width_in(rect_width: float, figure_width_in: float, total_slots: floa
     Returns:
         The width one column gets once the between-block gaps are taken out.
     """
-    n_gaps = len(style.THEME_ORDER) - 1
+    n_gaps = len(style.PANEL_A_THEMES) - 1
     usable = rect_width * figure_width_in - BLOCK_GAP_IN * n_gaps
     return usable / total_slots if total_slots else 0.0
 
@@ -323,8 +323,11 @@ def draw(
     bars_h_in = bars_h * fig_h
 
     # Horizontal budget: equal column width everywhere, blocks separated by a gap.
-    blocks = [(theme, _block_frame(combinations, theme, top_n)) for theme in style.THEME_ORDER]
-    summaries = [_tail_summary(combinations, theme, top_n) for theme in style.THEME_ORDER]
+    # PANEL_A_THEMES, not THEME_ORDER: virtual staining was added to Panel B
+    # only, because a fifth block breaches MIN_COLUMN_WIDTH_IN. See the note on
+    # the constant in ``style``.
+    blocks = [(theme, _block_frame(combinations, theme, top_n)) for theme in style.PANEL_A_THEMES]
+    summaries = [_tail_summary(combinations, theme, top_n) for theme in style.PANEL_A_THEMES]
     slots = [
         block_slots(len(frame), summary.draws_remainder)
         for (_, frame), summary in zip(blocks, summaries)

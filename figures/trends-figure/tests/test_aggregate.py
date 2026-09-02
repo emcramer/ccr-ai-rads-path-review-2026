@@ -169,44 +169,64 @@ def test_year_axis_is_dense(labels):
     assert set(empty_year) == {0}
 
 
-def test_one_row_per_series_and_year(labels):
-    """Five series: three themes drawn whole, and the clinical theme's two halves."""
+def test_every_theme_gets_the_whole_domain_breakdown(labels):
+    """The figure chooses which rows to draw, so the table carries all of them."""
     counts = aggregate.build_theme_year_counts(labels, partial_year=2026)
     series = set(map(tuple, counts[["theme", "domain"]].drop_duplicates().to_numpy()))
     assert series == {
-        ("foundation_models", "all"),
-        ("multimodal_integration", "all"),
-        ("digital_twins", "all"),
-        ("clinical_fda", "radiology"),
-        ("clinical_fda", "pathology"),
+        (theme, domain)
+        for theme in aggregate.THEME_KEYS
+        for domain in aggregate.DOMAIN_SERIES
     }
-    assert len(counts) == 5 * 6
+    assert len(counts) == len(aggregate.THEME_KEYS) * len(aggregate.DOMAIN_SERIES) * 6
     assert not counts.duplicated(subset=["theme", "domain", "year"]).any()
 
 
-def test_clinical_theme_has_no_combined_line(labels):
-    """docs/DECISIONS.md: the clinical theme is drawn as two lines, not three."""
-    counts = aggregate.build_theme_year_counts(labels)
-    clinical = counts.loc[counts["theme"] == "clinical_fda"]
-    assert "all" not in set(clinical["domain"])
+def test_the_four_domain_rows_partition_each_theme(labels):
+    """radiology + pathology + both + none == all, for every theme and every year.
 
-
-def test_the_clinical_lines_are_not_additive():
-    """A paper using both sides counts in both, so the lines do not sum to the theme."""
-    labels = make_labels(
-        [{"pmid": 1, "year": 2024, "themes": ("clinical_fda",),
-          "modalities": ["ct", "he_histology"]}]
+    Each paper carries exactly one ``domain`` value, so the four rows are a
+    partition. This is the identity Panel B's legend rests on, and the one that
+    would break silently if ``domain`` and this reduction ever disagreed.
+    """
+    counts = aggregate.build_theme_year_counts(labels, partial_year=2026)
+    wide = counts.pivot_table(
+        index=["theme", "year"], columns="domain", values="n_papers", aggfunc="sum"
     )
+    parts = wide[["radiology", "pathology", "both", "none"]].sum(axis=1)
+    assert (parts == wide["all"]).all()
+    assert int(wide["all"].sum()) > 0  # not vacuously true
+
+
+def test_radiology_and_pathology_alone_do_not_sum_to_the_theme():
+    """The other half of the same fact, and the reason the legend must say so.
+
+    A cross-specialty paper sits in ``both``, not in each side, so the two
+    single-specialty lines under-count the theme by the cross-specialty and
+    no-domain papers.
+    """
+    labels = make_labels([
+        {"pmid": 1, "year": 2024, "themes": ("clinical_fda",),
+         "modalities": ["ct", "he_histology"]},          # both
+        {"pmid": 2, "year": 2024, "themes": ("clinical_fda",), "modalities": ["ct"]},
+        {"pmid": 3, "year": 2024, "themes": ("clinical_fda",), "modalities": ["genomics"]},
+    ])
     counts = aggregate.build_theme_year_counts(labels)
-    assert int(counts["n_papers"].sum()) == 2      # one paper, counted on both lines
-    assert int(labels["theme_clinical_fda"].sum()) == 1
+    by_domain = counts[counts.theme == "clinical_fda"].set_index("domain")["n_papers"]
+    assert by_domain["all"] == 3
+    assert by_domain["radiology"] == 1 and by_domain["pathology"] == 0
+    assert by_domain["both"] == 1 and by_domain["none"] == 1
+    assert by_domain["radiology"] + by_domain["pathology"] < by_domain["all"]
 
 
-def test_a_paper_with_no_modality_is_on_neither_clinical_line():
-    """``domain: none`` belongs to neither half, so it appears on no clinical line."""
+def test_a_paper_with_no_imaging_modality_lands_on_the_none_line():
+    """It is not lost: it counts in ``all`` and in ``none``, and nowhere else."""
     labels = make_labels([{"pmid": 1, "year": 2024, "themes": ("clinical_fda",)}])
     counts = aggregate.build_theme_year_counts(labels)
-    assert int(counts.loc[counts["theme"] == "clinical_fda", "n_papers"].sum()) == 0
+    by_domain = counts[counts.theme == "clinical_fda"].set_index("domain")["n_papers"]
+    assert by_domain["all"] == 1 and by_domain["none"] == 1
+    assert by_domain["radiology"] == 0 and by_domain["pathology"] == 0
+    assert by_domain["both"] == 0
 
 
 def test_only_the_retrieval_year_is_flagged_partial(labels):
@@ -241,7 +261,12 @@ def test_written_tables_load_in_the_plotting_reader(labels, tmp_path):
     assert set(paths) == {"paper_labels", "combination_counts", "theme_year_counts"}
     data = io.load_figure_data(tmp_path)
     assert data.n_papers_total == len(labels)
-    assert set(data.theme_years["domain"]) <= {"all", "radiology", "pathology"}
+    # The reader's vocabulary and this module's must agree, or a table that is
+    # correct here is rejected there.
+    from trends.plotting import style
+
+    assert set(data.theme_years["domain"]) == set(aggregate.DOMAIN_SERIES)
+    assert set(aggregate.DOMAIN_SERIES) <= set(style.DOMAIN_VALUES)
 
 
 def test_the_provenance_header_does_not_break_the_reader(labels, tmp_path):
@@ -303,4 +328,5 @@ def test_the_reductions_follow_the_table_they_are_given():
     # table carries every theme the labels declare.
     years = aggregate.build_theme_year_counts(labels)
     assert set(years["theme"]) == set(aggregate.theme_keys_of(labels))
-    assert int(years.loc[years["theme"] == "agents", "n_papers"].sum()) == 1
+    totals = years[(years["theme"] == "agents") & (years["domain"] == "all")]
+    assert int(totals["n_papers"].sum()) == 1

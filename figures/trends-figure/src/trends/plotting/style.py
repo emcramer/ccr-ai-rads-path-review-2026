@@ -161,8 +161,24 @@ FONT_DIR: Final[Path] = register_fonts()
 # Canonical keys
 # --------------------------------------------------------------------------
 
-#: Theme keys in the left-to-right block order used by Panel A.
+#: Every theme key, in canonical order. Kept equal to ``aggregate.THEME_KEYS``
+#: by a test in ``tests/test_classify.py``.
 THEME_ORDER: Final[tuple[str, ...]] = (
+    "foundation_models",
+    "multimodal_integration",
+    "digital_twins",
+    "clinical_fda",
+    "virtual_staining",
+)
+
+#: The themes Panel A draws as blocks, left to right. This is deliberately NOT
+#: :data:`THEME_ORDER`. ``virtual_staining`` was added to Panel B only: at
+#: thirteen columns per block a fifth block puts the column width below
+#: :data:`panel_a.MIN_COLUMN_WIDTH_IN`, which is the floor that holds a dot
+#: legible, and ``tests/test_plot.py`` fails if it is breached. Author's
+#: decision of 2026-09-02. A theme added here must be added to the width test's
+#: arithmetic too.
+PANEL_A_THEMES: Final[tuple[str, ...]] = (
     "foundation_models",
     "multimodal_integration",
     "digital_twins",
@@ -175,6 +191,7 @@ THEME_LABELS: Final[dict[str, str]] = {
     "multimodal_integration": "Multimodal Integration",
     "digital_twins": "Digital Twins",
     "clinical_fda": "Clinical Applications /\nFDA Approval",
+    "virtual_staining": "Virtual Staining",
 }
 
 #: Modality keys in figure row order: pathology, then radiology, then the
@@ -234,7 +251,16 @@ PATHOLOGY_MODALITIES: Final[frozenset[str]] = frozenset(
 # row to draw it on. See the canonical-keys section of ``docs/figure-spec.md``.
 
 #: Permitted values of the ``domain`` column of ``theme_year_counts.csv``.
-DOMAIN_VALUES: Final[frozenset[str]] = frozenset({"all", "radiology", "pathology"})
+#: The four split values partition the theme: ``radiology`` means radiologic and
+#: *not* pathologic, ``pathology`` the reverse, ``both`` is the cross-specialty
+#: case, and ``none`` is a paper whose only labels are non-imaging. So
+#: ``radiology + pathology + both + none == all``, and ``radiology + pathology``
+#: alone does not reach the theme total. The figure displays ``both`` as
+#: "cross-specialty"; the stored value stays ``both`` so this table and
+#: ``paper_labels.csv`` agree.
+DOMAIN_VALUES: Final[frozenset[str]] = frozenset(
+    {"all", "radiology", "pathology", "both", "none"}
+)
 
 # --------------------------------------------------------------------------
 # Colour and line style
@@ -307,70 +333,105 @@ MODALITY_COLORS: Final[dict[str, str]] = {
     "other": STRUCTURAL,
 }
 
-#: Colour per Panel B series. Three of the five series are *themes*, not
-#: modalities, so under the guide they carry no hue at all and are told apart by
-#: dash pattern and marker; they are drawn in the three neutral inks. The two
-#: clinical lines are modality-domain series -- radiology against pathology --
-#: so they take the fixed modality hues, and that comparison is the one the
-#: review cares most about.
-SERIES_COLORS: Final[dict[tuple[str, str], str]] = {
-    ("foundation_models", "all"): INK,
-    ("multimodal_integration", "all"): SUBTLE,
-    ("digital_twins", "all"): LINE,
-    ("clinical_fda", "radiology"): RADIOLOGY_IMAGING,
-    # The deep pathology variant, not the border hue. Measured in greyscale,
-    # #CC79A7 came out at luminance ~151 -- the lightest stroke on the page --
-    # and it carries the pathology series, which is the review's argument. The
-    # guide lists the deep variants for sub-labels and icon tint, and a 1.3 pt
-    # line at this size is nearer those than a card border. Radiology stays on
-    # #0072B2, which measures ~87 and needs no help.
-    ("clinical_fda", "pathology"): DIGITAL_PATHOLOGY_DEEP,
+#: Colour per clinical domain. This is the whole of Panel B's colour scheme:
+#: colour marks the **domain** a theme's papers were pursued in, which is
+#: semantic under the style guide, and every hue here is one of the project's
+#: fixed assignments. Cross-specialty takes the guide's structural/integrative
+#: grey, which it reserves for "fusion modules, joint models" -- a paper pairing
+#: a radiologic with a pathologic modality is exactly that.
+#:
+#: Pathology is the deep variant, not the border hue. Every mark in Panel B is a
+#: 1.3 pt stroke or 7 pt type, and the specification's own parenthetical assigns
+#: the deep variant to thin strokes and labels. Panel A's dots keep the border
+#: hue: they are filled marks, and they measured clear of the absent-dot neutral.
+DOMAIN_COLORS: Final[dict[str, str]] = {
+    "radiology": RADIOLOGY_IMAGING,
+    "pathology": DIGITAL_PATHOLOGY_DEEP,
+    "both": STRUCTURAL,
+    "all": INK,
 }
 
-#: End-of-line label colour per series: the line's own colour for the neutrals,
-#: the deep variant for the two hued lines, which are set at 7 pt.
-SERIES_TEXT_COLORS: Final[dict[tuple[str, str], str]] = {
-    ("foundation_models", "all"): INK,
-    ("multimodal_integration", "all"): SUBTLE,
-    ("digital_twins", "all"): LINE,
-    ("clinical_fda", "radiology"): RADIOLOGY_IMAGING_DEEP,
-    ("clinical_fda", "pathology"): DIGITAL_PATHOLOGY_DEEP,
+#: The domain an undivided series is *drawn* as, where it has one anyway.
+#:
+#: Virtual staining is drawn as a single line because splitting it would say
+#: nothing: 75 of its 76 papers are pathologic and none is radiologic. But that
+#: is itself a statement about its domain, and both of the domain channels --
+#: hue and marker -- should make it. Drawing it as domain-less would throw away
+#: the one semantic fact the series has, and would put it in the same ink as
+#: digital twins, which it crosses in 2024-2025.
+#:
+#: Digital twins is genuinely domain-less and is not overridden: 22 radiology,
+#: 7 pathology, 3 cross-specialty and 24 carrying no imaging modality at all.
+#:
+#: One override drives colour and marker together, so the two channels can never
+#: contradict each other. The specification's table says "no domain split
+#: (digital twins) | ink neutrals"; it names digital twins, and this reads that
+#: parenthetical as the example it is rather than as the whole rule. Author
+#: confirmed 2026-09-02.
+SERIES_DOMAIN_OVERRIDES: Final[dict[tuple[str, str], str]] = {
+    ("virtual_staining", "all"): "pathology",
 }
 
-#: Dash pattern per Panel B series. Three series carry no colour at all, so dash
-#: and marker are the whole of what tells them apart; the two clinical lines
-#: differ by hue *and* by dash, as the specification requires.
-SERIES_DASHES: Final[dict[tuple[str, str], tuple]] = {
-    ("foundation_models", "all"): (0, ()),
-    ("multimodal_integration", "all"): (0, (6, 1.6)),
-    ("digital_twins", "all"): (0, (1, 1.5)),
-    ("clinical_fda", "radiology"): (0, (5, 1.2, 1, 1.2)),
-    ("clinical_fda", "pathology"): (0, (2.4, 1.4)),
+#: Dash pattern per theme. Under the 2026-09-02 specification, **theme is
+#: carried by dash and marker, never by hue**, so two blue lines in the upper
+#: plot are radiology work in two different themes. Every pattern must stay
+#: distinguishable from every other at 1.3 pt: these are checked by a test.
+THEME_DASHES: Final[dict[str, tuple]] = {
+    "foundation_models": (0, ()),
+    "multimodal_integration": (0, (6, 1.6)),
+    "digital_twins": (0, (1, 1.5)),
+    "clinical_fda": (0, (5, 1.2, 1, 1.2)),
+    "virtual_staining": (0, (3.4, 1.5)),
 }
 
-#: Marker per Panel B series, a second non-colour cue.
-SERIES_MARKERS: Final[dict[tuple[str, str], str]] = {
-    ("foundation_models", "all"): "o",
-    ("multimodal_integration", "all"): "s",
-    ("digital_twins", "all"): "^",
-    ("clinical_fda", "radiology"): "D",
-    ("clinical_fda", "pathology"): "v",
+#: Marker per clinical domain -- the *second* domain channel, and the one that
+#: survives greyscale.
+#:
+#: Dash and marker were both spent on theme until 2026-09-02, which left hue as
+#: the only domain cue, so a greyscale print lost the domain entirely: the three
+#: domain lines of one theme were the same stroke in three near-identical greys
+#: (luminance 87, 100 and 75). Splitting the channels costs nothing -- hue and
+#: marker agree in colour, and in greyscale the dash still says which theme
+#: while the marker now says which side. That satisfies the style guide's
+#: "colour is never the sole cue" properly, instead of leaning on the end labels
+#: as the only surviving cue.
+#:
+#: Four shapes that stay separable at 2.9 pt: circle, square, triangle, diamond.
+#: Square and diamond are the risk pair and they do co-occur, in the lower plot.
+DOMAIN_MARKERS: Final[dict[str, str]] = {
+    "radiology": "o",
+    "pathology": "s",
+    "both": "^",
+    "all": "D",
 }
 
-#: Suffix appended to the theme label for a domain-split line.
-DOMAIN_SUFFIX: Final[dict[str, str]] = {
+#: How a domain is named on the figure. ``both`` is displayed as
+#: "cross-specialty"; the stored value stays ``both``.
+DOMAIN_LABELS: Final[dict[str, str]] = {
     "all": "",
-    "radiology": " (radiology)",
-    "pathology": " (pathology)",
+    "radiology": "radiology",
+    "pathology": "pathology",
+    "both": "cross-specialty",
+    "none": "no domain",
 }
 
-#: End-of-line label for each Panel B series, pre-wrapped to fit the right margin.
-#: Panel B labels lines directly instead of using a legend box, so these strings
-#: must stay short enough that five of them fit beside the axes without colliding.
+#: End-of-line label for each Panel B series, hand-wrapped to fit the right
+#: margin. Panel B labels its lines directly instead of using a legend box, so
+#: these must stay short enough that six of them stack beside the upper plot
+#: without colliding -- which is what sets Panel B's height. The widest line
+#: here, "FDA Approval (pathology)", measures about 1.25 in at 7 pt against a
+#: 1.49 in margin; a longer one would need the margin widened, not the type
+#: shrunk. :func:`series_label` falls back to composing one for any series not
+#: listed, so an unexpected domain still draws.
 SERIES_END_LABELS: Final[dict[tuple[str, str], str]] = {
-    ("foundation_models", "all"): "Foundation Models",
-    ("multimodal_integration", "all"): "Multimodal\nIntegration",
+    ("foundation_models", "radiology"): "Foundation Models\n(radiology)",
+    ("foundation_models", "pathology"): "Foundation Models\n(pathology)",
+    ("foundation_models", "both"): "Foundation Models\n(cross-specialty)",
+    ("multimodal_integration", "radiology"): "Multimodal Integration\n(radiology)",
+    ("multimodal_integration", "pathology"): "Multimodal Integration\n(pathology)",
+    ("multimodal_integration", "both"): "Multimodal Integration\n(cross-specialty)",
     ("digital_twins", "all"): "Digital Twins",
+    ("virtual_staining", "all"): "Virtual Staining",
     ("clinical_fda", "radiology"): "Clinical Applications /\nFDA Approval (radiology)",
     ("clinical_fda", "pathology"): "Clinical Applications /\nFDA Approval (pathology)",
 }
@@ -479,17 +540,51 @@ def modality_color(modality: str) -> str:
     return MODALITY_COLORS.get(modality, STRUCTURAL)
 
 
-def series_color(theme: str, domain: str) -> str:
-    """Return the line colour for one Panel B series.
+def domain_color(domain: str) -> str:
+    """Return the semantic colour of one clinical domain."""
+    return DOMAIN_COLORS.get(domain, INK)
 
-    Falls back to ink: an unexpected series is not a modality, so it gets no hue.
+
+def appearance_domain(theme: str, domain: str) -> str:
+    """Return the domain a series is drawn as.
+
+    Usually the domain itself. See :data:`SERIES_DOMAIN_OVERRIDES` for the one
+    series that is drawn undivided but still has a domain worth stating.
     """
-    return SERIES_COLORS.get((theme, domain), INK)
+    return SERIES_DOMAIN_OVERRIDES.get((theme, domain), domain)
+
+
+def series_color(theme: str, domain: str) -> str:
+    """Return the line colour for one Panel B series. Colour marks the domain."""
+    return domain_color(appearance_domain(theme, domain))
 
 
 def series_text_color(theme: str, domain: str) -> str:
-    """Return the end-of-line label colour for one Panel B series."""
-    return SERIES_TEXT_COLORS.get((theme, domain), series_color(theme, domain))
+    """Return the end-of-line label colour for one Panel B series.
+
+    The same colour as the line: every hue in :data:`DOMAIN_COLORS` is already
+    the deep variant or a neutral, so all of them read at 7 pt.
+    """
+    return series_color(theme, domain)
+
+
+def series_dash(theme: str, domain: str) -> tuple:
+    """Return the dash pattern for one Panel B series.
+
+    Dash marks the theme, so this ignores ``domain``: the three domain lines of
+    one theme share a pattern and are told apart by hue and by their end labels.
+    """
+    return THEME_DASHES.get(theme, (0, ()))
+
+
+def series_marker(theme: str, domain: str) -> str:
+    """Return the marker for one Panel B series.
+
+    Marker marks the **domain**, as hue does, so that greyscale keeps both
+    dimensions: dash says which theme, marker says which side. Hue and marker
+    are driven by the same :func:`appearance_domain` and cannot disagree.
+    """
+    return DOMAIN_MARKERS.get(appearance_domain(theme, domain), "o")
 
 
 def theme_label(theme: str) -> str:
@@ -505,11 +600,13 @@ def modality_label(modality: str) -> str:
 def series_label(theme: str, domain: str) -> str:
     """Return the end-of-line label for one Panel B series.
 
-    Falls back to the theme label plus a domain suffix for any series the figure
-    has no hand-wrapped label for, so an unexpected domain still draws.
+    Falls back to composing one from the theme label and the domain name for any
+    series the figure has no hand-wrapped label for, so an unexpected domain
+    still draws rather than going out unlabelled.
     """
     known = SERIES_END_LABELS.get((theme, domain))
     if known is not None:
         return known
     base = theme_label(theme).replace("\n", " ")
-    return base + DOMAIN_SUFFIX.get(domain, f" ({domain})")
+    named = DOMAIN_LABELS.get(domain, domain)
+    return base if not named else f"{base}\n({named})"

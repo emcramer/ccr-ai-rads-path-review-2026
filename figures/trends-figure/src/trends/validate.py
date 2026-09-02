@@ -111,12 +111,23 @@ RARE_MODALITIES: Final[tuple[str, ...]] = (
     "xray",
 )
 
+#: Strata that are not one of the four-or-more themes.
+NON_THEME_STRATA: Final[tuple[str, ...]] = ("rare_modality", "no_theme")
+
 #: Strata, in the order a paper is tested against them. The list is a
 #: **priority order**, not a preference: a paper joins the first stratum it
 #: qualifies for and no other, so the strata partition the corpus and the
 #: weights are well defined. Rarity decides the order — the scarcest categories
 #: are claimed first, or they would be swallowed by the large ones.
+#:
+#: Every theme in :data:`trends.aggregate.THEME_KEYS` must appear here.
+#: :func:`check_theme_coverage` enforces that at draw time and
+#: ``tests/test_validate.py`` enforces it at test time, because the failure it
+#: prevents is silent: a theme missing from this list does not raise, it simply
+#: falls into ``no_theme`` and is never measured. That is exactly what happened
+#: when ``virtual_staining`` was added at config v7.
 STRATUM_ORDER: Final[tuple[str, ...]] = (
+    "virtual_staining",
     "digital_twins",
     "clinical_fda",
     "rare_modality",
@@ -125,8 +136,9 @@ STRATUM_ORDER: Final[tuple[str, ...]] = (
     "no_theme",
 )
 
-#: Papers drawn from each stratum. Sums to 200.
+#: Papers drawn from each stratum. Sums to 225.
 DEFAULT_SAMPLE_SIZES: Final[dict[str, int]] = {
+    "virtual_staining": 25,
     "digital_twins": 25,
     "clinical_fda": 25,
     "rare_modality": 20,
@@ -134,6 +146,22 @@ DEFAULT_SAMPLE_SIZES: Final[dict[str, int]] = {
     "multimodal_integration": 40,
     "no_theme": 50,
 }
+
+
+def check_theme_coverage(stratum_order: Iterable[str] = STRATUM_ORDER) -> None:
+    """Refuse to draw a sample that cannot measure every theme.
+
+    A theme absent from :data:`STRATUM_ORDER` does not crash anything. Its
+    papers quietly join ``no_theme``, the draw succeeds, the report prints, and
+    the theme is simply never measured. Loud is better.
+    """
+    missing = [k for k in THEME_KEYS if k not in set(stratum_order)]
+    if missing:
+        raise ValidationError(
+            "these themes have no stratum and would never be measured: "
+            + ", ".join(missing)
+            + ". Add them to STRATUM_ORDER and DEFAULT_SAMPLE_SIZES."
+        )
 
 #: Rows in the author's audit sheet, by where they came from. The two halves
 #: are never averaged together: the agreement half estimates how often the
@@ -197,14 +225,12 @@ def assign_strata(
             "paper_labels.csv is missing label columns: " + ", ".join(sorted(missing))
         )
 
+    check_theme_coverage()
     rare_hit = labels[[f"mod_{m}" for m in rare_modalities]].sum(axis=1) > 0
-    tests = {
-        "digital_twins": labels["theme_digital_twins"] == 1,
-        "clinical_fda": labels["theme_clinical_fda"] == 1,
-        "rare_modality": rare_hit,
-        "foundation_models": labels["theme_foundation_models"] == 1,
-        "multimodal_integration": labels["theme_multimodal_integration"] == 1,
-    }
+    # Theme tests are derived from the canonical keys rather than written out,
+    # so adding a theme to the dictionaries cannot leave one behind here.
+    tests = {key: labels[f"theme_{key}"] == 1 for key in THEME_KEYS}
+    tests["rare_modality"] = rare_hit
 
     strata = pd.Series("no_theme", index=labels.index, dtype=object)
     claimed = pd.Series(False, index=labels.index)

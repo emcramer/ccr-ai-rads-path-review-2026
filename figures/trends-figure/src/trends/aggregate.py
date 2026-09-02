@@ -13,10 +13,10 @@ Two properties the tests hold it to:
 * Within a theme, the combination counts sum to that theme's paper count. Every
   paper carries at least one modality, because a paper matching none is given
   ``other``, so every paper falls in exactly one column of its theme's block.
-* ``theme_year_counts.csv`` carries no ``clinical_fda`` / ``all`` row. Per
-  ``docs/DECISIONS.md`` that theme is drawn as a radiology line and a pathology
-  line with no combined line, and a paper using both counts in both, so the two
-  lines do not sum to the theme total.
+* ``theme_year_counts.csv`` carries the full domain breakdown of every theme,
+  and the four domain rows partition it: ``radiology + pathology + both + none``
+  equals ``all``. ``radiology + pathology`` alone does not, because a
+  cross-specialty paper sits in ``both`` rather than in each side.
 """
 
 from __future__ import annotations
@@ -38,6 +38,7 @@ THEME_KEYS: Final[tuple[str, ...]] = (
     "multimodal_integration",
     "digital_twins",
     "clinical_fda",
+    "virtual_staining",
 )
 
 #: Modality keys, in figure row order: pathology, then radiology, then the
@@ -64,8 +65,15 @@ MODALITY_KEYS: Final[tuple[str, ...]] = (
 #: include pattern matched, when no named modality matched, or both.
 OTHER_MODALITY: Final[str] = "other"
 
-#: The one theme drawn as two domain lines rather than one combined line.
-SPLIT_THEME: Final[str] = "clinical_fda"
+#: The ``domain`` values emitted for every theme, in the order they are written.
+#:
+#: ``all`` is the theme total. The other four are the values of the ``domain``
+#: column of ``paper_labels.csv``, so each paper falls in exactly one of them and
+#: ``radiology + pathology + both + none == all``. ``radiology`` therefore means
+#: "radiologic and not pathologic": a paper touching both sides is in ``both``,
+#: not in each side. The figure displays ``both`` as "cross-specialty"; the value
+#: stays ``both`` here so that this table and ``paper_labels.csv`` agree.
+DOMAIN_SERIES: Final[tuple[str, ...]] = ("all", "radiology", "pathology", "both", "none")
 
 def order_keys(keys: Iterable[str], canonical: Sequence[str]) -> tuple[str, ...]:
     """Put a dictionary's category keys into figure order.
@@ -221,11 +229,19 @@ def build_theme_year_counts(
 ) -> pd.DataFrame:
     """Count papers per theme, domain, and year.
 
-    Three themes get one series each, with ``domain`` set to ``all``. The
-    clinical theme gets a radiology series and a pathology series and no
-    combined series, per ``docs/DECISIONS.md``; a paper whose domain is ``both``
-    counts in each. The year axis is dense between the first and last year in
-    the corpus, so a year with no papers draws as a zero rather than as a gap.
+    Every theme gets the full set of :data:`DOMAIN_SERIES`, and the figure
+    chooses which rows to draw. Emitting the whole breakdown costs a few hundred
+    rows and saves a schema change every time the author wants a different
+    theme split.
+
+    The four domain rows partition the theme, because each paper carries exactly
+    one ``domain`` value, so ``radiology + pathology + both + none == all``.
+    ``radiology`` means radiologic and *not* pathologic; a paper touching both
+    sides is in ``both``. ``radiology + pathology`` alone therefore does not sum
+    to the theme, which is the property the legend has to explain.
+
+    The year axis is dense between the first and last year in the corpus, so a
+    year with no papers draws as a zero rather than as a gap.
 
     Args:
         labels: The per-paper table.
@@ -249,15 +265,13 @@ def build_theme_year_counts(
     series: list[tuple[str, str, pd.Series]] = []
     for theme in theme_keys_of(labels):
         in_theme = labels[f"theme_{theme}"].to_numpy(dtype=bool)
-        if theme == SPLIT_THEME:
-            for side, values in (
-                ("radiology", {"radiology", "both"}),
-                ("pathology", {"pathology", "both"}),
-            ):
-                selected = in_theme & domain.isin(values).to_numpy(dtype=bool)
-                series.append((theme, side, year_values[selected]))
-        else:
-            series.append((theme, "all", year_values[in_theme]))
+        for side in DOMAIN_SERIES:
+            selected = (
+                in_theme
+                if side == "all"
+                else in_theme & (domain == side).to_numpy(dtype=bool)
+            )
+            series.append((theme, side, year_values[selected]))
 
     rows: list[dict] = []
     for theme, side, selected_years in series:

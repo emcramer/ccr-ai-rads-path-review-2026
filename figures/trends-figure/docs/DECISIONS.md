@@ -791,3 +791,153 @@ repository. Four things had to be decided without them: the hatch stroke weight,
 "1 px gray border" means, which neutrals the Panel B theme series take, and whether Panel A's
 row labels count as tick labels or as primary labels. Those four are where this figure and
 Figure 1 could drift apart.
+
+## 2026-09-02 — Panel B splits foundation models and multimodal integration by domain
+
+**Decision.** Both themes are drawn as three series each — radiology, pathology, and
+cross-specialty — rather than one line. Cross-specialty is the `both` domain: a paper carrying
+a radiologic and a pathologic modality. Author's request.
+**Why it fits the style guide better than what it replaces.** Colour now marks the domain,
+which is semantic under §3 of `figures/ink_style_guide.md`: radiology `#0072B2`, pathology
+`#CC79A7`, and cross-specialty `#4B4B4B` — the guide's structural/integrative grey, which it
+reserves for fusion modules and joint models. Theme moves to the dash pattern. Two blue lines
+in the upper plot are then radiology work in two different themes.
+**Measured.** foundation models: 520 radiology, 410 pathology, 39 cross-specialty, 257 with no
+domain. Multimodal integration: 2,835, 822, 276, 721.
+**Consequence stated in the legend.** Papers whose only labels are non-imaging — genomics,
+clinical data, or `other` — have no domain and appear on no split line. The split lines
+therefore do not sum to the theme totals.
+**Digital twins and virtual staining are not split**: the first is too small to divide three
+ways at 56 papers, the second is pathologic by definition.
+
+## 2026-09-02 — Virtual staining: 54 papers, and two literatures that never cite the same words
+
+**Decision.** New theme `virtual_staining` at themes v7, defined by the author as models that
+predict spatial proteomics or spatial transcriptomics from H&E slides. Drawn in Panel B only;
+Panel A stays at four blocks, because a fifth would breach the tested minimum column width.
+
+**The finding.** The theme is **two disjoint literatures with zero overlapping papers**. Route
+one, 26 papers, uses virtual-staining vocabulary with a molecular target — virtual IHC,
+H&E-to-IHC, virtual multiplex immunofluorescence. Route two, 28 papers, is spatial-omic
+prediction from histology — THItoGene, STFormer, Img2ST-Net, Hist2Cell. The
+spatial-transcriptomics literature never says "virtual staining", and the virtual-staining
+literature never says spatial transcriptomics. Either search alone would have found half the
+theme. That is a result about how the field is organised, not merely a note about our query.
+
+**The boundary, measured rather than assumed.** Virtual H&E generated *from* label-free or
+photoacoustic imaging is the reverse of the author's direction: 77 candidates, 5 in theme, 72
+correctly excluded — and excluded *structurally*, by requiring a molecular target, not by a
+blocklist. Stain normalisation and colour transfer: 129 candidates, 1 in theme, and that one is
+a genuine multi-omics translation paper that merely mentions normalisation. Virtual special
+stains — trichrome, PAS, silver: the corpus holds exactly one, and it is excluded, which the
+agent noted made the question cheap in either direction.
+
+**Precision** about 91%, measured by reading the whole population rather than sampling.
+**Open, and flagged to the author:** five of the 54 predict molecular signal from a label-free
+or autofluorescence source rather than from H&E. They match the spirit of the definition and not
+its letter. A source-restricted variant was built and measured at 52 against 54 and rejected as
+false precision: it removed two such papers while leaving three of the same class that happen to
+say "histology" elsewhere. The five are carried, and named, so the author can strike them.
+
+**Verified against the input-only rule.** 53 of 54 do not carry `genomics`, which is correct:
+these papers produce molecular signal rather than consuming it. The exception genuinely consumes
+omics as well. The theme records direction; the modality rows record data.
+
+## 2026-09-02 — Virtual staining means spatial maps, not biomarker status
+
+**Decision.** The theme covers generation of spatially resolved molecular signal from H&E. It
+excludes prediction of a slide-level biomarker status or score — HER2, PD-L1, Ki-67, BAP1,
+KRAS — because a status is not spatial proteomics. Author's ruling.
+**How the question arose.** Two agents read all 76 matched papers independently and disagreed:
+70 keeps against 63. The seven-paper gap was entirely this one class, so the disagreement was
+not noise but an unstated definitional choice surfacing. That is the argument for two
+independent reads rather than one.
+**The repair, measured.** `virtual_staining:include[5]` carries `predict\w+` in its verb list,
+which cannot separate "generate a virtual HER2 stain from H&E" from "predict HER2 status from
+H&E". That pattern runs 11 of 22 correct and supplies 11 of the theme's 13 false positives;
+every other pattern runs 89-100%. Dropping the token takes the theme to **63 of 65, 97%**,
+removing all eleven false positives at the cost of no genuine papers. Two alternative repairs
+measured worse.
+**Consequence.** The theme is about 65 papers, not 76. If the authors later want the broader
+reading — "molecular information inferred from H&E" — it roughly doubles the theme and needs
+fresh pattern work, because the current vocabulary catches that class only by accident.
+
+## 2026-09-02 — The 54 that became 76: validate against the corpus, not against the candidates
+
+**What happened.** The theme was reported as 54 papers at ~91% precision, "whole population
+read". The compiled patterns actually select 76. The 54 were the candidates enumerated by hand;
+the patterns generalise past them. All 54 proved to be a strict subset of the 76, and the 22
+unread were exactly those outside the hand-built candidate population.
+**Why it mattered more than the total suggests.** The 2025 count moved from 11 to 24 — the
+steepest year in the series. The drawn shape would have been wrong, not merely the label.
+**The rule, now recorded in the config and the strategy doc.** Validate a pattern against the
+corpus, never against the candidate query that inspired it: a candidate query is a superset of
+the papers you thought of, not of the papers your regex matches.
+**Measured precision over the full matched set**, after reading the 22: 70 of 76 by one reader,
+63 of 76 by another, the gap being the biomarker-status class the author has now excluded.
+
+## 2026-09-02 — Route 2 is clean; route 1 is adjacent to a literature it cannot see
+
+**Finding.** Disjointness was tested objectively, on which patterns fired: 44 papers matched
+only virtual-staining vocabulary, 32 matched only spatial-omic prediction, **zero matched both**,
+across all 76. The pooled precision hid the sharper result: route 2 is **32 of 32, 100%**, while
+route 1 is 31 of 44, **70%**, and carries every false positive.
+**Reading.** The two literatures are not merely disjoint in vocabulary. Spatial-omic prediction
+is cleanly separable; virtual-staining vocabulary sits adjacent to a biomarker-status literature
+it cannot distinguish itself from without help. That is a statement about how the field talks
+about itself, and it belongs in the manuscript rather than only in a QA report.
+
+## 2026-09-02 — A silent failure mode closed in the validation sampler
+
+**Fix.** `assign_strata` derives its theme tests from the canonical key list rather than naming
+themes by hand, and `check_theme_coverage()` refuses to draw a sample when a canonical theme has
+no stratum.
+**Why it matters.** The failure it prevents is silent, not loud: a theme missing from the
+stratum list does not raise. Its papers quietly join the `no_theme` stratum, the draw succeeds,
+the report prints, and the theme is simply never measured. Nothing in the output would have said
+so.
+
+## 2026-09-02 — Final state after the virtual-staining repair
+
+**Shipped.** Themes v8 (`5ff6b0a92416`), modalities v6 (`6b3065142bc8`). Dropping `predict\w+`
+from one pattern removed exactly 11 papers, all read: PD-L1 status, BAP1 expression, HER2
+status, Ki-67/ER/PR status, KRAS status. None produces a spatial map; no genuine paper was lost.
+Theme precision went 63/76 (82.9%) to **63/65 (96.9%)**, and route 1 alone went 70.5% to 93.9%.
+
+**Authoritative counts, from the pipeline rather than from any agent's enumeration:** foundation
+models 1,226; multimodal integration 4,654; digital twins 56; clinical applications 93; virtual
+staining **65**, by year from 2019: 1, 2, 1, 2, 6, 13, 19, 21.
+
+**A race caught by checking provenance, not exit status.** The first re-run read `themes.yaml`
+microseconds before v8 was written and produced a v7 report that exited cleanly. It was caught
+only because the report's provenance block was read and compared against the file on disk. An
+exit code of zero says a run finished, not that it read what you meant.
+
+**A caution now recorded in the search strategy.** The corrected yearly series was projected by
+one agent from its own enumeration, and differed from the pipeline's because the pipeline takes
+the year from `ArticleDate` while a fresh PubMed fetch returns `PubDate`; they disagree on 3 of
+the 65. The authoritative series is whatever `theme_year_counts.csv` holds. That is the same
+class of error as the 54-versus-76 mistake, caught before it propagated this time.
+
+## 2026-09-02 — Panel B: domain in two channels, so grayscale keeps it
+
+**Decision.** Dash pattern denotes theme; **colour and marker both denote domain**, driven by
+one function so the two cannot disagree.
+**Reason.** With hue alone carrying domain, grayscale lost it entirely: the three domain hues
+convert to luminance within 25 points of each other, and the three domain lines of one theme
+share a dash by design. Marker shape restores the second dimension at no cost in space. The
+panel now asserts something it could not before — that within one plot, dash and marker alone
+separate every series, with no colour at all.
+**Measured, not eyeballed.** Each marker was rendered at drawn size and its ink measured inside
+its bounding box: circle 0.782, square 1.000, triangle 0.521, diamond 0.515. The closest pair
+actually drawn together differs by 0.218. **Triangle and diamond differ by 0.006 — effectively
+identical at print size — and are safe only because they never share a plot.** That is luck, so
+a test now asserts they never co-occur.
+
+## 2026-09-02 — Cross-specialty stays in the figure
+
+**Decision.** Draw the cross-specialty series for both split themes, though they are the
+flattest lines on the panel and dropping them would return about half the height Panel B gained.
+**Reason.** Cross-specialty is 39 of 1,226 foundation-model papers and 276 of 4,654 multimodal
+ones — 3% and 6%. A review arguing that radiology and pathology should converge needs to show
+how rarely they currently do. The flatness is the message, not a defect of the drawing.

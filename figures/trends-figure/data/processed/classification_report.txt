@@ -1,8 +1,8 @@
 CLASSIFICATION DIAGNOSTIC REPORT
 ==============================================================================
-generated_utc   : 2026-09-02T18:11:44Z
+generated_utc   : 2026-09-02T20:46:23Z
 records         : data/interim/records.parquet
-themes.yaml     : v6  6323007f5343  4 categories, 41 patterns
+themes.yaml     : v8  5ff6b0a92416  5 categories, 51 patterns
 modalities.yaml : v6  6b3065142bc8  15 categories, 150 patterns
 
 records read     :  44,625
@@ -20,8 +20,9 @@ foundation_models            1,226    2.8%  #
 multimodal_integration       4,654   10.5%  ###
 digital_twins                   56    0.1%  
 clinical_fda                    93    0.2%  
-(no theme)                  38,827   87.2%  ########################
-(two or more themes)           312    0.7%
+virtual_staining                65    0.1%  
+(no theme)                  38,777   87.1%  ########################
+(two or more themes)           326    0.7%
 
 MODALITIES
 ------------------------------------------------------------------------------
@@ -130,6 +131,20 @@ clinical_fda  (93 papers, 27 distinct combinations)
     12. mammography+ultrasound                              2    2.2%
     remainder column: 15 further combination(s), 15 papers (16.1%)
 
+virtual_staining  (65 papers, 11 distinct combinations)
+     1. he_histology+spatial_transcriptomics               30   46.2%
+     2. he_histology+ihc                                   18   27.7%
+     3. he_histology                                        3    4.6%
+     4. he_histology+spatial_proteomics                     3    4.6%
+     5. he_histology+ihc+spatial_proteomics                 3    4.6%
+     6. he_histology+other+spatial_proteomics               3    4.6%
+     7. ihc                                                 1    1.5%
+     8. other                                               1    1.5%
+     9. spatial_proteomics                                  1    1.5%
+    10. genomics+he_histology+ihc                           1    1.5%
+    11. he_histology+ihc+other+spatial_proteomics           1    1.5%
+    remainder column: 0 further combination(s), 0 papers (0.0%)
+
 MOST FREQUENTLY FIRING PATTERNS  (top 25 by records matched)
 ------------------------------------------------------------------------------
 A pattern matching a large share of the corpus is either the theme's backbone or a runaway term. Check any you did not expect.
@@ -176,4 +191,4 @@ EXCLUDE PATTERNS  (labels suppressed)
 PATTERNS THAT NEVER FIRED
 ------------------------------------------------------------------------------
 Dead weight, a typo, or a term the corpus does not use. Not necessarily wrong; worth a look.
-    0 of 191: none
+    0 of 201: none

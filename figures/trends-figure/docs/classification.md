@@ -255,14 +255,26 @@ tests hold them to it. Sets are the modality keys sorted alphabetically and join
 set size ascending and then on the set string, so the ranking is reproducible rather than
 whatever order the grouping happened to produce.
 
-**`theme_year_counts.csv`.** Three themes get one series each, `domain = all`. The clinical
-theme gets a radiology series and a pathology series and **no combined series**, per
-`docs/DECISIONS.md`; a paper whose domain is `both` counts on both lines, so the two do not
-sum to the theme total. A paper in that theme with no named modality (`domain = none`)
-appears on neither line, and the clinical theme's total is therefore in the manifest and the
-report rather than in this table. The year axis is dense between the first and last year in
-the corpus, so a year with no papers draws as a zero rather than a gap. Exactly one year
-carries `partial_year = 1`: the retrieval year, taken from `config/corpus.yaml`.
+**`theme_year_counts.csv`.** Every theme gets the whole domain breakdown — `all`,
+`radiology`, `pathology`, `both`, `none` — and Panel B chooses which rows to draw. Emitting
+all of it costs a few hundred rows and saves a schema change each time the author wants a
+different split.
+
+Two facts about those rows, and the legend must state the second:
+
+- `radiology + pathology + both + none == all`, for every theme and every year. Each paper
+  carries exactly one `domain` value, so the four rows partition the theme. A test asserts
+  this identity.
+- `radiology + pathology` alone does **not** sum to the theme. `radiology` means radiologic
+  and *not* pathologic; a cross-specialty paper sits in `both`, and a paper whose only
+  labels are genomics, clinical data, or `other` sits in `none`. The two single-specialty
+  lines therefore under-count their theme.
+
+The value stays `both` in the data even though the figure displays it as "cross-specialty",
+so that this table and `paper_labels.csv` never disagree. The year axis is dense between the
+first and last year in the corpus, so a year with no papers draws as a zero rather than a
+gap. Exactly one year carries `partial_year = 1`: the retrieval year, taken from
+`config/corpus.yaml`.
 
 ---
 

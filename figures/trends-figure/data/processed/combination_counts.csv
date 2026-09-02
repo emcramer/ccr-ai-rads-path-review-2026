@@ -1,6 +1,6 @@
 # file: combination_counts.csv
 # records: data/interim/records.parquet
-# themes.yaml v6 sha256:6323007f53435a16
+# themes.yaml v8 sha256:5ff6b0a924166261
 # modalities.yaml v6 sha256:6b3065142bc8e5ea
 theme,modality_set,n_modalities,n_papers,rank_in_theme
 foundation_models,other,1,212,1
@@ -517,3 +517,14 @@ clinical_fda,clinical_data+ct+mri,3,1,24
 clinical_fda,ct+mri+ultrasound,3,1,25
 clinical_fda,clinical_data+ct+he_histology+pet,4,1,26
 clinical_fda,ct+mri+other+ultrasound,4,1,27
+virtual_staining,he_histology+spatial_transcriptomics,2,30,1
+virtual_staining,he_histology+ihc,2,18,2
+virtual_staining,he_histology,1,3,3
+virtual_staining,he_histology+spatial_proteomics,2,3,4
+virtual_staining,he_histology+ihc+spatial_proteomics,3,3,5
+virtual_staining,he_histology+other+spatial_proteomics,3,3,6
+virtual_staining,ihc,1,1,7
+virtual_staining,other,1,1,8
+virtual_staining,spatial_proteomics,1,1,9
+virtual_staining,genomics+he_histology+ihc,3,1,10
+virtual_staining,he_histology+ihc+other+spatial_proteomics,4,1,11

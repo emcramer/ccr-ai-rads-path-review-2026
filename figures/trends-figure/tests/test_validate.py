@@ -24,6 +24,7 @@ from trends.aggregate import MODALITY_KEYS, THEME_KEYS
 from trends.validate import (
     CAUSE_CODES,
     DEFAULT_SAMPLE_SIZES,
+    NON_THEME_STRATA,
     DEFAULT_SEED,
     ROUND_ONE_SEED,
     ROUND_THREE_SEED,
@@ -38,6 +39,7 @@ from trends.validate import (
     assign_strata,
     blind_sheet,
     build_audit_sheet,
+    check_theme_coverage,
     confusion,
     disagreements,
     draw_sample,
@@ -200,9 +202,29 @@ def test_a_stratum_smaller_than_its_request_is_taken_whole():
     assert design.sizes["digital_twins"] == design.populations["digital_twins"] == 12
 
 
-def test_default_sizes_sum_to_two_hundred():
-    assert sum(DEFAULT_SAMPLE_SIZES.values()) == 200
+def test_default_sizes_cover_every_stratum():
+    assert sum(DEFAULT_SAMPLE_SIZES.values()) == 225
     assert set(DEFAULT_SAMPLE_SIZES) == set(STRATUM_ORDER)
+
+
+def test_every_canonical_theme_has_a_stratum():
+    """The failure this guards is silent. A theme missing from STRATUM_ORDER
+    does not raise: its papers join `no_theme` and are never measured. That is
+    what happened when `virtual_staining` arrived at config v7."""
+    for key in THEME_KEYS:
+        assert key in STRATUM_ORDER, f"{key} has no stratum and cannot be measured"
+    check_theme_coverage()
+
+
+def test_a_theme_without_a_stratum_is_refused_by_name():
+    short = tuple(s for s in STRATUM_ORDER if s != "virtual_staining")
+    with pytest.raises(ValidationError, match="virtual_staining"):
+        check_theme_coverage(short)
+
+
+def test_the_non_theme_strata_are_not_themes():
+    assert not set(NON_THEME_STRATA) & set(THEME_KEYS)
+    assert set(STRATUM_ORDER) == set(THEME_KEYS) | set(NON_THEME_STRATA)
 
 
 def test_unknown_stratum_is_refused():

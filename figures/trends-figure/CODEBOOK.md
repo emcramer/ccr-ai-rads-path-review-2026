@@ -24,7 +24,7 @@ Code reads these. No search term is hard-coded anywhere else.
 |---|---|
 | `README.md` | The term-dictionary schema and the matching contract. |
 | `corpus.yaml` | The PubMed query, the date range, retrieval settings, and the record counts measured at design time (`expected:`). |
-| `themes.yaml` | Term dictionary for the four themes. |
+| `themes.yaml` | Term dictionary for the five themes. |
 | `modalities.yaml` | Term dictionary for the thirteen modalities. |
 
 Every dictionary carries a `version`. Bump it when you change a pattern: run manifests
@@ -101,6 +101,12 @@ One directory per validation round, plus the digital-twins screen.
 A round measures one dictionary version. The version each round measured is recorded in
 `docs/validation.md`; do not compare rates across rounds without it.
 
+### `assets/fonts/`
+IBM Plex Sans and Serif, required by `figures/ink_style_guide.md` §2 and vendored rather than
+installed system-wide, so the figure renders identically anywhere. `trends.plotting.style`
+registers them at import and raises if a face is missing — the guide forbids silent
+substitution. Licence: SIL Open Font License 1.1.
+
 ### `data/processed/synthetic/` — not real
 Fake tables with a fixed seed, for layout testing. Every file says so. Never cite a number
 from this directory.
@@ -131,6 +137,9 @@ from this directory.
 - **The four themes do not measure the same kind of thing.** Three count what a paper does; `digital_twins` counts engagement with an idea, including a paper that only names the concept as a future direction. Of its 56 papers, 18 build something meeting the manuscript's definition and 3 update as new measurements arrive.
 - **`genomics` counts input data only.** A paper predicting a molecular label from an image is not counted as using genomic data. The rule catches the recognizable form of the problem, not all of it; the genomics-and-H&E cell is the least reliable in the figure.
 - **`other` carries two meanings.** A pattern match means an unlisted data type was found; the fallback means no modality could be identified at all. They are recorded apart in `pattern_hits.csv` and scored apart in validation. Do not sum them.
+- **`virtual_staining` counts generation of spatially resolved molecular signal from H&E**, and excludes prediction of a biomarker status such as HER2 or PD-L1. It appears in Panel B only; Panel A draws four themes, because a fifth block would breach the tested minimum column width.
+- **Panel B's `domain` split partitions a theme but the drawn lines do not.** `radiology + pathology + both + none` equals the theme total; the figure draws only the first three, so papers with no imaging or report modality appear nowhere. Their counts are in `theme_year_counts.csv` under `domain = none`.
+- **Configuration versions bump on any content change, including prose.** A corrected number in a `notes:` block moves the file's hash, and a run manifest recording the old hash under the same version is then wrong. Check the manifest against the file before trusting a report.
 
 ## 7. Rebuilding everything from nothing
 

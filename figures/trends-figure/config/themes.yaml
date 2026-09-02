@@ -8,7 +8,14 @@
 #                  Python rejects `(?i)` anywhere else, so a pattern needs at
 #                  most one, at the front.
 # Matched against title + " \n " + abstract. Classification is multi-label.
-version: 6
+#
+# VERSION RULE: bump `version` on ANY content change, not only on changes you
+# judge significant. A corrected number in a `notes:` block is a content change —
+# it moves the file's SHA, and a run manifest that records the old SHA under the
+# same version is then a lie. This is easy to remember when a pattern changes and
+# easy to forget when only prose changes; the prose case is the one that has
+# caught this project twice.
+version: 8
 
 categories:
 
@@ -369,3 +376,119 @@ categories:
       # (~3,290 corpus papers) at roughly 11/14 precision for "is about clinical
       # application" — a different and much weaker claim than "was cleared".
       # ---------------------------------------------------------------------
+
+  virtual_staining:
+    label: "Virtual Staining"
+    type: null
+    # Added v7 (2026-09-02). Author definition, verbatim: "any models that predict
+    # spatial proteomics or spatial transcriptomics from H&E stained tissue slides".
+    # DIRECTION IS ENFORCED BY REQUIRING A MOLECULAR OR SPATIAL-OMIC TARGET, which is
+    # what separates this literature from the large adjacent one going the other way.
+    include:
+      - pattern: "(?i)\\bvirtual\\w*\\s+(IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex\\w*|HER2|Ki-?67|p16\\b|PD-L1|CD\\d{1,3}\\b|cytokeratin|ER/PR|oestrogen receptor|estrogen receptor)"
+        kind: regex
+      - pattern: "(?i)\\b(virtual|computational|digital|in[- ]silico|AI[- ]generated|deep[- ]learning[- ]generated)(ly)?[- ]?(stain\\w*|immunostain\\w*)[^.]{0,45}\\b(IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex\\w*|HER2|Ki-?67|p16\\b|PD-L1|CD\\d{1,3}\\b|cytokeratin|ER/PR|oestrogen receptor|estrogen receptor)"
+        kind: regex
+      - pattern: "(?i)\\b(IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex\\w*|HER2|Ki-?67|p16\\b|PD-L1|CD\\d{1,3}\\b|cytokeratin|ER/PR|oestrogen receptor|estrogen receptor)[^.]{0,45}\\b(virtual|computational|digital|in[- ]silico|AI[- ]generated|deep[- ]learning[- ]generated)(ly)?[- ]?(stain\\w*|immunostain\\w*)"
+        kind: regex
+      - pattern: "(?i)\\bH&E[- ]?to[- ]?((IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex\\w*|HER2|Ki-?67|p16\\b|PD-L1|CD\\d{1,3}\\b|cytokeratin|ER/PR|oestrogen receptor|estrogen receptor)|mIF|multiplex)"
+        kind: regex
+      - pattern: "(?i)\\bstain (transfer|translation|transformation)[^.]{0,50}\\b(IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex\\w*|HER2|Ki-?67|p16\\b|PD-L1|CD\\d{1,3}\\b|cytokeratin|ER/PR|oestrogen receptor|estrogen receptor)"
+        kind: regex
+      - pattern: "(?i)\\b(generat\\w+|synthes\\w+|impute\\w+)[^.]{0,45}\\b(IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex\\w*|HER2|Ki-?67|p16\\b|PD-L1|CD\\d{1,3}\\b|cytokeratin|ER/PR|oestrogen receptor|estrogen receptor)[^.]{0,45}\\bfrom\\b[^.]{0,45}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|pathology image\\w*|tissue image\\w*|morpholog\\w+|routine (slide|section|stain))"
+        kind: regex
+      - pattern: "(?i)\\b(predict\\w*|infer\\w*|generat\\w*|impute\\w*|estimat\\w*|deriv\\w*)[^.]{0,60}\\b(spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression|spatial proteom\\w+|spatial omics?|spatial molecular)\\b[^.]{0,60}\\b(from|using|based on|via)\\b[^.]{0,45}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|pathology image\\w*|tissue image\\w*|morpholog\\w+|routine (slide|section|stain))"
+        kind: regex
+      - pattern: "(?i)\\b(spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression|spatial proteom\\w+|spatial omics?|spatial molecular)\\b[^.]{0,45}\\b(prediction|generation|inference|imputation)[^.]{0,45}\\b(from|using|based on|via)\\b[^.]{0,45}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|pathology image\\w*|tissue image\\w*|morpholog\\w+|routine (slide|section|stain))"
+        kind: regex
+      - pattern: "(?i)\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|pathology image\\w*|tissue image\\w*|morpholog\\w+|routine (slide|section|stain))\\b[^.]{0,60}\\b(predict\\w*|infer\\w*|generat\\w*|impute\\w*)[^.]{0,45}\\b(spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression|spatial proteom\\w+|spatial omics?|spatial molecular)"
+        kind: regex
+      - pattern: "(?i)\\b(gene expression|transcriptom\\w+) prediction[^.]{0,45}\\b(from|using)\\b[^.]{0,40}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|pathology image\\w*|tissue image\\w*|morpholog\\w+|routine (slide|section|stain))"
+        kind: regex
+    exclude: []
+    notes: >
+      SCOPE RULING (author, 2026-09-02): SPATIAL MAPS ONLY. A HER2 status, a
+      PD-L1 score or a Ki-67 positivity call is NOT spatial proteomics, even when
+      predicted from an H&E slide. The definition stands as written: the model must
+      produce a spatially resolved molecular or protein-level readout. This ruling
+      resolved a seven-paper disagreement between two independent reads of the same
+      76 papers, and the validator's stricter reading was the correct one.
+      THE REPAIR, v8: `predict\w+` was dropped from the verb list of include[5].
+      That verb cannot distinguish "GENERATE a virtual HER2 stain from H&E" from
+      "PREDICT HER2 status from H&E", and only the first is in scope. Independently
+      verified rather than taken on report: the token's removal drops exactly 11
+      papers, ALL ELEVEN WERE READ, and all eleven are status, score or expression
+      prediction - PD-L1 status, BAP1 IHC expression, HER2 status (x4), Ki-67/ER/PR
+      status, PD-L1 expression, IHC biomarkers, IHC markers, HER2 score, and
+      KRAS/NRAS/BRAF status. Not one produces a spatial map. ZERO GENUINE PAPERS
+      LOST. Two alternative repairs were measured worse by the validator.
+      COUNT AND PRECISION. The row is 65 papers. Under the author's ruling,
+      precision before the repair was 63 of 76 (82.9%, 95% CI 72.9-89.7) and after
+      it is 63 of 65 (96.9%, 95% CI 89.5-99.2).
+      THE ROUTE SPLIT IS WHERE THE REAL STRUCTURE IS, and pooling hid it:
+        * Route 2, spatial-omic prediction from histology (include[6..9]):
+          32 of 32, 100%. Cleanly separable, and untouched by the repair.
+        * Route 1, virtual-staining vocabulary (include[0..5]): 31 of 44, 70.5%
+          before the repair, and it carried EVERY false positive. After the repair
+          it is 31 of 33, 93.9%.
+      The two literatures are not merely disjoint in vocabulary: route 2 has no
+      adjacent literature to be confused with, while route 1 sits next to a
+      biomarker-status-prediction literature it cannot distinguish itself from
+      without the verb constraint. That is why one token was worth 14 points.
+      DISJOINTNESS IS OBJECTIVE, not impressionistic. Tested on which patterns
+      actually fired across all 76: 44 route-1-only, 32 route-2-only, ZERO in both.
+      After the repair, 33 and 32 with zero overlap. The
+      spatial-transcriptomics-prediction literature never uses the words "virtual
+      staining" and the virtual-staining literature never says "spatial
+      transcriptomics prediction"; either route alone would have found about half
+      the row.
+      AN EARLIER NOTE IN THIS FILE SAID 54 PAPERS AT ~91%, "whole population read".
+      That was wrong, and the error is recorded because it is a methodological trap
+      rather than a typo. The 54 was the set enumerated by hand from a 626-record
+      candidate population built by a PubMed term query; the compiled patterns
+      generalise beyond the terms that built that query, so they selected 22 papers
+      it never retrieved. All 54 proved to be a strict subset of the 76.
+      THE LESSON, for anyone extending this file: validate a pattern against the
+      CORPUS, never against the candidate query that inspired it. A candidate query
+      is a superset of the papers you thought of, not of the papers your regex
+      matches.
+      THE BOUNDARY, measured on the 626-record candidate population:
+        * REVERSE DIRECTION - virtual H&E generated FROM autofluorescence,
+          photoacoustic, quantitative-phase or label-free imaging. The largest
+          adjacent literature at 77 candidate records, 72 correctly excluded. They
+          are excluded STRUCTURALLY, by requiring a molecular target, not by a
+          blocklist.
+        * STAIN NORMALISATION and colour transfer - 129 candidate records, exactly
+          ONE enters, and that one is His-MMDM, a genuine multi-omics
+          image-translation paper that also mentions normalisation. No real leak.
+        * VIRTUAL SPECIAL STAINS (Masson trichrome, PAS, Jones silver) - settled
+          cheaply by measurement: the corpus holds exactly ONE such paper (PMID
+          34385460). Excluded; a histochemical stain is not molecular or
+          spatial-omic. THE COST IS ONE PAPER.
+      WHAT WAS REJECTED: a source-restricted variant requiring an explicit H&E or
+      histology token, measured at 52 against 54 on the candidate population. Not
+      shipped, because it is false precision - it removes 2 label-free-source
+      papers while leaving 3 of the same class that happen to say "histology"
+      elsewhere. Requiring a molecular target is the filter that works.
+      THE FIVE LABEL-FREE-SOURCE PAPERS STAY (PMIDs 37850170, 39154539, 39636222,
+      41676162, 41933080). They predict molecular signal from autofluorescence or
+      label-free imaging rather than from H&E, so they match the spirit of the
+      definition but not its letter. Two independent reads identified the same five
+      and both judged them in; removing them moves precision by about one point. A
+      definitional preference, not a quality problem, and the author has not asked
+      for them out.
+      AGREEMENT WITH THE INPUT-ONLY RULE: of the matched papers only ONE also
+      carries `genomics` - PMID 32953248, predicting nuclear BAP1 IHC from H&E,
+      where the genomics label comes from a discussion sentence about "genetic
+      alterations". That is a `genomics` mention-not-input case, not a boundary
+      failure. It is now moot for this row, since the v8 repair drops that paper
+      from `virtual_staining` anyway. The `genomics` label on it was left alone
+      deliberately: the pattern responsible, genomics include[12], is the SOLE
+      trigger for 126 corpus papers, so narrowing it is not free.
+      PANEL B: 65 papers. Applying the pipeline's own year assignment to the
+      surviving 65 projects 2019 1, 2020 2, 2021 1, 2022 2, 2023 6, 2024 13,
+      2025 19, 2026 21 (partial). THAT IS A PROJECTION, NOT A MEASUREMENT - the
+      authoritative series is whatever the next classifier run writes to
+      theme_year_counts.csv. Do not quote it from here. Note that a naive recount
+      from freshly fetched PubMed dates disagrees on 3 of the 65, because the
+      pipeline assigns year from ArticleDate and a raw fetch gives PubDate.

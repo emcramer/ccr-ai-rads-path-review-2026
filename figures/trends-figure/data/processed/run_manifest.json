@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-09-02T18:11:44Z",
+  "generated_utc": "2026-09-02T20:46:23Z",
   "tool": "trends.classify",
   "python": "3.13.1",
   "pandas": "3.0.5",
@@ -11,10 +11,10 @@
   "config": {
     "themes": {
       "path": "config/themes.yaml",
-      "version": 6,
-      "sha256": "6323007f53435a161409aa9c706f1cb6829ce6a59dd84266e1aafabc0573e374",
-      "n_categories": 4,
-      "n_patterns": 41
+      "version": 8,
+      "sha256": "5ff6b0a92416626198b2a076c21298b01ba847be680f60aafee2ac7ed6d8c3d4",
+      "n_categories": 5,
+      "n_patterns": 51
     },
     "modalities": {
       "path": "config/modalities.yaml",
@@ -44,7 +44,8 @@
       "foundation_models": 1226,
       "multimodal_integration": 4654,
       "digital_twins": 56,
-      "clinical_fda": 93
+      "clinical_fda": 93,
+      "virtual_staining": 65
     },
     "papers_per_modality": {
       "he_histology": 6432,
@@ -69,7 +70,7 @@
       "pathology": 7327,
       "both": 1041
     },
-    "papers_with_no_theme": 38827
+    "papers_with_no_theme": 38777
   },
   "partial_year": {
     "year": 2026,
@@ -87,23 +88,23 @@
   "outputs": {
     "paper_labels": {
       "path": "data/processed/paper_labels.csv",
-      "sha256": "6f74ef3add26e42adf4da0f5392f03917cdf978151dbe0e4564cfe09ea972ae1"
+      "sha256": "4c785ac862795d4cfd79ebec43b91695fb098621e0bd8bfe4437a80d12900f86"
     },
     "combination_counts": {
       "path": "data/processed/combination_counts.csv",
-      "sha256": "7dc30fd4450d51f50c154f7712e9e8267c1e860a6d25958995002b4d44de53cc"
+      "sha256": "9867d54183cb9e48ffbc0872c3c89e21b0bf459cb6d27535adaf5a793032b036"
     },
     "theme_year_counts": {
       "path": "data/processed/theme_year_counts.csv",
-      "sha256": "a7085bb668ffefe544a60bf597d8e184fb3133884444a05ff51cb3442b7486e5"
+      "sha256": "ed80ab87341e037405ffae84c145c9c0ea76a201405fc2ca4b6a9f6c1460af0b"
     },
     "pattern_hits": {
       "path": "data/processed/pattern_hits.csv",
-      "sha256": "9f009e0845baf930b3c4b4674ceb2efa21991c32af0c9fa14cd2ba0f0304f64b"
+      "sha256": "f08cb8af7c85d2d3d2c7945997f09c9fc12bfe6044ca08f42def593f9db66f5d"
     },
     "report": {
       "path": "data/processed/classification_report.txt",
-      "sha256": "0ce72f463be1aa60434965f132dac5172f814470f6eda936c692f6283b74706d"
+      "sha256": "8c71b87c48b439ea0a24f20a9ea2765e1ba7f820bf4b2fbeeed50b5bcbd50d01"
     }
   }
 }

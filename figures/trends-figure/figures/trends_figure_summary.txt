@@ -18,12 +18,17 @@ its theme total.
 Papers are multi-label: the theme totals above sum to more than the corpus size.
 
 Panel B — two stacked plots, per-year counts, separate linear y axes
-  upper plot       : foundation_models, multimodal_integration
-  lower plot       : digital_twins/all, clinical_fda/radiology, clinical_fda/pathology
-  lower y scale    : 43x finer than the upper plot (range band drawn on the upper plot)
-  foundation_models/all            total   1,226   peak year    536
-  multimodal_integration/all       total   4,654   peak year  1,442
+  upper plot       : foundation_models/radiology, foundation_models/pathology, foundation_models/both, multimodal_integration/radiology, multimodal_integration/pathology, multimodal_integration/both
+  lower plot       : digital_twins/all, virtual_staining/all, clinical_fda/radiology, clinical_fda/pathology
+  lower y scale    : 26x finer than the upper plot (range band drawn on the upper plot)
+  foundation_models/radiology      total     520   peak year    212
+  foundation_models/pathology      total     410   peak year    201
+  foundation_models/both           total      39   peak year     22
+  multimodal_integration/radiology total   2,835   peak year    868
+  multimodal_integration/pathology total     822   peak year    313
+  multimodal_integration/both      total     276   peak year    101
   digital_twins/all                total      56   peak year     33
-  clinical_fda/radiology           total      63   peak year     21
-  clinical_fda/pathology           total      16   peak year      8
+  virtual_staining/all             total      65   peak year     21
+  clinical_fda/radiology           total      60   peak year     19
+  clinical_fda/pathology           total      13   peak year      6
   pathology zero run: 2015-2021 (7 consecutive years at zero)

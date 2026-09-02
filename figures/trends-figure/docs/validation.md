@@ -1,9 +1,25 @@
 # Classifier validation
 
-How accurate the rule-based classifier is, measured twice against independently
-labeled samples, and what the figure legend may therefore claim.
+How accurate the rule-based classifier is, measured across four rounds against
+independently labeled samples, and what the figure legend may therefore claim.
 
-**Three rounds.** Round one measured `config/*.yaml` **v2** (seed 20260902,
+**Every round measures a specific dictionary version, and the dictionaries have
+moved seven times.** A round's numbers describe the configuration it measured and
+nothing after it. Read this table before any figure below.
+
+| Round | Measured | Design | Outcome |
+|---|---|---|---|
+| One | themes/modalities **v2** | 200 papers, seed 20260902 | 7 defects found → **v3** |
+| Two | **v3** | 200 papers, fresh seed 20260903 | 7 more changes → **v4/v5** |
+| Two, re-scored | **v5 / v4** | same papers, rule labels refreshed | isolates the fix from the sample |
+| Three | themes **v5** / modalities **v4** | 106 papers, targeted, seed 20260904 | 7 changes → **v5→v6**, and the mpMRI diagnosis |
+| Four | themes **v7** | census of all 76 `virtual_staining` papers | one-token repair → **v8** |
+
+**The current configuration is themes v8 / modalities v6.** Round four is the
+most recent measurement and it measured **v7**; v8 exists *because of* round
+four. Its post-repair figures are carried beside the census below.
+
+**Four rounds.** Round one measured `config/*.yaml` **v2** (seed 20260902,
 200 papers) and found seven defects, all fixed. Round two measured **v3** on a
 **fresh sample with a fresh seed** (20260903, 200 papers), because the v3
 patterns were written after reading round one's papers: that sample had been
@@ -22,6 +38,12 @@ concluded.
 rule-positive, so it contains no paper the rules called negative and recall is
 not estimable from it. Round two's recall figures stand as the most recent
 estimates.
+
+Round four (themes **v7**) is a **census** of the new `virtual_staining` theme:
+all 76 papers of the row read against the author's definition. It found a
+one-token defect, the repair shipped as **v8**, and **the row is now 65 papers**.
+The census is reported below under its own heading, unchanged, followed by the
+post-repair state.
 
 **The digital-twins row is judged against a different question from every other
 row.** The author's standard, approved 2026-09-02: *this row tracks trends of
@@ -536,23 +558,223 @@ vocabulary, so both count under the operational line; neither is a patient twin.
 
 ---
 
+## Round four: the virtual-staining census
+
+> **Measured themes v7. Superseded by v8.** Every number in this section
+> describes the 76-paper row as it stood before the repair this census produced.
+> The row is now **65 papers** at 96.9% precision — see *After the repair* at the
+> end of the section. The census is kept intact because it is the evidence.
+
+A fifth theme, `virtual_staining`, arrived at v7. The author's definition,
+verbatim: *"any models that predict spatial proteomics or spatial
+transcriptomics from H&E stained tissue slides."* The row is small enough to
+read in full, so this round is a **census, not a sample**: all 76 papers.
+
+**The row is 76 papers, not the 54 originally reported.** I derived membership
+independently by running the shipped v7 matcher over the record table and got 76;
+the coordinator confirmed 76 from `pattern_hits.csv`. The "~91% precision, whole
+population read" figure that came with the theme covers 54 of them, so about 22
+had never been read. That gap is the reason this census was worth doing.
+
+**Design.** Reading order shuffled with seed 20260905, and the pattern
+identifiers withheld from the reading sheet so no judgment was anchored on the
+phrase that matched. It is not blind to *membership*: a census of a row cannot
+be, because every paper in it is rule-positive by construction. That is a real
+limitation and it cuts one way — it can only make me more generous, not less.
+
+### Precision
+
+**63 of 76 are in theme: 83% (95% CI 73–90%).** The search agent measured ~91%
+on its 54; the two are not in conflict, because the 22 papers it never saw are
+where most of the errors are.
+
+**Eleven of the thirteen failures are one class**: prediction of a slide-level
+biomarker **status or score** from H&E — HER2, PD-L1, Ki67/ER/PR, KRAS/NRAS/BRAF,
+BAP1. Those papers predict a molecular *label*; they do not produce a spatially
+resolved molecular map, and they belong to a large adjacent literature. The other
+two use "virtual multiplexing" to mean co-registering **real** serial IHC onto
+H&E, where nothing is predicted from morphology at all.
+
+### One pattern causes it, and the repair is a single token
+
+| Pattern | Precision | | Pattern | Precision |
+|---|---|---|---|---|
+| `include[0]` | 17/19 (89%) | | `include[5]` | **11/22 (50%)** |
+| `include[1]` | 6/6 | | `include[6]` | 25/25 |
+| `include[2]` | 4/4 | | `include[7]` | 8/8 |
+| `include[3]` | 5/5 | | `include[8]` | 6/6 |
+| `include[4]` | 2/2 | | `include[9]` | 6/6 |
+
+`include[5]` contributes **11 of the 13 false positives**. Its verb list is
+`(generat\w+|synthes\w+|predict\w+|impute\w+)`, and `predict\w+` cannot
+separate "generate a virtual HER2 stain from H&E" from "predict HER2 status from
+H&E". Both are "predict … HER2 … from … H&E".
+
+**Measured repair: drop `predict\w+` from that verb list.** The row becomes
+63 of 65, **97%** — it removes all eleven status-prediction false positives and
+loses **zero** genuine papers. Two alternatives were measured and are worse:
+requiring a stain or image noun near the marker costs three genuine papers for
+the same benefit. The caveat is that this is measured inside the 76 the current
+patterns select; it cannot see a paper outside the row that uses "predict"
+generatively and is caught by nothing else.
+
+### Two disjoint literatures — confirmed, and stronger than reported
+
+Tested objectively on which include patterns fired, not on impression.
+Patterns 0–5 are the virtual-staining-vocabulary route; 6–9 are the spatial-omic
+route.
+
+| | Papers |
+|---|---|
+| route 1 only (virtual-staining vocabulary with a molecular target) | 44 |
+| route 2 only (spatial-omic prediction from histology) | 32 |
+| **both routes** | **0** |
+
+**Zero overlap across all 76**, not just the 54. Either route alone would have
+found roughly half the theme. My independent reading agrees: 26 papers are
+virtual-staining work, 31 are spatial-omic prediction, 5 are label-free-source,
+and exactly one uses both vocabularies in its own prose ("virtual spatial
+proteomics", PMID 41491099) while still matching only route-2 patterns.
+
+**This is a finding for the manuscript, not just a QA result**, and it comes with
+a sharper edge than the pooled precision shows:
+
+| Route | Precision |
+|---|---|
+| route 1 — virtual-staining vocabulary | 31/44 = **70%** |
+| route 2 — spatial-omic prediction | 32/32 = **100%** |
+
+Every false positive is in route 1. The spatial-transcriptomics-prediction
+literature is not only disjoint in vocabulary from the virtual-staining
+literature — it is also cleanly separable, while the virtual-staining vocabulary
+sits adjacent to a biomarker-status literature it cannot distinguish itself from.
+
+### The three requested checks
+
+**1. The excluded reverse direction.** Records that generate virtual **H&E** from
+a label-free, autofluorescence, photoacoustic or quantitative-phase source: I
+found 37 candidates, of which 3 are in the theme and 34 are out. The three that
+are in are in because they produce a **molecular** target — HER2 IHC, an mIF
+panel, ERG/PanCK — not because they produce virtual H&E. The structural
+exclusion works exactly as designed, in both directions. Confirmed.
+
+**2. The five label-free-source papers.** I identified the same five
+independently: 37850170, 39154539, 39636222, 41676162, 41933080. My read is that
+they **belong**. All five predict a spatially resolved *molecular* signal from
+label-free morphology; only the source differs from the letter of the definition.
+The analytic content — computationally inferring molecular signal from
+morphology — is identical, and the figure tracks a trend of interest rather than
+a protocol. The decision is cheap either way: removing them moves precision from
+63/76 (83%) to 58/71 (82%), about one point. It is a definitional choice, not a
+quality problem, and it should be settled on what the row is meant to mean.
+
+**3. Agreement with the `genomics` input-only rule.** Confirmed, not assumed:
+exactly **2 of 76** carry `mod_genomics`. PMID 41588694 (His-MMDM) legitimately
+consumes omics as well as producing signal. PMID 32953248 is the
+mention-not-input error — and it is **also out of theme** in this census, so that
+one record is wrong twice over. The other 74 correctly carry no `genomics`: these
+papers *produce* molecular signal rather than consuming it, which is the
+behaviour the input-only rule was written for.
+
+### Independently corroborated
+
+Row size 76; yearly series 2019–2026 of **2, 3, 2, 4, 6, 13, 24, 22** with 2026
+partial; `he_histology` on 73 of 76 (96%); `domain = pathology` on 75 of 76. All
+four matched the v7 classifier's figures exactly, from a separate code path.
+
+> These are **v7-era figures, and the series is a recount**. Both are superseded:
+> the v8 row is 65 papers and its series must be quoted from
+> `theme_year_counts.csv`, never recounted. See *After the repair* below.
+
+### The boundary the author should settle
+
+The eleven status-prediction papers are not obviously wrong to a reader who has
+only the theme's *name*. "Virtual staining" invites them in; the *definition*
+keeps them out, because a HER2 status is not spatial proteomics. If the author
+wants the row to mean "molecular information inferred from H&E" rather than
+"spatially resolved molecular signal generated from H&E", the row roughly
+doubles and the repair above should not be made. As written, the definition is
+clear and the repair implements it.
+
+### After the repair: what the row is now (themes v8)
+
+**The census above measured v7 and describes a row that no longer exists.** The
+repair shipped as **themes v8** and the corpus was reclassified. Everything above
+this heading is left exactly as it was measured, because it is the evidence that
+produced the repair: the thirteen false positives it names are what made a
+one-token fix findable at all.
+
+The author also ruled on the definitional question, and the ruling settled it in
+the direction this census read it — biomarker **status** prediction is not
+virtual staining. My reading and the search agent's had disagreed, and the
+disagreement turned out to be **entirely** that one class.
+
+| | Round four (v7) | After the repair (v8) |
+|---|---|---|
+| Papers in the row | 76 | **65** |
+| In theme | 63 | 63 |
+| Precision | 63/76 = **82.9%** | 63/65 = **96.9%** |
+| Route 1 — virtual-staining vocabulary | 31/44 = 70.5% | **93.9%** |
+| Route 2 — spatial-omic prediction | 32/32 = 100% | **100%**, unchanged |
+
+Eleven papers were removed, all of them read in this census, all of them
+biomarker-status rather than spatial maps. **No genuine paper was lost**, which
+is why the in-theme count is 63 in both columns. The search-strategy agent
+verified the same result independently.
+
+The route-1 improvement is the substantive one. Before the repair, route 1 was
+the only route carrying error; after it, the two literatures are both clean, and
+the disjointness finding stands on 44 and 32 papers that no longer include a
+biomarker-status literature masquerading as virtual staining.
+
+**Authoritative counts come from the pipeline, not from this census.** The row is
+**65 papers**, and the per-year series in `data/processed/theme_year_counts.csv`
+(themes v8) is:
+
+| 2019 | 2020 | 2021 | 2022 | 2023 | 2024 | 2025 | 2026 |
+|---|---|---|---|---|---|---|---|
+| 1 | 2 | 1 | 2 | 6 | 13 | 19 | 21 |
+
+2026 is the partial retrieval year and carries `partial_year = 1`. Sixty-four of
+the 65 are `domain = pathology`; one 2021 paper is `domain = none`.
+
+**Do not recount this series by hand, and do not take a year from a fresh PubMed
+fetch.** The pipeline dates a paper by `ArticleDate` where that precedes the
+issue date, per the year rule in `docs/DECISIONS.md`; a fresh fetch returns
+`PubDate`. The two disagree on 3 of the 65. The search agent projected a series
+from its own reading and it differed from the pipeline's for exactly this reason.
+`theme_year_counts.csv` is the figure's source and the only series that should be
+quoted.
+
+---
+
 ## What the legend may claim
 
 Defensible, in this form:
 
 > Labels were assigned by regex matching against title and abstract
-> (`config/themes.yaml` v5, `config/modalities.yaml` v4). Accuracy was measured
+> (`config/themes.yaml` v8, `config/modalities.yaml` v6). Accuracy was measured
 > on stratified samples of abstracts labeled blind by a language model and
 > calibrated against an author audit of 50 of them. Against those labels the
 > rules reached 100% precision for the clinical/FDA theme (24 of 24 papers),
 > 89% for foundation models (41 of 46), 85–100% for CT, MRI, PET, ultrasound and
 > mammography, 93% for spatial proteomics (13 of 14), and 55% for multimodal
 > integration (11 of 20), whose false positives are papers using "multimodal" in
-> a sense other than combining data types. Every one of the 56 papers in the
-> digital-twins row was read: all 56 invoke the digital-twin idea, which is what
-> that row is defined to track. These are per-category rates on stratified
+> a sense other than combining data types. Two small themes were read in full
+> rather than sampled: all 56 papers of the digital-twins row invoke the
+> digital-twin idea, which is what that row is defined to track, and 63 of the
+> 65 papers in the virtual-staining row predict spatially resolved molecular
+> signal from histology (97%). These are per-category rates on stratified
 > samples, not a corpus-wide accuracy, and the reference labels are not a
 > hand-labeled gold standard.
+
+Two figures in that paragraph carry version caveats a reader should not have to
+reconstruct. The theme precisions for foundation models, multimodal integration,
+spatial proteomics and clinical/FDA were measured against **v5/v4** and have not
+been re-measured since; the changes shipped as v6, v7 and v8 touched
+`virtual_staining` and the genomics row, not those. The virtual-staining figure
+is **post-repair (v8)**, derived from the v7 census by removing eleven papers
+that were read and found out of theme.
 
 **Wording for the `other` row, which the legend must carry.** `other` reaches a
 paper two ways and they mean opposite things, so the row cannot be presented as
@@ -623,10 +845,17 @@ sanity check, not a result.**
 ## What I would change now
 
 `config/*.yaml` has one owner, per `docs/DECISIONS.md` (2026-09-01), so this is
-a recommendation. In descending order of measured return against **v5/v4**, and
-all needing re-measurement after the change:
+a recommendation. In descending order of measured return, and all needing
+re-measurement after the change. Item 1 has shipped; items 2 onward are measured
+against **themes v5 / modalities v4** and have not been re-measured since:
 
-1. **Qualify `mutation (status|profil|burden)`, `methylation`, `(gene signature|
+1. ~~**Drop `predict\w+` from `virtual_staining`'s `include[5]` verb list.**~~
+   **SHIPPED as themes v8.** Measured on the whole 76-paper row: it removed all
+   eleven biomarker-status false positives and lost zero genuine papers, taking
+   the theme from 82.9% to 96.9% and route 1 from 70.5% to 93.9%. One token, no
+   measured cost, independently verified. Kept here as the record of the
+   highest-return change measured on this project.
+2. **Qualify `mutation (status|profil|burden)`, `methylation`, `(gene signature|
    genetic alteration)` and the TCGA pattern so that a *predicted* molecular
    label does not count as using genomic data.** This is the largest measured
    defect in the current dictionaries: 9 of 18 genomics false positives, and it
@@ -635,26 +864,26 @@ all needing re-measurement after the change:
    the one already used elsewhere: require an input verb near the molecular
    noun ("sequencing was performed", "RNA-seq data were used") and exclude the
    prediction frame ("predict ... from", "inferred from", "directly from H&E").
-2. **Rewrite the multiparametric-MRI exclusion to fire without sequence names.**
+3. **Rewrite the multiparametric-MRI exclusion to fire without sequence names.**
    It currently reaches 2.4% of multimodal candidates because 93% of them never
    name a T1 and a T2 sequence. Keying on "multi-modal/multi-parametric" within
    a few words of "MRI/magnetic resonance", with the same no-other-data-type
    guard, would cover the common wording; the sequence-pair test can stay as a
    second route.
-3. **Protect `SPECT` and `CT\b` in that exclusion's context list against
+4. **Protect `SPECT` and `CT\b` in that exclusion's context list against
    case-insensitive matching.** They match "retrospective" and the "-ct" ending
    of ordinary words. The cost is small today only because the sequence-pair
    requirement is the binding constraint; fix it before recommendation 2 removes
    that constraint and the exclusion silently stops firing.
-4. **Decide whether subcellular "spatial proteomics" belongs in the imaging
+5. **Decide whether subcellular "spatial proteomics" belongs in the imaging
    row.** Organelle-fractionation mass spectrometry uses the same phrase for a
    different thing and supplies the row's only false positive.
-5. **Constrain `multi[- ]?modal` against the non-data senses.** "Multimodal
+6. **Constrain `multi[- ]?modal` against the non-data senses.** "Multimodal
    human-machine interface", "multimodality imaging" describing a workup, and
    "the multimodality of the acquired images" account for most of what remains.
    A negative lookahead on `interface|human-machine|analgesi` and a requirement
    that a second data type be named would address them.
-6. **Consider dropping bare `genomic`.** Four round-three false positives are
+7. **Consider dropping bare `genomic`.** Four round-three false positives are
    the bare adjective in prose that uses no genomic data.
 
 What I would *not* change: the mention-versus-use problem. It was 43% of all
@@ -723,10 +952,18 @@ labels, which the reclassification has overwritten.
 | `agreement_report.txt` | Everything above, as printed. |
 | `audit_sheet.csv` | The author's fifty rows. |
 | `agreement_round3.csv`, `agreement_report.txt` | Round three's per-category precision, in its own directory. |
+| `round4/census_labels.csv` | All 76 virtual-staining papers, verdict, route, firing patterns and note. |
 
-Four directories: `round1/` (v2), `round2/` (v3), `round2-v5/` (the same sample
-and labels re-scored against v5/v4, and the current audit sheet), and `round3/`
-(the targeted draw).
+Five directories: `round1/` (v2), `round2/` (v3), `round2-v5/` (the same sample
+and labels re-scored against v5/v4, and the current audit sheet), `round3/` (the
+targeted draw) and `round4/` (the virtual-staining census, themes v7 —
+superseded by v8, kept as the evidence that produced the repair).
+
+Version provenance is carried in the data, not only here: every table under
+`data/processed/` has a `#` header naming the dictionary version and its
+SHA-256, and each round directory's `agreement_report.txt` names the version it
+measured. When in doubt about which configuration a number describes, read the
+header rather than this document.
 
 `other_datatype` is separate from `mod_other` on purpose. `mod_other` is the
 composite the classifier assigns by either route; `other_datatype` is only the
@@ -743,6 +980,17 @@ apart.
 The author's audit of 50 bounds how far these labels drift from the author's
 judgment; until it is done, every figure here is agreement with a machine, not
 accuracy.
+
+**No census in this document is blind to membership, and the residual bias runs
+toward generosity.** This is the honest frame for every census figure here: the
+56-paper digital-twins row in round three and the 76-paper virtual-staining row
+in round four. Every paper in a row is rule-positive by construction, so I knew
+that much before reading a word. What was withheld is the *pattern* that fired,
+which removes anchoring on the matching phrase but not on membership. A census
+buys completeness — no sampling error, no unread remainder — and pays for it in
+independence. Where a census and a blind sample both exist, prefer the sample:
+round three's 20 blind digital-twin papers are the stronger number, and the
+36 relabelled ones are the weaker.
 
 **The labeler is the same across rounds and may have drifted.** The
 digital-twins fall is partly a stricter application of the same rule. A second
@@ -772,6 +1020,17 @@ not is miscounted by both, and this design cannot detect that.
 
 **One agent, one pass per round.** Nothing here measures the agent's own
 consistency.
+
+**A theme can no longer be dropped from the sampler in silence.** Until config
+v7 the theme list was written out by hand in `trends.validate`, and the failure
+mode was silent rather than loud: a theme absent from `STRATUM_ORDER` does not
+raise, its papers simply join `no_theme`, the draw succeeds, the report prints,
+and the theme is never measured. That is exactly what `virtual_staining` did on
+arrival. The strata are now derived from `trends.aggregate.THEME_KEYS`, and
+`check_theme_coverage()` refuses to draw a sample that cannot measure every
+canonical theme, naming the missing one. `tests/test_validate.py` asserts both
+the coverage and the refusal. A reader should know that earlier rounds had no
+such guard — they happened to be complete, rather than being checked.
 
 **Round three measures precision and not recall.** Every stratum is
 rule-positive by construction. A category could have lost recall to a v4 or v5

@@ -40,32 +40,62 @@ paper appears in exactly one column, the column for its exact modality set.
 
 ## Panel B — theme volume over time
 
-**Two stacked line plots sharing one x-axis**, not one plot. Measured theme sizes differ by
-two orders of magnitude — Multimodal Integration 5,794 papers against Clinical/FDA's 94 —
-and on a single linear axis the small themes are flat lines on the floor.
+**Two stacked line plots sharing one x-axis**, not one plot. Theme sizes differ by two orders
+of magnitude, and on a single linear axis the small themes are flat lines on the floor.
 
-- **Upper plot:** `foundation_models`, `multimodal_integration`.
-- **Lower plot:** `digital_twins`, and the two `clinical_fda` domain lines.
-- Each plot carries its own y-axis label and its own linear scale. The difference in scale
-  must be unmistakable; a reader must not read the lower plot as a continuation of the upper.
-- X axis: publication year, shared, labeled once.
-- Lines are labeled at their ends rather than in a legend box.
+### Which series are drawn
+
+Foundation models and multimodal integration are each **split by clinical domain**, because
+the review's question is where each theme is being pursued, not only how large it is.
+
+| Plot | Series |
+|---|---|
+| Upper | foundation models × {radiology, pathology, cross-specialty} |
+| Upper | multimodal integration × {radiology, pathology, cross-specialty} |
+| Lower | digital twins (all) |
+| Lower | virtual staining (all) |
+| Lower | clinical applications / FDA approval × {radiology, pathology} |
+
+**Domain** comes from the modality labels, by the rule in the Input schema below:
+`radiology` if the paper carries any radiologic modality and no pathologic one, `pathology`
+for the reverse, and **cross-specialty** where it carries both — a paper pairing, say,
+radiography with H&E. Cross-specialty is the integrative case the review argues about, so it
+is drawn rather than folded into either side.
+
+Papers whose only labels are non-imaging — genomics, clinical data, or `other` — have no
+domain and appear on **no** split line. They are 257 of foundation models' 1,226 papers and
+721 of multimodal integration's 4,654, so the split lines do not sum to the theme total and
+the legend must say so.
+
+Digital twins and virtual staining are drawn undivided: digital twins is too small to split
+three ways, and virtual staining is pathologic by definition.
+
+### How the series are distinguished
+
+Per `figures/ink_style_guide.md`, colour is semantic and marks the **domain**:
+
+| Domain | Colour |
+|---|---|
+| Radiology | `#0072B2` |
+| Pathology | `#CC79A7` (deep `#8F4B73` for thin strokes and labels) |
+| Cross-specialty | `#4B4B4B`, the guide's structural/integrative grey |
+| No domain split (digital twins) | ink neutrals |
+
+**Theme is carried by dash pattern and marker**, not by hue, so two blue lines in the upper
+plot are radiology work in two different themes. Every line keeps a direct end label; colour
+is never the only cue.
+
+### Axes and marks
+
+- Each plot has its own linear y axis, labelled. The scale difference must be unmistakable:
+  the range band on the upper plot marks the lower plot's whole range.
 - Per-year counts throughout. Not cumulative, not logarithmic.
-
-The Clinical Applications/FDA Approval theme is split into radiology and pathology, drawn
-with the same colour and different dash patterns, per the sketch's "(Rads vs. Path)" note.
-
-Two features of the real clinical series must survive the drawing:
-
-- **Pathology is exactly zero for seven consecutive years** (2015-2021; 2022 holds one
-  paper). That is the review's argument. It must read as a visible zero, not as a line that
-  begins when the first paper appears.
-- **Radiology runs 13, 9, 21 across 2024-2026.** The dip is sampling noise in a 94-paper
-  theme. The legend must say that single-digit yearly changes here carry no information.
-
-The final year is partial (retrieval date 2026-09-01). Draw it in both plots, distinguish it
-— dashed segment or open marker — and say in the legend that it is partial. Do not describe
-a trend using the partial year.
+- The final year is partial (retrieval date 2026-09-01): draw it in both plots, distinguish it
+  with a dotted segment and an open marker, and shade it. Never describe a trend using it.
+- Pathology in the clinical theme is exactly zero from 2015 through 2021. It must read as
+  plotted zeros, not as a line that begins when the first paper appears.
+- Small themes move by single papers between years, which carries no information. That
+  statement lives in the legend, not on the figure.
 
 ---
 
@@ -113,7 +143,7 @@ Drives Panel B.
 | Column | Type | Meaning |
 |---|---|---|
 | `theme` | string | Theme key |
-| `domain` | string | `all`, or `radiology`/`pathology` for the clinical theme split |
+| `domain` | string | `all` for a whole theme, or one of `radiology`, `pathology`, `both`, `none` for a split. Emitted for every theme; the figure chooses which rows to draw. `both` is displayed as "cross-specialty". |
 | `year` | integer | Publication year |
 | `n_papers` | integer | Papers with that theme label in that year |
 | `partial_year` | 0/1 | 1 for the retrieval year |
@@ -141,6 +171,7 @@ Themes (`theme` column values, and the `theme_<key>` column suffixes):
 | `multimodal_integration` | Multimodal Integration |
 | `digital_twins` | Digital Twins |
 | `clinical_fda` | Clinical Applications / FDA Approval |
+| `virtual_staining` | Virtual Staining |
 
 Modalities (`mod_<key>` columns, and the members of `modality_set`), in figure row order:
 

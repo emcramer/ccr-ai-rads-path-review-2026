@@ -11,13 +11,27 @@ that returns *fewer* means the query broke.
 Files this document explains: `config/corpus.yaml`, `config/themes.yaml`,
 `config/modalities.yaml`.
 
-**Dictionary version 6** (2026-09-02) for both `themes.yaml` and `modalities.yaml`; see §5,
-"Version 6". `modalities.yaml` jumps 4 → 6 because it had no v5 change; the two files are
-kept on one number so a manifest pair identifies one dictionary state. Earlier versions
-follow. Version 2 (2026-09-01)
-is described below it. From v3 onward the version bumps on **any** content change, not
-only on changes judged significant — an unversioned edit makes every older manifest and
-report uninterpretable, which happened once between two v2 runs.
+**Current dictionary state — `themes.yaml` v8, `modalities.yaml` v6, `corpus.yaml` v1**
+(2026-09-02).
+
+`themes.yaml` reached v7 by adding the `virtual_staining` theme, then **v8**, which carries
+two content changes together: the corrected count and precision for that theme, and a
+one-token repair to `virtual_staining:include[5]` (§5, "Versions 7 and 8"). The repair
+changes labels — the row goes from 76 papers to 65 — so classification must be re-run before
+any figure is drawn from it.
+
+`modalities.yaml` last changed at v6; it jumped 4 → 6 because it had no v5 change, so that a
+manifest pair identifies one dictionary state. `corpus.yaml` has never changed since
+retrieval.
+
+**The version rule, and why it is stated this emphatically.** From v3 onward the version
+bumps on **any** content change, not only on changes judged significant. An unversioned edit
+makes every older manifest and report uninterpretable, because version plus SHA is what
+identifies the content. This project has broken the rule twice, and **both times the change
+was prose rather than patterns** — once when `modalities.yaml` content moved under an
+unchanged v2, and once when this file's v7 notes were corrected without a bump, leaving two
+different files claiming v7. The pattern case is easy to remember; the prose case is the one
+that catches people. A reminder to that effect now sits at the top of `themes.yaml`.
 
 **Dictionary version 2** (2026-09-01). `themes.yaml` and `modalities.yaml` were revised
 after the first production run; see §5, "Version 2". The corpus query is unchanged and
@@ -295,6 +309,108 @@ really do use both. `pet+ct` will be one of the largest columns in Panel A and t
 should say why.
 
 The two spatial modalities overlap at only 2 records, so the disambiguation in §6 works.
+
+### Versions 7 and 8 — the `virtual_staining` theme (2026-09-02)
+
+A fifth theme, from the author's definition verbatim: *"any models that predict spatial
+proteomics or spatial transcriptomics from H&E stained tissue slides"*.
+
+**The row is 65 papers at 63/65 — 96.9% precision (95% CI 89.5–99.2).** v7 introduced the
+theme; v8 carries two content changes: a corrected count (below) and a one-token pattern
+repair.
+
+#### The scope ruling: spatial maps only
+
+Two independent reads of the same 76 papers disagreed by seven, and the gap was one class:
+**papers predicting a biomarker status or score from H&E** — HER2, PD-L1, Ki-67, BAP1, KRAS.
+The author ruled: **a HER2 status is not spatial proteomics.** The model must produce a
+spatially resolved readout. The stricter read was correct.
+
+#### The repair — one token, 14 points
+
+`predict\w+` was dropped from the verb list of `virtual_staining:include[5]`. The verb cannot
+distinguish "**generate** a virtual HER2 stain from H&E" from "**predict** HER2 status from
+H&E", and only the first is in scope.
+
+I verified this independently rather than taking it on report. Removing the token drops
+**exactly 11 papers; all 11 were read; all 11 are status, score or expression prediction** —
+PD-L1 status, BAP1 IHC expression, HER2 status (×4), Ki-67/ER/PR status, PD-L1 expression,
+IHC biomarkers, IHC markers, HER2 score, KRAS/NRAS/BRAF status. Not one produces a spatial
+map. **Zero genuine papers lost.**
+
+| | before repair | after repair |
+|---|---|---|
+| Whole row | 63/76 — 82.9% (72.9–89.7) | **63/65 — 96.9% (89.5–99.2)** |
+| Route 1 — virtual-staining vocabulary | 31/44 — **70.5%** (55.8–81.8) | 31/33 — **93.9%** (80.4–98.3) |
+| Route 2 — spatial-omic prediction | 32/32 — **100%** (89.3–100) | 32/32 — unchanged |
+
+#### The pooled precision hid the real structure
+
+Route 2 is **cleanly separable**: it has no adjacent literature to be confused with, and it
+was perfect before and after. Route 1 **carried every false positive**, because it sits next
+to a biomarker-status-prediction literature it cannot distinguish itself from without the
+verb constraint. That is why a single token was worth fourteen points. Reporting one pooled
+number for the theme would have concealed both facts.
+
+#### Disjointness is objective, not impressionistic
+
+Tested on which patterns actually fired across all 76: **44 route-1-only, 32 route-2-only,
+zero in both.** After the repair, 33 and 32, still zero. The
+spatial-transcriptomics-prediction literature never uses the words "virtual staining", and
+the virtual-staining literature never says "spatial transcriptomics prediction". Either
+route alone would have found about half the row.
+
+#### The count correction, and the trap behind it
+
+An earlier version of this section reported **54 papers at ~91%, "whole population read"**.
+That was wrong. The 54 was the set enumerated by hand from a 626-record candidate population
+built by a PubMed term query; the compiled patterns generalise beyond the terms that built
+the query, so they selected **22 papers it never retrieved**. All 54 proved to be a strict
+subset of the 76.
+
+> **Validate a pattern against the corpus, never against the candidate query that inspired
+> it.** A candidate query is a superset of the papers you thought of, not of the papers your
+> regex matches.
+
+#### The boundary, measured on the 626-record candidate population
+
+| Direction | Candidates | In theme | Verdict |
+|---|---|---|---|
+| **Reverse** — virtual H&E *from* autofluorescence, photoacoustic, label-free | 77 | 5 | **OUT** — 72 correctly excluded |
+| **Stain normalisation / colour transfer** | 129 | 1 | **OUT** — and the 1 is not a leak |
+| **Virtual special stains** (trichrome, PAS, Jones silver) | 4 | 0 | **OUT** — costs exactly 1 paper |
+
+The reverse direction is excluded **structurally**, by requiring a molecular or spatial-omic
+*target*, not by a blocklist. The single normalisation "leak" is His-MMDM, a genuine
+multi-omics image-translation paper that merely mentions normalisation.
+
+#### What was rejected, and what stays
+
+A **source-restricted variant** requiring an explicit H&E token measured 52 against 54. Not
+shipped: false precision — it removes 2 label-free-source papers while leaving 3 of the same
+class that happen to say "histology" elsewhere.
+
+**The five label-free-source papers stay** (37850170, 39154539, 39636222, 41676162,
+41933080). Two independent reads identified the same five and both judged them in; removing
+them moves precision by about one point. A definitional preference, not a quality problem.
+
+#### Agreement with the input-only rule
+
+One matched paper also carried `genomics` — PMID 32953248, BAP1 IHC from H&E, where the
+genomics label came from a discussion sentence about "genetic alterations". A **mention-not-
+input** case (§8a), now moot for this row since the v8 repair drops that paper anyway. The
+`genomics` label was left alone: `genomics:include[12]` is the **sole trigger for 126 corpus
+papers**, so narrowing it is not free.
+
+#### Panel B
+
+65 papers. Applying the pipeline's own year rule to the surviving 65 **projects** 2019 · 1,
+2020 · 2, 2021 · 1, 2022 · 2, 2023 · 6, 2024 · 13, 2025 · 19, 2026 · 21 (partial).
+
+**That is a projection, not a measurement** — the authoritative series is whatever the next
+classifier run writes to `theme_year_counts.csv`, and it should be quoted from there. A naive
+recount from freshly fetched PubMed dates disagrees on 3 of the 65, because the pipeline
+assigns year from `ArticleDate` while a raw fetch gives `PubDate`.
 
 ### Version 6 — round three: the residue, measured to its limit (2026-09-02)
 

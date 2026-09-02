@@ -138,9 +138,11 @@ def test_build_writes_the_legend_numbers(synthetic_dir: Path, tmp_path: Path) ->
     """The summary records what the top-N cap hid, for each theme."""
     result = plot.build(synthetic_dir, tmp_path / "figures", tag="synthetic")
     text = result.summary.read_text()
-    for theme in plot.style.THEME_ORDER:
+    for theme in plot.style.PANEL_A_THEMES:
         assert theme in text
-    assert len(result.tails) == len(plot.style.THEME_ORDER)
+    # Four blocks, not five: virtual staining went to Panel B only.
+    assert len(result.tails) == len(plot.style.PANEL_A_THEMES) == 4
+    assert "virtual_staining" not in {tail.theme for tail in result.tails}
     for tail in result.tails:
         assert tail.shown_papers + tail.remainder_papers == tail.total_papers
 
@@ -417,8 +419,49 @@ def test_measured_fixture_holds_the_real_clinical_series(measured_dir: Path) -> 
     clinical = frame.loc[frame["theme"] == "clinical_fda"].sort_values(["domain", "year"])
     radiology = clinical.loc[clinical["domain"] == "radiology", "n_papers"].tolist()
     pathology = clinical.loc[clinical["domain"] == "pathology", "n_papers"].tolist()
-    assert radiology == [0, 0, 1, 2, 1, 3, 3, 6, 5, 13, 9, 21]
-    assert pathology == [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 5, 8]
+    # These are the partitioned series: `radiology` now means radiologic and NOT
+    # pathologic, so the three cross-specialty papers that used to be counted on
+    # both lines are on neither. The radiology tail moved from 13, 9, 21 to
+    # 13, 8, 19 when the partition landed on 2026-09-02.
+    assert radiology == [0, 0, 1, 2, 1, 3, 2, 6, 5, 13, 8, 19]
+    assert pathology == [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 4, 6]
+    assert sum(radiology) == 60 and sum(pathology) == 13
+    cross = clinical.loc[clinical["domain"] == "both", "n_papers"]
+    assert cross.sum() == 3
+
+
+def test_the_domain_rows_partition_every_theme(measured_dir: Path) -> None:
+    """radiology + pathology + both + none == all, per theme and year.
+
+    This is the property the legend has to explain: the two split lines of a
+    theme do NOT sum to it, because cross-specialty and no-domain papers are
+    counted apart. A drawing that assumed otherwise would overstate every
+    domain, so the shape is pinned here rather than trusted.
+    """
+    frame = io.load_figure_data(measured_dir).theme_years
+    wide = frame.pivot_table(
+        index=["theme", "year"], columns="domain", values="n_papers", aggfunc="sum"
+    ).fillna(0)
+    split = wide[["radiology", "pathology", "both", "none"]].sum(axis=1)
+    assert (split == wide["all"]).all(), "the domain rows must partition the theme"
+    # And the property that makes the legend necessary.
+    pairs = wide[["radiology", "pathology"]].sum(axis=1)
+    assert (pairs < wide["all"]).any(), "some theme must lose papers to both/none"
+
+
+def test_virtual_staining_is_drawn_undivided_because_it_is_pathologic(
+    measured_dir: Path,
+) -> None:
+    """75 of its 76 papers are pathologic, so a three-way split would say nothing."""
+    frame = io.load_figure_data(measured_dir).theme_years
+    theme = frame.loc[frame["theme"] == "virtual_staining"]
+    totals = theme.groupby("domain")["n_papers"].sum()
+    assert totals["all"] == 76
+    assert totals["pathology"] == 75
+    assert totals["radiology"] == 0 and totals["both"] == 0
+    series = theme.loc[theme["domain"] == "all"].sort_values("year")["n_papers"].tolist()
+    assert series == [0, 0, 0, 0, 2, 3, 2, 4, 6, 13, 24, 22]
+    assert ("virtual_staining", "all") in panel_b.LOWER_SERIES
 
 
 def test_panel_b_draws_two_plots(measured_dir: Path) -> None:
@@ -437,22 +480,54 @@ def test_panel_b_puts_each_series_in_the_plot_the_spec_names(measured_dir: Path)
     """Foundation and multimodal above; digital twins and both clinical lines below."""
     frame = io.load_figure_data(measured_dir).theme_years
     upper, lower = panel_b._partition(frame)
-    assert upper == [("foundation_models", "all"), ("multimodal_integration", "all")]
+    assert upper == [
+        ("foundation_models", "radiology"),
+        ("foundation_models", "pathology"),
+        ("foundation_models", "both"),
+        ("multimodal_integration", "radiology"),
+        ("multimodal_integration", "pathology"),
+        ("multimodal_integration", "both"),
+    ]
     assert lower == [
         ("digital_twins", "all"),
+        ("virtual_staining", "all"),
         ("clinical_fda", "radiology"),
         ("clinical_fda", "pathology"),
     ]
+    assert len(upper) + len(lower) == 10
 
 
-def test_an_unexpected_series_is_drawn_below(minimal_dir: Path) -> None:
-    """A series the spec does not name must not rescale the upper plot."""
-    path = minimal_dir / io.THEME_YEAR_COUNTS
-    path.write_text(path.read_text() + "digital_twins,radiology,2024,4,0\n")
-    frame = io.load_figure_data(minimal_dir).theme_years
+def test_a_series_the_spec_does_not_name_is_not_drawn(measured_dir: Path) -> None:
+    """The table carries every (theme, domain) pair; the figure draws ten of them.
+
+    This used to be a fallback that appended any unrecognised pair to the lower
+    plot. On the regenerated table -- five themes by five domains by twelve
+    years, 300 rows -- that would have added about nineteen lines nobody asked
+    for, silently. It is a filter now.
+    """
+    frame = io.load_figure_data(measured_dir).theme_years
+    present = set(map(tuple, frame[["theme", "domain"]].drop_duplicates().to_numpy()))
+    assert len(present) == 25, "the table carries every combination by design"
     upper, lower = panel_b._partition(frame)
-    assert ("digital_twins", "radiology") in lower
-    assert ("digital_twins", "radiology") not in upper
+    drawn = set(upper) | set(lower)
+    assert len(drawn) == 10
+    # The rows deliberately left undrawn, named so the intent is not mistaken
+    # for an oversight: every "all" and "none" row, and the clinical theme's
+    # three cross-specialty papers, which the spec does not draw.
+    assert ("clinical_fda", "both") in present and ("clinical_fda", "both") not in drawn
+    assert ("foundation_models", "all") in present
+    assert ("foundation_models", "all") not in drawn
+    assert not any(domain == "none" for _, domain in drawn)
+
+
+def test_an_unknown_theme_raises_rather_than_drawing_silently(measured_dir: Path) -> None:
+    """A moved canonical key is a bug, not a data variation."""
+    path = measured_dir / io.THEME_YEAR_COUNTS
+    path.write_text(path.read_text() + "quantum_pathology,all,2024,4,0\n")
+    frame = pd.read_csv(path, comment="#")
+    with pytest.raises(panel_b.UnknownTheme) as raised:
+        panel_b._partition(frame)
+    assert "quantum_pathology" in str(raised.value)
 
 
 def test_the_two_scales_are_far_apart_and_the_ratio_is_reported(measured_dir: Path) -> None:
@@ -539,19 +614,41 @@ def test_the_zero_line_is_drawn_clear_of_the_bottom_spine(measured_dir: Path) ->
     plt.close(figure)
 
 
+def _dash_ratio_of(dashes: tuple) -> tuple[float, ...]:
+    """Return a dash pattern normalised so it can be compared across scalings.
+
+    Matplotlib multiplies a dash sequence by the line width before storing it,
+    so the pattern read back off a drawn line is not the tuple that was passed
+    in. Dividing through by the first segment makes the two comparable.
+    """
+    pattern = tuple(float(value) for value in dashes[1])
+    return tuple(value / pattern[0] for value in pattern) if pattern else ()
+
+
+def _dash_ratio(line) -> tuple[float, ...]:
+    """Return the normalised dash pattern actually drawn on a line."""
+    _, pattern = line._dash_pattern
+    return _dash_ratio_of((0, tuple(pattern))) if pattern else ()
+
+
 def test_every_zero_year_is_drawn_as_a_point(measured_dir: Path) -> None:
     """The zeros must read as seven measured years, not a line starting in 2022."""
     import matplotlib.pyplot as plt
 
     figure, panel = _panel(measured_dir)
-    marker = style.SERIES_MARKERS[("clinical_fda", "pathology")]
-    colour = style.SERIES_COLORS[("clinical_fda", "pathology")]
+    # Identify the line by all three channels. Hue and marker are no longer
+    # enough on their own: virtual staining is also drawn as pathology, so the
+    # lower plot holds two magenta squares and only the dash tells them apart.
+    marker = style.series_marker("clinical_fda", "pathology")
+    colour = style.series_color("clinical_fda", "pathology")
+    dashes = style.series_dash("clinical_fda", "pathology")
     pathology = [
         line
         for line in panel.lower.get_lines()
         if line.get_marker() == marker
         and line.get_color() == colour
         and line.get_linestyle() != "None"
+        and _dash_ratio(line) == pytest.approx(_dash_ratio_of(dashes), rel=1e-6)
     ]
     assert pathology, "the pathology line must be drawn, with its marker"
     drawn = pathology[0]
@@ -572,7 +669,7 @@ def test_counts_are_drawn_per_year_not_cumulatively(measured_dir: Path) -> None:
         for line in panel.lower.get_lines()
         for x, y in zip(line.get_xdata(), line.get_ydata())
     }
-    assert {(2024, 13.0), (2025, 9.0), (2026, 21.0)} <= drawn
+    assert {(2024, 13.0), (2025, 8.0), (2026, 19.0)} <= drawn
     plt.close(figure)
 
 
@@ -663,8 +760,8 @@ def test_one_plot_takes_the_whole_rectangle(minimal_dir: Path) -> None:
 
     (minimal_dir / io.THEME_YEAR_COUNTS).write_text(
         "theme,domain,year,n_papers,partial_year\n"
-        "foundation_models,all,2025,19,0\n"
-        "foundation_models,all,2026,9,1\n"
+        "foundation_models,radiology,2025,19,0\n"
+        "foundation_models,radiology,2026,9,1\n"
     )
     figure, panel = _panel(minimal_dir)
     assert panel.lower is None and panel.upper is not None
@@ -977,7 +1074,7 @@ def test_the_summary_reports_the_remainder(synthetic_dir: Path, tmp_path: Path) 
 def test_the_columns_stay_wide_enough_to_carry_a_dot() -> None:
     """The cap is bounded by column width, not by taste."""
     slots = sum(
-        panel_a.block_slots(panel_a.DEFAULT_TOP_N, True) for _ in plot.style.THEME_ORDER
+        panel_a.block_slots(panel_a.DEFAULT_TOP_N, True) for _ in plot.style.PANEL_A_THEMES
     )
     width = panel_a.column_width_in(plot._PANEL_A_RECT[2], plot.FIGURE_SIZE[0], slots)
     assert width >= panel_a.MIN_COLUMN_WIDTH_IN, (
@@ -990,7 +1087,7 @@ def test_the_columns_stay_wide_enough_to_carry_a_dot() -> None:
 def test_the_dots_are_not_pinned_to_their_own_floor() -> None:
     """A dot clamped at the floor means the column width has already failed."""
     slots = sum(
-        panel_a.block_slots(panel_a.DEFAULT_TOP_N, True) for _ in plot.style.THEME_ORDER
+        panel_a.block_slots(panel_a.DEFAULT_TOP_N, True) for _ in plot.style.PANEL_A_THEMES
     )
     width = panel_a.column_width_in(plot._PANEL_A_RECT[2], plot.FIGURE_SIZE[0], slots)
     panel_height = plot._PANEL_A_RECT[3] * plot.FIGURE_SIZE[1]
@@ -1002,7 +1099,7 @@ def test_the_dots_are_not_pinned_to_their_own_floor() -> None:
 
 def test_a_cap_of_twenty_would_fail_the_column_width_floor() -> None:
     """The rejected alternative is rejected by measurement, not by memory."""
-    slots = sum(panel_a.block_slots(20, True) for _ in plot.style.THEME_ORDER)
+    slots = sum(panel_a.block_slots(20, True) for _ in plot.style.PANEL_A_THEMES)
     width = panel_a.column_width_in(plot._PANEL_A_RECT[2], plot.FIGURE_SIZE[0], slots)
     assert width < panel_a.MIN_COLUMN_WIDTH_IN
 
@@ -1014,7 +1111,7 @@ def test_bar_labels_stand_on_end_when_the_column_is_too_narrow(
     import matplotlib.pyplot as plt
 
     slots = sum(
-        panel_a.block_slots(panel_a.DEFAULT_TOP_N, True) for _ in plot.style.THEME_ORDER
+        panel_a.block_slots(panel_a.DEFAULT_TOP_N, True) for _ in plot.style.PANEL_A_THEMES
     )
     width = panel_a.column_width_in(plot._PANEL_A_RECT[2], plot.FIGURE_SIZE[0], slots)
     assert panel_a._value_font_size(width, "1234") < panel_a._MIN_LEGIBLE_VALUE_FS
@@ -1245,7 +1342,7 @@ def test_panel_a_dots_carry_their_rows_modality_colour(minimal_dir: Path) -> Non
         figure, _, _ = plot.build_figure(data)
         row_of = {key: index for index, key in enumerate(style.MODALITY_ORDER)}
         seen = 0
-        for ax in _matrix_axes(figure, len(style.THEME_ORDER)):
+        for ax in _matrix_axes(figure, len(style.PANEL_A_THEMES)):
             for collection in ax.collections:
                 offsets = collection.get_offsets()
                 colours = collection.get_facecolor()
@@ -1281,33 +1378,135 @@ def test_panel_a_bars_carry_no_modality_colour(synthetic_dir: Path) -> None:
         plt.close(figure)
 
 
-def test_panel_b_gives_colour_only_to_the_two_clinical_lines() -> None:
-    """The other three series are themes, so they are drawn in neutrals."""
-    hues = {
-        style.RADIOLOGY_IMAGING,
-        style.DIGITAL_PATHOLOGY,
-        style.DIGITAL_PATHOLOGY_DEEP,
-    }
-    neutrals = {style.INK, style.LINE, style.SUBTLE}
-    assert style.SERIES_COLORS[("clinical_fda", "radiology")] == style.RADIOLOGY_IMAGING
-    # The deep variant, not the border hue: the border hue was the lightest
-    # stroke on the page in greyscale, and this line is the review's argument.
-    assert style.SERIES_COLORS[("clinical_fda", "pathology")] == style.DIGITAL_PATHOLOGY_DEEP
-    for key in (
-        ("foundation_models", "all"),
-        ("multimodal_integration", "all"),
-        ("digital_twins", "all"),
-    ):
-        assert style.SERIES_COLORS[key] in neutrals
-        assert style.SERIES_COLORS[key] not in hues
+def test_panel_b_colour_marks_the_domain_and_only_the_domain() -> None:
+    """Section 3, under the 2026-09-02 specification.
 
-
-def test_colour_is_never_the_only_cue_in_panel_b() -> None:
-    """Section 7. Three series carry no hue at all, so this is load-bearing."""
+    Colour identifies the clinical domain a theme's papers were pursued in --
+    which is semantic -- and carries nothing else. Two blue lines in the upper
+    plot are radiology work in two different themes, so the test asserts that
+    the theme has no influence on the hue at all.
+    """
     keys = panel_b.UPPER_SERIES + panel_b.LOWER_SERIES
-    assert len({style.SERIES_DASHES[key] for key in keys}) == len(keys)
-    assert len({style.SERIES_MARKERS[key] for key in keys}) == len(keys)
-    assert len({style.SERIES_END_LABELS[key] for key in keys}) == len(keys)
+    by_domain: dict[str, set[str]] = {}
+    for theme, domain in keys:
+        if (theme, domain) in style.SERIES_DOMAIN_OVERRIDES:
+            continue
+        by_domain.setdefault(domain, set()).add(style.series_color(theme, domain))
+    for domain, colours in by_domain.items():
+        assert len(colours) == 1, f"{domain} must have one colour, got {colours}"
+
+    # Virtual staining is drawn undivided but is not domain-less: 75 of its 76
+    # papers are pathologic, so it takes the pathology hue rather than the ink
+    # that a genuinely mixed undivided series gets. Drawing it in ink would have
+    # put it in the same colour as digital twins, which it crosses.
+    assert style.series_color("virtual_staining", "all") == style.DIGITAL_PATHOLOGY_DEEP
+    assert style.series_color("digital_twins", "all") == style.INK
+    # And the override drives hue and marker together, so they cannot disagree.
+    assert style.series_marker("virtual_staining", "all") == style.DOMAIN_MARKERS["pathology"]
+    assert style.series_marker("digital_twins", "all") == style.DOMAIN_MARKERS["all"]
+    assert style.domain_color("radiology") == style.RADIOLOGY_IMAGING
+    # The deep pathology variant: every mark in Panel B is a thin stroke or 7 pt
+    # type, which is what the specification assigns the deep variant to.
+    assert style.domain_color("pathology") == style.DIGITAL_PATHOLOGY_DEEP
+    # Cross-specialty takes the guide's structural/integrative grey, which it
+    # reserves for fusion modules and joint models.
+    assert style.domain_color("both") == style.STRUCTURAL
+    # An undivided series makes no domain claim and takes ink.
+    assert style.domain_color("all") == style.INK
+
+
+def test_the_three_channels_carry_one_dimension_each() -> None:
+    """Dash = theme. Hue = domain. Marker = domain.
+
+    The marker was a second *theme* cue until 2026-09-02, which left hue as the
+    only thing separating the domains, so greyscale lost the domain entirely.
+    Marker now doubles the domain instead, and dash carries the theme alone.
+    """
+    # Dash is the theme channel: unique per theme, and blind to the domain.
+    for domain in ("radiology", "pathology", "both"):
+        dashes = {style.series_dash(theme, domain) for theme in style.THEME_ORDER}
+        assert len(dashes) == len(style.THEME_ORDER), "each theme needs its own dash"
+    for theme in style.THEME_ORDER:
+        seen = {style.series_dash(theme, d) for d in ("all", "radiology", "pathology", "both")}
+        assert len(seen) == 1, "the domain must not affect the dash"
+
+    # Marker is a domain channel: unique per domain, and blind to the theme
+    # except where an override deliberately restates a known domain.
+    for theme in ("foundation_models", "multimodal_integration", "clinical_fda"):
+        markers = {style.series_marker(theme, d) for d in ("radiology", "pathology", "both")}
+        assert len(markers) == 3, "each domain needs its own marker"
+    for domain in ("radiology", "pathology", "both"):
+        seen = {style.series_marker(theme, domain) for theme in style.THEME_ORDER}
+        assert len(seen) == 1, "the theme must not affect the marker"
+
+    # Hue and marker are the same statement, so they can never contradict.
+    for theme, domain in panel_b.UPPER_SERIES + panel_b.LOWER_SERIES:
+        shown = style.appearance_domain(theme, domain)
+        assert style.series_color(theme, domain) == style.domain_color(shown)
+        assert style.series_marker(theme, domain) == style.DOMAIN_MARKERS[shown]
+
+
+def test_the_confusable_marker_pair_never_shares_a_plot() -> None:
+    """Triangle and diamond are the one pair that could be mistaken. Measured.
+
+    Rendering each marker at its drawn size and measuring the ink inside its
+    bounding box gives, for the 2.9 pt filled markers: circle 0.782, square
+    1.000, triangle 0.521, diamond 0.515. Triangle and diamond differ by 0.006 --
+    they are effectively the same silhouette at 1.02 mm on the page.
+
+    They are safe only because they never appear together: the triangle is
+    cross-specialty, drawn in the upper plot alone, and the diamond is the
+    no-domain marker, drawn in the lower plot alone. If a future series brought
+    them into one plot the figure would lose a distinction in greyscale, so the
+    separation is asserted rather than left to luck.
+
+    Within each plot as drawn, the closest pair is circle against square, 0.218
+    apart in ink fill -- a 22-point difference plus a round-versus-flat-sided
+    silhouette, which reads.
+    """
+    confusable = {style.DOMAIN_MARKERS["both"], style.DOMAIN_MARKERS["all"]}
+    for plot_series in (panel_b.UPPER_SERIES, panel_b.LOWER_SERIES):
+        used = {style.series_marker(theme, domain) for theme, domain in plot_series}
+        assert not confusable <= used, (
+            f"the triangle and diamond markers are 0.006 apart in ink fill and "
+            f"must not share a plot; this one draws {sorted(used)}"
+        )
+
+
+def test_every_drawn_series_is_distinguishable_from_every_other() -> None:
+    """Section 7. Ten lines, so this is the test that has to hold the panel up.
+
+    The standard is greyscale, not colour: **within one plot, the dash-and-marker
+    pair alone must separate every series from every other**, with no hue at all.
+    Dash carries the theme and marker carries the domain, so the pair identifies
+    the series completely and a greyscale print loses nothing.
+
+    This is stronger than what the panel could assert before 2026-09-02, when
+    marker was a second theme cue and the three domain lines of one theme were
+    the same stroke in three near-identical greys.
+    """
+    for plot_series in (panel_b.UPPER_SERIES, panel_b.LOWER_SERIES):
+        signatures = {
+            (
+                style.series_color(theme, domain),
+                style.series_dash(theme, domain),
+                style.series_marker(theme, domain),
+            )
+            for theme, domain in plot_series
+        }
+        assert len(signatures) == len(plot_series), "two series would draw alike"
+        labels = {style.series_label(theme, domain) for theme, domain in plot_series}
+        assert len(labels) == len(plot_series), "every line needs its own end label"
+        # The greyscale test: dash and marker alone, no hue, must separate every
+        # series. If this fails the figure does not survive a monochrome print.
+        strokes = {
+            (style.series_dash(theme, domain), style.series_marker(theme, domain))
+            for theme, domain in plot_series
+        }
+        assert len(strokes) == len(plot_series), (
+            "two series are identical in greyscale: dash and marker must "
+            "separate every series in this plot without any help from hue"
+        )
 
 
 def test_no_explanatory_annotation_stands_in_the_artwork(
