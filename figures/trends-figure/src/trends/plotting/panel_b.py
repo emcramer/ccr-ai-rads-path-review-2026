@@ -25,22 +25,26 @@ journal redraws the figure:
 2. **Both y axes are labelled and ticked**, so the tick numbers themselves —
    0-1,200 above, 0-25 below — contradict any reading of one continuous axis.
 3. **The lower plot's whole range is drawn on the upper plot**, as a tinted band
-   from zero up to the lower plot's ceiling, capped by a dashed rule and labelled
-   in place. The reader sees the entire lower plot as a sliver at the foot of the
-   upper one, which is what it is. Below :data:`MIN_RATIO_FOR_BAND` the band would
-   cover a third of the upper plot and teach nothing, so it is not drawn.
+   from zero up to the lower plot's ceiling, capped by a dashed rule. The reader
+   sees the entire lower plot as a sliver at the foot of the upper one, which is
+   what it is. Below :data:`MIN_RATIO_FOR_BAND` the band would cover a third of
+   the upper plot and teach nothing, so it is not drawn. The band's caption moved
+   to the legend on 2026-09-02; the band and rule are structure and stay.
 4. **The ratio is printed**, computed from the axes actually drawn, in the gap
    between the plots.
 
 What must survive the drawing
 -----------------------------
-* **Pathology is exactly zero for eight consecutive years.** A zero series drawn
-  on the axis floor reads as an absent series. So the lower plot's y limit starts
-  slightly below zero, lifting the zero line clear of the spine; every year of the
-  run carries its marker, so the zeros read as eight measured points rather than
-  as a line that starts in 2023; and the run is named on the figure, with a curved
-  leader dropped onto the zero line just after the first year, where every series
-  in the lower plot is still flat and the leader crosses nothing.
+* **Pathology is exactly zero for a run of consecutive years.** A zero series
+  drawn on the axis floor reads as an absent series. So the lower plot's y limit
+  starts slightly below zero, lifting the zero line clear of the spine, and every
+  year of the run carries its marker, so the zeros read as measured points rather
+  than as a line that starts when the first paper appears. The run used to be
+  named on the figure as well, with a curved leader dropped onto the zero line;
+  that sentence moved to the legend on 2026-09-02, under the style guide's rule
+  that the artwork carries no explanatory prose. :func:`_leading_zero_run` still
+  finds the span, and the run summary still prints it, so whoever writes the
+  legend reads it from the numbers rather than off the picture.
 * **Small counts are noisy.** The lower plot magnifies a 93-paper theme, so its
   shape — clinical radiology's 13, 9, 21 across 2024-2026 — invites a story that
   the numbers cannot carry. That warning, and the change-of-scale note, are made
@@ -51,6 +55,20 @@ What must survive the drawing
 The final year is partial. Its segment is drawn dotted and its point as an open
 marker, in both plots, and the year sits inside a shaded band marked "partial".
 No trend statement may rest on it.
+
+Colour
+------
+Three of the five series are *themes*, not data modalities, so under
+``../ink_style_guide.md`` they carry no hue at all: foundation models, multimodal
+integration and digital twins are drawn in the guide's three neutral inks and are
+told apart by dash pattern and marker. The two clinical lines are genuinely
+modality-domain series -- radiology against pathology -- so they take the fixed
+radiology and pathology hues, and that is the one place in this panel where
+colour means something. It also happens to be the comparison the review cares
+most about.
+
+Every series keeps its dash, its marker, and its label at the end of the line, so
+nothing here depends on colour being seen, and the panel survives greyscale.
 """
 
 from __future__ import annotations
@@ -81,9 +99,13 @@ LOWER_SERIES: tuple[tuple[str, str], ...] = (
 
 _SERIES_ORDER: tuple[tuple[str, str], ...] = UPPER_SERIES + LOWER_SERIES
 
-#: Gap between the two plots, in inches. It has to hold two lines of note text and
-#: still read as a break rather than as a margin.
-GAP_IN: float = 0.34
+#: Gap between the two plots, in inches. It has to read as a deliberate break in
+#: the axis rather than as a margin, which is now its whole job: the notes that
+#: used to sit here moved to the legend on 2026-09-02. Sized for the break alone,
+#: it is narrower than it was; restoring SHOW_GAP_NOTES needs about 0.34 in again,
+#: or the two lines will collide with the lower plot.
+GAP_IN: float = 0.20
+GAP_IN_WITH_NOTES: float = 0.34
 
 #: Share of the plotting height, gap excluded, given to the upper plot.
 UPPER_SHARE: float = 0.56
@@ -121,8 +143,9 @@ NOISE_NOTE_MAX_PEAK: float = 50.0
 RANGE_BAND: str = "#E7EEF4"
 RANGE_RULE: str = "#7B8B99"
 
-#: Colour of the small grey notes.
-NOTE_INK: str = "#5A5A5A"
+#: Colour of the small grey notes ("2026 partial", and the gap notes when they
+#: are switched back on). The style guide's subtle neutral.
+NOTE_INK: str = style.SUBTLE
 
 
 @dataclass(frozen=True)
@@ -299,7 +322,7 @@ def _draw_plot(
             continue
         x = frame["year"].to_numpy()
         y = frame["n_papers"].to_numpy()
-        colour = style.THEME_COLORS.get(theme, style.INK)
+        colour = style.series_color(theme, domain)
         dashes = style.SERIES_DASHES.get((theme, domain), (0, ()))
         marker = style.SERIES_MARKERS.get((theme, domain), "o")
 
@@ -338,17 +361,31 @@ def _draw_plot(
                 zorder=4,
             )
         label_entries.append(
-            (float(y[-1]), style.series_label(theme, domain), style.theme_text_color(theme))
+            (
+                float(y[-1]),
+                style.series_label(theme, domain),
+                style.series_text_color(theme, domain),
+            )
         )
 
     ax.set_xticks(years)
     if show_x_labels:
         ax.set_xticklabels([str(year) for year in years], fontsize=style.FS_TICK)
-        ax.set_xlabel("Publication year", fontsize=style.FS_AXIS_LABEL)
+        ax.set_xlabel(
+            "Publication year",
+            fontsize=style.FS_AXIS_LABEL,
+            style="italic",
+            color=style.SUBTLE,
+        )
     else:
         ax.set_xticklabels([])
-    ax.tick_params(axis="both", labelsize=style.FS_TICK, pad=2.0)
-    ax.set_ylabel("# of papers", fontsize=style.FS_AXIS_LABEL)
+    ax.tick_params(axis="both", labelsize=style.FS_TICK, pad=2.0, colors=style.SUBTLE)
+    ax.set_ylabel(
+        "# of papers",
+        fontsize=style.FS_AXIS_LABEL,
+        style="italic",
+        color=style.SUBTLE,
+    )
     for name in ("top", "right"):
         ax.spines[name].set_visible(False)
 
@@ -381,58 +418,33 @@ def _draw_plot(
         )
 
 
-def _mark_lower_range(ax: Axes, lower_top: float, last_year: int) -> None:
-    """Draw the lower plot's whole range onto the upper plot, and say what it is.
+def _mark_lower_range(ax: Axes, lower_top: float) -> None:
+    """Draw the lower plot's whole range onto the upper plot.
 
     The band runs from zero to the lower plot's ceiling. On the real numbers it is
     a sliver a couple of points high, which is the honest picture: that sliver is
     the entire lower plot.
+
+    The band and its dashed rule are structural and stay. The sentence that used
+    to sit beside the rule -- "the whole lower plot fits below this line" -- was
+    removed on 2026-09-02: it explained the drawing rather than naming an
+    element, which the style guide keeps out of the artwork and puts in the
+    legend. What it said is now a clause of the legend's Panel B sentence.
     """
     ax.axhspan(0.0, lower_top, color=RANGE_BAND, linewidth=0, zorder=0.5)
     ax.axhline(lower_top, color=RANGE_RULE, linewidth=0.7, linestyle=(0, (2.6, 1.6)), zorder=1)
-    # The label sits outside the axes, level with the rule, where the end-of-line
-    # labels leave the gutter empty. Inside the axes it would cross the lines.
-    ax.annotate(
-        "the whole lower plot\nfits below this line",
-        xy=(last_year + 0.6, lower_top),
-        ha="left",
-        va="center",
-        fontsize=style.FS_NOTE,
-        color=RANGE_RULE,
-        linespacing=1.25,
-        annotation_clip=False,
-    )
 
 
-def _mark_zero_run(ax: Axes, run: tuple[int, int], y_top: float, y_bottom: float) -> None:
-    """Name the pathology line's run of zero years, with a leader down to it.
-
-    The leader is dropped at the first year, where every series in the lower plot
-    is flat, so it crosses no line on its way to the zero line.
-    """
-    start, end = run
-    colour = style.theme_text_color("clinical_fda")
-    span = y_top - y_bottom
-    ax.annotate(
-        f"Pathology: 0 papers in every\nyear from {start} to {end}",
-        xy=(start + 0.75, 0.30),
-        xytext=(start + 0.05, y_top - 0.05 * span),
-        ha="left",
-        va="top",
-        fontsize=style.FS_NOTE,
-        color=colour,
-        linespacing=1.25,
-        zorder=5,
-        arrowprops={
-            "arrowstyle": "-|>",
-            "mutation_scale": 5.0,
-            "color": colour,
-            "linewidth": 0.55,
-            "shrinkA": 3.0,
-            "shrinkB": 1.0,
-            "connectionstyle": "arc3,rad=-0.22",
-        },
-    )
+# The pathology zero run used to be named on the figure, with a curved leader
+# dropped onto the zero line: "Pathology: 0 papers in every year from 2015 to
+# 2021". It was removed on 2026-09-02. It is an explanation, not a label of an
+# element, and the style guide keeps explanations in the legend; at nine words
+# it was also far past the four-word limit for anything that may stand in the
+# artwork. What the drawing still does is show the run: every zero year carries
+# its own marker, and the lower plot's floor sits below zero so the run reads as
+# seven measured points rather than as a line that starts in 2022. The sentence
+# naming the years now lives in the figure legend, and :func:`_leading_zero_run`
+# still computes the span, which is reported in the run summary.
 
 
 def _draw_gap_notes(
@@ -496,15 +508,24 @@ def draw(
 
     upper_series, lower_series = _partition(theme_years)
     zero_run = _leading_zero_run(theme_years, "clinical_fda", "pathology")
-    # The lower plot's headroom has to hold the zero-run note as well as its lines.
-    lower_headroom = 1.34 if (zero_run is not None and lower_series) else 1.12
+    # The lower plot's headroom. It used to open to 1.34 to make room for the
+    # zero-run note; the note moved to the legend on 2026-09-02 and the headroom
+    # follows it down, closing the dead band left above the lines.
+    #
+    # This moves a published number. The headroom sets the lower plot's y limit,
+    # the y limit sets the ratio between the two scales, and that ratio is quoted
+    # in the figure legend and in the description. Whoever changes it must read
+    # the new value out of ``figures/trends_figure_summary.txt`` and carry it into
+    # both documents -- never off the picture. Author's decision, 2026-09-02.
+    lower_headroom = 1.12
 
     upper_ax: Axes | None = None
     lower_ax: Axes | None = None
     ratio: float | None = None
 
     if upper_series and lower_series:
-        gap = min(GAP_IN / fig_h, 0.4 * height)
+        gap_in = GAP_IN_WITH_NOTES if SHOW_GAP_NOTES else GAP_IN
+        gap = min(gap_in / fig_h, 0.4 * height)
         plots_h = height - gap
         upper_h = UPPER_SHARE * plots_h
         lower_h = plots_h - upper_h
@@ -543,10 +564,7 @@ def draw(
         )
         ratio = (upper_top - upper_bottom) / (lower_top - lower_bottom)
         if ratio >= MIN_RATIO_FOR_BAND:
-            _mark_lower_range(upper_ax, lower_top, last_year)
-        if zero_run is not None:
-            _mark_zero_run(lower_ax, zero_run, lower_top, lower_bottom)
-
+            _mark_lower_range(upper_ax, lower_top)
         _draw_gap_notes(figure, left, bottom + lower_h + 0.055 * gap, ratio, lower_peak)
         annotate_on = upper_ax
     else:
@@ -570,8 +588,6 @@ def draw(
         )
         if series is lower_series:
             lower_ax = ax
-            if zero_run is not None:
-                _mark_zero_run(ax, zero_run, peak * headroom, -_ZERO_LIFT * peak)
         else:
             upper_ax = ax
         annotate_on = ax

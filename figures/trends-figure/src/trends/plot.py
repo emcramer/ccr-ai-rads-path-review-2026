@@ -105,13 +105,18 @@ def build_figure(
     tails = panel_a.draw(figure, data.combinations, _PANEL_A_RECT, top_n=top_n, scale=scale)
     panel = panel_b.draw(figure, data.theme_years, _PANEL_B_RECT)
 
+    # Panel letters: bold serif in ink, and the largest type on the page, per
+    # section 2 of ``../ink_style_guide.md``. They are the only element of the
+    # figure that has to be findable before anything is read.
     for letter, y in (("A", 0.995), ("B", 0.432)):
         figure.text(
             0.012,
             y,
             letter,
             fontsize=style.FS_PANEL_LETTER,
+            fontfamily="serif",
             fontweight="bold",
+            color=style.INK,
             va="top",
             ha="left",
         )

@@ -19,6 +19,7 @@ import shutil
 import sys
 from pathlib import Path
 
+import matplotlib.colors as mcolors
 import pandas as pd
 import pytest
 
@@ -505,14 +506,25 @@ def test_the_x_axis_is_shared_and_labeled_once(measured_dir: Path) -> None:
     plt.close(figure)
 
 
-def test_the_zero_years_are_found_and_named(measured_dir: Path) -> None:
-    """Pathology's zero run is the review's argument; the figure must state it."""
+def test_the_zero_run_is_found_but_left_to_the_legend(measured_dir: Path) -> None:
+    """Style guide section 6: the artwork names elements, it does not explain them.
+
+    "Pathology: 0 papers in every year from 2015 to 2021" was an explanation, and
+    a nine-word one. It moved to the legend on 2026-09-02. The run itself must
+    still be *found*, because the run summary reports it and the legend is filled
+    from the summary rather than from the picture -- and it must still be
+    *drawn*, which the next two tests check.
+    """
     import matplotlib.pyplot as plt
 
     figure, panel = _panel(measured_dir)
     assert panel.zero_run == (2015, 2021)
-    texts = " ".join(text.get_text() for text in panel.lower.texts)
-    assert "0 papers" in texts and "2015" in texts and "2021" in texts
+    drawn = {text.get_text() for text in panel.lower.texts}
+    # What is left inside the plot is the end-of-line series labels, which are
+    # functional names, not explanations. Nothing else may stand there.
+    assert drawn == {
+        style.series_label(theme, domain) for theme, domain in panel_b.LOWER_SERIES
+    }
     plt.close(figure)
 
 
@@ -533,7 +545,7 @@ def test_every_zero_year_is_drawn_as_a_point(measured_dir: Path) -> None:
 
     figure, panel = _panel(measured_dir)
     marker = style.SERIES_MARKERS[("clinical_fda", "pathology")]
-    colour = style.THEME_COLORS["clinical_fda"]
+    colour = style.SERIES_COLORS[("clinical_fda", "pathology")]
     pathology = [
         line
         for line in panel.lower.get_lines()
@@ -904,21 +916,42 @@ def test_the_remainder_bar_is_drawn_as_a_different_kind_of_bar(
                     else tail.remainder_papers / tail.total_papers
                 )
                 assert abs(hatched[0].get_height() - expected) < 0.005
-                assert hatched[0].get_facecolor()[:3] == (1.0, 1.0, 1.0)
+                # Author's decision of 2026-09-02: the remainder column is
+                # hatched in the bars' own ink, NOT in the style guide's pale
+                # section 4 hatch, which is specified for masked and inactive
+                # elements. In the multimodal block this is the tallest bar in
+                # the block; drawn pale it read as a rounding error, which is
+                # exactly what DECISIONS.md forbids.
+                assert style.HATCH_LINE == style.BAR_FILL
+                ground = mcolors.to_rgb(style.HATCH_GROUND)
+                assert hatched[0].get_facecolor()[:3] == pytest.approx(ground)
+                assert mcolors.to_rgb(hatched[0].get_edgecolor()[:3]) == pytest.approx(
+                    mcolors.to_rgb(style.HATCH_LINE)
+                )
         plt.close(figure)
 
 
-def test_the_block_note_no_longer_claims_anything_is_hidden(
+def test_the_block_note_is_the_theme_total_and_nothing_else(
     synthetic_dir: Path, tmp_path: Path
 ) -> None:
-    """Nothing is hidden now, so no note may say so."""
+    """Nothing is hidden, so no note may say so -- and none may explain the cap.
+
+    The note under each block is now the functional label ``n = N papers`` alone.
+    "top 12 of 139 combinations" was explanatory prose and moved to the legend on
+    2026-09-02, per section 6 of the style guide. How the columns divide the
+    theme is still visible in the drawing, through the remainder column and its
+    "+N sets" caption, which this file tests elsewhere.
+    """
     import matplotlib.pyplot as plt
 
     data = io.load_figure_data(synthetic_dir)
-    figure, _, _ = plot.build_figure(data)
+    figure, tails, _ = plot.build_figure(data)
     notes = " ".join(text.get_text() for text in figure.texts)
     assert "rarer combinations" not in notes
-    assert "combinations" in notes
+    assert "top " not in notes and "combinations shown" not in notes
+    for tail in tails:
+        if tail.total_papers:
+            assert f"n = {tail.total_papers:,} papers" in notes
     plt.close(figure)
 
 
@@ -1029,10 +1062,24 @@ def _texts_outside_the_page(figure) -> list[str]:
     page = figure.get_window_extent(renderer=renderer)
     offenders = []
     artists = list(figure.texts)
+    # A tick locator emits ticks beyond the axes' view interval; matplotlib holds
+    # the label objects but never draws them, and their boxes sit wherever the
+    # off-view tick would have been. Measuring those reports overflows that do
+    # not exist on the page, so they are collected here and skipped below. Only
+    # ticks that are actually drawn are held to the canvas.
+    unrendered = set()
     for ax in figure.axes:
         artists.extend(ax.texts)
-        artists.extend(ax.get_xticklabels())
-        artists.extend(ax.get_yticklabels())
+        for axis, (low, high) in (
+            (ax.xaxis, sorted(ax.get_xlim())),
+            (ax.yaxis, sorted(ax.get_ylim())),
+        ):
+            locations = axis.get_ticklocs()
+            labels = axis.get_ticklabels()
+            artists.extend(labels)
+            for location, label in zip(locations, labels):
+                if not low <= location <= high:
+                    unrendered.add(label)
         if ax.get_title():
             artists.append(ax.title)
         for label in (ax.xaxis.label, ax.yaxis.label):
@@ -1040,6 +1087,8 @@ def _texts_outside_the_page(figure) -> list[str]:
                 artists.append(label)
     for artist in artists:
         if not artist.get_text().strip():
+            continue
+        if artist in unrendered:
             continue
         box = artist.get_window_extent(renderer=renderer)
         # A half point of slack: anti-aliasing puts a glyph's box a hair wide.
@@ -1076,3 +1125,239 @@ def test_no_label_runs_off_the_page_on_the_synthetic_corpus(synthetic_dir: Path)
         offenders = _texts_outside_the_page(figure)
         plt.close(figure)
     assert not offenders, "text drawn off the page: " + "; ".join(offenders)
+
+
+# --------------------------------------------------------------------------
+# Style guide conformance
+#
+# The figure follows ``../ink_style_guide.md``. Three of its rules are the kind
+# that decay silently -- a font substitution nobody sees, a hue that creeps back
+# in as decoration, an explanatory sentence that gets re-added "just this once"
+# -- so each is pinned here rather than trusted to review.
+# --------------------------------------------------------------------------
+
+
+def test_every_ibm_plex_face_resolves_to_the_vendored_file() -> None:
+    """Section 2: the faces are IBM Plex, and not a fallback wearing its name.
+
+    ``findfont`` never fails: handed a family it does not have, it returns
+    DejaVu Sans and logs a warning at a level nobody reads, and the whole figure
+    renders in the wrong face while looking finished. So the test compares the
+    resolved path, not the family name it asked for.
+    """
+    from matplotlib import font_manager
+
+    directory = style.font_dir()
+    for (family, weight, slant), filename in style.FONT_FILES.items():
+        resolved = Path(
+            font_manager.findfont(
+                font_manager.FontProperties(family=family, weight=weight, style=slant)
+            )
+        ).resolve()
+        assert resolved == (directory / filename).resolve(), (
+            f"{family} {weight} {slant} resolved to {resolved.name}, not {filename}; "
+            "matplotlib has substituted a face the style guide names"
+        )
+        assert "Plex" in resolved.name
+
+
+def test_a_missing_face_raises_rather_than_falling_back(tmp_path: Path, monkeypatch) -> None:
+    """Section 2 is explicit: do not substitute silently. So: raise, loudly."""
+    incomplete = tmp_path / "assets" / "fonts"
+    incomplete.mkdir(parents=True)
+    (incomplete / "IBMPlexSans-Regular.ttf").write_bytes(b"")
+    monkeypatch.setattr(style, "font_dir", lambda: incomplete)
+    with pytest.raises(style.FontsUnavailable) as raised:
+        style.register_fonts()
+    assert "IBMPlexSerif-Bold.ttf" in str(raised.value)
+
+
+def test_the_font_directory_is_found_from_the_package_not_the_cwd(
+    tmp_path: Path, monkeypatch
+) -> None:
+    """A build launched from anywhere must find the same vendored faces."""
+    monkeypatch.chdir(tmp_path)
+    assert style.font_dir().is_dir()
+    assert (style.font_dir() / "IBMPlexSerif-Bold.ttf").is_file()
+
+
+def test_the_figure_is_drawn_in_ibm_plex(synthetic_dir: Path) -> None:
+    """Serif for the panel letters and theme titles, sans for everything else."""
+    import matplotlib.pyplot as plt
+
+    data = io.load_figure_data(synthetic_dir)
+    with plt.rc_context(plot.style.rc_params()):
+        figure, _, _ = plot.build_figure(data)
+        letters = [text for text in figure.texts if text.get_text() in {"A", "B"}]
+        assert len(letters) == 2
+        for letter in letters:
+            assert letter.get_fontfamily() == ["serif"]
+            assert letter.get_fontweight() == "bold"
+            assert letter.get_color() == style.INK
+        titles = [ax.title for ax in figure.axes if ax.get_title()]
+        assert titles, "each Panel A block carries its theme title"
+        for title in titles:
+            assert title.get_fontfamily() == ["serif"]
+            assert title.get_fontweight() == "bold"
+        assert plt.rcParams["font.sans-serif"][0] == style.SANS
+        assert plt.rcParams["font.serif"][0] == style.SERIF
+        plt.close(figure)
+
+
+def test_the_panel_letter_is_the_largest_type_on_the_page() -> None:
+    """Section 2's hierarchy, in the order the guide sets it."""
+    sizes = (
+        style.FS_PANEL_LETTER,
+        style.FS_THEME_TITLE,
+        style.FS_AXIS_LABEL,
+        style.FS_TICK,
+        style.FS_NOTE,
+    )
+    assert list(sizes) == sorted(sizes, reverse=True)
+    assert style.FS_PANEL_LETTER > 1.4 * style.FS_THEME_TITLE
+    # Nothing may fall below the floors this project measured and tested.
+    assert style.FS_BAR_VALUE >= panel_a._MIN_LEGIBLE_VALUE_FS
+    assert style.FS_TICK >= 7.0
+
+
+def test_axis_titles_are_italic_and_subtle(measured_dir: Path) -> None:
+    """Section 2's "column headers / axis-style labels" row: italic, #5C6068."""
+    import matplotlib.pyplot as plt
+
+    figure, panel = _panel(measured_dir)
+    labels = [ax.yaxis.label for ax in panel.axes] + [panel.lower.xaxis.label]
+    for label in labels:
+        assert label.get_style() == "italic"
+        assert label.get_color() == style.SUBTLE
+    plt.close(figure)
+
+
+def test_panel_a_dots_carry_their_rows_modality_colour(minimal_dir: Path) -> None:
+    """Section 3: colour identifies a data modality, and only that.
+
+    The fixed assignments are the project's, not this figure's, so the test
+    checks the drawn dot against the modality table rather than against itself.
+    """
+    import matplotlib.pyplot as plt
+
+    data = io.load_figure_data(minimal_dir)
+    with plt.rc_context(plot.style.rc_params()):
+        figure, _, _ = plot.build_figure(data)
+        row_of = {key: index for index, key in enumerate(style.MODALITY_ORDER)}
+        seen = 0
+        for ax in _matrix_axes(figure, len(style.THEME_ORDER)):
+            for collection in ax.collections:
+                offsets = collection.get_offsets()
+                colours = collection.get_facecolor()
+                if len(colours) < 2:
+                    continue  # the single-coloured absent-dot grid
+                for (_, row), colour in zip(offsets, colours):
+                    expected = style.modality_color(style.MODALITY_ORDER[int(round(row))])
+                    assert tuple(colour[:3]) == pytest.approx(
+                        mcolors.to_rgb(expected), abs=0.01
+                    )
+                    seen += 1
+        assert seen, "no present dot was drawn, so nothing was checked"
+        assert row_of["genomics"] < row_of["other"]
+        plt.close(figure)
+
+
+def test_panel_a_bars_carry_no_modality_colour(synthetic_dir: Path) -> None:
+    """A bar is a combination, not a modality, so it takes the structural ink."""
+    import matplotlib.pyplot as plt
+
+    data = io.load_figure_data(synthetic_dir)
+    hues = {mcolors.to_rgb(colour) for colour in style.MODALITY_COLORS.values()}
+    with plt.rc_context(plot.style.rc_params()):
+        figure, tails, _ = plot.build_figure(data)
+        for ax in _bar_axes(figure, len(tails)):
+            for patch in ax.patches:
+                face = tuple(patch.get_facecolor()[:3])
+                assert not any(
+                    face == pytest.approx(hue, abs=0.01) for hue in hues
+                ), "no bar may be tinted by modality or by theme"
+                if not patch.get_hatch():
+                    assert face == pytest.approx(mcolors.to_rgb(style.BAR_FILL), abs=0.01)
+        plt.close(figure)
+
+
+def test_panel_b_gives_colour_only_to_the_two_clinical_lines() -> None:
+    """The other three series are themes, so they are drawn in neutrals."""
+    hues = {
+        style.RADIOLOGY_IMAGING,
+        style.DIGITAL_PATHOLOGY,
+        style.DIGITAL_PATHOLOGY_DEEP,
+    }
+    neutrals = {style.INK, style.LINE, style.SUBTLE}
+    assert style.SERIES_COLORS[("clinical_fda", "radiology")] == style.RADIOLOGY_IMAGING
+    # The deep variant, not the border hue: the border hue was the lightest
+    # stroke on the page in greyscale, and this line is the review's argument.
+    assert style.SERIES_COLORS[("clinical_fda", "pathology")] == style.DIGITAL_PATHOLOGY_DEEP
+    for key in (
+        ("foundation_models", "all"),
+        ("multimodal_integration", "all"),
+        ("digital_twins", "all"),
+    ):
+        assert style.SERIES_COLORS[key] in neutrals
+        assert style.SERIES_COLORS[key] not in hues
+
+
+def test_colour_is_never_the_only_cue_in_panel_b() -> None:
+    """Section 7. Three series carry no hue at all, so this is load-bearing."""
+    keys = panel_b.UPPER_SERIES + panel_b.LOWER_SERIES
+    assert len({style.SERIES_DASHES[key] for key in keys}) == len(keys)
+    assert len({style.SERIES_MARKERS[key] for key in keys}) == len(keys)
+    assert len({style.SERIES_END_LABELS[key] for key in keys}) == len(keys)
+
+
+def test_no_explanatory_annotation_stands_in_the_artwork(
+    measured_dir: Path, four_digit_dir: Path
+) -> None:
+    """Section 6: only functional labels of four words or fewer may stay.
+
+    The three sentences removed on 2026-09-02 are named individually, because
+    each was added for a real reason and each will be proposed again.
+    """
+    import matplotlib.pyplot as plt
+
+    data = io.load_figure_data(measured_dir)
+    with plt.rc_context(plot.style.rc_params()):
+        figure, _, _ = plot.build_figure(data)
+        everything = " ".join(
+            text.get_text()
+            for text in list(figure.texts) + [t for ax in figure.axes for t in ax.texts]
+        )
+        for gone in (
+            "0 papers in every",
+            "fits below this line",
+            "whole lower plot",
+            "combinations shown",
+        ):
+            assert gone not in everything, f"{gone!r} is an explanation; it belongs in the legend"
+        assert "top " not in everything
+        plt.close(figure)
+
+        # The functional labels that were kept. Drawn from a corpus with enough
+        # combinations to force a remainder column, which the measured fixture
+        # has not got.
+        figure, tails, _ = plot.build_figure(io.load_figure_data(four_digit_dir))
+        kept = " ".join(
+            text.get_text()
+            for text in list(figure.texts) + [t for ax in figure.axes for t in ax.texts]
+        )
+        assert panel_a.REMAINDER_LABEL in kept
+        assert f"+{tails[0].remainder_sets} sets" in kept
+        assert "partial" in kept
+        assert f"n = {tails[0].total_papers:,} papers" in kept
+        plt.close(figure)
+
+
+def test_the_svg_references_fonts_by_name_rather_than_outlining_them(
+    synthetic_dir: Path, tmp_path: Path
+) -> None:
+    """Section 8. An outlined SVG cannot be restyled by the journal's artist."""
+    assert style.rc_params()["svg.fonttype"] == "none"
+    result = plot.build(synthetic_dir, tmp_path / "figures", tag="svg")
+    body = result.svg.read_text(encoding="utf-8")
+    assert "IBM Plex" in body, "the SVG must name the families it was drawn in"
+    assert result.pdf.exists() and result.png.exists()

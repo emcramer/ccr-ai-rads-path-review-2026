@@ -5,8 +5,7 @@ intelligence in radiology and pathology.
 
 ## What is here
 
-Right now this repository tracks one thing: `figures/trends-figure/`, the pipeline that
-produces the two-panel literature-trends figure — which data modalities each research
+Current purpose of the repository is to track figures. The `figures/trends-figure/` directory contains the pipeline that produces the two-panel literature-trends figure — which data modalities each research
 theme uses (Panel A), and how theme volume moves over time (Panel B).
 
 ```
@@ -25,6 +24,17 @@ Start with `figures/trends-figure/README.md` for how to run it, and
 and why.
 
 The manuscript itself is not tracked here yet.
+
+### Figure Style Guide
+
+A style guide that describes theme, fonts, and aesthetics information is at `figures/ink_style_guide.md`. This guide should be applied to all figures to ensure uniform appearance throughout the manuscript.
+
+Collaborators — and their coding agents — should start from `figures/AGENTS.md`, which
+turns that guide into working instructions: the palette and type tokens in
+copy-pasteable form, how to reuse the existing matplotlib style module, where the
+vendored fonts and approved icons live, and a checklist to run before a figure is
+called done. Agent tools read `AGENTS.md` automatically; for Claude Code, add
+`@figures/AGENTS.md` to your `CLAUDE.md`.
 
 ## Data that is deliberately not tracked
 

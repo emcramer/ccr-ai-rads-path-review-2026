@@ -706,3 +706,88 @@ unchanged, so author effort already spent carries over.
 relabeled under the inclusive standard *after* the v3 scoring was seen, so it is not blind. The
 blind measurement of the new standard is round three, which is why round three read the row as
 a census rather than a sample.
+
+## 2026-09-02 — The in-figure notes move to the legend; SVG added
+
+**Decision.** The change-of-scale note and the small-count warning no longer print in the gap
+between Panel B's plots. Both statements move to the figure legend. The gap narrows from 0.34
+to 0.20 inches, since it now only has to read as a break in the axis rather than hold two
+lines of text. Author's decision.
+**Reason.** The journal prints the legend beneath the figure, so the statements still reach
+every reader, and the figure carries less furniture.
+**What was kept.** The scale difference is still shown graphically — two labelled axes, a real
+break between the plots, and the band on the upper plot marking the lower plot's whole range —
+so removing the prose costs the reader nothing the drawing does not already say. Setting
+`panel_b.SHOW_GAP_NOTES = True` restores both lines and widens the gap again to fit them; a
+test asserts that switch still works, so the decision is reversible without a code edit.
+**Recorded risk.** The small-count warning now rests on the legend alone. If the legend is
+shortened further, that caveat should move into the body text rather than disappear — noted in
+`figure-legend.md`.
+
+## 2026-09-02 — SVG is a third output
+
+**Decision.** Every build writes PDF, PNG, and SVG.
+**Reason.** AACR redraws figures from author sketches. SVG keeps text as text, so an
+illustrator can restyle every label without redrawing the figure.
+
+## 2026-09-02 — Legend split from description
+
+**Decision.** `docs/figure-legend.md` is the roughly 205-word legend for the manuscript.
+The former long legend is `docs/figure-description.md`, a working document holding the full
+account of the figure and its limitations.
+**Reason.** The legend that ships must be short enough for a journal to print; the reasoning
+behind it must still be written down somewhere. The description file records what was cut from
+the legend, so a later editor can tell the difference between a claim that was dropped and a
+claim that was never made.
+
+## 2026-09-02 — The project moved to `CCR/figures/trends-figure/`
+
+The editable install was re-pointed and stale `__pycache__` from the old path removed; its
+compiled files were reporting the old location in tracebacks. Stale figure variants built on
+superseded dictionary versions were deleted, so nothing in `figures/` predates the current run.
+
+## 2026-09-02 — The figure follows the project's ink style guide
+
+**Decision.** Restyled to `figures/ink_style_guide.md`. Colour is now semantic rather than
+decorative: Panel A's dots take their row's fixed modality colour, Panel A's bars are neutral
+because a bar is a combination rather than one modality, and the only colour in Panel B marks
+the clinical theme's radiology and pathology series — which are modality-domain series, and
+are also the comparison the review turns on. The other three themes are distinguished by ink
+tone, dash, and marker. Type is IBM Plex Serif for panel letters and block titles and IBM Plex
+Sans elsewhere; the faces are vendored at `assets/fonts/` under the Open Font Licence, and the
+build raises `FontsUnavailable` rather than substituting Georgia and Arial silently, as §2
+requires.
+
+**Three annotations were removed from the artwork** under §6, which reserves the artwork for
+functional labels of four words or fewer: the pathology zero-run callout, the sentence
+explaining the dashed range rule, and the "top 12 of N combinations" line. All three moved into
+the legend. Removing them let the gap between Panel B's plots close and the lower plot's
+headroom tighten, which moved the published scale ratio from 36× to 43×; the legend and the
+description were updated together.
+
+**One deliberate departure from the guide, recorded in code and asserted by a test.** §4
+assigns its pale hatch — `#F0F0F0` ground, `#BDBDBD` lines — to "masked, hidden, or inactive"
+elements. Panel A's remainder column is none of those: in the multimodal block it is 45% of the
+theme and the tallest bar present, and this project had already resolved not to let a redraw
+shrink it into a rounding error. Rendered to the letter of §4 it became the faintest mark in
+the block. It is hatched in the bars' own ink instead, which keeps it visibly a different kind
+of quantity while carrying the weight its height deserves. A test asserts the hatch colour
+equals the bar fill, so restoring the pale spec fails rather than passing review.
+
+**Type was not scaled literally.** The guide's sizes are units on a canvas about 1,355 wide;
+this figure is 540 pt wide, so literal scaling puts body text near 5 pt and the guide's own
+9.5-unit floor near 3.8 pt — below print legibility, and below floors this project had already
+measured and tested. The guide's hierarchy and its ratios are preserved at the tested sizes.
+
+**Two greyscale defects were measured and fixed** while applying the palette: the pathology
+line was the lightest stroke on the page at luminance 151, which mattered because it carries
+the review's central argument, and now uses the guide's deep pathology tint at 100; and the
+genomics dots had the narrowest margin against the absent dots, widened from 52 to 65 by
+lightening the absent dot rather than by altering a fixed assignment.
+
+**Open, and not ours to settle.** The guide names `figure1_ink_2x2.svg` and `build_variants.py`
+as the reference implementation — "when in doubt, match it" — and neither is in this
+repository. Four things had to be decided without them: the hatch stroke weight, which grey
+"1 px gray border" means, which neutrals the Panel B theme series take, and whether Panel A's
+row labels count as tick labels or as primary labels. Those four are where this figure and
+Figure 1 could drift apart.

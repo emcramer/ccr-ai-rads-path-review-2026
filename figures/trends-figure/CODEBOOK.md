@@ -112,7 +112,8 @@ from this directory.
 | `search-strategy.md` | The corpus query, the retrieval date, measured counts, precision spot-checks with sample sizes, and what the strategy knowingly misses. |
 | `classification.md` | How matching works and how to change a term safely. |
 | `figure-spec.md` | Panel layouts, the three input schemas, and the canonical theme and modality keys. |
-| `figure-legend.md` | The legend as it will appear in the manuscript. |
+| `figure-legend.md` | The legend as it will appear in the manuscript. About 205 words. |
+| `figure-description.md` | Working document: the full account of the figure, every number in it, and every limitation. Not for the journal. This is where anything cut from the legend is recorded. |
 | `DECISIONS.md` | Append-only log of every judgment call. |
 | `validation.md` | Classifier accuracy: strata, seeds, per-category rates with Wilson intervals, the causes of each divergence, and the author's audit instructions. Three rounds, measuring dictionary versions 2, 3, and 4/5. |
 | `digital_twins_screen.md` | The hand screen of all 64 candidate digital-twins papers, under both the strict and the inclusive standard, with the definition each was screened against. |

@@ -67,6 +67,22 @@ different question.
 * **Alternating row bands** carry the eye across four blocks and fifteen rows,
   which a grid of dots alone does not.
 * **The size of the remainder is printed under each block**, not only in the legend.
+
+Colour
+------
+Colour in this panel is semantic and nothing else, per ``../ink_style_guide.md``
+sections 1 and 3. A present dot takes its row's fixed modality hue -- radiology
+blue, pathology pink, clinical-text green, molecular orange, structural grey --
+so a colour in the matrix always answers "what kind of data is this". Absent
+dots stay a light neutral, and the connector that joins a column is structural,
+so it is drawn in line grey rather than in any hue.
+
+**The bars carry no modality colour.** A bar is a *combination* of modalities,
+often several at once, and there is no one hue that could honestly stand for it;
+tinting it by theme would be decoration, which the guide forbids. They are drawn
+in the guide's secondary-output ink. The remainder column is set apart by the
+guide's hatch specification -- 45 degrees, pale ground, grey lines, hairline
+border -- which is also what the guide asks for instead of inventing a hue.
 """
 
 from __future__ import annotations
@@ -395,7 +411,6 @@ def draw(
             bars_ax,
             block_values[index],
             block_labels[index],
-            theme,
             slots[index],
             positions,
             y_top,
@@ -409,6 +424,7 @@ def draw(
         matrix_ax.set_title(
             style.theme_label(theme),
             fontsize=style.FS_THEME_TITLE,
+            fontfamily="serif",
             fontweight="bold",
             color=style.INK,
             pad=4.0,
@@ -429,7 +445,7 @@ def draw(
                 ha="center",
                 va="top",
                 fontsize=style.FS_NOTE,
-                color="#5A5A5A",
+                color=style.SUBTLE,
             )
 
         if index < len(blocks) - 1:
@@ -487,9 +503,20 @@ def _draw_matrix(
         if not rows:
             continue
         x = positions[column]
+        # The connector is structural -- it says "these were used together" and
+        # names no modality -- so it is drawn in line grey, not in any hue.
         if len(rows) > 1:
-            ax.plot([x, x], [rows[0], rows[-1]], color=style.INK, linewidth=1.0, zorder=2)
-        ax.scatter([x] * len(rows), rows, s=dot_area, color=style.INK, linewidths=0, zorder=3)
+            ax.plot([x, x], [rows[0], rows[-1]], color=style.LINE, linewidth=1.0, zorder=2)
+        # A present dot takes its row's modality colour, so colour in this panel
+        # only ever identifies a kind of data.
+        ax.scatter(
+            [x] * len(rows),
+            rows,
+            s=dot_area,
+            color=[style.modality_color(style.MODALITY_ORDER[row]) for row in rows],
+            linewidths=0,
+            zorder=3,
+        )
 
     if has_remainder:
         x = positions[-1]
@@ -501,7 +528,7 @@ def _draw_matrix(
             ha="center",
             va="center",
             fontsize=style.FS_NOTE,
-            color="#5A5A5A",
+            color=style.SUBTLE,
             zorder=3,
         )
         divider = (positions[-2] + x) / 2 if len(positions) > 1 else x - 0.5
@@ -516,7 +543,7 @@ def _draw_matrix(
             va="center",
             fontsize=style.FS_NOTE,
             style="italic",
-            color=style.RULE,
+            color=style.SUBTLE,
         )
 
     ax.set_xticks([])
@@ -525,6 +552,7 @@ def _draw_matrix(
         ax.set_yticklabels(
             [style.modality_label(key) for key in style.MODALITY_ORDER],
             fontsize=style.FS_TICK,
+            color=style.SUBTLE,
         )
         ax.tick_params(axis="y", length=0, pad=2.5)
     else:
@@ -537,7 +565,6 @@ def _draw_bars(
     ax,
     values: np.ndarray,
     labels: list[str],
-    theme: str,
     slots: float,
     positions: list[float],
     y_top: float,
@@ -556,16 +583,18 @@ def _draw_bars(
     under ``"count"``, a percentage under ``"share"`` -- so the printed number and
     the bar length can never tell the reader two different things.
 
-    The remainder bar is drawn hollow and hatched in the theme's colour, so it
-    reads at a glance as a different kind of quantity: an aggregate, not one more
-    combination.
+    No bar carries a modality colour: a bar is a combination of modalities, not
+    one modality, so under the style guide it is structural and takes the
+    secondary-output ink. The remainder bar is set apart by hatching instead --
+    the guide's 45-degree pattern on a pale ground with a hairline grey border --
+    so it reads at a glance as a different kind of quantity: an aggregate, not
+    one more combination.
     """
     ax.set_xlim(-0.5, slots - 0.5)
     ax.set_ylim(0, y_top)
     ax.set_axisbelow(True)
     ax.yaxis.grid(True, color="#DCDCDC", linewidth=0.55)
 
-    colour = style.THEME_COLORS.get(theme, style.INK)
     n_bars = values.size
     n_combinations = n_bars - 1 if has_remainder else n_bars
     if n_combinations > 0:
@@ -573,7 +602,7 @@ def _draw_bars(
             positions[:n_combinations],
             values[:n_combinations],
             width=0.66,
-            color=colour,
+            color=style.BAR_FILL,
             linewidth=0,
             zorder=2,
         )
@@ -582,10 +611,10 @@ def _draw_bars(
             [positions[-1]],
             [values[-1]],
             width=0.66,
-            facecolor="white",
-            edgecolor=colour,
-            hatch="////",
-            linewidth=0.7,
+            facecolor=style.HATCH_GROUND,
+            edgecolor=style.HATCH_LINE,
+            hatch=style.HATCH_PATTERN,
+            linewidth=0.8,
             zorder=2,
         )
         divider = (positions[-2] + positions[-1]) / 2 if n_bars > 1 else positions[-1] - 0.5
@@ -609,11 +638,21 @@ def _draw_bars(
         ax.spines[name].set_visible(False)
     if show_axis:
         if scale == "share":
-            ax.set_ylabel("% of theme's papers", fontsize=style.FS_AXIS_LABEL)
+            ax.set_ylabel(
+                "% of theme's papers",
+                fontsize=style.FS_AXIS_LABEL,
+                style="italic",
+                color=style.SUBTLE,
+            )
             ax.yaxis.set_major_formatter(PercentFormatter(xmax=1.0, decimals=0))
         else:
-            ax.set_ylabel("# of papers", fontsize=style.FS_AXIS_LABEL)
-        ax.tick_params(axis="y", labelsize=style.FS_TICK, pad=2.0)
+            ax.set_ylabel(
+                "# of papers",
+                fontsize=style.FS_AXIS_LABEL,
+                style="italic",
+                color=style.SUBTLE,
+            )
+        ax.tick_params(axis="y", labelsize=style.FS_TICK, pad=2.0, colors=style.SUBTLE)
     else:
         ax.set_yticks([])
         ax.spines["left"].set_visible(False)
@@ -622,24 +661,22 @@ def _draw_bars(
 def _draw_block_note(
     figure: Figure, summary: TailSummary, x_center: float, y_bottom: float, top_n: int
 ) -> None:
-    """Print, under a block, the theme's size and how its columns divide it.
+    """Print the theme's size under its block.
 
-    The theme total is printed because the bar scale is shared across blocks: a
-    small theme draws as hairlines, and without its total a reader cannot tell a
-    small literature from a drawing error.
+    The theme total is printed because the bar scale carries composition rather
+    than volume: without its total a reader cannot tell a small literature from
+    a drawing error.
+
+    The second line this note used to carry -- "top 12 of 139 combinations" --
+    was removed on 2026-09-02 under the style guide's rule that explanatory
+    prose belongs in the legend and only short functional labels (four words or
+    fewer) may stand in the artwork. Nothing is lost from the drawing: the
+    remainder column is still there, still labelled "all other combinations",
+    and still prints "+127 sets" beneath itself, so how the columns divide the
+    theme is visible without being narrated. ``top_n`` is kept in the signature
+    because the run summary and the legend are written from it.
     """
-    if summary.total_papers == 0:
-        text = "no papers"
-    elif not summary.draws_remainder:
-        text = (
-            f"n = {summary.total_papers:,} papers\n"
-            f"all {summary.shown_sets} combinations shown"
-        )
-    else:
-        text = (
-            f"n = {summary.total_papers:,} papers\n"
-            f"top {summary.shown_sets} of {summary.total_sets} combinations"
-        )
+    text = "no papers" if summary.total_papers == 0 else f"n = {summary.total_papers:,} papers"
     figure.text(
         x_center,
         y_bottom - 0.012,
@@ -647,6 +684,6 @@ def _draw_block_note(
         ha="center",
         va="top",
         fontsize=style.FS_NOTE,
-        color="#5A5A5A",
+        color=style.SUBTLE,
         linespacing=1.25,
     )

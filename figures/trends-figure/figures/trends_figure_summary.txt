@@ -20,7 +20,7 @@ Papers are multi-label: the theme totals above sum to more than the corpus size.
 Panel B — two stacked plots, per-year counts, separate linear y axes
   upper plot       : foundation_models, multimodal_integration
   lower plot       : digital_twins/all, clinical_fda/radiology, clinical_fda/pathology
-  lower y scale    : 36x finer than the upper plot (range band drawn on the upper plot)
+  lower y scale    : 43x finer than the upper plot (range band drawn on the upper plot)
   foundation_models/all            total   1,226   peak year    536
   multimodal_integration/all       total   4,654   peak year  1,442
   digital_twins/all                total      56   peak year     33
