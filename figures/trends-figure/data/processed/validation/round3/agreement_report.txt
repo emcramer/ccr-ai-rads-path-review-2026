@@ -1,0 +1,35 @@
+ROUND THREE — TARGETED AGREEMENT REPORT
+==============================================================================
+generated_utc   : 2026-09-02T17:37:46Z
+seed            : 20260904
+dictionaries    : themes v5, modalities v4
+design          : 106 papers, six rule-positive strata, none read in rounds one or two
+                  PRECISION ONLY. A rule-positive stratum contains no paper the
+                  rules called negative, so recall is not estimable from it.
+
+PRECISION, within each category's own stratum
+------------------------------------------------------------------------------
+category                  TP  FP       precision (95% CI)   stratum population
+digital_twins             20   0           100% (84-100%)         20
+genomics                  16  16             50% (34-66%)   853 + 2,729 (two strata; see docs/validation.md for the split)
+multimodal_integration    11   9             55% (34-74%)      3,198
+clinical_data             17   3             85% (64-95%)      4,533
+spatial_proteomics        13   1             93% (69-99%)        320
+
+Across all 106 papers (extra observations; the pool is not random)
+------------------------------------------------------------------------------
+category                  TP  FP  FN       precision (95% CI)
+digital_twins             20   0   0           100% (84-100%)
+genomics                  24  18   2             57% (42-71%)
+multimodal_integration    28  13  25             68% (53-80%)
+clinical_data             27   5   6             84% (68-93%)
+spatial_proteomics        13   1   0             93% (69-99%)
+
+DIGITAL TWINS — CENSUS OF THE WHOLE ROW
+------------------------------------------------------------------------------
+All 56 papers of the v5 row were read under the inclusive standard:
+20 blind in round three, 22 relabelled in round two, 14 relabelled from round one.
+56 of 56 invoke the digital-twin idea in twin vocabulary. Precision 100% (94-100%).
+Recall probe: 'virtual twin', 'in-silico twin' and 'computational twin' match 0
+corpus records; 'patient avatar', 'digital avatar' and 'virtual human' match 5,
+none of which is a digital-twin paper. No genuine twin paper is being missed.

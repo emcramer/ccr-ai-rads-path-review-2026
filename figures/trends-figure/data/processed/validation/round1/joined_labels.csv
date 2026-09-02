@@ -1,0 +1,203 @@
+# file: joined_labels.csv
+# seed: 20260902
+pmid,stratum,n_population,n_sampled,weight,rule_foundation_models,rule_multimodal_integration,rule_digital_twins,rule_clinical_fda,rule_he_histology,rule_ihc,rule_spatial_proteomics,rule_spatial_transcriptomics,rule_pathology_report,rule_mri,rule_ct,rule_pet,rule_ultrasound,rule_mammography,rule_xray,rule_radiology_report,rule_genomics,rule_clinical_data,rule_other,agent_uncertain,agent_note,agent_foundation_models,agent_multimodal_integration,agent_digital_twins,agent_clinical_fda,agent_he_histology,agent_ihc,agent_spatial_proteomics,agent_spatial_transcriptomics,agent_pathology_report,agent_mri,agent_ct,agent_pet,agent_ultrasound,agent_mammography,agent_xray,agent_radiology_report,agent_genomics,agent_clinical_data,agent_other
+31645301,digital_twins,64,25,2.56,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,Digital twins appear in the final sentence only.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+35403831,digital_twins,64,25,2.56,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,Vertebral digital twin from micro-QCT and diagnostic CT.,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+36344838,digital_twins,64,25,2.56,0,1,1,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,"""Digital patient model"" is a prediction model, not a simulating twin.",0,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,1,1,0
+39192505,digital_twins,64,25,2.56,0,1,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,Digital twins appear in the closing clause only.,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0
+39435342,digital_twins,64,25,2.56,0,0,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,"Spatial technologies named as an umbrella, never as a specific assay.",0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+39848769,digital_twins,64,25,2.56,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,"Theranostic digital twins; regulatory discussion is about a pathway, not a clearance.",0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1
+40108714,digital_twins,64,25,2.56,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,Bibliometric review of digital twins; imaging named only generically.,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+40409031,digital_twins,64,25,2.56,0,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,"""Digital patient model"" here means a registered anatomical model, not a twin.",0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+40676342,digital_twins,64,25,2.56,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,"""Geometric digital twin"" is an anatomical model for AR registration.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+41073794,digital_twins,64,25,2.56,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0
+41093713,digital_twins,64,25,2.56,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,Patient-specific CFD digital twins for radioembolization.,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+41787197,digital_twins,64,25,2.56,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,Digital twins appear in one closing clause; wearable data.,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1
+42014628,digital_twins,64,25,2.56,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,Digital twins appear in one closing forward-looking clause only.,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1
+42025266,digital_twins,64,25,2.56,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0
+42041819,digital_twins,64,25,2.56,0,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,MRI-EEG fusion in a self-described cognitive digital twin.,0,1,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1
+42172162,digital_twins,64,25,2.56,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,Calls itself digital-twin-inspired but disclaims the clinical sense.,0,1,1,0,1,0,0,0,0,0,0,0,0,1,0,0,1,1,0
+42330729,digital_twins,64,25,2.56,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,Scoping review; imaging named as a data source without a modality.,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+42361838,digital_twins,64,25,2.56,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,Digital twin for online adaptive proton planning; CBCT and dose-volume scoring.,0,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+42373432,digital_twins,64,25,2.56,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,"Digital twins appear once, as a future direction.",0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+42396189,digital_twins,64,25,2.56,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,Broad review; imaging discussed without naming a modality.,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1
+42403543,digital_twins,64,25,2.56,0,1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,Multimodal imaging integration and digital twin models for navigation.,0,1,1,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1
+42437630,digital_twins,64,25,2.56,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,ctDNA assigned to other per the dictionary; imaging named generically.,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1
+42472318,digital_twins,64,25,2.56,1,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,0,Theranostics digital twins; vision-language foundation models; dosimetry.,1,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1
+42559365,digital_twins,64,25,2.56,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,Optical digital twins; virtual staining plus photonic sensing.,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+42627101,digital_twins,64,25,2.56,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,Digital twins are one item in a list of discussed topics.,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0
+30963339,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,Compared against an FDA-approved conventional CAD.,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+33126894,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,NeuroQuant named as FDA-approved software; dose-volume planning.,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1
+33394994,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,FDA-approved AI software read alongside two radiologists.,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+34389243,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,CE-marked commercial auto-contouring; no imaging modality named.,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+37016416,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,1,0,0,FDA-cleared VBrain contouring algorithm.,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+38067395,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,"Tools that ""gained regulatory approval for clinical use"".",0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+38179406,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,1,1,0,1,0,0,0,0,0,1,0,"Drug approval (dabrafenib/trametinib), not an AI device clearance.",0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,0,1
+38353449,clinical_fda,94,25,3.76,0,1,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,Four FDA-approved or cleared breast ultrasound tools.,0,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+38404754,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,"Two FDA-cleared, CE-marked segmentation algorithms.",0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+38416951,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,FDA-approved cmTriage.,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+38606831,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,"""Numerous AI tools have already received regulatory approval.""",0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+38702282,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,FDA-cleared ProstatID CADe/CADx.,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+41536177,clinical_fda,94,25,3.76,0,0,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,"FDA-approved pneumothorax models; cytology plus CT, PET-CT and laboratory markers.",0,1,0,1,1,0,0,0,0,0,1,1,0,0,0,0,0,1,0
+41714355,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,AI Act and MDR obligations for a Class III AI SaMD; no modality named.,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+41927979,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,FDA-cleared Lunit INSIGHT MMG.,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+42014495,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,FDA-approved AI risk model.,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+42046894,clinical_fda,94,25,3.76,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Hologic Genius, FDA-approved for cervical cytology screening.",0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+42192906,clinical_fda,94,25,3.76,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,510(k) summaries and CE files; FDA-cleared mammography and pathology tools.,0,0,0,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1
+42368306,clinical_fda,94,25,3.76,1,1,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,"Regulatory oversight and software as a medical device are a stated focus, but no clearance is reported.",1,1,0,1,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1
+42419395,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1,0,FDA-approved synthetic-CT algorithm; DVH dosimetry.,0,0,0,1,0,0,0,0,0,1,1,0,0,0,0,0,0,0,1
+42421219,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,"FDA clearance performance testing; the sequence type is implied, not named.",0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+42448899,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,Systematic review restricted to CE-marked and FDA-cleared products.,0,0,0,1,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+42465149,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,"The FDA approval is of the PSA assay, not of an AI device.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0
+42468971,clinical_fda,94,25,3.76,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"Paige Prostate Detect and Ibex Prostate Detect, both FDA-cleared.",0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+42642316,clinical_fda,94,25,3.76,0,0,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,FDA-approved AI tool scored the false-negative mammograms.,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+29780633,rare_modality,1885,20,94.25,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,1,1,0,0,1,0,0,0,0
+34463551,rare_modality,1885,20,94.25,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,States the CAD system is regulatory-approved; chest radiographs.,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
+35141002,rare_modality,1885,20,94.25,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0
+37984064,rare_modality,1885,20,94.25,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,Lipid imaging mass spectrometry; no H&E image analysed.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+38042019,rare_modality,1885,20,94.25,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,1,"EMR is reviewed by the investigators, not consumed by the model.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
+39401144,rare_modality,1885,20,94.25,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,Histology to spatial gene expression.,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+39666722,rare_modality,1885,20,94.25,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,1,"CT served as the reference standard, not as model input.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0
+39842240,rare_modality,1885,20,94.25,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,1,"Three modalities tested separately, not fused.",0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1
+39924997,rare_modality,1885,20,94.25,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0,0,Radiotranscriptomics; imaging modality never named.,0,1,0,0,0,1,0,1,0,0,0,0,0,0,0,0,1,0,0
+40741541,rare_modality,1885,20,94.25,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,1,"Image-to-text report generation; the language models are fine-tuned, not foundation models.",0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0
+40932806,rare_modality,1885,20,94.25,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,"Brightfield multiplex IHC; self-supervised, not a foundation model.",0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0
+41023521,rare_modality,1885,20,94.25,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,1,The LLM reads report text; no MR image is analysed.,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+41210922,rare_modality,1885,20,94.25,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,Histology-to-spatial-transcriptomics generation.,0,1,0,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0
+41239138,rare_modality,1885,20,94.25,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,GWAS plus spatial transcriptomics plus plasma lipidome.,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,1
+41373689,rare_modality,1885,20,94.25,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,0,1,1,"Biology review; spatial proteomics named once as a future avenue, no data used.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+41402452,rare_modality,1885,20,94.25,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,Label-free microscopy plus imaging mass spectrometry.,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+41812101,rare_modality,1885,20,94.25,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,"LLMs code 21,364 pathology reports.",1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0
+41899621,rare_modality,1885,20,94.25,0,0,0,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,1,Reviews several data types without arguing for fusing them.,0,0,0,0,1,0,1,1,0,0,0,0,0,0,0,0,1,0,0
+41958249,rare_modality,1885,20,94.25,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,Intraoral photographs plus radiographs plus structured records.,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1
+42026532,rare_modality,1885,20,94.25,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,Free-text report descriptors become model concepts.,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,0
+35596966,foundation_models,1165,40,29.125,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,Contrastive self-supervised pretraining is not a foundation model; MSI/HRD labels from TCGA.,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+36496303,foundation_models,1165,40,29.125,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,Self-supervised tile features inside a bespoke model.,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+37563337,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,"Specimen mammography; margin status is the label, not a pathology image input.",0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+37686665,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,1,"ChatGPT was a writing aid for the review, not its subject.",0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0
+38777719,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,"Self-supervised pretraining, not a foundation model.",0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+39030695,foundation_models,1165,40,29.125,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,GPT-4 reads histopathology photomicrographs.,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+39266750,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,"Tumor-board records are free text, not structured EHR; no better row exists.",1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+39833819,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,ChatGPT answering patient questions; no data modality.,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+39855601,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,Visual language model over imaging and text; imaging modality never named.,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0
+39941179,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,Self-supervised pretraining on a 33-case dataset is not a foundation model.,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+40010011,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,Self-supervised pretraining on bpMRI; not a foundation model.,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+40244356,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,"Self-supervised pretraining, not a foundation model.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+40377781,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,MoCo-v2 contrastive pretraining is not a foundation model.,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0
+40640380,foundation_models,1165,40,29.125,1,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,TCGA multi-omics integration.,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+40833907,foundation_models,1165,40,29.125,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,"""Multimodal MRI"" is four sequences of one modality.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+40985608,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,1,1,"Radiomic, dosiomic and clinical features; Swin UNETR SSL is not a foundation model.",0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,1
+40999489,foundation_models,1165,40,29.125,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,Image-text and image-gene pathology foundation models.,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+41142601,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,"""Large Vision Model""; CT and MRI compared, not fused.",1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+41158859,foundation_models,1165,40,29.125,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,1,"Self-supervised components inside a bespoke fusion model, not a foundation model.",0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0
+41336747,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,Endoscopic images.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+41360962,foundation_models,1165,40,29.125,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,Self-supervised stain normalization; foundation models are a closing aspiration.,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+41400327,foundation_models,1165,40,29.125,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,"Review; foundation and multimodal large models over pathology, omics, structured clinical data.",1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0
+41774629,foundation_models,1165,40,29.125,1,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,"MedSAM-2 generalist model; ""multi-modal prompts"" are prompt types, not data modalities.",1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+41858345,foundation_models,1165,40,29.125,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,"Transcriptomics is a correlative analysis, not fused into the model.",1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+42053617,foundation_models,1165,40,29.125,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+42073616,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,0,MRI radiomics against RNA-seq pathway scores.,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0
+42103618,foundation_models,1165,40,29.125,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,1,Pathology foundation model predicting mutations; sequencing is the label.,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+42105267,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,Text-only task; no imaging or report modality.,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+42116853,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,Segment Anything Model with nnU-Net on LIDC-IDRI.,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+42169576,foundation_models,1165,40,29.125,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,ChatGPT-4o scores HER2 IHC images.,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0
+42205157,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,Fine-tuned MedGemma on mammograms and tomosynthesis.,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+42249085,foundation_models,1165,40,29.125,1,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,Vision foundation model transfer; PSA integrated as a laboratory value.,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0
+42366429,foundation_models,1165,40,29.125,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,"BYOL self-supervision, not a foundation model.",0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+42410534,foundation_models,1165,40,29.125,1,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,,0,1,0,0,0,0,0,0,0,1,0,0,1,0,0,0,0,1,0
+42423906,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,The LLM reads CT findings as text; no image is analysed.,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0
+42485960,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,"Adoption-readiness framework; LLM decision support is one example, not the subject.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+42550018,foundation_models,1165,40,29.125,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,"DINOv2 pretrained on 487,975 tomosynthesis volumes.",1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+42614130,foundation_models,1165,40,29.125,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,WSI plus transcriptomics plus LLM-rendered clinical records.,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0
+42669326,foundation_models,1165,40,29.125,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,LLMs and RAG; digital pathology and ECG screening.,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+42676058,foundation_models,1165,40,29.125,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+32205534,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,0,0,0,Radiogenomics.,0,1,0,0,0,0,0,0,0,1,1,1,1,0,0,0,1,0,0
+32382473,multimodal_integration,5174,40,129.35,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,Multimodal imaging is one of several reviewed margin techniques.,0,1,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,1
+33159809,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,"""Feature fusion blocks"" are intra-image, not multimodal.",0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+33274728,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,"""Synergic fusion"" combines three views of one tomosynthesis ROI.",0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+33974545,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,"""Multimodal MRI"" is multiparametric sequences of one modality.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+36398404,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,"4D CT target volumes; the ""fusion"" is between network paths.",0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+37267125,multimodal_integration,5174,40,129.35,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,Multi-omics plus AI spatial analysis of whole-slide images.,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,0
+37307766,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,"""Multimodal MRI"" is the four BraTS sequences.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+37380667,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+37633086,multimodal_integration,5174,40,129.35,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,"""Multi-dimensional feature fusion"" is architectural.",0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+38184742,multimodal_integration,5174,40,129.35,0,1,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,MIAS mammograms fused with BreakHis histology.,0,1,0,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+38634154,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,"Dermoscopic images; ""multi-network fusion"" is architectural.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+38880866,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1,Compares CT and MRI features; does not fuse them.,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+39221589,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,"""Multi-modal MRI"" is CE-T1W and T2-FLAIR.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+39626212,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,Triphasic CT with clinical parameters.,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+39973782,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,"""Feature fusion CNN"" is intra-image, not multimodal.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+40030423,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,"Feature fusion inside one ultrasound image stream, not multimodal data integration.",0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+40032630,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,"CT, MR and PET knowledge relayed across datasets.",0,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0
+40150061,multimodal_integration,5174,40,129.35,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+40183953,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0,0,PSMA PET/CT fused with clinical variables.,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0
+40318172,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,"""Multimodal fusion"" over T1WI, FLAIR and DWI.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+40373044,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,"""Multimodal imaging"" is ADC and T2, two MRI sequences.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+40503548,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,,0,1,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0
+40656430,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,1,"Integration with clinical variables is one finding, not the subject.",0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+40830323,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,MRI plus PET for reirradiation planning; dose-painting.,0,1,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,1
+40842580,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,0,"Radiomics plus Gleason grade, PSA and prostate volume.",0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0
+40904801,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,CEUS plus B-mode plus clinical data.,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+40948833,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,"Radiological, pathological, genomic and clinical fusion; imaging never named.",0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1,0
+41023673,multimodal_integration,5174,40,129.35,0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,"""Multimodal attention"" fuses two network branches on one image type.",0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+41197263,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,"""Multimodal fusion"" over T1, T2, T1ce and FLAIR.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+41273608,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0,0,,0,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,1,0
+41301080,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,1,1,"Regulatory pathways named as a barrier, not a clearance.",0,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,1,0,1
+41445764,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,Diffuse optical imaging.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+41726519,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,CT images fused with report text.,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0,0,0
+41767498,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+42067634,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,Dermoscopic images.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+42121116,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,1,"""Multimodal MRI"" is three sequences; IDH and Ki-67 are predicted labels, not inputs.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+42134255,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,"Serum and inflammatory markers read as laboratory values, i.e. clinical data.",0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0
+42445878,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,B-mode and elastography ultrasound plus genetic testing.,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0
+42596052,multimodal_integration,5174,40,129.35,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0
+27125126,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+28120144,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,Histology used as registered ground truth; mpMRI is one modality.,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+29480684,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,"Non-oncologic; ICP surrogates are physiological signals, ultrasound never named.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+30831287,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+30957936,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+30972543,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,Predicting IDH genotype from MRI; the nomogram adds age only.,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,1,0
+31416559,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0
+31682155,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,Systematic review of radiomics; no imaging modality named.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+31923222,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,1,"FDA approval is of transcriptomic assays, not of an AI device.",0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,1,0,0
+32594207,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,1,Only age and lesion location join the radiomics features.,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0
+32770563,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,Title-only editorial; no abstract.,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+33329300,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,1,0,"Clinical variables, scalp EEG and MRI features in one classifier.",0,1,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,1
+33447551,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+33733226,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,CBCT and planning CT.,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+34902259,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,"""Multimodality treatment"" is therapy; radiographic images never named to a modality.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+35158836,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,"Modalities combined in the clinical workup, not in a model.",0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0
+35238465,no_theme,36151,50,723.02,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,MALDI mass-spectrometry imaging of tissue; no H&E image is analysed.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+35445341,no_theme,36151,50,723.02,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+35445899,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,,0,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1,0
+35453892,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,Compares PET with MRI; PET/MRI is a closing suggestion.,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0
+35848832,no_theme,36151,50,723.02,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,"Metal-labelled antibodies with secondary ion mass spectrometry, i.e. MIBI.",0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0
+35996649,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+36273397,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,Dual-energy digital breast tomosynthesis.,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+36426089,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+36480027,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,CT AI combined with a serum autoantibody panel and CEA.,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+36690032,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0
+36757454,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+37386289,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0,0,PET/MRI acquisition; the model reads the PET.,0,0,0,0,0,0,0,0,0,1,0,1,0,0,0,0,0,0,0
+38006827,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+38267686,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1,0,SPECT/CT voxel dosimetry.,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,1
+38628841,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,Delta-CT radiomics plus laboratory ratios in one nomogram.,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+38717291,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0
+38924227,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,Title-only editorial about an MRI radiomics paper; no abstract to label from.,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+39106672,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,"The ""fused"" model fuses GNN and CNN branches.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+39242086,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,"Clinical and laboratory information combined by the clinician, not by a model.",0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,0
+39671712,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,Quantitative phase / holographic microscopy.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+40019033,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,Dermoscopic and clinical skin images.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+40212272,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,"CT, MRI and X-ray named only as prior work, not used.",0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+40252095,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,1,"IDH status is an endpoint label, with no molecular data described.",0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+40681548,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,"""Medical imaging data"" never resolved to a modality.",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+40903179,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,"CT and MRI named as impractical alternatives, not used.",0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+40903523,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,Methodological review; no imaging modality named.,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1
+41254548,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0
+41426936,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0
+41902873,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0,0,Radiomics nomogram combined with clinical characteristics.,0,1,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,1,0
+41935472,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0
+41989548,no_theme,36151,50,723.02,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,"IHC named as clinical practice, not as data the model uses.",0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+42010056,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0
+42312470,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0
+42401077,no_theme,36151,50,723.02,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,"Comparison of two modalities, not integration.",0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0

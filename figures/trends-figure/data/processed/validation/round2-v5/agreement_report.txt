@@ -1,0 +1,72 @@
+CLASSIFIER AGREEMENT REPORT
+==============================================================================
+generated_utc   : 2026-09-02T17:25:00Z
+seed            : 20260903
+sample          : 200 papers in 6 strata
+reference       : agent labels, blind to the rule labels
+system          : rule-based classifier, config/*.yaml v2
+
+STRATA
+------------------------------------------------------------------------------
+stratum                   population  sampled    weight
+digital_twins                     64       25       2.6
+clinical_fda                      94       25       3.8
+rare_modality                  1,876       20      93.8
+foundation_models                882       40      22.1
+multimodal_integration         4,385       40     109.6
+no_theme                      37,232       50     744.6
+total                         44,533      200
+
+papers the agent flagged uncertain: 95 of 200
+
+THEMES
+------------------------------------------------------------------------------
+category                  TP  FP  FN    precision (95% CI)       recall (95% CI)
+foundation_models         41   5   0          89% (77-95%)        100% (91-100%)  
+multimodal_integration    42  21  25          67% (54-77%)          63% (51-73%)  
+digital_twins             22   0   0        100% (85-100%)        100% (85-100%)  
+clinical_fda              24   0   0        100% (86-100%)        100% (86-100%)  
+
+MODALITIES
+------------------------------------------------------------------------------
+category                  TP  FP  FN    precision (95% CI)       recall (95% CI)
+he_histology              37   5  10          88% (75-95%)          79% (65-88%)  
+ihc                        3   3   2          50% (19-81%)          60% (23-88%) !
+spatial_proteomics         2   0   0        100% (34-100%)        100% (34-100%) !
+spatial_transcriptomics    5   0   1        100% (57-100%)          83% (44-97%) !
+pathology_report           2   0   2        100% (34-100%)          50% (15-85%) !
+mri                       44   2   1          96% (85-99%)         98% (88-100%)  
+ct                        39   5   0          89% (76-95%)        100% (91-100%)  
+pet                       13   0   0        100% (77-100%)        100% (77-100%)  
+ultrasound                11   2   1          85% (58-96%)          92% (65-99%)  
+mammography                9   1   0          90% (60-98%)        100% (70-100%) !
+xray                       7   1   1          88% (53-98%)          88% (53-98%) !
+radiology_report           5   0   3        100% (57-100%)          62% (31-86%) !
+genomics                  21   5   1          81% (62-91%)          95% (78-99%)  
+clinical_data             29   6  18          83% (67-92%)          62% (47-74%)  
+other                     39   8  11          83% (70-91%)          78% (65-87%)  
+
+! marks a rate resting on fewer than 10 papers on one side.
+  Read the counts and the interval, not the percentage.
+  Intervals are 95% Wilson score intervals on the sample counts. They
+  cover sampling error only, not the risk that the reference labels are
+  themselves wrong.
+
+EXACT LABEL-SET AGREEMENT, per stratum
+------------------------------------------------------------------------------
+Every theme and every modality identical. A strict test: 19 binary
+labels must all match.
+clinical_fda               18 of  25    72.0%
+digital_twins              11 of  25    44.0%
+foundation_models          21 of  40    52.5%
+multimodal_integration     18 of  40    45.0%
+no_theme                   29 of  50    58.0%
+rare_modality               8 of  20    40.0%
+
+THE TWO ROUTES TO `other`
+------------------------------------------------------------------------------
+A pattern match claims an out-of-row data type. The fallback claims
+only that no named modality was found. Scored apart, because pooled
+they measure nothing.
+pattern     21 of  23   91% (73-98%)   uses a data type outside the named rows
+fallback    18 of  24   75% (55-88%)   no named modality could be identified

@@ -1,0 +1,3 @@
+# SYNTHETIC FIXTURE - deliberately broken: the n_papers column is missing.
+theme,modality_set,n_modalities,rank_in_theme
+foundation_models,he_histology,1,1

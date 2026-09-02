@@ -1,0 +1,16 @@
+SYNTHETIC DATA - INVENTED NUMBERS - NOT THE REAL CORPUS
+
+generated_utc      : 2026-09-02T05:46:56Z
+generator          : src/trends/plotting/synthetic.py
+seed               : 20260901
+requested_n_papers : 3800
+year_range         : 2015-2026 (final year partial)
+partial_fraction   : 0.62
+tail_probability   : 0.11
+
+row counts
+  paper_labels.csv           3,801 rows
+  combination_counts.csv       652 rows
+  theme_year_counts.csv         60 rows
+
+The same seed reproduces these files byte for byte, apart from this timestamp.

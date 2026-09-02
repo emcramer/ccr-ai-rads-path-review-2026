@@ -1,0 +1,21 @@
+pmid,title,abstract,year,year_source,record_type
+1001,A foundation model for whole  slide imaging,We evaluate the model on CT scans from one hundred patients.,2023,ArticleDate,PubmedArticle
+1002,Foundation models in oncology,A narrative overview. No data modality is named anywhere in this abstract.,2021,PubDate,PubmedArticle
+1003,Vision-language models for radiology reports,We apply NLP to free-text reports and report accuracy.,2024,ArticleDate,PubmedArticle
+1004,qPCR Ct values and pet ownership in cancer cohorts,The mean Ct value was 30. Our pet dataset covers US populations.,2024,PubDate,PubmedArticle
+1005,PET/CT radiomics of lung nodules,FDG PET/CT was compared with MRI in a retrospective cohort.,2024,ArticleDate,PubmedArticle
+1006,Intrahepatic cholangiocarcinoma (IHC) staging with ultrasound,No staining was performed in this imaging study.,2025,PubDate,PubmedArticle
+1007,Immunohistochemistry and IHC scoring by deep learning,CODEX multiplex panels and spatial transcriptomics were profiled.,2025,ArticleDate,PubmedArticle
+1008,A digital twin of the patient,The words codex and wsi in lower case name no modality here.,2026,PubDate,PubmedArticle
+1009,A 510(k)-cleared triage algorithm,Computed tomography studies were triaged automatically.,2026,ArticleDate,PubmedArticle
+1010,FDA-approved software for pathology reports,We apply natural language processing to pathology reports.,2026,PubDate,PubmedArticle
+1011,Multimodal therapy for sarcoma,Multimodal treatment planning was guided by MRI.,2023,ArticleDate,PubmedArticle
+1012,Multi-modal fusion of MRI and whole slide imaging,Multimodal integration improved prediction.,2025,PubDate,PubmedArticle
+1013,Foundation model chapter,"A reference work mentioning MRI, CT and PET.",2024,Book/PubDate,PubmedBookArticle
+1014,An article with no publication year,It names MRI but has nowhere to sit on a time axis.,,none,PubmedArticle
+1016,Deep learning for mammography screening,Digital mammograms and chest X-rays were reviewed by two readers.,2025,ArticleDate,PubmedArticle
+1017,X-ray diffraction of tumour mineral deposits,Powder X-ray diffraction was used; no clinical imaging was performed.,2024,PubDate,PubmedArticle
+1018,An early-online paper issued inside the window,Posted online in 2014 and assigned to a 2015 issue. It names MRI.,2014,ArticleDate,PubmedArticle
+1019,MRI radiomics with genomic profiling,RNA-seq and electronic health record covariates were modelled jointly.,2025,ArticleDate,PubmedArticle
+1020,Endoscopy and CT staging of gastric cancer,Endoscopic video was combined with computed tomography.,2024,PubDate,PubmedArticle
+,An article with no PMID,It names CT but cannot be identified.,2025,PubDate,PubmedArticle

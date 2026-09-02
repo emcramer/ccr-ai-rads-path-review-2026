@@ -1,0 +1,9 @@
+# SYNTHETIC FIXTURE - hand written for tests, not derived from any corpus.
+theme,modality_set,n_modalities,n_papers,rank_in_theme
+foundation_models,he_histology,1,12,1
+foundation_models,ct+pet,2,7,2
+multimodal_integration,ct+pet,2,9,1
+multimodal_integration,he_histology+spatial_transcriptomics,2,4,2
+digital_twins,other,1,3,1
+clinical_fda,mri,1,15,1
+clinical_fda,ct,1,11,2

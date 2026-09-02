@@ -1,0 +1,29 @@
+Trends figure — numbers for the legend
+source directory : data/processed
+tag              : (none)
+papers in corpus : 44533
+year range       : 2015-2026
+partial year     : 2026
+Panel A columns  : top 12 modality combinations per theme, plus one remainder column holding every other paper in the theme
+Panel A bars     : share (percent of each theme's own papers)
+
+theme                     papers   sets  drawn  in remainder  remainder papers   share
+foundation_models           1226    139     12           127               388  31.6%
+multimodal_integration      4654    317     12           305              2116  45.5%
+digital_twins                 56     31     12            19                19  33.9%
+clinical_fda                  93     27     12            15                15  16.1%
+
+Nothing is hidden: the remainder column is drawn, so each block's bars sum to
+its theme total.
+Papers are multi-label: the theme totals above sum to more than the corpus size.
+
+Panel B — two stacked plots, per-year counts, separate linear y axes
+  upper plot       : foundation_models, multimodal_integration
+  lower plot       : digital_twins/all, clinical_fda/radiology, clinical_fda/pathology
+  lower y scale    : 36x finer than the upper plot (range band drawn on the upper plot)
+  foundation_models/all            total   1,226   peak year    536
+  multimodal_integration/all       total   4,654   peak year  1,442
+  digital_twins/all                total      56   peak year     33
+  clinical_fda/radiology           total      63   peak year     21
+  clinical_fda/pathology           total      16   peak year      8
+  pathology zero run: 2015-2021 (7 consecutive years at zero)

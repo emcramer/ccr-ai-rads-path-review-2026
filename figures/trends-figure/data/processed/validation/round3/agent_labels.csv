@@ -1,0 +1,111 @@
+# file: agent_labels.csv (round three, targeted)
+# Blind labels for the five affected categories only. Every paper was
+# judged on all five, because being told which category a paper was
+# drawn for would reveal its rule label.
+pmid,agent_digital_twins,agent_genomics,agent_multimodal_integration,agent_clinical_data,agent_spatial_proteomics,uncertain,note
+30686996,0,0,1,0,0,1,Whole-slide features combined with the Ki-67 marker.
+31131906,0,0,0,0,0,0,Genomic variation named as a motivation only.
+32386828,0,0,1,1,0,0,"CT radiomics with gender, age and enhancement pattern."
+32401031,0,0,0,0,0,1,"""Spatial proteomics"" in the subcellular-fractionation sense; no tissue imaging."
+33591922,0,0,1,0,0,0,PET and CT genuinely fused by a spatial attention module.
+33957006,0,0,1,1,0,1,Title-only editorial: MRI radiomics nomogram with clinical risk factors.
+33967603,0,0,1,1,0,0,CT radiomics with AFP.
+33996546,0,0,1,1,0,0,Ultrasound radiomics with clinicopathological predictors.
+34204319,0,0,0,0,1,0,Multiplex immunofluorescence data analysis.
+34305523,1,0,0,0,0,1,Digital twins map brain images to virtual space; the fusion is within MRI.
+34434892,0,0,1,1,0,0,Splenic radiomics with haemoglobin and platelet-lymphocyte ratio.
+34448928,0,0,1,1,0,0,MRI radiomics with clinical predictors.
+34624649,0,0,0,0,0,1,"RESIDUE: predicts molecular subtype from imaging, names gene expression profiling as the gold standard."
+35213363,0,0,0,0,1,0,"Cyclic multiplexed immunofluorescence, 31 markers."
+35310959,1,0,0,0,0,0,"""Developing a Cancer Digital Twin"" from consecutive radiology reports."
+35794172,1,0,0,0,0,0,"""Modeling digital-twin of renal functions"" - the hyphenated form."
+36207777,0,0,1,1,0,0,"Ultrasound radiomics with age, PSA and prostate volume."
+36224012,0,0,0,0,0,0,Bibliometrics; genomics appears only as a literature topic.
+36307192,0,0,0,0,0,1,"RESIDUE: mutations, copy number and protein expression predicted from slides."
+36466076,0,0,0,0,1,0,Fluorescent multiplex IHC images.
+36739752,0,0,0,0,0,1,RESIDUE: gene mutations predicted from TCGA slides.
+37080884,0,0,1,1,0,0,CT radiomics with clinical and semantic features.
+37384952,0,0,0,0,0,1,"MR, CT and ultrasound benchmarks tested separately."
+37723592,0,0,1,1,0,1,MRI radiomics nomogram with clinical data; p53 status is the target.
+37742374,0,0,1,1,0,0,FDG-PET/CT with clinical variables.
+38007979,0,0,1,0,0,1,"RESIDUE: gene expression is the prediction target, spatial transcriptomics the label source."
+38317154,0,1,1,0,0,0,"Survey of deep learning in genomics and histopathology, including multimodal."
+38438436,1,0,0,0,0,1,"""A digital twin of a pathologist"" - twin vocabulary, but the twin is of a reader."
+38444144,0,0,0,0,0,1,"Genomics named as playing a role in treatment planning, not used."
+38537130,0,1,1,0,1,1,"Single-cell transcriptomes, mass cytometry and multiplex immunofluorescence."
+38617949,0,0,0,0,0,0,"""Multimodality of the acquired images"" is a generic opening phrase."
+38817539,0,0,0,0,1,0,Seven-plex multiplex IHC stain decomposition.
+38876960,0,0,1,1,0,0,CT radiomics with prealbumin and monocyte counts.
+38961276,0,1,1,0,0,1,"Predicted transcriptomes are consumed by the second stage, so expression is an input."
+39040448,0,0,0,0,0,1,Multi-omics and multimodal fusion appear only as future work.
+39053365,0,0,0,1,0,1,Electronic medical records only; the CT arm belongs to a larger trial.
+39162780,0,0,0,1,0,1,Multi-sequence MRI habitats; T stage is the only clinical variable.
+39227262,0,0,0,0,1,1,Spatial proteomics named as a reviewed technology.
+39350223,0,0,0,0,1,1,"Multiplex immunohistochemical staining of glioma microarrays; ""bioinformatics"" unspecified."
+39490225,0,1,0,0,0,1,Genomic data analysis reviewed as one application of AI in neuropathology.
+39537211,0,1,1,0,1,1,"H&E, multiplex immunofluorescence and transcriptomic analyses together."
+39678362,0,0,0,0,0,1,"NGS establishes the TP53 ground truth; it is the target, not an input."
+39761649,1,0,0,0,0,0,A digital twin framework for adaptive proton therapy.
+39835605,0,1,1,0,0,0,CT radiomics with next-generation sequencing and ctDNA.
+39848886,0,0,1,1,0,0,Photoacoustic-ultrasound imaging with clinical parameters.
+39891665,0,1,0,0,0,1,B-cell receptor repertoire sequencing alongside whole-slide TLS detection.
+40021759,0,1,1,0,0,0,"TCGA bulk transcriptomes drive the ligand-receptor model, fused with histology."
+40183671,0,1,0,0,0,1,Liquid biopsy genomic signatures; virtual and liquid biopsy reviewed separately.
+40361975,0,0,0,0,0,1,"""Multimodal"" is ADC, T1W+C and T2W, one modality."
+40473100,1,0,0,0,0,1,Patient-specific digital twins named as the deployment goal; MRI and DTI are one modality.
+40513068,1,0,1,1,0,1,"Digital twin advancement is the stated framework; pathology, CT and serology integrated."
+40587926,0,0,1,0,0,1,"""Multimodal information of patients"" fused with CT; the modalities are unnamed."
+40633839,0,0,0,0,0,1,A Delphi consensus on meeting process; no molecular data is analysed.
+40660102,0,0,1,1,0,1,Combined clinical and radiomics model; molecular subtype is the target.
+40683334,0,0,0,0,1,0,Multiplex immunofluorescence and triple chromogenic IHC.
+40774225,0,1,0,0,0,0,Multiomic analyses generating mutation and transcriptomic profiles.
+40777394,0,0,1,0,1,1,Integration of single-cell and spatial proteomics.
+40840227,0,0,0,0,0,1,RESIDUE: CD40LG expression predicted from H&E; expression also used for correlates.
+40864208,0,1,1,0,0,1,"GEO and TCGA expression data; ""multi-omics integrative analysis"" over transcriptomes."
+40887833,0,0,1,0,0,1,Spatial multi-omics named as an umbrella; computational pathology and liquid biopsy integrated.
+40902264,0,1,1,0,0,1,"Multi-omics signatures with PET/CT radiomics; sarcoidosis, not cancer."
+40929723,0,1,0,1,0,1,EHR platform; NLP extracts genomic results from free text.
+41004706,0,0,0,0,0,1,RESIDUE: gene mutations predicted from H&E; TCGA supplies slides and labels.
+41052882,1,0,1,1,0,0,Clinical and radiomic causal model; a treatment-focused digital twin as the stated goal.
+41192450,0,1,1,0,0,1,Radiogenomics correlating imaging with genomic and molecular data.
+41290079,1,1,1,1,0,0,"Digital twins named among future directions; genomics, EHR, histopathology fused."
+41377006,0,0,1,1,0,1,"CT radiomics, deep features and clinical data; RESIDUE: EGFR is the target."
+41402342,0,0,0,0,0,1,RESIDUE: molecular features including somatic mutations predicted from slides.
+41510074,0,1,0,0,1,1,TCGA and scRNA-seq as inputs; multiplex immunofluorescence for validation.
+41547006,0,0,1,0,0,0,Microscopic hyperspectral and RGB pathology images fused.
+41560793,1,1,0,0,0,1,AI-guided digital twins; patient-specific multi-omics as design input.
+41561639,0,1,0,0,0,0,Transcriptomic data from 584 patients as the model input.
+41567739,0,0,0,0,0,1,Fundus photographs only; multimodal imaging named as the current requirement.
+41616643,0,0,1,0,0,0,Cross-modal PET and CT fusion.
+41617832,0,0,1,1,0,0,"Clinical data, contrast CT and laryngoscopy fused."
+41671623,0,0,1,1,1,0,Multiplex immunofluorescence densities added to clinical parameters.
+41682868,0,0,1,0,0,1,"""Multimodal neuroimaging"" combines MRI, CT and PET."
+41717418,1,0,1,0,0,1,Digital twins named as a future paradigm; RESIDUE: methylation and HRD are targets.
+41737281,1,0,0,0,0,1,Images to physics-based models to digital twins.
+41764582,0,0,0,0,0,1,"Grayscale, Doppler and 3D reconstruction are all ultrasound."
+41820399,0,1,0,1,0,1,"A data resource holding WGS, slides and structured clinical data; not a fusion model."
+41830147,1,0,0,0,0,1,"Theranostic digital twins; ""multi-parametric"" stays within PET."
+41878089,1,1,1,1,0,0,"A patient-specific digital twin for pain over genomics, pathology and clinical text."
+41880130,0,0,1,1,0,0,DKI habitat radiomics with immune-inflammatory biomarkers.
+41925746,0,1,1,0,0,0,Multi-omics profiling plus spatial transcriptomics as inputs.
+41942612,0,0,0,0,1,0,Multiplex immunohistochemistry with digital image analysis.
+41969630,0,0,1,1,0,0,Chest radiograph features fused with four epidemiologic variables.
+42000470,1,0,0,0,0,0,"Digital twins in radiology and radiotherapy, the subject of the review."
+42020074,0,0,0,0,0,1,"""Multimodality imaging"" describes the diagnostic workup."
+42065647,0,0,1,0,0,1,"Structural, functional and molecular imaging integrated; radiogenomics named only."
+42115215,0,0,0,0,0,1,RESIDUE: predicts the OncotypeDX 21-gene score from H&E; the assay is the target.
+42135350,0,0,0,0,0,1,"""Multi-modal MRI"" is the four BraTS sequences and nothing else."
+42147917,0,0,0,0,0,1,ABVS and strain elastography are both ultrasound.
+42157115,0,0,1,1,0,0,"Clinical, US and CEUS features."
+42209845,1,1,1,1,0,1,Digital twins in manufacturing and future systems; spatial omics named as an umbrella.
+42240645,0,0,1,1,0,0,Multiparametric MRI radiomics combined with AFP and cystic necrosis.
+42322380,0,1,1,1,0,1,Transcriptome fused with H&E WSI; clinicopathological data in the nomogram.
+42322793,1,1,1,0,0,0,Digital twin model named; whole-genome sequence and RNA-seq integrated with pathology.
+42375536,0,0,1,0,0,1,H&E and Ki-67 slides as two stains; no sequencing described.
+42376625,1,1,1,1,0,0,"Digital twin-based modeling; radiomics, pathology, multiomics, ctDNA and clinical variables."
+42487970,0,0,1,1,0,0,"Clinical records, CT and MRI, and a literature knowledge base fused."
+42507084,1,0,0,0,0,1,Digital twins named among emerging tools; the imaging integration is a tumour board.
+42521098,0,0,0,0,0,1,"Vision-language foundation model, but the only patient data are H&E slides."
+42533186,1,0,0,0,0,1,"A 3D digital twin of the scanning scene, not of a patient."
+42551939,0,1,1,0,0,1,Histopathology integrated with non-image data; mRNA expression drives response prediction.
+42601302,0,0,1,1,0,0,Multimodal ultrasound with clinical features.

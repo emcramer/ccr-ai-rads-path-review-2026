@@ -1,0 +1,26 @@
+# --- Top level: track nothing but the figures pipeline (for now) ---
+/*
+!/.gitignore
+!/README.md
+!/figures/
+
+# --- Bulk data: regenerable, LFS-scale ---
+figures/trends-figure/data/raw/**/*.xml
+figures/trends-figure/data/raw/**/progress.jsonl
+figures/trends-figure/data/interim/
+
+# --- Large per-record intermediates (aggregated tables are kept) ---
+figures/trends-figure/data/processed/pattern_hits.csv
+figures/trends-figure/data/processed/paper_labels.csv
+figures/trends-figure/data/processed/synthetic/paper_labels.csv
+
+# --- Run noise and scratch ---
+figures/trends-figure/logs/
+figures/trends-figure/figure_mockup.jpg
+
+# --- Caches ---
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.DS_Store

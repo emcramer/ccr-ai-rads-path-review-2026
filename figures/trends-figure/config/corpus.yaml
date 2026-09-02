@@ -1,0 +1,85 @@
+# Corpus definition — the PubMed query that defines the paper pool.
+#
+# Scope: artificial-intelligence methods applied to pathology or radiology
+# imaging in cancer. Three blocks joined by AND: METHOD and DOMAIN and CANCER.
+# Every theme and every modality in themes.yaml / modalities.yaml is a subset of
+# this pool; nothing is retrieved per theme.
+#
+# The query carries NO date filter. The retrieval client applies the range below
+# as E-utilities mindate/maxdate with datetype=pdat. Verified 2026-09-01 that the
+# two routes agree exactly: an inline ("2015/01/01"[dp] : "2026/09/01"[dp]) filter
+# and mindate/maxdate both return 44,617.
+#
+# Measured 2026-09-01. Counts, precision spot-checks, and the reasoning for every
+# block are in docs/search-strategy.md. Do not edit a term here without updating
+# that file and bumping `version`.
+version: 1
+
+date_range:
+  start: "2015/01/01"
+  end: "2026/09/01"     # retrieval date; the final year is partial and must be flagged
+
+retrieval:
+  db: pubmed
+  tool: "ccr-trends-figure"
+  email: "ericscrum@gmail.com"      # NCBI requires a contact for E-utilities
+  batch_size: 200
+  requests_per_second: 3            # NCBI limit without an API key
+  datetype: pdat
+
+# Expected result, measured 2026-09-01 against live PubMed.
+# A rerun will drift upward as PubMed indexes more records; a large drop means
+# the query broke.
+expected:
+  total_records: 44617
+  per_year:
+    2015: 484
+    2016: 546
+    2017: 835
+    2018: 1366
+    2019: 2313
+    2020: 3367
+    2021: 4544
+    2022: 5593
+    2023: 6323
+    2024: 7668
+    2025: 9960
+    2026: 7299          # partial: through 2026-09-01
+  # Year windows overlap: summing the per-year counts gives 50,298 because [dp]
+  # matches both the electronic and the print date of a record. Deduplicating
+  # PMIDs across the year queries returns exactly 44,617. Retrieval must
+  # deduplicate, and must take each record's year from the parsed record rather
+  # than from the year window that returned it.
+  sum_of_year_windows: 50298
+
+query: >-
+  ("Artificial Intelligence"[mh] OR "Radiomics"[mh] OR "artificial intelligence"[tiab]
+  OR "machine learning"[tiab] OR "deep learning"[tiab] OR "neural network*"[tiab]
+  OR "convolutional"[tiab] OR "transformer*"[tiab] OR "foundation model*"[tiab]
+  OR "large language model*"[tiab] OR "radiomic*"[tiab] OR "pathomic*"[tiab]
+  OR "computational pathology"[tiab] OR "computer-aided detection"[tiab]
+  OR "computer-aided diagnosis"[tiab] OR "computer aided diagnosis"[tiab]
+  OR "self-supervised"[tiab] OR "vision transformer*"[tiab])
+  AND
+  ("Diagnostic Imaging"[mh] OR "Radiology"[mh] OR "Image Processing, Computer-Assisted"[mh]
+  OR "Pathology"[mh] OR "radiolog*"[tiab] OR "radiograph*"[tiab] OR "medical imaging"[tiab]
+  OR "MRI"[tiab] OR "magnetic resonance imaging"[tiab] OR "computed tomography"[tiab]
+  OR "ultrasound"[tiab] OR "ultrasonograph*"[tiab] OR "sonograph*"[tiab]
+  OR "mammograph*"[tiab] OR "positron emission tomography"[tiab] OR "PET/CT"[tiab]
+  OR "PET-CT"[tiab] OR "histopatholog*"[tiab] OR "histological image*"[tiab]
+  OR "histologic image*"[tiab] OR "histology image*"[tiab] OR "histological slide*"[tiab]
+  OR "histologic slide*"[tiab] OR "histology slide*"[tiab] OR "histological section*"[tiab]
+  OR "histologic section*"[tiab] OR "histological staining"[tiab] OR "whole slide"[tiab]
+  OR "whole-slide"[tiab] OR "digital pathology"[tiab] OR "computational pathology"[tiab]
+  OR "immunohistochem*"[tiab] OR "cytopatholog*"[tiab] OR "hematoxylin"[tiab]
+  OR "haematoxylin"[tiab] OR "pathologist*"[tiab] OR "pathology report*"[tiab]
+  OR "tissue microarray*"[tiab] OR "spatial transcriptomic*"[ti]
+  OR "spatial proteomic*"[ti] OR "spatially resolved transcriptomic*"[ti]
+  OR "spatial omics"[ti] OR "imaging mass cytometry"[tiab]
+  OR "multiplex immunofluorescence"[tiab] OR "imaging mass spectrometry"[tiab])
+  AND
+  ("Neoplasms"[mh] OR "cancer*"[tiab] OR "tumor*"[tiab] OR "tumour*"[tiab]
+  OR "oncolog*"[tiab] OR "carcinoma*"[tiab] OR "neoplas*"[tiab] OR "malignan*"[tiab]
+  OR "sarcoma*"[tiab] OR "lymphoma*"[tiab] OR "leukemia*"[tiab] OR "leukaemia*"[tiab]
+  OR "melanoma*"[tiab] OR "glioma*"[tiab] OR "glioblastoma*"[tiab] OR "myeloma*"[tiab]
+  OR "metastas*"[tiab] OR "metastat*"[tiab])

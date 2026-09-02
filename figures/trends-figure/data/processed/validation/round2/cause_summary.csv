@@ -1,0 +1,7 @@
+# file: cause_summary.csv
+cause,false_negative,false_positive,total,share
+rule_gap,73,6,79,0.5
+mention_not_use,0,36,36,0.22784810126582278
+term_defect,0,23,23,0.14556962025316456
+definition_boundary,2,17,19,0.12025316455696203
+agent_error,0,1,1,0.006329113924050633

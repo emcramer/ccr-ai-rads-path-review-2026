@@ -1,0 +1,761 @@
+# Term dictionary for the thirteen data modalities (Table 1 of task-spec.md,
+# plus PET, and mammography + radiography, all added 2026-09-01 at the
+# author's request).
+# Schema: config/README.md. Validation and counts: docs/search-strategy.md.
+#
+# Matcher contract (identical to themes.yaml):
+#   kind: phrase — case-insensitive, whitespace-tolerant, word-bounded literal.
+#   kind: regex  — Python `re`, applied CASE-SENSITIVELY. Write `(?i)` at
+#                  position 0 to opt into case-insensitivity; Python rejects
+#                  `(?i)` anywhere else.
+# Matched against title + " \n " + abstract. Classification is multi-label:
+# a PET/CT paper is expected to carry both `pet` and `ct`.
+#
+# Case sensitivity is load-bearing here. PET, CT, IHC and WSI are only usable
+# as bare acronyms when matched case-sensitively; see notes and
+# docs/search-strategy.md for the measurements.
+version: 6
+
+categories:
+  he_histology:
+    label: "H&E / Histology"
+    type: "Imaging"
+    include:
+      - pattern: "(?i)\\bH\\s?&\\s?E\\b"
+        kind: regex
+      - pattern: "(?i)\\bh(a)?ematoxylin"
+        kind: regex
+      - pattern: "(?i)\\bhistopatholog\\w*[ -](image|imaging|slide|section|specimen|sample|stain|patch|dataset|whole|architect)"
+        kind: regex
+      - pattern: "(?i)\\b(computational|digital|quantitative) histopatholog"
+        kind: regex
+      - pattern: "(?i)^(?=[\\s\\S]*\\bhistopatholog)(?=[\\s\\S]*\\b(whole[- ]slide|WSI|patch[- ]level|tile|stain normali|nuclei segmentation|nuclear segmentation|tissue segmentation|magnification|image analysis))"
+        kind: regex
+      - pattern: "(?i)\\bwhole[- ]slide"
+        kind: regex
+      - pattern: "\\bWSIs?\\b"
+        kind: regex
+      - pattern: "(?i)\\bdigital patholog"
+        kind: regex
+      - pattern: "(?i)\\bcomputational patholog"
+        kind: regex
+      - pattern: "(?i)\\bpathomics?\\b"
+        kind: regex
+      - pattern: "(?i)\\bhistolog(y|ic|ical) (image|slide|section|specimen|sample|stain|analys)"
+        kind: regex
+      - pattern: "(?i)\\btissue (section|slide|microarray)"
+        kind: regex
+      - pattern: "(?i)\\bbiopsy (slide|image)"
+        kind: regex
+      - pattern: "(?i)\\bfrozen section"
+        kind: regex
+      - pattern: "(?i)\\bcytopatholog"
+        kind: regex
+      - pattern: "(?i)\\bglass slides?\\b"
+        kind: regex
+      - pattern: "(?i)\\bslide[- ]level\\b"
+        kind: regex
+    exclude: []
+    notes: >
+      v3 (2026-09-02): "patch-level" REMOVED on validation evidence. It described a
+      processing granularity rather than the data type, and whole-slide papers that
+      matter are caught by the whole-slide, WSI, H&E and histopathology patterns.
+      Bare "histopatholog*" is deliberately NOT used either. Measured on 3,000
+      records: it matched 367, but of the 153 it admitted that no tighter
+      pathology term caught, a 14-record read found roughly 11 were
+      "histopathologically confirmed" reference-standard mentions in radiology
+      papers with no tissue image. It is replaced by three patterns: histopathology
+      followed by an image noun; "computational/digital/quantitative
+      histopathology"; and a conjunctive lookahead requiring histopathology to
+      co-occur with a whole-slide-imaging signal.
+      Bare "histolog*" is deliberately NOT used. Measured: it admits 1,434 papers
+      to the corpus that no other pathology term admits, and a 16-title read of
+      those gave roughly 40% precision — most were clinical or genomic
+      machine-learning papers using "histologically confirmed" or "histologic
+      subtype" with no tissue image anywhere. Requiring histology to be followed
+      by image/slide/section/specimen/stain fixes it. "WSI" is safe
+      case-sensitively. Deliberately misses: papers that say only "pathology
+      images" without any of these words.
+
+  ihc:
+    label: "IHC"
+    type: "Imaging"
+    include:
+      - pattern: "(?i)\\bimmunohistochem"
+        kind: regex
+      - pattern: "\\bIHC\\b"
+        kind: regex
+      - pattern: "(?i)\\bimmunostain"
+        kind: regex
+      - pattern: "(?i)\\bimmunolabel"
+        kind: regex
+    exclude:
+      - pattern: "(?i)\\bintrahepatic cholangiocarcinoma\\s*\\(IHC\\)"
+        kind: regex
+    notes: >
+      "IHC" collides with intrahepatic cholangiocarcinoma, which some
+      hepatobiliary papers abbreviate IHC. Measured on 3,000 records: 36 contain
+      "IHC"; of the 6 that contain IHC but no immunohistochem* spelling, 1 was
+      the cholangiocarcinoma sense. The exclude is written to fire only on the
+      explicit definition "intrahepatic cholangiocarcinoma (IHC)", which was
+      measured to co-occur with no genuine immunohistochemistry paper in the
+      sample. Note the exclude is record-level and would strip a genuine IHC
+      label from any future paper that both defines that abbreviation and uses
+      immunohistochemistry.
+
+  spatial_proteomics:
+    label: "Spatial Proteomics"
+    type: "Imaging"
+    include:
+      - pattern: "(?i)\\bspatial(ly resolved)? proteom"
+        kind: regex
+      - pattern: "(?i)\\bimaging mass cytometry\\b"
+        kind: regex
+      - pattern: "(?i)\\bmultiplex(ed)? immunofluorescen"
+        kind: regex
+      - pattern: "(?i)\\bmultiplex(ed)? immunohistochem"
+        kind: regex
+      - pattern: "(?i)\\bmultiplexed ion beam imaging\\b"
+        kind: regex
+      - pattern: "(?i)\\bsecondary ion mass spectrometry"
+        kind: regex
+      - pattern: "\\b(IMC|mIF|mIHC|CyCIF|CODEX)\\b"
+        kind: regex
+      - pattern: "(?i)\\b(GeoMx|PhenoCycler|PhenoImager|Opal multiplex)\\b"
+        kind: regex
+      - pattern: "(?i)\\bspatial protein (expression|profiling)"
+        kind: regex
+    exclude: []
+    notes: >
+      v4 (2026-09-02): the bare acronym "MIBI" is REMOVED, not guarded. It had
+      acquired a collision with 99mTc-MIBI (sestamibi), a nuclear-medicine tracer:
+      of 12 corpus records containing MIBI, 5 were sestamibi scintigraphy. A
+      technetium-prefix lookbehind was built and measured first, but it still let
+      through "Ultrasound and MIBI are the most commonly used imaging methods" and
+      "Thyroid scintigraphy with iodine-123, MIBI", where no prefix is adjacent.
+      Removal was then tested against all 5 genuine multiplexed-ion-beam papers in
+      the corpus: ALL FIVE are still caught by "multiplexed ion beam imaging",
+      "imaging mass cytometry" or "multiplexed immunofluorescence". Cost of removal
+      is therefore ZERO, which is better than a guard that half works.
+      NOT YET EXERCISED: "secondary ion mass spectrometry", added in v3, matched no
+      paper in the validation sample and only 3 in the corpus. It is retained on
+      definitional grounds — it is the full name of the MIBI platform — but its
+      precision is unmeasured.
+      v3 (2026-09-02): "imaging mass spectrometry" MOVED OUT to `other`. It was
+      putting lipid and MALDI mass-spectrometry imaging in this row, which is not
+      spatial proteomics; `other` already carries "mass spectrometr|MALDI", so
+      those papers keep a label. In exchange "secondary ion mass spectrometry" was
+      ADDED here — it is the full name of the MIBI platform, and the row was
+      missing a genuine MIBI paper that spelled it out rather than using the
+      acronym. Net: the row loses a wrong data type and gains a right one.
+      Platform names carry most of the recall, because papers name the assay
+      rather than the category. The all-caps alternation is case-sensitive:
+      "CODEX" and "IMC" as ordinary lower-case words are common, as an acronym
+      block they are not. GeoMx measures both protein and RNA and therefore
+      appears in this category and in spatial_transcriptomics; that
+      double-assignment is intended and will show as a co-occurrence in Panel A.
+      "Vectra" was drafted and REMOVED: it collides with the Canfield VECTRA
+      total-body photography system, and its single match in 3,000 records was a
+      dermatology photography paper, not spatial proteomics.
+
+  spatial_transcriptomics:
+    label: "Spatial Transcriptomics"
+    type: "Imaging"
+    include:
+      - pattern: "(?i)\\bspatial(ly resolved)? transcriptom"
+        kind: regex
+      - pattern: "(?i)\\bspatial gene expression\\b"
+        kind: regex
+      - pattern: "(?i)\\bspatial RNA\\b"
+        kind: regex
+      - pattern: "(?i)\\b(Visium|Xenium|CosMx|MERFISH|seqFISH|Slide-?seq|Stereo-?seq|GeoMx)\\b"
+        kind: regex
+      - pattern: "(?i)\\bin situ (sequencing|transcriptom)"
+        kind: regex
+      - pattern: "(?i)\\bspatial(ly resolved)? (single[- ]cell )?omics? (data|profil|analys)"
+        kind: regex
+    exclude: []
+    notes: >
+      The overlap with spatial_proteomics is handled by assigning the shared
+      platform (GeoMx) to both and by keeping the genuinely ambiguous umbrella
+      terms — "spatial omics", "spatial biology", "spatial multi-omics" — out of
+      BOTH categories rather than guessing. Those papers fall to `other` unless
+      they also name a specific assay. This is a deliberate choice to
+      under-assign rather than to invent an assignment; see
+      docs/search-strategy.md.
+
+  pathology_report:
+    label: "Pathology Report"
+    type: "Text"
+    include:
+      # Unambiguous on their own.
+      - pattern: "(?i)\\bsynoptic report"
+        kind: regex
+      - pattern: "(?i)\\bfree[- ]text patholog"
+        kind: regex
+      - pattern: "(?i)\\bpatholog\\w* (narrative|text report)"
+        kind: regex
+      # Conjunctive: a pathology report noun AND a natural-language-processing
+      # signal must both appear. Written as lookaheads anchored at string start,
+      # because the dictionary schema ORs include patterns and cannot express AND.
+      - pattern: "(?i)^(?=[\\s\\S]*\\b(patholog(y|ic|ical)|histopatholog\\w*|cytolog(y|ic|ical)|biopsy) reports?\\b)(?=[\\s\\S]*(natural language processing|\\bNLP\\b|text mining|text classification|text extraction|information extraction|language model|\\bBERT\\b|\\bGPT|named[- ]entity|free[- ]text|unstructured (text|data|report)|report generation|document classification|de-?identification|text corpus|narrative text))"
+        kind: regex
+    exclude: []
+    notes: >
+      This is a TEXT modality: the paper must process the report, not merely cite
+      it. An unconditional "pathology report" pattern was drafted, measured, and
+      rejected: on a 20-record read it was 50% precise, because most oncology
+      imaging papers mention the pathology report as their reference standard
+      ("confirmed by pathology report") without doing anything to the text. The
+      conjunctive form cut the sample count from 23 to 10 and removed every one of
+      the reference-standard false positives in the read. It deliberately misses
+      papers that process reports but describe the method only as "deep learning"
+      with no text-processing vocabulary. This is the least reliable modality in
+      the dictionary and its Panel A row should be read with that in mind.
+
+  mri:
+    label: "MRI"
+    type: "Imaging"
+    include:
+      - pattern: "\\bMRIs?\\b"
+        kind: regex
+      - pattern: "(?i)\\bmagnetic resonance imag"
+        kind: regex
+      - pattern: "\\bMR imaging\\b"
+        kind: regex
+      - pattern: "(?i)\\bdiffusion[- ]weighted imag"
+        kind: regex
+      - pattern: "\\b(DWI|DCE-MRI|mpMRI|bpMRI|MRCP|DTI)\\b"
+        kind: regex
+      - pattern: "(?i)\\bapparent diffusion coefficient\\b"
+        kind: regex
+      - pattern: "(?i)\\bT[12][- ]weighted\\b"
+        kind: regex
+      - pattern: "(?i)\\bmultiparametric MR"
+        kind: regex
+      - pattern: "\\bFLAIR\\b"
+        kind: regex
+    exclude: []
+    notes: >
+      "MR" alone is not used; it collides with the honorific and with dozens of
+      gene and protein abbreviations. Every MRI paper measured writes either MRI
+      or "magnetic resonance imaging" somewhere, so the loss is negligible.
+
+  ct:
+    label: "CT"
+    type: "Imaging"
+    include:
+      - pattern: "\\bCTs?\\b"
+        kind: regex
+      - pattern: "(?i)\\bcomput(ed|er) tomograph"
+        kind: regex
+      - pattern: "\\b(CECT|NCCT|LDCT|HRCT|CBCT|CTA)\\b"
+        kind: regex
+      - pattern: "(?i)\\bcone[- ]beam (computed )?tomograph"
+        kind: regex
+      - pattern: "(?i)\\bHounsfield\\b"
+        kind: regex
+    exclude: []
+    notes: >
+      Bare "CT" is safe ONLY case-sensitively, and it is safe. Measured on 3,000
+      corpus records: 722 contain case-sensitive \bCT\b, of which 386 never write
+      "computed tomography"; a 22-record read of those 386 found 22 of 22 were
+      computed tomography — no collisions with qPCR Ct, chemotherapy, or clinical
+      trial. \bCT\b also fires inside "PET/CT" and "SPECT/CT", which is intended:
+      those studies do acquire CT. Case-insensitive matching would be unusable.
+
+  pet:
+    label: "PET"
+    type: "Imaging"
+    include:
+      - pattern: "\\bPET\\b"
+        kind: regex
+      - pattern: "(?i)\\bpositron emission tomograph"
+        kind: regex
+      - pattern: "\\bFDG\\b"
+        kind: regex
+      - pattern: "\\b(SUVmax|SUVmean|SUVpeak)\\b"
+        kind: regex
+      - pattern: "(?i)\\bstandardi[sz]ed uptake value"
+        kind: regex
+      - pattern: "(?i)\\bradiotracer uptake\\b"
+        kind: regex
+    exclude: []
+    notes: >
+      The acronym trap is real but case sensitivity closes it. Measured on 3,000
+      corpus records: case-sensitive \bPET\b matched 213 records, lower-case
+      \bpet\b matched 1 — and that one ("pet-based radiogenomics") was a
+      lower-cased title for PET imaging, not an animal. A 16-record read of the
+      133 records that write PET but never "positron emission tomography" found
+      16 of 16 genuine. No polyethylene terephthalate appeared. Bare lower-case
+      "pet" is not used, costing one true positive in 3,000. \bPET\b does not
+      fire inside "SPECT", which is correct.
+      Overlap with `ct` is expected and is NOT suppressed: see
+      docs/search-strategy.md for the measured PET/CT co-occurrence.
+
+  ultrasound:
+    label: "Ultrasound"
+    type: "Imaging"
+    include:
+      - pattern: "(?i)\\bultraso(und|nograph|nic|nograp)"
+        kind: regex
+      - pattern: "(?i)\\bsonograph"
+        kind: regex
+      - pattern: "(?i)\\bechograph"
+        kind: regex
+      - pattern: "(?i)\\belastograph"
+        kind: regex
+      - pattern: "\\b(CEUS|EUS|ABUS|TRUS|EBUS)\\b"
+        kind: regex
+      - pattern: "(?i)\\bdoppler\\b"
+        kind: regex
+      - pattern: "(?i)\\bB-mode imag"
+        kind: regex
+    exclude: []
+    notes: >
+      Bare "US" is UNSALVAGEABLE and is not shipped. Measured on 3,000 corpus
+      records: 68 contain case-sensitive \bUS\b; of the 21 that contain no other
+      ultrasound word, a 6-record read found 4 of 6 false — "US populations",
+      "US National Science Foundation", "US English", "US-based trial". The cost
+      of dropping it is near zero, because papers that use the abbreviation
+      almost always introduce it as "ultrasound (US)" first, which
+      "(?i)\\bultraso" already catches.
+
+  mammography:
+    label: "Mammography"
+    type: "Imaging"
+    include:
+      - pattern: "(?i)\\bmammogra"
+        kind: regex
+      - pattern: "(?i)\\btomosynthesis"
+        kind: regex
+      - pattern: "(?i)\\bbreast tomograph"
+        kind: regex
+      - pattern: "\\b(FFDM|DBT|CESM)\\b"
+        kind: regex
+    exclude: []
+    notes: >
+      Split from `xray` at the author's request on 2026-09-01, because
+      mammographic screening AI (MASAI, PRAIM) is the strongest clinical-trial
+      evidence in the review and would disappear inside a generic radiography
+      bucket. Mammography IS a projection X-ray technique, so the split is by
+      clinical role, not by physics; the rows overlap slightly by design.
+      Measured on 3,000 corpus records: 132 match (~1,960 corpus), overlap with
+      `xray` is 7 records (5.3% of mammography, 12.7% of xray).
+      "(?i)\\bmammogra" is the workhorse at 125 of those 132: it covers
+      mammogram, mammography, mammographic and mammographically in one pattern.
+      Tomosynthesis is unqualified because digital breast tomosynthesis is
+      effectively the only tomosynthesis in this literature (16 matches).
+      \\bDBT\\b was checked case-sensitively for the dialectical-behaviour-therapy
+      collision and is clean: 7 of 7 matches were digital breast tomosynthesis.
+      Bare "DM" is NOT used — it is diabetes mellitus far more often than digital
+      mammography. Bare "breast imaging" is NOT used — it covers breast MRI and
+      breast ultrasound and would put those papers in this row; a narrower
+      "breast imaging with/using" was drafted and also removed, since it matched
+      only 2 records and one of them was a general biomarker review.
+
+  xray:
+    label: "Radiography (X-ray)"
+    type: "Imaging"
+    include:
+      - pattern: "(?i)\\bchest x-?rays?\\b"
+        kind: regex
+      - pattern: "\\b(CXR|CXRs)\\b"
+        kind: regex
+      - pattern: "(?i)\\bradiograph(y|s)\\b"
+        kind: regex
+      - pattern: "(?i)\\b(conventional|digital|projection|skeletal|panoramic|bone|dental|specimen|portable|computed) radiograph"
+        kind: regex
+      - pattern: "(?i)\\bplain (film|radiograph|x-?ray)"
+        kind: regex
+      - pattern: "(?i)\\bx-?ray (image|imaging|examination|film)\\b"
+        kind: regex
+      - pattern: "(?i)\\bfluoroscop"
+        kind: regex
+    exclude:
+      - pattern: "(?i)\\bmammograph\\w*[- ]?(is an? )?x-?ray"
+        kind: regex
+      - pattern: "(?i)x-?ray (crystallograph|diffraction|fluorescence|spectroscop|absorptiometry|photoelectron|microscop)"
+        kind: regex
+    notes: >
+      Bare "x-ray" is UNSALVAGEABLE and is NOT shipped. This is the important
+      decision in this entry and it was measured, not assumed. On 3,000 corpus
+      records bare "(?i)\\bx-?ray" matches 39, and of 13 read only about 4 were
+      plain radiography. It leaks in five directions at once: X-ray radiation and
+      radiotherapy dose ("exposed to X-ray radiation, 3 x 8 Gy"; "x-ray radiation
+      therapy"), X-ray fluorescence, dual-energy X-ray absorptiometry, the X-ray
+      physics of CT ("CT uses x-ray radiation"), and — worst for this row —
+      mammography ("mammography, a low-dose X-ray technique"; "X-ray
+      mammography"). Excluding the crystallography family alone does not fix it,
+      because radiotherapy dose and mammography are the larger leaks. The shipped
+      patterns name the examination instead.
+      "(?i)\\bradiograph(y|s)\\b" deliberately does NOT match the adjective
+      "radiographic": in oncology "radiographic response" and "radiographic
+      progression" are RECIST vocabulary describing CT or MRI, and admitting the
+      adjective would pull a large number of CT papers into this row. Requiring a
+      terminal y or s keeps the noun and drops the adjective. It measured 23
+      matches in 3,000 with roughly 13 of 14 read genuine — chest, KUB, hip,
+      panoramic and specimen radiographs.
+      Measured total: 55 of 3,000 (~820 corpus). Fluoroscopy is included because
+      it is definitionally X-ray, though it matched only 1 record.
+      The first exclude removes the definitional sentence "mammography is an
+      X-ray imaging technique", which otherwise pulls mammography papers here; it
+      was measured to remove 2 such records. The second is defensive: with bare
+      "x-ray" gone it is nearly inert, and it is kept only so that a crystallo-
+      graphy paper saying "X-ray images" cannot enter the row. Both excludes are
+      record-level, per the matcher contract.
+      Deliberately misses: DXA, which falls to `other`.
+
+  radiology_report:
+    label: "Radiology Report"
+    type: "Text"
+    include:
+      # Unambiguous on their own.
+      - pattern: "(?i)\\bfree[- ]text (radiolog|imaging)"
+        kind: regex
+      - pattern: "(?i)\\bstructured (radiology|imaging) report"
+        kind: regex
+      - pattern: "(?i)\\bradiolog\\w* (narrative|impressions?)"
+        kind: regex
+      - pattern: "(?i)\\bimpression section"
+        kind: regex
+      # Conjunctive, as in pathology_report.
+      - pattern: "(?i)^(?=[\\s\\S]*\\b(radiolog(y|ic|ical)|imaging|CT|MRI|mammograph\\w*|ultrasound|chest x-?ray|PET(/CT)?) reports?\\b)(?=[\\s\\S]*(natural language processing|\\bNLP\\b|text mining|text classification|text extraction|information extraction|language model|\\bBERT\\b|\\bGPT|named[- ]entity|free[- ]text|unstructured (text|data|report)|report generation|document classification|de-?identification|text corpus|narrative text))"
+        kind: regex
+    exclude: []
+    notes: >
+      Same conjunctive construction and same reasoning as pathology_report; the
+      unconditional form measured about 60% precise over 20 records and the
+      conjunctive form cut the sample count from 49 to 20. "BI-RADS
+      assessment/category/report" was drafted and REMOVED: both of its matches in
+      the read were papers predicting a BI-RADS category from images, which is an
+      imaging task, not report processing. Bare "structured report" is also not
+      used; it is generic across all of medicine.
+
+  genomics:
+    label: "Genomics / Transcriptomics"
+    type: "Molecular"
+    include:
+      - pattern: "(?i)\\b(?<!10x )genomic(?!\\s+instabilit)"
+        kind: regex
+      - pattern: "(?i)\\bradiogenomic"
+        kind: regex
+      - pattern: "(?i)\\bRNA-?seq"
+        kind: regex
+      - pattern: "(?i)\\bRNA sequencing"
+        kind: regex
+      - pattern: "(?i)\\bbulk (RNA|transcriptom|sequencing)"
+        kind: regex
+      - pattern: "(?i)\\bsingle[- ]cell (RNA|sequencing|transcriptom)"
+        kind: regex
+      - pattern: "(?i)\\bwhole[- ](exome|genome) sequencing"
+        kind: regex
+      - pattern: "\\b(WES|WGS|NGS)\\b"
+        kind: regex
+      - pattern: "(?i)\\bnext[- ]generation sequencing"
+        kind: regex
+      - pattern: "(?i)\\bsequencing data"
+        kind: regex
+      - pattern: "(?i)\\b(somatic|driver|germline) mutation"
+        kind: regex
+      - pattern: "(?i)\\bmutation (status|profil|burden)"
+        kind: regex
+      - pattern: "(?i)\\b(gene signature|genetic (alteration|variant|profil))"
+        kind: regex
+      - pattern: "(?i)\\bmRNA expression"
+        kind: regex
+      - pattern: "(?i)\\bmethylation"
+        kind: regex
+      - pattern: "(?i)\\bcopy[- ]number"
+        kind: regex
+      - pattern: "(?i)\\b(?<!tissue )(?<!tissue-)microarray"
+        kind: regex
+      - pattern: "(?i)\\bmulti[- ]?omics?\\b"
+        kind: regex
+      - pattern: "(?i)\\bTCGA\\b[^.]{0,120}\\b(sequenc\\w+|RNA-?seq|transcriptom\\w+|mutation\\w*|express\\w+|methylat\\w+|copy[- ]number|multi-?omic\\w*|genomic\\w*|genotyp\\w*|molecular (data|profil|subtyp)|omics)\\b|\\b(sequenc\\w+|RNA-?seq|transcriptom\\w+|mutation\\w*|express\\w+|methylat\\w+|copy[- ]number|multi-?omic\\w*|genomic\\w*|genotyp\\w*|molecular (data|profil|subtyp)|omics)\\b[^.]{0,120}\\bTCGA\\b"
+        kind: regex
+      - pattern: "(?i)\\b(cBioPortal|Gene Expression Omnibus)"
+        kind: regex
+    exclude:
+      - pattern: "(?i)^(?=[\\s\\S]*((predict|infer|determin|classif|estimat|detect|identif|assess)\\w*[^.]{0,70}\\b(mutation|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular subtyp\\w+|gene expression|genomic\\w*|transcriptomic\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB)\\b[^.]{0,70}\\b(from|using|based on|on)\\b[^.]{0,50}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|patholog\\w+|slide|image\\w*|imaging|CT\\b|MRI|radiomic\\w*|radiolog\\w+|ultrasound|mammogra\\w+)|(mutation|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular subtyp\\w+|gene expression|genomic\\w*|transcriptomic\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB)[^.]{0,25}(status )?(prediction|classification|inference)[^.]{0,50}\\b(from|using|based on)\\b[^.]{0,50}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|patholog\\w+|slide|image\\w*|imaging|CT\\b|MRI|radiomic\\w*|radiolog\\w+|ultrasound|mammogra\\w+)|\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|patholog\\w+|slide|image\\w*|imaging|CT\\b|MRI|radiomic\\w*|radiolog\\w+|ultrasound|mammogra\\w+)[- ](based|derived)\\b[^.]{0,60}\\b(predict\\w*|classif\\w*|infer\\w*)[^.]{0,40}\\b(mutation|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular subtyp\\w+|gene expression|genomic\\w*|transcriptomic\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB)))(?![\\s\\S]*((RNA-?seq|sequencing (data|was|were|of)|transcriptomic data|multi-?omic|bulk RNA|single[- ]cell RNA|\\bWES\\b|\\bWGS\\b|\\bNGS\\b|whole[- ](exome|genome) sequencing|genomic data|gene expression data|methylation (data|array|profil)|integrat\\w+ [^.]{0,30}(genomic|transcriptomic|molecular|omic)|(genomic|transcriptomic|molecular|omics) (data|profil|feature|signature)s? (were|was|are|is)|combin\\w+ [^.]{0,30}(genomic|transcriptomic|omics)|copy[- ]number|microarray)))"
+        kind: regex
+      - pattern: "(?i)(?:(?:^(?=(?:[^\\n]*\\b(predict\\w*|prediction|infer\\w*|inference|identif\\w*|determin\\w*|classif\\w*|estimat\\w*|assess\\w*|approximat\\w*|detect\\w*|deduc\\w*)\\b[^\\n]{0,90}\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b|[^\\n]*\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b[^\\n]{0,90}\\b(predict\\w*|prediction|infer\\w*|inference|identif\\w*|determin\\w*|classif\\w*|estimat\\w*|assess\\w*|approximat\\w*|detect\\w*|deduc\\w*)\\b)[^\\n]*\\n)(?=[^\\n]*\\b(from|using|based on|via|through|with|on)\\b[^\\n]{0,60}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|patholog\\w+|slide\\w*|image\\w*|imaging|radiomic\\w*|pathomic\\w*|morpholog\\w+)\\b[^\\n]*\\n)(?![^\\n]*(\\b(using|via|integrating|combining|incorporating|fusion of|with)\\b[^\\n]{0,20}\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b|\\b(image\\w*|histolog\\w+|histopatholog\\w+|slide\\w*|WSI|pathomic\\w*|H&E|patholog\\w+|morpholog\\w+)\\b\\s+and\\s+[^\\n]{0,12}\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b|\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b\\s+and\\s+[^\\n]{0,12}\\b(image\\w*|histolog\\w+|histopatholog\\w+|slide\\w*|WSI|pathomic\\w*|H&E|patholog\\w+|morpholog\\w+)\\b)))|(?:\\b(predict\\w*|prediction|infer\\w*|inference|identif\\w*|determin\\w*|classif\\w*|estimat\\w*|approximat\\w*|deduc\\w*)\\b[^.]{0,60}\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b[^.]{0,40}\\b(from|using|based on|via|directly from|on)\\b[^.]{0,40}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|patholog\\w+|slide\\w*|image\\w*|imaging|radiomic\\w*|pathomic\\w*|morpholog\\w+)\\b))"
+        kind: regex
+    notes: >
+      Bulk and single-cell molecular data. Added 2026-09-01 because `other` was
+      not additive and a paper using MRI plus genomics therefore read as "MRI
+      alone", making the multimodal-integration theme look unimodal.
+      Not an imaging modality; does NOT contribute to the `domain` rule.
+      THE SPATIAL-TRANSCRIPTOMICS BOUNDARY WAS MEASURED, NOT GUESSED. Bare
+      "transcriptomic" is NOT used: it matched 96.6% of all spatial-
+      transcriptomics papers (28 of 29 in a 3,000-record sample), which would have
+      made that row redundant. Bare "gene expression" is NOT used either: adding it
+      raised the spatial overlap from 14 of 29 to 23 of 29, because it describes
+      the spatial assay itself ("analyse gene expression profiles of tissues while
+      preserving spatial location"). With the shipped patterns the overlap is 14 of
+      29, and all 14 were read: 12 were correct — papers genuinely integrating
+      single-cell or bulk RNA-seq, TCGA or multi-omics data alongside spatial —
+      and 2 were wrong. So a spatial paper carries `genomics` only when it names
+      non-spatial molecular data, which is the intended line.
+      v6 (2026-09-02) — SECOND PREDICTION-TARGET EXCLUDE, added after round-three
+      validation measured this cell at 45% precision (95% CI 26-66%) in the
+      genomics n he_histology stratum, with 8 of 11 false positives being the
+      predicted-label residue. Against that stratum's ~855 papers that implies
+      300-630 spurious, on the cell a reader looks at first.
+      The v4 exclude fires only when NO genomics-as-input idiom appears; the
+      residue survives because the paper mentions the sequencing that produced its
+      ground-truth LABELS. As advised, this second exclude works from the
+      PREDICTION side and treats the construction as evidence AGAINST genomics
+      rather than merely failing to be evidence for it. It has two routes: a
+      title-scoped test (the title is the text before the first newline, so
+      "^[^\\n]*" scopes to it) and a whole-record test requiring
+      prediction-verb -> molecular-target -> source-preposition -> image within one
+      sentence. Both carry a guard that rescues papers where the molecular term is
+      a SOURCE rather than the prediction target ("survival prediction using
+      genomic and histopathology features"); the guard was measured to rescue 10
+      records of which 9 are correct.
+      MEASURED, on a 2,153-record superset reconstructed from the corpus (my
+      stratum is 855, against the validator's 853, so the reconstruction is
+      faithful): genomics 1,182 -> 1,092, and genomics n he_histology 855 -> 766,
+      a 10% reduction. Removal precision is high: 18 of 18 read from the
+      whole-record route and 20 of 22 from the title route were unambiguous
+      residue.
+      THE RESIDUE IS NOT FULLY FIXABLE AT ABSTRACT LEVEL, and this is the honest
+      measurement the author asked for. A looser detector was built and rejected:
+      dropping the sentence boundary and proximity constraints reaches 213 of 855
+      (25%), but a 20-record read put its removal precision near 70%. It would
+      discard roughly 64 genuine papers to remove roughly 150 spurious ones,
+      moving stratum precision from about 45% to about 50% - not worth the loss.
+      What remains uncaught is the paper that predicts a molecular label but
+      phrases it across sentences, or never names the image source in the same
+      breath. THE FIGURE LEGEND SHOULD CARRY THE STRATUM PRECISION AS A NUMBER.
+      v4 (2026-09-02) — INPUT MODALITIES ONLY. The author has settled the
+      definitional question: a paper counts for a modality only if that data type
+      enters the model as INPUT. Prediction targets do not count, so Panel A means
+      "what data does this work consume". The exclude implements it for the case
+      that broke precision: papers that PREDICT a molecular label from an image —
+      MSI, HER2, EGFR, KRAS, IDH, MGMT, molecular subtype — which were being
+      counted as genomics papers. This is the same class of error as the TCGA
+      defect below: counting predicted labels re-inflates exactly the
+      imaging-plus-molecular pairing the figure exists to display.
+      The exclude is conjunctive and self-limiting: it fires only when a
+      predict-molecular-from-image idiom is present AND no genomics-as-input idiom
+      (RNA-seq, sequencing data, multi-omics, methylation array, copy number,
+      integration of molecular data) appears anywhere in the record.
+      MEASURED: removes 17 of 261 records in a 3,000-record sample. All 17 were
+      read and all 17 are correct — CT/MRI/PET radiomics predicting mutation
+      status, and deep learning predicting genetic alterations from histopathology.
+      Effect on the co-occurrence at risk: `genomics` + `he_histology` falls from
+      47 to 44. The effect is modest there because most predict-molecular papers
+      are radiology, not histology.
+      KNOWN RESIDUE, not fixable by terms: a paper that predicts molecular subtype
+      from histology AND mentions the sequencing used to generate its ground-truth
+      LABELS is rescued by the input clause and survives. Tightening the rescue
+      clause to drop bare "sequencing" was tested and changed nothing, so this
+      residue is inherent to abstract-level matching.
+      Bare "genomic" is additionally guarded against "genomic instability", which
+      names a phenotype rather than a data type.
+      v3 (2026-09-02) — THE TCGA FIX, the most consequential correction in this
+      round. Bare "TCGA" was admitting pathology-SLIDE papers as genomics. TCGA
+      distributes both whole-slide images and molecular data, so the archive's name
+      alone cannot settle which one a paper used, in either direction. Measured on
+      the corpus: TCGA fired on 1,094 papers and was the ONLY genomics pattern for
+      527 of them, of which 349 (66%) also carried `he_histology`. Reproduced on
+      the 3,000-record sample: 69 TCGA papers, 34 TCGA-only, 24 of those (71%) also
+      histology. This was worse than an ordinary false positive, because those
+      papers land in `genomics` + `he_histology` — precisely the imaging-plus-
+      molecular pairing the figure was rebuilt to display — so the defect
+      manufactured evidence for the review's own argument.
+      The pattern now requires a molecular noun (sequencing, RNA-seq,
+      transcriptomic, mutation, expression, methylation, copy number, multi-omic,
+      genomic, genotype, molecular data/profile/subtype, omics) within 120
+      characters of TCGA and without an intervening sentence break.
+      MEASURED COST. On the sample the qualifier keeps 30 of 69 TCGA papers; among
+      the 34 TCGA-only papers it keeps 7 and drops 27; among the 24 TCGA-only
+      papers that also carry histology it keeps 3 and drops 21. Reading all 21
+      dropped: they are slide-archive uses — pathomics signatures, whole-slide
+      tumour recognition, histologic classification, slide retrieval, MSI and HPV
+      prediction FROM histology. The 3 kept are genuinely molecular (lncRNA
+      analysis, gene-expression representation, protein-cascade prediction). About
+      1 or 2 of the 27 drops look like genuine losses, the clearest being a paper
+      integrating "gene biomarker signatures" in a phrasing no other pattern
+      catches, so the fix costs a small amount of real recall to remove a much
+      larger amount of manufactured co-occurrence.
+      Two lookbehind guards fix measured collisions: "(?<!10x )" stops \\bgenomic
+      matching the vendor name "10x Genomics" (2 records in 3,000), and
+      "(?<!tissue )(?<!tissue-)" stops \\bmicroarray matching "tissue microarray",
+      which is an he_histology term — 14 of 18 microarray hits were tissue
+      microarrays. Precision after both guards: 19 of 20 read.
+      Deliberately misses: bulk proteomics and metabolomics, which are not
+      genomics or transcriptomics and fall to `other`.
+
+  clinical_data:
+    label: "Clinical / EHR Data"
+    type: "Structured"
+    include:
+      # Unambiguous record systems.
+      - pattern: "(?i)\\belectronic (health|medical) record"
+        kind: regex
+      - pattern: "\\b(EHR|EMR|EHRs|EMRs)\\b"
+        kind: regex
+      # Named hybrid model types.
+      - pattern: "(?i)\\bclinico-?radiomic"
+        kind: regex
+      - pattern: "(?i)\\bclinical[- ](radiomic|pathomic|deep)"
+        kind: regex
+      # Fusion phrasing, with a bounded gap so an intervening noun does not break
+      # the match. v2 required adjacency and missed "a combined MODEL with
+      # clinical characteristics", which is the commonest phrasing in the
+      # radiomics-nomogram literature.
+      - pattern: "(?i)\\bcombin\\w+[^.]{0,45}\\bclinical\\w*\\s+(data|variable|feature|factor|parameter|information|characteristic|indicator|ind(ex|ices))"
+        kind: regex
+      - pattern: "(?i)\\b(nomogram|model|classifier|signature|score|framework)[^.]{0,45}\\bclinical\\w*\\s+(data|variable|feature|factor|parameter|characteristic)"
+        kind: regex
+      - pattern: "(?i)\\bclinical\\w*\\s+(data|variable|feature|factor|parameter|characteristic)s?[^.]{0,45}\\b(combined|integrated|incorporated|fused|added|included|merged)"
+        kind: regex
+      - pattern: "(?i)\\b(radiomic|imaging|image|pathomic|deep learning)\\w*[^.]{0,45}(and|with|plus) clinical\\w*\\s+(data|variable|feature|factor|parameter|information|characteristic)"
+        kind: regex
+      - pattern: "(?i)\\bintegrat\\w+[^.]{0,45}\\bclinical\\w*\\s+(data|variable|feature|factor|parameter|information|characteristic)"
+        kind: regex
+      - pattern: "(?i)\\bintegrat\\w+ (imaging|radiomic\\w*|image|deep learning|pathomic\\w*)\\w* (and|with) clinical"
+        kind: regex
+      - pattern: "(?i)\\bclinicopathologic\\w*[^.]{0,45}\\b(model|nomogram|combined|integrated|incorporated)"
+        kind: regex
+      - pattern: "(?i)\\b(combined|integrated|hybrid|joint) clinic"
+        kind: regex
+      # Structural signals of a clinical-variable model. Added in v3 for recall.
+      - pattern: "(?i)\\bclinicopathologic\\w*\\s+(data|variable|feature|factor|characteristic|parameter)"
+        kind: regex
+      - pattern: "(?i)\\bclinical (model|score|signature)\\b"
+        kind: regex
+      - pattern: "(?i)\\bradiomics? nomogram"
+        kind: regex
+      - pattern: "(?i)(\\b(model|models|combined|combining|integrat\\w+|incorporat\\w+|nomogram|based on|developed (using|with))[^.]{0,55}\\bclinical (risk )?factors?\\b|\\bclinical (risk )?factors?\\b[^.]{0,55}\\b(were|was) (combined|integrated|incorporated|included|used to (develop|build|construct)))"
+        kind: regex
+      # Structured variable families named as inputs.
+      - pattern: "(?i)\\bclinical variables?\\b"
+        kind: regex
+      - pattern: "(?i)\\blaborator\\w+ (value|parameter|indicator|ind(ex|ices)|data|result)"
+        kind: regex
+      - pattern: "(?i)\\bdemographic\\w*[^.]{0,25}(clinical|laborator)"
+        kind: regex
+    exclude: []
+    notes: >
+      Structured clinical variables used as a MODEL INPUT. Not an imaging
+      modality; does NOT contribute to the `domain` rule.
+      v4 (2026-09-02): "clinical (risk) factors" TIGHTENED after round-two
+      validation found that four of six false positives came from the four
+      structural patterns added in v3. It now requires a model verb within 55
+      characters (model, combined, integrating, incorporating, nomogram, based on,
+      developed using) or a following "were combined/integrated/incorporated".
+      Measured: 75 hits to 54, and its unique contribution from 14 records to 5,
+      of which 4 of 5 read are genuine — against 10 of 14 before. The records it
+      now drops were statistical adjustments ("independent of clinical factors")
+      and baseline comparisons ("no significant difference in clinical factors"),
+      not model inputs. The other three v3 patterns are retained: each contributes
+      15 to 28 unique records and the category is recall-limited.
+      One round-two false positive was a RETRACTION NOTICE. No term edit fixes
+      that; it is a publication-type question, and retracted papers being retained
+      in the corpus is an open decision recorded in docs/search-strategy.md.
+      v3 (2026-09-02) — BROADENED FOR RECALL. Blind validation measured v2 at 96%
+      precision but only 41% recall (17 of 41): it under-counted by more than
+      half. The commonest miss was the radiomics nomogram — "a combined model with
+      clinical characteristics" fired nothing, because v2's fusion patterns
+      required the word "clinical" to follow the fusion verb immediately. Every
+      fusion pattern now allows a bounded gap of up to 45 non-sentence characters,
+      and four structural patterns were added: "clinicopathological
+      data/variables/factors", "clinical model/score/signature", "radiomics
+      nomogram" and "clinical risk factors". In the radiomics literature a
+      "radiomics nomogram" and a "clinical model" essentially always denote
+      clinical variables combined with an imaging signature.
+      MEASURED COST. The category grew from 244 to 382 records in a 3,000-record
+      sample — about 3,630 to 5,680 corpus papers, a 57% increase. Precision on
+      the 92 newly admitted records was 17-18 of 20 read, so the blended estimate
+      is roughly 94%, down from 96%. That is the trade the author asked for: a
+      couple of points of precision for a large recall gain. The residual failures
+      are papers that mention clinicopathological factors in a statistical
+      adjustment or as background framing rather than as model inputs.
+      THE OLD CAVEAT STILL STANDS, and broadening makes it matter more: this row
+      counts papers that SAY they fused clinical variables with imaging. It over-
+      counts papers that merely report clinical variables alongside a model, and
+      under-counts papers that fuse without saying so. It is not a precise count of
+      multimodal clinical-imaging models.
+
+  other:
+    label: "Other"
+    type: "All other"
+    include:
+      # Radiotherapy dose and planning data.
+      - pattern: "(?i)\\bradiotherapy dose"
+        kind: regex
+      - pattern: "(?i)\\bdose[- ](volume|distribution|map|prediction)"
+        kind: regex
+      - pattern: "(?i)\\bdose (prediction|calculation|engine)"
+        kind: regex
+      - pattern: "(?i)\\bdosimetr"
+        kind: regex
+      - pattern: "\\bDVH\\b"
+        kind: regex
+      # Other imaging that has no row of its own.
+      - pattern: "(?i)\\b(endoscop|colonoscop|gastroscop|bronchoscop|cystoscop)"
+        kind: regex
+      - pattern: "(?i)\\bderm(at)?oscop"
+        kind: regex
+      - pattern: "(?i)\\boptical coherence tomograph"
+        kind: regex
+      - pattern: "\\bSPECT\\b"
+        kind: regex
+      - pattern: "(?i)\\bhyperspectral"
+        kind: regex
+      - pattern: "(?i)\\bthermograph"
+        kind: regex
+      - pattern: "(?i)\\bconfocal microscop"
+        kind: regex
+      - pattern: "(?i)\\belectron microscop"
+        kind: regex
+      - pattern: "(?i)\\b(clinical|total[- ]body|digital) photograph"
+        kind: regex
+      # Molecular and laboratory data types outside `genomics`.
+      - pattern: "(?i)\\b(mass spectrometr|MALDI)"
+        kind: regex
+      - pattern: "(?i)\\bmetabolomic"
+        kind: regex
+      - pattern: "(?i)\\bproteomic"
+        kind: regex
+      - pattern: "(?i)\\bflow cytometr"
+        kind: regex
+      - pattern: "(?i)\\bRaman spectroscop"
+        kind: regex
+      - pattern: "(?i)\\b(liquid biopsy|ctDNA|circulating tumou?r (cell|DNA))"
+        kind: regex
+      - pattern: "(?i)\\bmicrobiome"
+        kind: regex
+      # Signals and sensors.
+      - pattern: "(?i)\\b(wearable|accelerometer)"
+        kind: regex
+      - pattern: "\\b(ECG|EKG|EEG)\\b"
+        kind: regex
+    exclude: []
+    notes: >
+      ADDITIVE as of 2026-09-01, per config/README.md: `other` now takes include
+      patterns and may appear alongside named modalities. It means "uses a data
+      type outside the named rows". The classifier ALSO assigns it as a fallback
+      to any record matching no named modality at all, so the catch-all behaviour
+      is preserved and the two routes are distinguished in `pattern_hits.csv`.
+      The patterns name specific data types rather than trying to describe
+      "everything else", because only a named data type can be verified.
+      "(radiotherapy|radiation) dose" was drafted, measured and REMOVED: 24 of its
+      26 matches in 3,000 records were ACQUISITION dose — "reduce radiation dose",
+      "low-dose CT", "zero radiation dose imaging" — which is a scanner setting,
+      not a data type the model consumes. It cost about 3 of 16 records in a
+      precision read. Only dose-volume, dose-distribution, dose-map,
+      dose-prediction, dosimetry, DVH and the explicit "radiotherapy dose" are
+      kept. "treatment planning" was also rejected: 132 matches, and it names a
+      clinical process rather than a data type.
+      Known overlaps, accepted: `proteomic` also fires on some
+      `spatial_proteomics` papers, and mass spectrometry imaging appears in both
+      rows. That is correct — those papers do use both.
+      Deliberately misses: any data type nobody in the corpus named often enough
+      to be worth a pattern. Those papers still reach `other` by the fallback route
+      if they match no named row, and are simply not marked additive if they also
+      match one.

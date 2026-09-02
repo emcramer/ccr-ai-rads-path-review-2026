@@ -1,0 +1,371 @@
+# Term dictionary for the four review themes.
+# Schema: config/README.md. Validation and counts: docs/search-strategy.md.
+#
+# Matcher contract (measured against PubMed records, 2026-09-01):
+#   kind: phrase — case-insensitive, whitespace-tolerant, word-bounded literal.
+#   kind: regex  — Python `re`, applied CASE-SENSITIVELY. Write `(?i)` at
+#                  position 0 of the pattern to opt into case-insensitivity.
+#                  Python rejects `(?i)` anywhere else, so a pattern needs at
+#                  most one, at the front.
+# Matched against title + " \n " + abstract. Classification is multi-label.
+version: 6
+
+categories:
+
+  foundation_models:
+    label: "Foundation Models"
+    type: null
+    include:
+      - pattern: "(?i)\\bfoundation models?\\b"
+        kind: regex
+      - pattern: "(?i)\\bvision[- ]language models?\\b"
+        kind: regex
+      - pattern: "(?i)\\blarge (language|vision|multi-?modal(ity)?) models?\\b"
+        kind: regex
+      - pattern: "\\b(LLM|VLM|MLLM)s?\\b"
+        kind: regex
+      - pattern: "(?i)\\bChatGPT\\b"
+        kind: regex
+      - pattern: "\\bGPT-?[0-9]"
+        kind: regex
+      - pattern: "(?i)\\b(Gemini|Claude|LLaMA|Mistral|Qwen|DeepSeek)[- ][0-9]"
+        kind: regex
+      - pattern: "(?i)\\bpre-?trained on .{0,40}\\b(million|billion|slides|images)\\b"
+        kind: regex
+      - pattern: "(?i)\\b(pathology|radiology|medical|clinical) foundation model"
+        kind: regex
+      # Named pathology and radiology foundation models. All-caps names are
+      # matched case-sensitively so they do not collide with ordinary words
+      # ("chief", "titan", "prism", "atlas", "uni-", "conch").
+      - pattern: "\\b(UNI|CONCH|TITAN|CHIEF|PLIP|KRONOS|MUSK)\\b"
+        kind: regex
+      - pattern: "(?i)\\b(Virchow|Prov-?GigaPath|GigaPath|Phikon|RudolfV|Hibou|H-optimus|Paige ?PanCancer)\\b"
+        kind: regex
+      - pattern: "(?i)\\b(CT-FM|RAD-DINO|Merlin|BiomedCLIP|MedCLIP|MedSAM|BiomedGPT|LLaVA-?Med)\\b"
+        kind: regex
+      - pattern: "(?i)\\bsegment anything\\b"
+        kind: regex
+    exclude: []
+    notes: >
+      v3 (2026-09-02) — REBUILT after blind validation measured this category at
+      59% precision (27 of 46), with 12 of its 19 false positives from ONE pattern.
+      "self-supervised (learning|pre-training|model)" is REMOVED. Self-supervised
+      learning is a training technique, not a foundation model: a paper that
+      pretrains a small CNN self-supervised is not thereby a foundation model.
+      Measured on 3,000 records: it added 13 records beyond the rest of the
+      category, and they are ordinary SSL applications — a bpMRI pretraining
+      scheme, self-supervised cervical OCT, SSL kidney-tumour classification. A
+      QUALIFIED form requiring foundation-model or large-scale-pretraining language
+      nearby was also built and measured: it added exactly ONE record, itself
+      doubtful, so it is not shipped either.
+      "zero-shot" and "few-shot" are REMOVED for the same definitional reason.
+      THIS GOES BEYOND THE REPORTED DEFECT and is flagged for the fresh validation
+      round: they are evaluation regimes characteristic of foundation models but
+      not exclusive to them, and they added 3 and 4 unique records respectively,
+      mostly not foundation models (a Fourier neural operator, a radiomics
+      delineation model, a few-shot prostate detector).
+      Two acronym collisions removed, the same class as CT/PET/IHC. "LMM" matched
+      "linear mixed-effects models": 6 corpus records, only 2 genuine. Those 2 are
+      preserved because the spelled-out pattern was broadened to
+      "large (language|vision|multi-modal(ity)) models?", which catches "large
+      multimodality model" — so dropping the acronym costs nothing, verified.
+      "PRISM" matched CTRP/PRISM drug-screen compounds, GraphPad Prism, PRISm
+      (preserved-ratio impaired spirometry) and bibliometrics software: 24 corpus
+      records, and a 12-record read found NO instance of the Paige PRISM pathology
+      model. Removed outright.
+      Cost of the three removals: 108 records to 89 in a 3,000-record sample,
+      roughly 1,610 to 1,320 in the corpus.
+      "foundation model" as a phrase, never bare "foundation": in this corpus
+      "foundation" alone fires on funding bodies (National Natural Science
+      Foundation, National Science Foundation). Measured on a 3,000-record
+      sample: 52 records contain "foundation", only 22 contain "foundation
+      model". Large language models are treated as foundation models, since the
+      review's usage covers both. Named models are listed because most papers
+      name the model without ever writing "foundation model"; the all-caps names
+      are case-sensitive because the lower-case words collide badly. Deliberately
+      misses: papers that describe self-supervised pretraining at scale without
+      using any of these words, and models named after this dictionary was frozen.
+
+  multimodal_integration:
+    label: "Multimodal Integration"
+    type: null
+    include:
+      - pattern: "(?i)\\bmulti[- ]?modal"
+        kind: regex
+      - pattern: "(?i)\\bcross[- ]?modal"
+        kind: regex
+      - pattern: "(?i)\\bmulti[- ]?omics?\\b"
+        kind: regex
+      - pattern: "(?i)\\bradiogenomic"
+        kind: regex
+      - pattern: "(?i)\\bradiopathomic"
+        kind: regex
+      - pattern: "(?i)\\bpathogenomic"
+        kind: regex
+      - pattern: "(?i)\\bimag(e|ing)[- ](genomic|omic|transcriptomic)"
+        kind: regex
+      - pattern: "(?i)\\b(data|modality|multimodal|multi-modal|cross-modal|multi-omic) fusion\\b"
+        kind: regex
+      - pattern: "(?i)^(?=[\\s\\S]*fusion (model|network|framework|strateg))(?=[\\s\\S]*(multi-?modal|cross-?modal|multi-?omic|radiogenomic|pathomic|genomic|clinical (data|feature|variable)))"
+        kind: regex
+      - pattern: "(?i)\\bintegrat\\w+ (imaging|radiomic\\w*|patholog\\w+|histolog\\w+|clinical) (and|with) "
+        kind: regex
+      - pattern: "(?i)\\bcombin\\w+ (imaging|radiomic\\w*|patholog\\w+) (and|with) (genomic|transcriptomic|molecular|clinical)"
+        kind: regex
+    exclude:
+      - pattern: "(?i)\\bmulti[- ]?modal(ity)? (therap|treatment|analgesi|pain|prehabilitat|rehabilitat|chemotherap|regimen)"
+        kind: regex
+      - pattern: "(?i)^(?:(?=[\\s\\S]*(\\bmulti[- ]?(modal|parametric)\\w*[^.]{0,60}\\b(MRI|magnetic resonance)\\b|\\b(MRI|magnetic resonance)\\b[^.]{0,60}\\bmulti[- ]?(modal|parametric)))|(?=[\\s\\S]*\\b(T1|T1W|T1WI|T1C|T1CE|T1-weighted|T1 weighted)\\b)(?=[\\s\\S]*\\b(T2|T2W|T2WI|T2-weighted|T2 weighted|FLAIR|DWI|ADC|DCE|DKI|SWI|PWI|MRCP)\\b))(?![\\s\\S]*(cross-?modal|multi-?omic|radiogenomic|pathogenomic|genomic|transcriptom|sequencing|RNA-?seq|clinical (data|feature|variable|factor|parameter|information|characteristic)|(?-i:\\bEHR\\b)|electronic health|patholog|histolog|H&E|h(a)?ematoxylin|whole[- ]slide|(?-i:\\bWSI\\b)|report|\\btext\\b|(?-i:\\bPET\\b)|(?-i:\\bCT\\b)|computed tomograph|ultrasound|sonograph|mammogra|x-?ray|radiograph|liquid biopsy|ctDNA|(?-i:\\bEEG\\b)|(?-i:\\bECG\\b)|dosimetr|dose[- ](volume|distribution)|endoscop|derm(at)?oscop|\\bwearable|mass spectrom|metabolom|proteom|flow cytometr|microbiome|hyperspectral|optical coherence|(?-i:\\bSPECT\\b)|demographic|laborator))"
+        kind: regex
+    notes: >
+      v6 (2026-09-02) — the intra-modality exclusion WIDENED, and its context list
+      HARDENED. Round three measured the v4/v5 form at 55% precision (34-74%)
+      against 67% before, with overlapping intervals - it demonstrated nothing.
+      The mechanism was measured: the sequence-pair test needs both a T1-family and
+      a T2-family term, but only 245 of 3,452 multimodal candidates (7.1%) name
+      both, so it fired on 2.4%. The type specimen it missed is PMID 42135350,
+      "multi-modal MRI scans" over four BraTS sequences with no other data type and
+      not one sequence named.
+      The exclusion now has TWO routes: "multi-modal" or "multi-parametric" within
+      60 characters of MRI or magnetic resonance (either order), OR the original
+      sequence-pair test. Verified: PMID 42135350 is caught by the new route and
+      was not caught before. Measured on multimodal candidates in a 3,000-record
+      sample, the exclusion rate goes 1.7% -> 5.5% and the theme count 287 -> 276.
+      All 11 newly excluded records were read and all 11 are intra-modality MRI
+      work - multimodal brain-tumour segmentation from MRI scans, T2w-and-DWI
+      registration, multi-parametric MRI segmentation.
+      THE LATENT DEFECT IN THE CONTEXT LIST, checked before acting rather than
+      assumed. The report named "SPECT" and "CT\\b" as unprotected against
+      case-insensitive matching. As written in the file they were already anchored
+      as "\\bSPECT\\b" and "\\bCT\\b", and measurement confirms case-insensitivity
+      cost 0 and 1 records respectively out of 3,000; the quoted 51% and 64% rates
+      reproduce exactly only if the leading word boundary is dropped, which is what
+      must have been tested. So that specific defect was not live and is not live
+      now. But a REAL unbounded token was present and unreported: "text", which
+      matches "context" (169 records) and "texture" (177) - and "texture" is
+      everywhere in a radiomics corpus. It is now "\\btext\\b". Every acronym in the
+      list is additionally pinned case-sensitive with a scoped flag,
+      "(?-i:\\bCT\\b)" and so on, so that widening the exclusion cannot make the
+      class live later.
+      v4 (2026-09-02) — the intra-modality exclusion REWRITTEN after round two
+      showed the v3 version did not work: precision moved only 64% to 67% with
+      overlapping intervals, and 11 of 21 remaining false positives were still
+      intra-modality fusion. The v3 exclude required the literal phrase "multimodal
+      MRI", so it missed "multi-modal deep learning ... magnetic resonance imaging
+      sequences" and could not fire at all when MRI was never named.
+      It now keys on SEQUENCE NAMES instead of phrase order: it fires when a T1
+      family term and a second sequence family term (T2, FLAIR, DWI, ADC, DCE, SWI,
+      PWI, MRCP) both appear and NO other data type is named anywhere in the
+      record. Phrase order is irrelevant and the word "MRI" need never appear.
+      MEASURED: fires on 5 records per 3,000 against the old version's 2, and all
+      5 read are genuinely intra-MRI — radiomics across T1 and T2 sequences,
+      MRI synthesis, perfusion-weighted radiomics, sequence-limited segmentation.
+      "early|late|intermediate fusion" REMOVED from the fusion alternation as
+      commonly architectural. Measured cost: 3 matches in 3,000, only 1 unique to
+      those words, so the removal is close to free.
+      NOT ADDRESSED, deliberately: the CT analogue (multi-phase CT fusion) matched
+      3 records in 3,000, too few to justify a pattern.
+      v3 (2026-09-02) — two fixes from blind validation. The FUSION patterns were
+      firing on network architecture: "Spatial Feature Fusion Convolutional
+      Network" is a model-internal operation, not multimodal data. "feature
+      fusion" and "image fusion" are REMOVED from the first pattern — measured at
+      53 of its 60 matches — leaving the multimodal terms of art (data, modality,
+      late, early, intermediate, cross-modal, multi-omic). The second pattern,
+      "fusion model/network/framework", is now CONJUNCTIVE: it requires multimodal,
+      cross-modal, multi-omic, radiogenomic, pathomic, genomic or clinical-data
+      language elsewhere in the record. That took it from 54 matches to 27.
+      The MULTIPARAMETRIC-MRI exclusion is deliberately context-aware, not blunt.
+      A blunt exclude on "multimodal MRI" would fire on 18 records in 3,000, but 6
+      of those genuinely pair MRI with another data type. The shipped exclude fires
+      only when "multimodal MRI" appears AND no other data type is named anywhere
+      in the record: 2 records in 3,000, both genuinely MRI-sequence-only.
+      Building it required adding liquid biopsy and EEG to the context list,
+      because the first draft wrongly excluded an MRI-plus-liquid-biopsy paper and
+      an MRI-EEG digital-twin paper. Both excludes are record-level.
+      "multimodal" in oncology also means multimodal *therapy* (surgery plus
+      chemotherapy plus radiation) and multimodal analgesia. Within this corpus
+      that sense is uncommon — 2 of 18 sampled "multimodal" records — because the
+      corpus already requires an AI term, so the exclude list is short and
+      targeted at the therapy sense only. The exclude is record-level: a paper
+      that genuinely fuses modalities *and* mentions multimodal therapy loses the
+      theme label. Measured at 7 records per 3,000, so the cost is small and it is
+      preferred to the alternative of admitting therapy papers. Deliberately
+      misses: papers that fuse image and text without ever calling it multimodal.
+
+  digital_twins:
+    label: "Digital Twins"
+    type: null
+    # STANDARD CHANGE 2026-09-02 (author): this row tracks trends of INTEREST in
+    # the literature, not successful construction of a digital twin. Papers that
+    # engage with the idea in any capacity count — proposing a framework, building
+    # a component, reviewing it, or naming it as future work.
+    #
+    # OPERATIONAL LINE (approved 2026-09-02): the paper must INVOKE THE
+    # DIGITAL-TWIN IDEA ITSELF, IN THE TWIN VOCABULARY — not merely supply
+    # something a twin would need. Without this line "a building block for one"
+    # has no stopping point: every longitudinal imaging study is a building block
+    # and the theme swallows the corpus.
+    include:
+      - pattern: "(?i)\\bdigital[\\s-]+twin(s|ning)?\\b"
+        kind: regex
+    exclude: []
+    notes: >
+      v5 (2026-09-02) — ONE PATTERN, and that is the finding. Measurement says the
+      twin vocabulary in this corpus is saturated by "digital twin" alone.
+      The pattern tolerates a hyphen: "(?i)\\bdigital[\\s-]+twin(s|ning)?\\b". This was
+      not cosmetic. A literal space missed "modeling digital-twin of renal
+      functions", one real paper, and the fix took the corpus count from 55 to 56 —
+      which is exactly the figure the hand screen expects from the current
+      vocabulary. "digital twinning" measures 0 corpus records but costs nothing to
+      tolerate.
+      DO NOT ANCHOR THIS PATTERN ON A MODIFIER. The genuine vocabulary is "digital
+      twin" plus a modifier, and the modifiers vary without limit across the
+      screened papers — medical, clinical, cognitive, theranostic, generative,
+      optical, geometric, therapeutic. Because every modifier PRECEDES the head
+      noun, the unanchored pattern catches them all; any refinement that requires a
+      known modifier would silently lose the rest.
+      COLLISIONS, all seven now handled. Five died in v4 with the removal of
+      "digital (patient|tumour|avatar)": the CamelCase acronym "DiGital tuMor
+      pArameTErs", "Digi-TAS", "DGMate", "digital patient files", and "digital
+      tumor signatures" (autoencoder latents). Verified absent from the 115-record
+      candidate population. The sixth, "patient avatars?", is REMOVED here: it
+      matched exactly ONE record in the entire corpus, and that record displays CNN
+      heatmaps on 3D total-body-photography avatars — a photograph, not a model.
+      Zero genuine papers lost; the same free-removal result as MIBI in v4. That
+      also disposes of the VR surgical-avatar case. No guard was written against
+      "digital tumour signatures" and none is needed, so genuine "digital twin of
+      the tumour" phrasing is untouched.
+      RECALL: the ranked candidate list was measured against the whole corpus and
+      EVERY TERM YIELDED ZERO papers that pass the operational line.
+        * "patient-specific computational model" — 1 corpus record, 0 unique. It is
+          the neuro-oncology systematic review that also says "digital twin" in its
+          title. The field's reviewers do treat these as one literature, but in
+          this corpus the phrase never appears outside a paper already captured.
+        * "virtual human twin" — the EU term of art, and genuine twin vocabulary,
+          but 0 unique. Its one appearance is the sentence "'Digital twins', also
+          called 'digital patient twins' or 'virtual human twins'", where the head
+          term sits three words away. This is the failure mode predicted for
+          "virtual replica", and "virtual replica" measured 0 records outright.
+        * "in silico trial" (3 unique) and "virtual trial" (2 unique) — REJECTED on
+          the operational line. Every one is a virtual IMAGING trial simulating the
+          scanner chain over phantoms; none reaches for the twin idea.
+        * "virtual cohort" (1 unique) and bare "virtual patient" (9 unique) —
+          REJECTED on the operational line. Phantoms, XCAT human models and GAN
+          synthetic-data augmentation. Confirms the screener's warning that
+          precision might improve while yield stayed negligible.
+        * "digital <modifier> twin" as a construction — 0 unique.
+      SELF-CORRECTION: an earlier v5 draft added "digital patient/human model",
+      "virtual patient model" and "patient-specific simulation/computational
+      model", gaining 5 records. All five were then tested against the operational
+      line and ALL FIVE FAILED — none contains any twin vocabulary. They are a
+      biobank's patient model, an image-registration coordinate space, two 3D
+      surgical-planning models and a finite-element tumour-growth simulation:
+      exactly the "supplies what a twin needs but never invokes it" class the line
+      exists to exclude. The additions were reverted.
+      ONE DISAGREEMENT WITH THE HAND SCREEN, surfaced rather than resolved: the
+      screener counts the "Twin-GRU" paper as a collision because its authors
+      disclaim the twin sense. It is the only Twin-GRU record in the corpus and its
+      TITLE reads "A Digital Twin-Inspired Closed-Loop Latent Simulation
+      Framework". Under the strict standard it is a false positive; under
+      "engagement with the idea in any capacity" a title framing the work as
+      digital-twin-inspired is engagement, and it is currently counted. No pattern
+      separates it from genuine usage — if the screener's reading governs, it must
+      be dropped by PMID.
+
+  clinical_fda:
+    label: "Clinical Applications / FDA Approval"
+    type: null
+    # SCOPE DECISION 2026-09-01 (author): this theme means REGULATORY CLEARANCE
+    # ONLY. The earlier draft ORed in clinical-deployment language and measured
+    # ~3,290 papers; that reading was rejected. A pathology line of a handful of
+    # papers per year IS the review's argument, since pathology has almost no
+    # cleared AI against radiology's ~1,100 devices.
+    include:
+      # --- Group A: specific regulatory instruments. Unconditional; each one
+      # names a regulator or a statutory pathway, so none of them can mean
+      # anything else.
+      - pattern: "\\b510\\(k\\)"
+        kind: regex
+      - pattern: "(?i)\\bCE[- ]mark"
+        kind: regex
+      - pattern: "(?i)\\bpre-?market (approval|notification|clearance)"
+        kind: regex
+      - pattern: "(?i)\\bsoftware as a medical device"
+        kind: regex
+      - pattern: "\\bSaMD\\b"
+        kind: regex
+      - pattern: "(?i)\\b(medical )?devices? (clearance|approval|authoriz)"
+        kind: regex
+      - pattern: "(?i)\\bAI[- ]enabled (medical )?device"
+        kind: regex
+      - pattern: "\\b(MHRA|PMDA|NMPA|UKCA)\\b"
+        kind: regex
+      # --- Group B: "FDA" and "regulatory approval" are generic and leak badly
+      # on their own, so each is constrained. The FDA patterns require a
+      # software/device noun within 90 characters and no intervening sentence
+      # break; the "regulatory approval" pattern requires a possession verb, so
+      # that "further validation and regulatory approval are needed" does not
+      # match.
+      - pattern: "(?i)\\b(FDA|Food and Drug Administration)[- ]?(clear\\w*|approv\\w*|authoriz\\w*|grant\\w*)\\b[^.]{0,90}\\b(algorithm|software|artificial intelligence|deep learning|machine learning|device|tool|system|CADx|CADe|application|platform|assistant|solution|product|AI)\\b"
+        kind: regex
+      - pattern: "(?i)\\b(algorithm|software|artificial intelligence|deep learning|machine learning|device|tool|system|CADx|CADe|application|platform|assistant|solution|product|AI)\\b[^.]{0,90}\\b(FDA|Food and Drug Administration)[- ]?(clear\\w*|approv\\w*|authoriz\\w*)\\b"
+        kind: regex
+      - pattern: "(?i)\\b(clear\\w*|approv\\w*|authoriz\\w*) by the (US |U\\.S\\. )?(FDA|Food and Drug)\\b"
+        kind: regex
+      - pattern: "(?i)\\b(received|receives|obtained|granted|gained|gains|has|have|holds?|awarded|carries|achieved|secured)\\s+((the|a|an|multiple|numerous|several|its|their|full|initial|already)\\s+){0,3}regulatory (approval|clearance|authoriz)"
+        kind: regex
+    exclude:
+      # The one systematic false-positive class: approval of a DRUG or
+      # RADIOTRACER rather than of an AI device. Both patterns were measured
+      # against all 97 pre-exclusion matches and removed 4 false positives with
+      # ZERO genuine records lost.
+      - pattern: "(?i)\\b(approv\\w+|clear\\w+|authoriz\\w+)\\b[^.]{0,50}\\b(monotherapy|chemotherap\\w+|immunotherap\\w+|radioligand|radiopharmaceutic\\w+|radiotracer|inhibitor|antibod\\w+|therapeutic agent|as a treatment|for the treatment of)\\b"
+        kind: regex
+      - pattern: "(?i)\\b(\\[?1?\\d{2,3}\\s?[A-Za-z]{1,2}\\]?[- ]?(Lu|Ga|F|Tc|Cu|Zr)|Lu-PSMA|PSMA-617|PSMA-11|fluoroestradiol|piflufolastat|DCFPyL)\\b[^.]{0,70}\\b(approv|regulatory approval)"
+        kind: regex
+    notes: >
+      v4 (2026-09-02): "following" dropped from the possession verbs of the
+      "regulatory approval" pattern. It admitted temporal sequence — "following
+      regulatory approval, 123 examinations were reviewed" — rather than possession
+      of a clearance by the thing being studied.
+      Regulatory clearance only, per the author's decision of 2026-09-01.
+      Measured by downloading ALL 834 corpus records containing any regulatory
+      vocabulary and running these patterns over the full set, not over a sample:
+      93 records match, and reading all 93 gives 95.7% precision (4 residual false
+      positives). Bare "FDA" is never used; it appears in discussion sections of
+      papers that cleared nothing. Bare "regulatory approval" was measured at 44%
+      precision over 16 reads — nine of sixteen were aspirational, of the form
+      "further validation and regulatory approval are needed" — and is not
+      shipped; only the possession-constrained form is. The four residual false
+      positives are drug or biomarker approvals discussed inside genuine AI
+      imaging papers, which no pattern separates without losing true positives.
+      Counts are small and the per-year series is thin before 2023: see
+      docs/search-strategy.md for the year-by-year and radiology/pathology split
+      and for the recommendation to plot it cumulatively.
+      #
+      # ---------------------------------------------------------------------
+      # PRESERVED, DELIBERATELY NOT USED: clinical-deployment vocabulary.
+      # This is the ~3,290-paper reading of the theme that the author rejected on
+      # 2026-09-01. It is kept verbatim so that a reversal does not require
+      # rediscovering and re-validating the terms. To restore, move these back
+      # into `include` and re-measure; they were NOT precision-read individually.
+      #
+      #   - pattern: "(?i)\\bclinical (deployment|implementation|integration|workflow|adoption|readiness|translation)\\b"
+      #     kind: regex          # measured 105 / 3,000 sample
+      #   - pattern: "(?i)\\bprospective(ly)? (multicent|valid|evaluat|random|recruit|enroll)"
+      #     kind: regex          # measured  57 / 3,000 sample
+      #   - pattern: "(?i)\\breal[- ]world (deployment|implementation|setting|evidence|performance)\\b"
+      #     kind: regex          # measured   7 / 3,000 sample
+      #   - pattern: "(?i)\\broutine (clinical )?(practice|use|care|workflow|diagnostic)\\b"
+      #     kind: regex          # measured  31 / 3,000 sample
+      #   - pattern: "(?i)\\bcommercial(ly available)?[ -](AI|artificial|software|algorithm|system|tool|deep)"
+      #     kind: regex          # measured  19 / 3,000 sample
+      #   - pattern: "(?i)\\b(multi[- ]?)?reader stud"
+      #     kind: regex          # measured  14 / 3,000 sample
+      #   - pattern: "(?i)\\bclinically (deployed|implemented|integrated|validated)\\b"
+      #     kind: regex
+      #
+      # Union of the above with the regulatory group measured 221 / 3,000
+      # (~3,290 corpus papers) at roughly 11/14 precision for "is about clinical
+      # application" — a different and much weaker claim than "was cleared".
+      # ---------------------------------------------------------------------

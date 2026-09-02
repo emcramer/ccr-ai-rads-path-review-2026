@@ -1,0 +1,109 @@
+{
+  "generated_utc": "2026-09-02T18:11:44Z",
+  "tool": "trends.classify",
+  "python": "3.13.1",
+  "pandas": "3.0.5",
+  "input": {
+    "records": "data/interim/records.parquet",
+    "sha256": "ea815a6c79262f5129236b91003a38c1984b46efd70d9aea26f8bd5f55657780",
+    "n_records": 44625
+  },
+  "config": {
+    "themes": {
+      "path": "config/themes.yaml",
+      "version": 6,
+      "sha256": "6323007f53435a161409aa9c706f1cb6829ce6a59dd84266e1aafabc0573e374",
+      "n_categories": 4,
+      "n_patterns": 41
+    },
+    "modalities": {
+      "path": "config/modalities.yaml",
+      "version": 6,
+      "sha256": "6b3065142bc8e5ea5a846fda6be4ea45f63d3a9ef236a98067ed2eba9b278675",
+      "n_categories": 15,
+      "n_patterns": 150
+    },
+    "corpus": {
+      "path": "config/corpus.yaml",
+      "version": 1,
+      "sha256": "b610cd7a17b415c6dd959480d98b5b3084997b73bf43ccdcb37c2fce7b2d298a",
+      "date_range_start": "2015/01/01",
+      "date_range_end": "2026/09/01"
+    }
+  },
+  "counts": {
+    "records_in": 44625,
+    "records_analysed": 44533,
+    "exclusions": {
+      "book_records": 8,
+      "missing_pmid": 0,
+      "missing_year": 0,
+      "outside_date_range": 84
+    },
+    "papers_per_theme": {
+      "foundation_models": 1226,
+      "multimodal_integration": 4654,
+      "digital_twins": 56,
+      "clinical_fda": 93
+    },
+    "papers_per_modality": {
+      "he_histology": 6432,
+      "ihc": 2132,
+      "spatial_proteomics": 325,
+      "spatial_transcriptomics": 453,
+      "pathology_report": 226,
+      "mri": 12363,
+      "ct": 12566,
+      "pet": 3325,
+      "ultrasound": 4730,
+      "mammography": 2203,
+      "xray": 602,
+      "radiology_report": 325,
+      "genomics": 3550,
+      "clinical_data": 6127,
+      "other": 9514
+    },
+    "papers_per_domain": {
+      "radiology": 28417,
+      "none": 7748,
+      "pathology": 7327,
+      "both": 1041
+    },
+    "papers_with_no_theme": 38827
+  },
+  "partial_year": {
+    "year": 2026,
+    "source": "config/corpus.yaml:date_range.end"
+  },
+  "year_range_applied": {
+    "first": 2015,
+    "last": 2026
+  },
+  "other_assignment": {
+    "by_pattern": 4470,
+    "by_fallback": 5044,
+    "total": 9514
+  },
+  "outputs": {
+    "paper_labels": {
+      "path": "data/processed/paper_labels.csv",
+      "sha256": "6f74ef3add26e42adf4da0f5392f03917cdf978151dbe0e4564cfe09ea972ae1"
+    },
+    "combination_counts": {
+      "path": "data/processed/combination_counts.csv",
+      "sha256": "7dc30fd4450d51f50c154f7712e9e8267c1e860a6d25958995002b4d44de53cc"
+    },
+    "theme_year_counts": {
+      "path": "data/processed/theme_year_counts.csv",
+      "sha256": "a7085bb668ffefe544a60bf597d8e184fb3133884444a05ff51cb3442b7486e5"
+    },
+    "pattern_hits": {
+      "path": "data/processed/pattern_hits.csv",
+      "sha256": "9f009e0845baf930b3c4b4674ceb2efa21991c32af0c9fa14cd2ba0f0304f64b"
+    },
+    "report": {
+      "path": "data/processed/classification_report.txt",
+      "sha256": "0ce72f463be1aa60434965f132dac5172f814470f6eda936c692f6283b74706d"
+    }
+  }
+}

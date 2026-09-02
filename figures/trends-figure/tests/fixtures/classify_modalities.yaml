@@ -1,0 +1,177 @@
+# Fixture modality dictionary for tests/test_classify.py and tests/test_aggregate.py.
+#
+# Hand-written and tiny; see the header of classify_themes.yaml. It carries all
+# fifteen canonical modality keys so that tables built from it validate against
+# trends.plotting.io, and it concentrates on the acronym traps: CT against "Ct",
+# PET against "pet", IHC against "ihc", WSI against "wsi", and CODEX against the
+# ordinary word "codex".
+#
+# `case_sensitive: true` on a phrase is the readable way to write an acronym.
+# Schema: config/README.md.
+version: 4
+
+categories:
+
+  he_histology:
+    label: "H&E / Histology"
+    type: "Imaging"
+    include:
+      # Whitespace-tolerant: matches "whole  slide imaging" and across a newline.
+      - pattern: "whole slide imaging"
+        kind: phrase
+      - pattern: "WSI"
+        kind: phrase
+        case_sensitive: true
+    exclude: []
+    notes: "Whitespace tolerance and a case-sensitive acronym phrase."
+
+  ihc:
+    label: "IHC"
+    type: "Imaging"
+    include:
+      - pattern: "(?i)\\bimmunohistochem"
+        kind: regex
+      - pattern: "IHC"
+        kind: phrase
+        case_sensitive: true
+    exclude:
+      - pattern: "(?i)\\bintrahepatic cholangiocarcinoma\\s*\\(IHC\\)"
+        kind: regex
+    notes: "The IHC / intrahepatic cholangiocarcinoma collision."
+
+  spatial_proteomics:
+    label: "Spatial Proteomics"
+    type: "Imaging"
+    include:
+      - pattern: "CODEX"
+        kind: phrase
+        case_sensitive: true
+    exclude: []
+    notes: "An all-caps platform name that is also an ordinary word."
+
+  spatial_transcriptomics:
+    label: "Spatial Transcriptomics"
+    type: "Imaging"
+    include:
+      - pattern: "spatial transcriptomics"
+        kind: phrase
+    exclude: []
+    notes: "A plain multi-word phrase."
+
+  pathology_report:
+    label: "Pathology Report"
+    type: "Text"
+    include:
+      # Conjunctive: both lookaheads must hold. Anchored at the start of the
+      # title-plus-abstract string, which is why the separator matters.
+      - pattern: "(?i)^(?=[\\s\\S]*\\bpathology reports?\\b)(?=[\\s\\S]*(natural language processing|\\bNLP\\b))"
+        kind: regex
+    exclude: []
+    notes: "The conjunctive lookahead construction the real dictionary uses."
+
+  radiology_report:
+    label: "Radiology Report"
+    type: "Text"
+    include:
+      - pattern: "(?i)\\bradiology reports?\\b"
+        kind: regex
+    exclude: []
+    notes: "Unconditional, unlike the real dictionary; the fixture is not the corpus."
+
+  mri:
+    label: "MRI"
+    type: "Imaging"
+    include:
+      - pattern: "\\bMRIs?\\b"
+        kind: regex
+    exclude: []
+    notes: "Case-sensitive by default, as every regex is."
+
+  ct:
+    label: "CT"
+    type: "Imaging"
+    include:
+      - pattern: "\\bCTs?\\b"
+        kind: regex
+      - pattern: "computed tomography"
+        kind: phrase
+    exclude: []
+    notes: "Bare CT is safe only case-sensitively; it must not fire on qPCR Ct."
+
+  pet:
+    label: "PET"
+    type: "Imaging"
+    include:
+      - pattern: "\\bPET\\b"
+        kind: regex
+    exclude: []
+    notes: "Must not fire on the animal."
+
+  ultrasound:
+    label: "Ultrasound"
+    type: "Imaging"
+    include:
+      - pattern: "ultrasound"
+        kind: phrase
+    exclude: []
+    notes: "Case-insensitive by default, as every phrase is."
+
+  mammography:
+    label: "Mammography"
+    type: "Imaging"
+    include:
+      - pattern: "(?i)\\bmammogra"
+        kind: regex
+    exclude: []
+    notes: "Stands in for the shipped entry; the prefix covers gram/graphy/graphic."
+
+  xray:
+    label: "Radiography (X-ray)"
+    type: "Imaging"
+    include:
+      - pattern: "(?i)\\bx-?ray"
+        kind: regex
+    exclude:
+      - pattern: "(?i)x-?ray (diffraction|computed tomograph)"
+        kind: regex
+    notes: "Carries an exclude, so the record-level exclusion rule stays exercised."
+
+  genomics:
+    label: "Genomics / Transcriptomics"
+    type: "Molecular"
+    include:
+      - pattern: "(?i)\\bgenomic"
+        kind: regex
+      - pattern: "(?i)\\bRNA[- ]?seq"
+        kind: regex
+    exclude: []
+    notes: >
+      Takes no side of the domain rule: a paper using MRI and genomics is
+      radiology, not both.
+
+  clinical_data:
+    label: "Clinical / EHR Data"
+    type: "Structured"
+    include:
+      - pattern: "(?i)\\belectronic health record"
+        kind: regex
+      - pattern: "EHR"
+        kind: phrase
+        case_sensitive: true
+    exclude: []
+    notes: "Also outside the domain rule. The acronym is case-sensitive."
+
+  other:
+    label: "Other"
+    type: "All other"
+    include:
+      - pattern: "(?i)\\bdermoscop"
+        kind: regex
+      - pattern: "(?i)\\bendoscop"
+        kind: regex
+    exclude: []
+    notes: >
+      Additive, and it does take include patterns: it names a data type outside
+      the fourteen named rows. The classifier also assigns it as a fallback to a
+      record that matched no named modality, and the two routes are told apart in
+      pattern_hits.csv by the `role` column.

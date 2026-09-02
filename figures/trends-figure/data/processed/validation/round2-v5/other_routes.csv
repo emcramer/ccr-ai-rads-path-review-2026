@@ -1,0 +1,7 @@
+# file: other_routes.csv
+# The two routes to `other` scored as the different claims they
+# are: a pattern match asserts an out-of-row data type, the
+# fallback admits that no named modality was found.
+route,claim,n,correct,precision,lo,hi
+pattern,uses a data type outside the named rows,23,21,0.9130434782608695,0.7320359570190598,0.9758205045927666
+fallback,no named modality could be identified,24,18,0.75,0.5510017468789357,0.8800079652065766

@@ -1,0 +1,58 @@
+# Fixture theme dictionary for tests/test_classify.py and tests/test_aggregate.py.
+#
+# Hand-written, tiny, and deliberately NOT a copy of config/themes.yaml. Its job
+# is to exercise the matcher, not to classify literature: it holds one pattern of
+# every kind the schema allows, one exclude, and two known traps — a `phrase`
+# that will not match its own plural, and a `phrase` whose last character is not
+# a word character.
+#
+# Schema: config/README.md. The four keys are the canonical ones from
+# docs/figure-spec.md, so tables built from this fixture validate against
+# trends.plotting.io.
+version: 7
+
+categories:
+
+  foundation_models:
+    label: "Foundation Models"
+    type: null
+    include:
+      # A phrase is word-bounded, so this does NOT match "foundation models".
+      - pattern: "foundation model"
+        kind: phrase
+      - pattern: "(?i)\\bvision[- ]language models?\\b"
+        kind: regex
+    exclude: []
+    notes: "Phrase and regex side by side, and the singular/plural trap."
+
+  multimodal_integration:
+    label: "Multimodal Integration"
+    type: null
+    include:
+      - pattern: "(?i)\\bmulti[- ]?modal"
+        kind: regex
+    exclude:
+      - pattern: "(?i)\\bmultimodal therapy\\b"
+        kind: regex
+    notes: "Exercises record-level, category-level exclusion."
+
+  digital_twins:
+    label: "Digital Twins"
+    type: null
+    include:
+      - pattern: "digital twin"
+        kind: phrase
+    exclude: []
+    notes: "A bare phrase."
+
+  clinical_fda:
+    label: "Clinical Applications / FDA Approval"
+    type: null
+    include:
+      - pattern: "(?i)\\bFDA[- ]?(clear|approv)"
+        kind: regex
+      # Ends in ")", where \b would assert the wrong thing.
+      - pattern: "510(k)"
+        kind: phrase
+    exclude: []
+    notes: "Exercises a phrase bounded by a non-word character."

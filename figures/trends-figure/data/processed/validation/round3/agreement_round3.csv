@@ -1,0 +1,15 @@
+# file: agreement_round3.csv
+# Targeted round: every stratum is rule-positive, so this measures
+# PRECISION only. `own stratum` is the designed measurement; `whole pool`
+# adds observations from the other strata and is not a random sample.
+category,scope,tp,fp,fn,precision,precision_lo,precision_hi,n_population
+digital_twins,own stratum,20,0,0,1.0,0.8389,1.0,20
+digital_twins,whole pool,20,0,0,1.0,0.8389,1.0,
+genomics,own stratum,16,16,0,0.5,0.3363,0.6637,853
+genomics,whole pool,24,18,2,0.5714,0.4221,0.7088,
+multimodal_integration,own stratum,11,9,0,0.55,0.3421,0.7418,3198
+multimodal_integration,whole pool,28,13,25,0.6829,0.5302,0.8044,
+clinical_data,own stratum,17,3,0,0.85,0.6396,0.9476,4533
+clinical_data,whole pool,27,5,6,0.8438,0.6825,0.9314,
+spatial_proteomics,own stratum,13,1,0,0.9286,0.6853,0.9873,320
+spatial_proteomics,whole pool,13,1,0,0.9286,0.6853,0.9873,
