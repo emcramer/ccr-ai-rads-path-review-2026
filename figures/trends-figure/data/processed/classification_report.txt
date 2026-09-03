@@ -1,8 +1,8 @@
 CLASSIFICATION DIAGNOSTIC REPORT
 ==============================================================================
-generated_utc   : 2026-09-02T20:46:23Z
+generated_utc   : 2026-09-03T16:51:53Z
 records         : data/interim/records.parquet
-themes.yaml     : v8  5ff6b0a92416  5 categories, 51 patterns
+themes.yaml     : v10  756010f21037  6 categories, 59 patterns
 modalities.yaml : v6  6b3065142bc8  15 categories, 150 patterns
 
 records read     :  44,625
@@ -21,8 +21,9 @@ multimodal_integration       4,654   10.5%  ###
 digital_twins                   56    0.1%  
 clinical_fda                    93    0.2%  
 virtual_staining                65    0.1%  
-(no theme)                  38,777   87.1%  ########################
-(two or more themes)           326    0.7%
+agentic_ai                      35    0.1%  
+(no theme)                  38,767   87.1%  ########################
+(two or more themes)           338    0.8%
 
 MODALITIES
 ------------------------------------------------------------------------------
@@ -145,6 +146,21 @@ virtual_staining  (65 papers, 11 distinct combinations)
     11. he_histology+ihc+other+spatial_proteomics           1    1.5%
     remainder column: 0 further combination(s), 0 papers (0.0%)
 
+agentic_ai  (35 papers, 16 distinct combinations)
+     1. he_histology                                       10   28.6%
+     2. ultrasound                                          4   11.4%
+     3. mri                                                 3    8.6%
+     4. other                                               3    8.6%
+     5. clinical_data                                       2    5.7%
+     6. pathology_report                                    2    5.7%
+     7. ct+other                                            2    5.7%
+     8. pet                                                 1    2.9%
+     9. spatial_transcriptomics                             1    2.9%
+    10. clinical_data+he_histology                          1    2.9%
+    11. ct+he_histology                                     1    2.9%
+    12. ct+pet                                              1    2.9%
+    remainder column: 4 further combination(s), 4 papers (11.4%)
+
 MOST FREQUENTLY FIRING PATTERNS  (top 25 by records matched)
 ------------------------------------------------------------------------------
 A pattern matching a large share of the corpus is either the theme's backbone or a runaway term. Check any you did not expect.
@@ -191,4 +207,4 @@ EXCLUDE PATTERNS  (labels suppressed)
 PATTERNS THAT NEVER FIRED
 ------------------------------------------------------------------------------
 Dead weight, a typo, or a term the corpus does not use. Not necessarily wrong; worth a look.
-    0 of 201: none
+    0 of 209: none

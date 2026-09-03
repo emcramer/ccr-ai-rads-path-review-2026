@@ -56,7 +56,10 @@ lower plot's entire range. Counts are per year throughout, neither cumulative no
 
 **Color and marker denote clinical domain; dash pattern denotes theme.** Radiology is
 `#0072B2` with a circle, pathology `#8F4B73` with a square, cross-specialty `#4B4B4B` with a
-triangle, and the two undivided series carry a diamond. Domain is therefore legible in
+triangle, and digital twins — undivided and not integrative — carries ink and a diamond.
+Agentic AI is `#4B4B4B` with an X: the style guide's structural/integrative category names
+agents explicitly, so the hue is semantic rather than decorative, and the X was chosen by
+measurement over the shapes that proved indistinguishable from the diamond at print size. Domain is therefore legible in
 grayscale, where hue is lost but marker shape survives; a test asserts that dash and marker
 alone separate every series within a plot, with no color at all.
 
@@ -76,6 +79,35 @@ papers, the second is 75 of 76 pathologic and so has nothing to divide. Virtual 
 nonetheless drawn in the pathology hue and marker, because that is a true statement about its
 papers and because ink would have put it in the same stroke as digital twins, which it crosses
 in 2024 and 2025.
+
+**Agentic AI is drawn only from 2024, and this is the one series on the panel whose line
+starts mid-axis.** The reason is measured. Its precision is strongly time-dependent: 24 of the
+27 papers from 2025 onward are strictly agentic, against 1 of 8 before 2025. "Agent" acquired
+its current sense in this literature around 2025; earlier matches are reinforcement-learning
+agents, or models whose authors simply called them agents, and no vocabulary separates those
+because they use the word correctly for their own era. The author set the cut at 2024 rather
+than 2025 so that the rise remains visible rather than beginning at its peak. **The omitted
+papers stay in the theme total and in Panel A** — only the drawn line is truncated. The rule
+lives in `panel_b.SERIES_START_YEAR`, and a test asserts that no other series is cut, so a
+start year stays an exception that must be argued for rather than a habit.
+
+Two further scope statements belong with that theme. **Its 35 papers include papers that
+discuss agentic AI as well as papers that build an agent** — 21 of 35 carry a single agentic
+mention, and several are reviews naming the topic in passing. Whether the theme should mean
+building or discussing is a definitional question the author has not yet been asked; the
+validation round records both readings per paper so the choice can be applied without
+re-reading anything. And **five papers use "multi-agent" in the reinforcement-learning sense**,
+kept and flagged rather than excluded, because excluding them would narrow the author's
+definition on an agent's judgment.
+
+**A corpus limitation this theme exposed, which is worth knowing before citing.** The primary
+PathChat paper — *A multimodal generative AI copilot for human pathology*, Nature 2024, PMID
+38866050 — is **not in the corpus**. It matches the method and domain blocks of the corpus
+query and fails only the cancer block, because its abstract says "pathology" and "diverse
+tissue origins" but never "cancer" or "tumour". The theme therefore finds reviews that cite
+PathChat but not PathChat itself. ChatEHR and Biomni are absent for a different and correct
+reason: they are EHR and general-biomedical agents rather than cancer imaging work. This is a
+recall property of the corpus query, not a defect in the theme.
 
 Pathology in the clinical theme is exactly zero in every year from 2015 through 2021, drawn as
 seven plotted points on the zero line rather than as a line beginning in 2022; where two lines

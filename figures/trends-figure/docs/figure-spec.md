@@ -54,6 +54,7 @@ the review's question is where each theme is being pursued, not only how large i
 | Upper | multimodal integration × {radiology, pathology, cross-specialty} |
 | Lower | digital twins (all) |
 | Lower | virtual staining (all) |
+| Lower | agentic AI (all) |
 | Lower | clinical applications / FDA approval × {radiology, pathology} |
 
 **Domain** comes from the modality labels, by the rule in the Input schema below:
@@ -67,8 +68,10 @@ domain and appear on **no** split line. They are 257 of foundation models' 1,226
 721 of multimodal integration's 4,654, so the split lines do not sum to the theme total and
 the legend must say so.
 
-Digital twins and virtual staining are drawn undivided: digital twins is too small to split
-three ways, and virtual staining is pathologic by definition.
+Digital twins, virtual staining, and agentic AI are drawn undivided: digital twins is too
+small to split three ways, virtual staining is pathologic by definition, and agentic AI is
+both small and deliberately cross-cutting — an agent that reads reports, images, and records
+is not usefully assigned to one specialty.
 
 ### How the series are distinguished
 
@@ -172,6 +175,7 @@ Themes (`theme` column values, and the `theme_<key>` column suffixes):
 | `digital_twins` | Digital Twins |
 | `clinical_fda` | Clinical Applications / FDA Approval |
 | `virtual_staining` | Virtual Staining |
+| `agentic_ai` | Agentic AI |
 
 Modalities (`mod_<key>` columns, and the members of `modality_set`), in figure row order:
 

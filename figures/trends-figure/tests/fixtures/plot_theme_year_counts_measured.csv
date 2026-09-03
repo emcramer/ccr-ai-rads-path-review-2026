@@ -2,11 +2,12 @@
 # file: plot_theme_year_counts_measured.csv
 #
 # Every row is the real per-year count, copied from data/processed/
-# theme_year_counts.csv as regenerated on 2026-09-02 from the 44,533-paper
-# corpus. It carries every (theme, domain) combination the pipeline emits --
-# five themes by five domains by twelve years, 300 rows -- because the table is
-# the record and the figure chooses which series to draw. panel_b filters; it
-# must not draw a row merely because the row exists.
+# theme_year_counts.csv as regenerated on 2026-09-03 from the 44,533-paper
+# corpus at themes v10 / modalities v6. It carries every (theme, domain)
+# combination the pipeline emits -- six themes by five domains by twelve years,
+# 360 rows -- because the table is the record and the figure chooses which
+# series to draw. panel_b filters; it must not draw a row merely because the row
+# exists.
 #
 # The four split domains PARTITION each theme:
 #   radiology + pathology + both + none == all
@@ -20,10 +21,14 @@
 # Features of the measured series that the tests hold the drawing to:
 #   * clinical pathology is exactly zero for the seven years 2015-2021, and
 #     first rises in 2022;
-#   * clinical radiology runs 13, 9, 21 across 2024-2026, and the dip is
+#   * clinical radiology runs 13, 8, 19 across 2024-2026, and the dip is
 #     sampling noise in a 93-paper theme;
-#   * virtual staining is 75 of 76 papers pathologic, which is why Panel B
-#     draws it undivided.
+#   * virtual staining is 64 of 65 papers pathologic, which is why Panel B
+#     draws it undivided;
+#   * agentic AI is drawn only from 2024. Its earlier matches are reinforcement-
+#     learning agents and models their authors simply called agents: 24 of 27
+#     papers from 2025 on are strictly agentic (89%), against 1 of 8 before 2025
+#     (12%). The table keeps every year; panel_b.SERIES_START_YEAR cuts the line.
 #
 # Schema matches docs/figure-spec.md.
 theme,domain,year,n_papers,partial_year
@@ -271,14 +276,14 @@ virtual_staining,all,2015,0,0
 virtual_staining,all,2016,0,0
 virtual_staining,all,2017,0,0
 virtual_staining,all,2018,0,0
-virtual_staining,all,2019,2,0
-virtual_staining,all,2020,3,0
-virtual_staining,all,2021,2,0
-virtual_staining,all,2022,4,0
+virtual_staining,all,2019,1,0
+virtual_staining,all,2020,2,0
+virtual_staining,all,2021,1,0
+virtual_staining,all,2022,2,0
 virtual_staining,all,2023,6,0
 virtual_staining,all,2024,13,0
-virtual_staining,all,2025,24,0
-virtual_staining,all,2026,22,1
+virtual_staining,all,2025,19,0
+virtual_staining,all,2026,21,1
 virtual_staining,radiology,2015,0,0
 virtual_staining,radiology,2016,0,0
 virtual_staining,radiology,2017,0,0
@@ -295,14 +300,14 @@ virtual_staining,pathology,2015,0,0
 virtual_staining,pathology,2016,0,0
 virtual_staining,pathology,2017,0,0
 virtual_staining,pathology,2018,0,0
-virtual_staining,pathology,2019,2,0
-virtual_staining,pathology,2020,3,0
-virtual_staining,pathology,2021,1,0
-virtual_staining,pathology,2022,4,0
+virtual_staining,pathology,2019,1,0
+virtual_staining,pathology,2020,2,0
+virtual_staining,pathology,2021,0,0
+virtual_staining,pathology,2022,2,0
 virtual_staining,pathology,2023,6,0
 virtual_staining,pathology,2024,13,0
-virtual_staining,pathology,2025,24,0
-virtual_staining,pathology,2026,22,1
+virtual_staining,pathology,2025,19,0
+virtual_staining,pathology,2026,21,1
 virtual_staining,both,2015,0,0
 virtual_staining,both,2016,0,0
 virtual_staining,both,2017,0,0
@@ -327,3 +332,63 @@ virtual_staining,none,2023,0,0
 virtual_staining,none,2024,0,0
 virtual_staining,none,2025,0,0
 virtual_staining,none,2026,0,1
+agentic_ai,all,2015,0,0
+agentic_ai,all,2016,0,0
+agentic_ai,all,2017,0,0
+agentic_ai,all,2018,0,0
+agentic_ai,all,2019,0,0
+agentic_ai,all,2020,1,0
+agentic_ai,all,2021,1,0
+agentic_ai,all,2022,2,0
+agentic_ai,all,2023,3,0
+agentic_ai,all,2024,1,0
+agentic_ai,all,2025,11,0
+agentic_ai,all,2026,16,1
+agentic_ai,radiology,2015,0,0
+agentic_ai,radiology,2016,0,0
+agentic_ai,radiology,2017,0,0
+agentic_ai,radiology,2018,0,0
+agentic_ai,radiology,2019,0,0
+agentic_ai,radiology,2020,1,0
+agentic_ai,radiology,2021,1,0
+agentic_ai,radiology,2022,1,0
+agentic_ai,radiology,2023,2,0
+agentic_ai,radiology,2024,1,0
+agentic_ai,radiology,2025,3,0
+agentic_ai,radiology,2026,3,1
+agentic_ai,pathology,2015,0,0
+agentic_ai,pathology,2016,0,0
+agentic_ai,pathology,2017,0,0
+agentic_ai,pathology,2018,0,0
+agentic_ai,pathology,2019,0,0
+agentic_ai,pathology,2020,0,0
+agentic_ai,pathology,2021,0,0
+agentic_ai,pathology,2022,0,0
+agentic_ai,pathology,2023,1,0
+agentic_ai,pathology,2024,0,0
+agentic_ai,pathology,2025,7,0
+agentic_ai,pathology,2026,8,1
+agentic_ai,both,2015,0,0
+agentic_ai,both,2016,0,0
+agentic_ai,both,2017,0,0
+agentic_ai,both,2018,0,0
+agentic_ai,both,2019,0,0
+agentic_ai,both,2020,0,0
+agentic_ai,both,2021,0,0
+agentic_ai,both,2022,0,0
+agentic_ai,both,2023,0,0
+agentic_ai,both,2024,0,0
+agentic_ai,both,2025,0,0
+agentic_ai,both,2026,1,1
+agentic_ai,none,2015,0,0
+agentic_ai,none,2016,0,0
+agentic_ai,none,2017,0,0
+agentic_ai,none,2018,0,0
+agentic_ai,none,2019,0,0
+agentic_ai,none,2020,0,0
+agentic_ai,none,2021,0,0
+agentic_ai,none,2022,1,0
+agentic_ai,none,2023,0,0
+agentic_ai,none,2024,0,0
+agentic_ai,none,2025,1,0
+agentic_ai,none,2026,4,1

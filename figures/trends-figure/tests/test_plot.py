@@ -452,15 +452,35 @@ def test_the_domain_rows_partition_every_theme(measured_dir: Path) -> None:
 def test_virtual_staining_is_drawn_undivided_because_it_is_pathologic(
     measured_dir: Path,
 ) -> None:
-    """75 of its 76 papers are pathologic, so a three-way split would say nothing."""
+    """Nearly every paper is pathologic, so a three-way split would say nothing.
+
+    The totals are read from the table rather than written here: the theme was
+    65 papers at themes v8 and 76 at v7, and a literal would have made this test
+    assert a superseded corpus instead of the property it is named for.
+    """
     frame = io.load_figure_data(measured_dir).theme_years
     theme = frame.loc[frame["theme"] == "virtual_staining"]
     totals = theme.groupby("domain")["n_papers"].sum()
-    assert totals["all"] == 76
-    assert totals["pathology"] == 75
+    assert totals["all"] > 0
+    assert totals["pathology"] / totals["all"] > 0.9, (
+        "the theme is drawn undivided because it is overwhelmingly pathologic"
+    )
     assert totals["radiology"] == 0 and totals["both"] == 0
     series = theme.loc[theme["domain"] == "all"].sort_values("year")["n_papers"].tolist()
-    assert series == [0, 0, 0, 0, 2, 3, 2, 4, 6, 13, 24, 22]
+    pathology_series = (
+        theme.loc[theme["domain"] == "pathology"].sort_values("year")["n_papers"].tolist()
+    )
+    # The v7 row was 76 papers reading [0, 0, 0, 0, 2, 3, 2, 4, 6, 13, 24, 22]; the
+    # v8 repair removed the biomarker-status papers, moving the shape as well as
+    # the total. This test is named for the undivided-drawing property, so it
+    # asserts that property rather than a snapshot of one corpus: the pathology
+    # series tracks the whole theme year by year, differing only where the single
+    # non-pathologic paper falls.
+    assert sum(series) > 0
+    assert all(p <= a for p, a in zip(pathology_series, series))
+    assert sum(series) - sum(pathology_series) <= 1, (
+        "at most one paper in the theme is not pathologic"
+    )
     assert ("virtual_staining", "all") in panel_b.LOWER_SERIES
 
 
@@ -491,26 +511,31 @@ def test_panel_b_puts_each_series_in_the_plot_the_spec_names(measured_dir: Path)
     assert lower == [
         ("digital_twins", "all"),
         ("virtual_staining", "all"),
+        ("agentic_ai", "all"),
         ("clinical_fda", "radiology"),
         ("clinical_fda", "pathology"),
     ]
-    assert len(upper) + len(lower) == 10
+    assert len(upper) + len(lower) == len(panel_b._SERIES_ORDER)
 
 
 def test_a_series_the_spec_does_not_name_is_not_drawn(measured_dir: Path) -> None:
-    """The table carries every (theme, domain) pair; the figure draws ten of them.
+    """The table carries every (theme, domain) pair; the figure draws a subset.
 
     This used to be a fallback that appended any unrecognised pair to the lower
-    plot. On the regenerated table -- five themes by five domains by twelve
-    years, 300 rows -- that would have added about nineteen lines nobody asked
-    for, silently. It is a filter now.
+    plot, which on the full table would have added a dozen or more lines nobody
+    asked for, silently. It is a filter now.
+
+    The expected pair count is derived, not written down: a theme was added on
+    2026-09-02 and another on 2026-09-03, and a literal here would have to be
+    edited each time -- which is how a guard quietly stops guarding.
     """
     frame = io.load_figure_data(measured_dir).theme_years
     present = set(map(tuple, frame[["theme", "domain"]].drop_duplicates().to_numpy()))
-    assert len(present) == 25, "the table carries every combination by design"
+    expected = len(style.THEME_ORDER) * len(style.DOMAIN_VALUES)
+    assert len(present) == expected, "the table carries every combination by design"
     upper, lower = panel_b._partition(frame)
     drawn = set(upper) | set(lower)
-    assert len(drawn) == 10
+    assert len(drawn) == len(panel_b._SERIES_ORDER)
     # The rows deliberately left undrawn, named so the intent is not mistaken
     # for an oversight: every "all" and "none" row, and the clinical theme's
     # three cross-specialty papers, which the spec does not draw.
@@ -597,7 +622,21 @@ def test_the_zero_run_is_found_but_left_to_the_legend(measured_dir: Path) -> Non
     drawn = {text.get_text() for text in panel.lower.texts}
     # What is left inside the plot is the end-of-line series labels, which are
     # functional names, not explanations. Nothing else may stand there.
-    assert drawn == {
+    #
+    # Measured against the series the fixture actually carries, not against every
+    # series the panel declares: ``_partition`` draws a line only where the table
+    # holds rows for it, and this fixture was recorded before ``agentic_ai``
+    # existed. A label for a series with no data would be a worse failure than a
+    # missing one, so the subset check below still catches it.
+    table = io.load_figure_data(measured_dir).theme_years
+    present = set(map(tuple, table[["theme", "domain"]].drop_duplicates().to_numpy()))
+    expected = {
+        style.series_label(theme, domain)
+        for theme, domain in panel_b.LOWER_SERIES
+        if (theme, domain) in present
+    }
+    assert drawn == expected
+    assert expected <= {
         style.series_label(theme, domain) for theme, domain in panel_b.LOWER_SERIES
     }
     plt.close(figure)
@@ -1473,6 +1512,61 @@ def test_the_confusable_marker_pair_never_shares_a_plot() -> None:
         )
 
 
+def test_two_series_may_share_a_marker_and_the_dash_tells_them_apart() -> None:
+    """The marker states a domain, so series making the same claim draw alike.
+
+    One pair still does: virtual staining and clinical pathology are both deep-pink
+    squares, separated by dash and by their end labels. That is the scheme
+    working, not a collision -- hue and marker answer "which side of the clinic",
+    the dash answers "which theme", and the label names it outright.
+
+    **Digital twins and agentic AI used to be the second such pair, and no longer
+    are.** The author asked on 2026-09-03 for the two to be distinguishable at a
+    glance, which reverses a decision this docstring previously recorded: giving
+    a domain-less series its own shape had been measured and declined, on the
+    grounds that no unused marker separated cleanly from diamond, circle and
+    square at once, and that the star's limbs fell under the guide's minimum
+    stroke. Two things resolve it. The style guide's structural/integrative row
+    names "fusion modules, joint models, **agents**", so agentic AI has a
+    semantic hue of its own rather than a borrowed one -- the earlier analysis
+    treated this as a free choice when the guide had already made it. And the
+    marker question narrows once hue is doing work too: "X" measures 0.706 ink
+    against the diamond's 0.523, a 0.183 separation, with a silhouette no round
+    or flat-sided marker resembles, and it is a filled glyph rather than thin
+    limbs.
+
+    What this test protects is the rule that a marker means a display domain and
+    nothing else -- agentic AI has one, it is not an invented shape for a theme.
+    If it fails because a shape was attached to a theme directly, that is a
+    different decision and belongs in docs/DECISIONS.md.
+    """
+    for plot_series in (panel_b.UPPER_SERIES, panel_b.LOWER_SERIES):
+        for first in plot_series:
+            for second in plot_series:
+                if first == second:
+                    continue
+                same_look = (
+                    style.series_color(*first) == style.series_color(*second)
+                    and style.series_marker(*first) == style.series_marker(*second)
+                )
+                if not same_look:
+                    continue
+                # Then they must be making the same domain claim ...
+                assert style.appearance_domain(*first) == style.appearance_domain(*second)
+                # ... and the dash and the label must separate them.
+                assert style.series_dash(*first) != style.series_dash(*second)
+                assert style.series_label(*first) != style.series_label(*second)
+
+    domainless = [pair for pair in panel_b.LOWER_SERIES if pair[1] == "all"
+                  and pair not in style.SERIES_DOMAIN_OVERRIDES]
+    assert {("digital_twins", "all")} == set(domainless), (
+        "agentic AI took a display domain of its own on 2026-09-03"
+    )
+    for pair in domainless:
+        assert style.series_color(*pair) == style.INK
+        assert style.series_marker(*pair) == style.DOMAIN_MARKERS["all"]
+
+
 def test_every_drawn_series_is_distinguishable_from_every_other() -> None:
     """Section 7. Ten lines, so this is the test that has to hold the panel up.
 
@@ -1560,3 +1654,36 @@ def test_the_svg_references_fonts_by_name_rather_than_outlining_them(
     body = result.svg.read_text(encoding="utf-8")
     assert "IBM Plex" in body, "the SVG must name the families it was drawn in"
     assert result.pdf.exists() and result.png.exists()
+
+
+def test_the_agentic_line_starts_in_2024(measured_dir: Path) -> None:
+    """Its earlier matches do not mean what its label means.
+
+    Measured: 24 of 27 papers from 2025 on are strictly agentic (89%), against
+    1 of 8 before 2025 (12%). The author set the cut at 2024 so the rise stays
+    visible. The papers remain in the theme total and in Panel A; only the drawn
+    line starts late. See panel_b.SERIES_START_YEAR.
+    """
+    frame = io.load_figure_data(measured_dir).theme_years
+    drawn = panel_b._series_frame(frame, "agentic_ai", "all")
+    assert not drawn.empty, "the series must still be drawn, just not from 2015"
+    assert int(drawn["year"].min()) == 2024
+
+    whole = frame.loc[
+        (frame["theme"] == "agentic_ai") & (frame["domain"] == "all")
+    ]
+    assert int(whole["year"].min()) == 2015, (
+        "the underlying table must keep every year; only the drawing is cut"
+    )
+
+
+def test_only_the_agentic_series_is_cut(measured_dir: Path) -> None:
+    """A start year is an exception that must be argued for, not a habit."""
+    frame = io.load_figure_data(measured_dir).theme_years
+    assert set(panel_b.SERIES_START_YEAR) == {("agentic_ai", "all")}
+    for theme, domain in panel_b._SERIES_ORDER:
+        if (theme, domain) == ("agentic_ai", "all"):
+            continue
+        drawn = panel_b._series_frame(frame, theme, domain)
+        if not drawn.empty:
+            assert int(drawn["year"].min()) == 2015, f"{theme}/{domain} was truncated"

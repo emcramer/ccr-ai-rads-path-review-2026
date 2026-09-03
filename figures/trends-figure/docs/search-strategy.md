@@ -11,27 +11,42 @@ that returns *fewer* means the query broke.
 Files this document explains: `config/corpus.yaml`, `config/themes.yaml`,
 `config/modalities.yaml`.
 
-**Current dictionary state — `themes.yaml` v8, `modalities.yaml` v6, `corpus.yaml` v1**
-(2026-09-02).
+**Current dictionary state — `themes.yaml` v10, `modalities.yaml` v6, `corpus.yaml` v1**
+(2026-09-03). Authoritative record: `config/VERSIONS.json`.
 
-`themes.yaml` reached v7 by adding the `virtual_staining` theme, then **v8**, which carries
-two content changes together: the corrected count and precision for that theme, and a
-one-token repair to `virtual_staining:include[5]` (§5, "Versions 7 and 8"). The repair
-changes labels — the row goes from 76 papers to 65 — so classification must be re-run before
-any figure is drawn from it.
+`themes.yaml` history: **v7** added the `virtual_staining` theme; **v8** corrected that
+theme's count and precision and applied a one-token repair to
+`virtual_staining:include[5]`, taking the row from 76 papers to 65 (§5, "Versions 7 and 8");
+**v9** added the `agentic_ai` theme (§5, "Version 9"); **v10** records the measurements that
+followed the v9 run — the chain-of-thought rejection, the tool-use correction, and the
+PathChat corpus gap. v10 changes no pattern, so labels are identical to v9 and only the
+provenance block moves. Classification still needs re-running, because the published counts
+were computed against v9 at a hash the file no longer carries.
 
 `modalities.yaml` last changed at v6; it jumped 4 → 6 because it had no v5 change, so that a
 manifest pair identifies one dictionary state. `corpus.yaml` has never changed since
 retrieval.
 
+**The rule is now enforced rather than remembered.** `config/VERSIONS.json` is an
+append-only ledger mapping each config file and version to the SHA-256 that version froze
+at, and a test fails when a file's current hash does not match its recorded version, or when
+a version number is reused with a different hash. Never edit or delete a ledger entry: to
+change a config, bump its `version` and append the new hash in the same commit. The ledger
+marks which entries were **observed** (hashed from a file that still exists) and which were
+**reconstructed** from session output and cannot be re-verified; versions whose hash could
+not be established with confidence are omitted deliberately, because a guessed entry would
+be worse than a missing one.
+
 **The version rule, and why it is stated this emphatically.** From v3 onward the version
 bumps on **any** content change, not only on changes judged significant. An unversioned edit
 makes every older manifest and report uninterpretable, because version plus SHA is what
-identifies the content. This project has broken the rule twice, and **both times the change
-was prose rather than patterns** — once when `modalities.yaml` content moved under an
-unchanged v2, and once when this file's v7 notes were corrected without a bump, leaving two
-different files claiming v7. The pattern case is easy to remember; the prose case is the one
-that catches people. A reminder to that effect now sits at the top of `themes.yaml`.
+identifies the content. This project broke the rule **three times in two days, and every
+time the change was prose rather than patterns**: `modalities.yaml` under v2, `themes.yaml`
+under v7, and `themes.yaml` under v9 — the last when notes recording the chain-of-thought
+rejection and the PathChat gap were added after the run that produced the published counts.
+Two written reminders did not prevent the third. The pattern case is easy to remember; the
+prose case is the one that catches people, which is why it is now a test rather than a
+convention.
 
 **Dictionary version 2** (2026-09-01). `themes.yaml` and `modalities.yaml` were revised
 after the first production run; see §5, "Version 2". The corpus query is unchanged and
@@ -309,6 +324,104 @@ really do use both. `pet+ct` will be one of the largest columns in Panel A and t
 should say why.
 
 The two spatial modalities overlap at only 2 records, so the disambiguation in §6 works.
+
+### Version 9 — the `agentic_ai` theme (2026-09-03)
+
+A sixth theme, from the author's definition: *"using an AI agent to do pathology or
+radiomics research, or clinical application"* — examples ChatEHR, PathChat, Biomni. The
+distinguishing feature is **planning, tool use, or multi-step autonomous action**, not a
+chat interface and not a single-shot LLM query.
+
+**35 papers.** Measured over a 917-record candidate superset built to be a *provable*
+superset of anything the patterns can match — every corpus record containing `agent`,
+`agentic`, `copilot`, `tool use/calling`, `autonomous`, `orchestrat*`, `chain-of-thought`,
+`multi-agent`, or a named system. That construction is deliberate, following the v7/v8
+lesson.
+
+#### Precision is time-dependent, and that is the finding for Panel B
+
+| | n | strictly agentic |
+|---|---|---|
+| 2025–2026 | 27 | **24 — 89%** |
+| pre-2025 | 8 | **1 — 12%** |
+| whole row | 35 | 25 — 71% strict; 30 — 86% counting classical RL agents |
+
+The word "agent" only acquired its agentic-AI sense around 2025. Before that a match is a
+drug (guarded out), a reinforcement-learning agent, or a model whose authors simply called
+it an agent — a cGAN for IMRT planning, a screening interface, a signature-fusion ensemble.
+**No vocabulary separates those**: they use the words correctly for their own era.
+
+**Recommendation:** the pre-2025 tail is 8 papers across five years and is mostly not
+agentic AI. Either start the line at 2025 or state in the legend that earlier points are
+unreliable. Do not present the early tail as a trend.
+
+#### `bare agent` is unusable, and the flood risk was checked directly
+
+Of 629 corpus records containing bare `agents?`: **384** carry a drug or contrast cue,
+**29** a software cue, and **216 carry neither**. Those 216 are where a thirty-paper theme
+becomes a three-hundred-paper one. **The shipped patterns select 0 of the 216.**
+
+#### What was rejected, with measurements
+
+- **Chain-of-thought — 31 records, the largest reasoning signal in the corpus. Not shipped.**
+  Roughly 24 of the 28 it would newly admit are prompting-strategy benchmarks
+  ("zero-shot, few-shot and chain-of-thought prompting were tested"). Chain-of-thought is a
+  *prompting technique*, not agency — the model emits reasoning tokens in one pass; it does
+  not plan, call tools, or act across steps.
+
+  This was also tested against a prediction recorded **before the fact**: a healthy theme was
+  expected at 35–75 papers with ~61% `foundation_models` overlap, and the stated failure
+  signature was a *larger* theme with a *higher* overlap. Measured: **without CoT, 35 papers
+  at 63% overlap; with CoT, 63 papers at 75%** — the failure signature exactly. Genuine
+  chain-of-thought *agents* are already caught by the agentic vocabulary.
+
+- **`tool use` / `tool calling` — 0 records each.** All 22 matches of the `tool` family are
+  `tool using`, the ordinary English participle: "a diagnostic tool using deep learning".
+  The largest apparent signal term contributes nothing.
+
+- **Bare `copilot` — 13 records, ~4 genuine.** The rest are "Microsoft Copilot" in LLM
+  benchmark lists beside ChatGPT and Gemini. Only domain-qualified forms ship; an
+  unrestricted `copilot in/for X` matched "Copilot in both Italian and English".
+
+- **`orchestrat*` — 33 records, ~4 computational.** The rest are biology: "TUBA1C
+  orchestrates the immunosuppressive tumour microenvironment".
+
+- **`autonomous <AI noun>` — 24 records, ~2 agentic.** Here "autonomous" almost always means
+  unsupervised *deployment* (autonomous triage), a regulatory property rather than planning.
+
+- **`agent-based (model|simulation)` — not shipped.** 2 corpus records, both simulation, and
+  **zero** co-occurrence with digital-twin wording, so no defence was needed. The sibling
+  `agent-based (framework|system|…)` ships and both its records are genuine.
+
+- **`multi-agent` — shipped with a guard.** 2 of 10 are "multi-agent chemotherapy", standard
+  oncology usage for a drug combination.
+
+**Kept but flagged:** 5 records are classical reinforcement-learning or MARL work. They
+satisfy "acts across steps" but belong to a different lineage from the LLM-agent wave.
+Excluding them would narrow the author's definition on my judgment, so the decision is
+surfaced rather than taken.
+
+#### Overlaps
+
+`foundation_models` **22 of 35 (63%)** — reported, not suppressed. Expected and mostly
+correct: agentic systems are built on foundation models. `digital_twins` **0 of 35**.
+
+#### The named examples — only one is in the corpus, and its primary paper is not
+
+| System | In corpus | In PubMed |
+|---|---|---|
+| **PathChat** | 2 (both *mentions* inside review articles) | 3 |
+| **ChatEHR** | 0 | 2 |
+| **Biomni** | 0 | 3 |
+
+ChatEHR and Biomni fall outside the corpus correctly — they are EHR and general-biomedical
+agents, not cancer imaging.
+
+**But the primary PathChat paper is also absent.** PMID 38866050, *"A multimodal generative
+AI copilot for human pathology"* (Nature 2024), matches the corpus METHOD and DOMAIN blocks
+but **fails the CANCER block**: its abstract contains no cancer term at all, speaking only
+of "pathology" and "diverse tissue origins and disease models". That is a corpus-recall gap,
+not a theme defect — and it matters because the paper is named in the manuscript. See §8.
 
 ### Versions 7 and 8 — the `virtual_staining` theme (2026-09-02)
 
@@ -967,16 +1080,24 @@ Stated plainly, because a reader should not have to discover these.
    HER2 status from H&E images matches both `he_histology` and `ihc`, though its input is
    only H&E. In a 12-record read of `ihc`, 11 involved IHC data but only about 4 used IHC as
    the model input. The dictionary cannot separate input from label, and it does not try.
-7. **Named foundation models released after 2026-09-01** are not in the dictionary.
-8. **`digital_twins` (~74 papers) and `clinical_fda` (93 papers) are small enough to be
+7. **Landmark papers whose abstracts never name cancer are invisible.** The corpus requires
+   a term from the CANCER block, and a paper can be central to cancer AI without using one.
+   The measured case is PMID 38866050, *"A multimodal generative AI copilot for human
+   pathology"* (Nature 2024) — the primary PathChat paper, named in this manuscript. It
+   matches the METHOD and DOMAIN blocks and fails only on CANCER, because its abstract says
+   "pathology" and "diverse tissue origins" and never "cancer" or "tumour". Any theme built
+   on such a paper will find only the reviews that cite it, not the paper itself.
+
+8. **Named foundation models released after 2026-09-01** are not in the dictionary.
+9. **`digital_twins` (~74 papers) and `clinical_fda` (93 papers) are small enough to be
    noisy** across twelve years. Their Panel B lines should be drawn, but no trend statement
    should rest on a single year of either. See §9.1 for the recommended cumulative plot.
-9. **Papers that do the thing without using the word.** A paper that fuses CT and pathology
+10. **Papers that do the thing without using the word.** A paper that fuses CT and pathology
    without ever writing "multimodal" is missed; so is a foundation model described only as
    "a large pretrained network".
-10. **The 2026 year is partial**, ending at the retrieval date. Already handled in
+11. **The 2026 year is partial**, ending at the retrieval date. Already handled in
    `docs/DECISIONS.md` and `docs/figure-spec.md`.
-11. **Retracted papers are retained** — 168 of them. See §9.
+12. **Retracted papers are retained** — 168 of them. See §9.
 
 ## 8a. The "mention, not use" bias — for the figure legend
 

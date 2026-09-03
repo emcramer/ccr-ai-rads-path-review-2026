@@ -14,8 +14,14 @@
 # it moves the file's SHA, and a run manifest that records the old SHA under the
 # same version is then a lie. This is easy to remember when a pattern changes and
 # easy to forget when only prose changes; the prose case is the one that has
-# caught this project twice.
-version: 8
+# caught this project THREE times (modalities v2, themes v7, themes v9).
+#
+# THE RULE IS NOW ENFORCED, not remembered: config/VERSIONS.json is an
+# append-only ledger of version -> SHA-256, and a test fails if this file's hash
+# does not match its recorded version, or if a version is reused with a different
+# hash. If that test fails after you edit here, the fix is to bump `version` and
+# add the new hash to the ledger — never to edit an existing ledger entry.
+version: 10
 
 categories:
 
@@ -492,3 +498,136 @@ categories:
       theme_year_counts.csv. Do not quote it from here. Note that a naive recount
       from freshly fetched PubMed dates disagrees on 3 of the 65, because the
       pipeline assigns year from ArticleDate and a raw fetch gives PubDate.
+
+  agentic_ai:
+    label: "Agentic AI"
+    type: null
+    # Added v9 (2026-09-03). Author definition: "using an AI agent to do pathology
+    # or radiomics research, or clinical application", examples ChatEHR, PathChat,
+    # Biomni. The distinguishing feature is PLANNING, TOOL USE, or MULTI-STEP
+    # AUTONOMOUS ACTION — not a chat interface and not a single-shot LLM query.
+    #
+    # BARE `agent` IS UNUSABLE. In an oncology corpus it means a drug: 629 corpus
+    # records match bare `agents?`, of which 275 are "contrast agent" and 89 are
+    # therapeutic/cytotoxic/antineoplastic agents. Every pattern here is qualified.
+    include:
+      - pattern: "(?i)\\bagentic"
+        kind: regex
+      - pattern: "(?i)\\b(AI|A\\.I\\.|LLM|GPT|large language model|language[- ]model|software|autonomous|intelligent|generative)[- ]agents?\\b"
+        kind: regex
+      - pattern: "(?i)\\bautonomous\\s+(artificial intelligence|AI)\\s+agents?\\b"
+        kind: regex
+      - pattern: "(?i)\\bmulti[- ]?agents?\\b(?!\\s+(chemotherap|regimen|therap|treatment|cytotoxic|systemic|artificial life))"
+        kind: regex
+      - pattern: "(?i)\\bagent[- ]based (framework|system|workflow|pipeline|AI|approach|large language)"
+        kind: regex
+      - pattern: "(?i)\\b(AI|artificial intelligence|generative|clinical|diagnostic|patholog\\w+|dermatolog\\w+|radiolog\\w+|multimodal|surgical|oncolog\\w+)[\\s-][\\w -]{0,24}co[- ]?pilots?\\b"
+        kind: regex
+      - pattern: "(?i)\\bco[- ]?pilots?\\W{0,3}\\s*(in|for)\\s+(cancer|patholog|radiolog|oncolog|clinical|medical|health|dermatolog|surgical)"
+        kind: regex
+      - pattern: "(?i)\\b(PathChat|ChatEHR|Biomni)\\b"
+        kind: regex
+    exclude: []
+    notes: >
+      35 papers, measured over a 917-record candidate superset built to be a
+      PROVABLE superset of anything these patterns can match (every corpus record
+      containing agent, agentic, copilot, tool use/calling, autonomous, orchestrat*,
+      chain-of-thought, multi-agent, or a named system). That construction is
+      deliberate: the previous theme was mis-measured because its candidate query
+      was narrower than its patterns.
+      PRECISION IS STRONGLY TIME-DEPENDENT, and this is the finding that matters
+      for Panel B. Reading all 35:
+        * 2025-2026 (n=27): 24 of 27 strictly agentic, 89%.
+        * pre-2025 (n=8): 1 of 8 strictly agentic, 12%.
+        * whole row: 25 of 35 strict (71%), or 30 of 35 (86%) if classical
+          reinforcement-learning agents are counted as agents.
+      The word "agent" only acquired its agentic-AI sense around 2025. Before that,
+      a match in this corpus is a drug (guarded out), a reinforcement-learning
+      agent, or a model whose authors simply called it an agent — a cGAN for IMRT
+      planning, a screening interface, a signature-fusion ensemble. NO VOCABULARY
+      SEPARATES THOSE: they use the words correctly for their own era. RECOMMENDED
+      FOR THE FIGURE: the pre-2025 tail is 8 papers across five years and is mostly
+      not agentic AI. Either start the line at 2025 or say in the legend that
+      points before 2025 are unreliable. Do not present the early tail as a trend.
+      REJECTED, with measurements:
+        * CHAIN-OF-THOUGHT — 31 records, the largest reasoning signal in the
+          corpus, and NOT SHIPPED. Reading the 28 it would newly admit: roughly 24
+          are prompting-strategy benchmarks — "zero-shot, few-shot and
+          chain-of-thought prompting were tested", "CoT prompting to classify T1
+          versus T2". Chain-of-thought is a PROMPTING TECHNIQUE, not agency: the
+          model emits intermediate reasoning tokens in one pass; it does not plan,
+          call tools, or act across steps. The author's definition excludes the
+          single-shot LLM query explicitly.
+          THE DECISION WAS ALSO TESTED EMPIRICALLY, against a prediction recorded
+          before the fact: a healthy theme was expected at 35-75 papers with about
+          61% `foundation_models` overlap, and the stated signature of failure was
+          a much LARGER theme with a HIGHER overlap. Measured: shipped without
+          chain-of-thought, 35 papers at 63% overlap. With chain-of-thought added,
+          63 papers at 75% overlap — the failure signature exactly. Genuine
+          chain-of-thought AGENTS are already caught by the agentic vocabulary
+          (Pathology-CoT enters via `agentic`), so the rejection costs little.
+        * `tool[- ](use|using|calling)` — 22 records, and 0 OF 22 ARE AGENTIC.
+          Every one is "a diagnostic tool using deep learning", "a decision-support
+          tool using MRI"; the ML terms of art `tool use`, `tool calling` and
+          `tool-augmented` match ZERO corpus records each. All 22 are the ordinary
+          English participle. This was the largest single signal term on offer and
+          it is entirely spurious.
+        * bare `copilot` — 13 records, roughly 4 genuine. The rest are "Microsoft
+          Copilot" listed among ChatGPT, Gemini and Perplexity in LLM benchmark
+          comparisons: a product name in a list, not a system under study. Only the
+          domain-qualified forms are shipped, and the `copilot in/for X` form
+          requires X to be a clinical domain, because an unrestricted version
+          matched "Copilot in both Italian and English".
+        * `orchestrat*` — 33 records, roughly 4 computational. The rest are
+          biology: "TUBA1C orchestrates the immunosuppressive tumour
+          microenvironment", "signalling orchestrates recruitment".
+        * `autonomous <AI noun>` — 24 records, ~2 agentic. In this literature
+          "autonomous" almost always means unsupervised DEPLOYMENT (autonomous
+          triage, autonomous screening), which is a regulatory property, not
+          planning or tool use. Only `autonomous artificial intelligence agent` is
+          shipped.
+        * `agent[- ]based (model|modelling|simulation)` — NOT shipped. It is a
+          simulation technique, and it is adjacent to the digital-twins literature,
+          so a leak would corrupt two themes at once. Measured: 2 records, both
+          simulation ("informing agent-based models with spatial data",
+          "agent-based modeling" beside topological data analysis). The sibling
+          form `agent-based (framework|system|workflow|...)` IS shipped and its 2
+          records are both genuine agentic systems. The split works.
+        * `conversational[- ]agent` — dropped from the qualifier list; the author
+          excludes chat interfaces explicitly. Costs 1 record.
+        * `multi[- ]agent` — SHIPPED WITH A GUARD. Of 10 records, 2 are
+          "multi-agent chemotherapy", which is standard oncology usage for a drug
+          combination. The guard removes those 2 and an artificial-life simulation,
+          keeping 7.
+      KEPT BUT FLAGGED FOR THE AUTHOR: 5 records are classical reinforcement-
+      learning or multi-agent-RL work (MARL for ultrasound segmentation, RL for
+      procedure planning). They satisfy the definition's "acts across steps" but
+      belong to a different technical lineage from the LLM-agent wave the review
+      describes. They are counted; excluding them would narrow the author's own
+      definition on my judgment, so the decision is surfaced rather than taken.
+      THE NAMED EXAMPLES: of the author's three, only PathChat appears in the
+      corpus, and only as a MENTION inside two review articles. ChatEHR (2 PubMed
+      records) and Biomni (3) exist in PubMed but fall outside the corpus, correctly
+      — they are EHR and general-biomedical agents, not cancer imaging.
+      MORE IMPORTANTLY, THE PRIMARY PathChat PAPER IS NOT IN THE CORPUS EITHER.
+      PMID 38866050, "A multimodal generative AI copilot for human pathology",
+      Nature 2024, matches the corpus METHOD and DOMAIN blocks but FAILS THE CANCER
+      BLOCK: its abstract contains no cancer term at all, speaking only of
+      "pathology", "diverse tissue origins and disease models". This is a corpus
+      recall gap, not a theme defect, and it is worth knowing because the paper is
+      named in the manuscript. See docs/search-strategy.md section 8.
+      FLOOD-RISK CHECK, the one that matters most for this theme. Partitioning the
+      629 corpus records containing bare `agents?`: 384 carry a drug or contrast
+      cue, 29 carry a software cue, and 216 carry NEITHER. Those 216 are where a
+      thirty-paper theme becomes a three-hundred-paper one, and any pattern
+      approaching bare `agent` would pull them in. THE SHIPPED PATTERNS SELECT 0 OF
+      THE 216. Every pattern is qualified; none approaches the bare token.
+      OVERLAP WITH `digital_twins`: 0 of 35. `agent-based model` measures 2 corpus
+      records with zero digital-twin co-occurrence, so no defence against it was
+      needed and none was built. If a future run shows any agentic_ai by
+      digital_twins overlap, it is a leak from some other pattern and should be
+      investigated rather than explained away.
+      OVERLAP WITH `foundation_models`: 22 of 35 (63%), reported not suppressed.
+      That is expected and mostly correct — agentic systems are built on foundation
+      models, and a paper describing an LLM agent for pathology is legitimately
+      both. The themes are not mutually exclusive by design.

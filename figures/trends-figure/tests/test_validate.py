@@ -203,7 +203,7 @@ def test_a_stratum_smaller_than_its_request_is_taken_whole():
 
 
 def test_default_sizes_cover_every_stratum():
-    assert sum(DEFAULT_SAMPLE_SIZES.values()) == 225
+    assert sum(DEFAULT_SAMPLE_SIZES.values()) == 250
     assert set(DEFAULT_SAMPLE_SIZES) == set(STRATUM_ORDER)
 
 
@@ -216,9 +216,12 @@ def test_every_canonical_theme_has_a_stratum():
     check_theme_coverage()
 
 
-def test_a_theme_without_a_stratum_is_refused_by_name():
-    short = tuple(s for s in STRATUM_ORDER if s != "virtual_staining")
-    with pytest.raises(ValidationError, match="virtual_staining"):
+@pytest.mark.parametrize("dropped", THEME_KEYS)
+def test_a_theme_without_a_stratum_is_refused_by_name(dropped):
+    """Parametrised over every canonical theme, so the guard is exercised for
+    whichever theme is added next rather than for one hard-coded name."""
+    short = tuple(s for s in STRATUM_ORDER if s != dropped)
+    with pytest.raises(ValidationError, match=dropped):
         check_theme_coverage(short)
 
 

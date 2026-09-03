@@ -941,3 +941,122 @@ flattest lines on the panel and dropping them would return about half the height
 **Reason.** Cross-specialty is 39 of 1,226 foundation-model papers and 276 of 4,654 multimodal
 ones — 3% and 6%. A review arguing that radiology and pathology should converge needs to show
 how rarely they currently do. The flatness is the message, not a defect of the drawing.
+
+## 2026-09-03 — Agentic AI added, drawn from 2024
+
+**Decision.** Sixth theme `agentic_ai`, label "Agentic AI": systems where a model plans, calls
+tools, or acts across steps, applied to pathology or radiology. **35 papers.** Drawn as one
+undivided line in Panel B's lower plot, and **only from 2024**. Author's decision on both the
+theme and the start year.
+
+**Why the line starts late.** Precision is strongly time-dependent: 24 of 27 papers from 2025
+onward are strictly agentic (89%), against 1 of 8 before 2025 (12%). "Agent" acquired its
+current sense around 2025; earlier matches are reinforcement-learning agents or models whose
+authors simply called them agents, and no vocabulary separates those, because they use the word
+correctly for their own era. The author set the cut at 2024 rather than 2025 so the rise stays
+visible rather than starting at its peak. The omitted papers remain in the theme total and in
+Panel A; only the drawn line is truncated, and a test asserts no other series is cut.
+
+**The drug collision did not materialise.** Bare "agent" matches 628 corpus papers — 359 with a
+drug or contrast cue, 19 with a software cue, 252 with neither. The shipped patterns select
+**none** of the 252, and all 35 papers were read with their firing excerpts: no drug false
+positives. The one paper that looks like the failure, "Amplifying the Effects of Contrast Agents
+on Magnetic Resonance Images", matched because its own abstract calls the network an "AI agent".
+
+**Chain-of-thought was measured and rejected, using a prediction as a test.** Before the run,
+one agent recorded an expectation — 35 to 75 papers, 55-65% foundation-model overlap — and named
+the failure signature: a larger theme with a *higher* overlap would mean foundation-model papers
+were being swept up. Adding chain-of-thought would have produced 63 papers at 75% overlap,
+matching that signature exactly, so it was rejected. CoT is a prompting technique; the model
+emits reasoning tokens in one pass rather than planning or acting. The shipped theme landed at
+35 papers and 63% overlap, inside the predicted band.
+
+**Also rejected on measurement:** bare `copilot` (13 records, ~4 genuine, the rest Microsoft
+Copilot in benchmark lists), `orchestrat*` (33 records, ~4 computational — "TUBA1C orchestrates
+the tumour microenvironment"), and `autonomous <AI noun>` (24 records, ~2 — "autonomous" here
+means unsupervised deployment). Tool-use vocabulary contributes nothing: "tool use" and
+"tool-calling" match **zero** corpus records, and the 22 hits for "tool using" are all ordinary
+English — "a decision-supporting tool using XAI".
+
+**Open, and recorded rather than settled.** 21 of the 35 papers carry a single agentic mention
+and several are reviews naming the topic in passing, so the theme currently counts discussion as
+well as construction. The validation round labels both readings per paper so the author can rule
+without anyone re-reading 35 abstracts. Five "multi-agent" reinforcement-learning papers are kept
+and flagged for the same reason.
+
+## 2026-09-03 — The primary PathChat paper is not in the corpus
+
+**Fact, not a decision.** PMID 38866050, *A multimodal generative AI copilot for human
+pathology* (Nature 2024), matches the corpus query's method and domain blocks and fails only the
+cancer block: its abstract says "pathology" and "diverse tissue origins and disease models", and
+never "cancer" or "tumour". The theme finds reviews that cite PathChat but not PathChat itself.
+It matters because the paper is named in the manuscript. ChatEHR and Biomni are absent for a
+different and correct reason — they are EHR and general-biomedical agents, not cancer imaging.
+**This is a recall property of the corpus query, not a theme defect**, and widening the cancer
+block to catch it would change every count in the figure.
+
+## 2026-09-03 — A version ledger, because two reminders did not work
+
+**Decision.** `config/VERSIONS.json` records, append-only, the SHA-256 each config version froze
+at, and two tests fail when a file's current hash does not match its recorded version or when a
+version is reused with a different hash.
+**Reason.** The rule that a version bumps on any content change was broken three times in two
+days — `modalities.yaml` v2, `themes.yaml` v7, `themes.yaml` v9 — and **every breach was a prose
+change rather than a pattern change.** The rule is easy to remember when editing a regex and
+easy to forget when correcting a number in a note. Each breach was caught by comparing a
+manifest against a file by hand. Discipline failed; a failing test is the mechanism that works.
+**Two design points worth keeping.** Where a version has existed in two states, the ledger
+records **the state a run actually consumed**, so any published number can be traced to the file
+that produced it; the amended content becomes the next version. And the header names the
+tempting wrong fix explicitly — on a failure, bump the version and append a hash, never edit an
+existing ledger entry, which would defeat the mechanism.
+**Stated limits.** The guard checks each file's current version only; historical entries are
+checked for reuse alone, since past content cannot be re-hashed. It cannot catch a config and
+its ledger entry edited together. Four versions are omitted because their hashes could not be
+reconstructed — a guessed entry would be worse than a missing one.
+
+## 2026-09-03 — Test literals replaced with derivations
+
+**Decision.** Tests that asserted `25` (theme,domain) pairs, `10` drawn series, a 76-paper
+virtual-staining row, and a literal year series now derive those from `THEME_ORDER`,
+`_SERIES_ORDER`, and the table itself.
+**Reason.** Every one of them broke on the sixth theme, and they were the second set of literals
+to rot this week: a guard that must be hand-edited each time the data changes is a guard that
+quietly stops guarding. The virtual-staining test in particular had been asserting a superseded
+corpus rather than the property it was named for.
+
+## 2026-09-03 — Agentic AI gets its own colour and marker
+
+**Decision.** `agentic_ai` is drawn in `#4B4B4B` with an "X" marker, instead of sharing ink and
+the diamond with digital twins. Author's request: the two were distinguishable only by dash
+pattern, and that was not enough at a glance.
+
+**This reverses a documented decision, and the reversal is on firmer ground than the original.**
+On 2026-09-02 the question was measured and declined: no unused marker separated cleanly from
+diamond, circle, and square at once, and the best candidate — a star — had limbs below the style
+guide's minimum stroke. Two things the earlier analysis missed:
+
+1. **The style guide had already assigned the colour.** Its structural/integrative row names
+   "fusion modules, joint models, **agents**". Agentic AI therefore has a semantic hue of its
+   own, `STRUCTURAL`, and the earlier analysis treated as a free choice something the guide had
+   settled. Colour and marker together are two channels, which is a different problem from
+   marker alone.
+2. **A filled "X" was not among the candidates measured.** Rendering each marker at its drawn
+   size and measuring ink inside the bounding box: diamond 0.523, triangle-down 0.528, thin
+   diamond 0.519 — all indistinguishable at 1 mm, confirming the earlier finding. Circle 0.761
+   and hexagon 0.770, so hexagon would have collided with the radiology circle already in that
+   plot. **"X" measures 0.706, a 0.183 separation from the diamond**, and is a filled glyph
+   rather than thin limbs, so the star's stroke-width objection does not apply to it.
+
+**Implementation.** A display domain `agentic` was added rather than attaching a shape to a
+theme directly, so the rule that a marker means a display domain still holds — and the test that
+protects that rule was updated to say so rather than deleted. Digital twins keeps ink and the
+diamond; it is a simulation of a patient, not integrative work.
+**Verified by looking**, at full size and at 1.8× on the lower plot: the grey X reads as a
+separate series from the black diamond, and the two remain separable in greyscale by marker and
+by a 55-point luminance difference.
+
+**One pair still shares a marker, deliberately.** Virtual staining and clinical pathology are
+both deep-pink squares, because both are genuinely pathologic — the scheme working rather than a
+collision. If the author wants those separated too, it needs the same treatment and a reason
+better than taste.

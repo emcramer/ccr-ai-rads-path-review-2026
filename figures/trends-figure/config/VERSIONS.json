@@ -1,0 +1,69 @@
+{
+  "_README": [
+    "Append-only ledger: config file -> version -> the SHA-256 that version froze at.",
+    "A test reads this file and fails when a config's current hash does not match its",
+    "recorded version, or when a version number is reused with a different hash.",
+    "NEVER edit or delete an existing entry. To change a config: bump its `version`,",
+    "then append the new version and hash here in the same commit.",
+    "Hashes are of the raw file bytes: sha256sum config/<file>."
+  ],
+  "_provenance": {
+    "observed": {
+      "themes.yaml": "10",
+      "modalities.yaml": "6",
+      "corpus.yaml": "1"
+    },
+    "observed_note": "Computed from the file on disk at 2026-09-03. Verifiable now.",
+    "reconstructed": {
+      "themes.yaml": [
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9"
+      ],
+      "modalities.yaml": [
+        "3",
+        "4"
+      ]
+    },
+    "reconstructed_note": "Taken from SHA-256 values printed during the 2026-09-02/03 working session. The files they describe no longer exist on disk, so these entries CANNOT be re-verified. They are recorded because they are directly observed output, not inference. Treat them as evidence, not as proof.",
+    "omitted": "themes.yaml v1-v2 and modalities.yaml v1-v2 and v5 are deliberately absent. v1-v2 hashes were never printed and cannot be reconstructed with confidence; modalities.yaml never had a v5 (it went 4 -> 6 so the pair would identify one dictionary state). A guessed entry would be worse than a missing one."
+  },
+  "_known_version_reuse": [
+    "Three breaches of the version rule occurred on 2026-09-02/03. Recorded so the",
+    "ledger explains rather than hides them.",
+    "modalities.yaml v2: content changed under an unchanged version. No single hash",
+    "  is authoritative for v2, so v2 is omitted entirely.",
+    "themes.yaml v7: notes corrected after the run; SHA moved 2acc04f7 -> 015b89fb.",
+    "  The ledger records v7 = 2acc04f7, the state the run consumed. The corrected",
+    "  content was then republished as v8.",
+    "themes.yaml v8: an interim state 015b89fb existed before the include[5] repair",
+    "  and was never consumed by a run. The ledger records the final v8 = 5ff6b0a9.",
+    "themes.yaml v9: SHA moved c370bcde -> b7781bf2 when the chain-of-thought,",
+    "  tool-use and PathChat notes were added. The ledger records v9 = c370bcde, the",
+    "  state the run consumed; the amended content is v10."
+  ],
+  "files": {
+    "themes.yaml": {
+      "3": "a92e27ba93304217b1e922382782135110c347b4d2db55f8097a1dd6e85fbdb8",
+      "4": "5942534236518cd90c3c25c8c6a84bfdb607accdb88370dd161e24fd9fdc0a23",
+      "5": "09da6b821ee7cb5a31e3a1792abaf52a3245b5c4a7f67ea2bf8f304953d0ae4e",
+      "6": "6323007f53435a161409aa9c706f1cb6829ce6a59dd84266e1aafabc0573e374",
+      "7": "2acc04f74445d91bb8c01941a0e570997bb5e900bff1931e6ece3df5a71ebbe9",
+      "8": "5ff6b0a92416626198b2a076c21298b01ba847be680f60aafee2ac7ed6d8c3d4",
+      "9": "c370bcde4ae2d4ef4b608cadaa70a3e1ac37b88a7d7f097ccc6412ab6775fde5",
+      "10": "756010f21037977e3d1656e4544d60cf0cca5730a57a1e70ddf41d576a4f17a6"
+    },
+    "modalities.yaml": {
+      "3": "a5e786b5e5552f871fa3a009abfd8107f60178d760b3cb49572766d5b67c4b40",
+      "4": "32c00fa5533940157c8d39c4a0b832eeeeba65692635929e55cf0abe2d5a3334",
+      "6": "6b3065142bc8e5ea5a846fda6be4ea45f63d3a9ef236a98067ed2eba9b278675"
+    },
+    "corpus.yaml": {
+      "1": "b610cd7a17b415c6dd959480d98b5b3084997b73bf43ccdcb37c2fce7b2d298a"
+    }
+  }
+}

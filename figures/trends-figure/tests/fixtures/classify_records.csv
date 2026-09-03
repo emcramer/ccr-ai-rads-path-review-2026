@@ -19,4 +19,6 @@ pmid,title,abstract,year,year_source,record_type
 1019,MRI radiomics with genomic profiling,RNA-seq and electronic health record covariates were modelled jointly.,2025,ArticleDate,PubmedArticle
 1020,Endoscopy and CT staging of gastric cancer,Endoscopic video was combined with computed tomography.,2024,PubDate,PubmedArticle
 1021,Virtual staining predicts spatial transcriptomics from H&E,A model trained on whole slide imaging infers spatial transcriptomics without sequencing.,2026,ArticleDate,PubmedArticle
+1022,An agentic AI system for radiology triage,"The LLM agent plans, calls tools, and acts across several steps on CT studies.",2026,ArticleDate,PubmedArticle
+1023,Gadolinium contrast agent dosing predicted by deep learning,The contrast agent was administered before MRI. No software agent is involved.,2025,PubDate,PubmedArticle
 ,An article with no PMID,It names CT but cannot be identified.,2025,PubDate,PubmedArticle

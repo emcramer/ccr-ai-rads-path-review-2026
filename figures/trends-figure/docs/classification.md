@@ -222,8 +222,16 @@ they are not a list the reductions depend on.
 
 1. Edit `config/themes.yaml` or `config/modalities.yaml`. Add the reason to that category's
    `notes`, and the measurement to `docs/search-strategy.md`.
-2. **Bump `version`** in the file you edited. The manifest records the version and the
-   file's SHA-256, and that is how a figure is traced back to the terms that made it.
+2. **Bump `version`** in the file you edited, and append the new version and its SHA-256 to
+   `config/VERSIONS.json`. The manifest records the version and the hash, and that is how a
+   figure is traced back to the terms that made it — a guarantee that breaks the moment a
+   file changes without its version moving, because the manifest then names a version that
+   no longer means what it meant. That happened three times on 2026-09-02/03, so it is now a
+   test rather than a rule: `tests/test_classify.py::test_config_files_match_the_version_ledger`
+   fails when a config's current hash is not the one its version froze at, and
+   `test_the_version_ledger_never_reuses_a_version` fails when a version is re-pointed at
+   different content. Never edit a hash already in the ledger; append a new entry. Versions
+   the ledger does not carry are skipped, so a reconstructed history with gaps is fine.
 3. Re-run the command above with `--report`.
 4. Read the report before the figure. In order:
    - **Records per theme and per modality.** A count that moved a long way from the last

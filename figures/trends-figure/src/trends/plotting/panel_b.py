@@ -5,8 +5,10 @@ about 5,320 papers against Clinical/FDA's 93 — so one linear axis draws the sm
 themes as flat lines on the floor. The panel is therefore split, per
 ``docs/figure-spec.md``:
 
-* **upper plot** — ``foundation_models`` and ``multimodal_integration``;
-* **lower plot** — ``digital_twins`` and the two ``clinical_fda`` domain lines.
+* **upper plot** — ``foundation_models`` and ``multimodal_integration``, each
+  split into three clinical-domain lines;
+* **lower plot** — ``digital_twins``, ``virtual_staining``, ``agentic_ai``, and
+  the two ``clinical_fda`` domain lines.
 
 The two plots share one x axis, labelled once under the lower plot. Each carries
 its own linear y axis. Per-year counts throughout: nothing here is cumulative and
@@ -58,16 +60,22 @@ No trend statement may rest on it.
 
 Colour
 ------
-Three of the five series are *themes*, not data modalities, so under
-``../ink_style_guide.md`` they carry no hue at all: foundation models, multimodal
-integration and digital twins are drawn in the guide's three neutral inks and are
-told apart by dash pattern and marker. The two clinical lines are genuinely
-modality-domain series -- radiology against pathology -- so they take the fixed
-radiology and pathology hues, and that is the one place in this panel where
-colour means something. It also happens to be the comparison the review cares
-most about.
+Colour marks the **clinical domain**, which is a modality statement and so is
+semantic under ``../ink_style_guide.md``: radiology blue, pathology the deep
+pathology tint, cross-specialty the guide's structural grey. Theme is carried by
+the dash pattern, so two blue lines in the upper plot are radiology work in two
+different themes. Marker doubles the domain rather than the theme, so a
+monochrome print keeps both dimensions: dash says which theme, marker says which
+side.
 
-Every series keeps its dash, its marker, and its label at the end of the line, so
+A series drawn undivided makes no domain claim and takes ink -- digital twins and
+agentic AI -- unless its papers state one anyway, as virtual staining's do. Two
+series may therefore share a hue and a marker, and two do in each plot; the dash
+and the end label separate them. See ``style.DOMAIN_MARKERS`` for the
+measurement behind that, and for why a fifth shape was not invented for the
+second domain-less series.
+
+Every series keeps its own dash and its own label at the end of the line, so
 nothing here depends on colour being seen, and the panel survives greyscale.
 """
 
@@ -100,14 +108,25 @@ UPPER_SERIES: tuple[tuple[str, str], ...] = (
     ("multimodal_integration", "both"),
 )
 
-#: Series drawn in the lower plot, in drawing order. Digital twins is too small
-#: to split three ways and virtual staining is pathologic by definition, so both
-#: are drawn undivided. The clinical lines are drawn last so that where two
-#: series sit on zero together, the clinical marker is the one on top; the
-#: seven-year pathology zero run is the panel's point.
+#: Series drawn in the lower plot, in drawing order. Three of the five are drawn
+#: undivided: digital twins is too small to split three ways, virtual staining is
+#: pathologic by definition, and agentic AI is both small and deliberately
+#: cross-cutting -- an agent that reads reports, images and records is not
+#: usefully assigned to one specialty.
+#:
+#: Order matters where lines sit on zero together, because the last one drawn
+#: puts its marker on top. Agentic AI is zero until the mid-twenties and the
+#: clinical pathology line is zero through 2021, so the two runs overlap for
+#: seven years. Agentic AI is drawn between them rather than last: the clinical
+#: markers stay on top, because the pathology zero run is the panel's point, and
+#: the diamond still shows around the square, which the square would not do
+#: around a circle. The two shapes are the same area at 2.9 pt but the diamond's
+#: box is 1.41 times wider, so its points clear the square's edges whichever is
+#: drawn first, and both zero runs read as measured years.
 LOWER_SERIES: tuple[tuple[str, str], ...] = (
     ("digital_twins", "all"),
     ("virtual_staining", "all"),
+    ("agentic_ai", "all"),
     ("clinical_fda", "radiology"),
     ("clinical_fda", "pathology"),
 )
@@ -227,11 +246,36 @@ def _partition(theme_years: pd.DataFrame) -> tuple[list[tuple[str, str]], list[t
     return upper, lower
 
 
+#: Years before which a series is not drawn, because its earlier matches do not
+#: mean what its label means. Only ``agentic_ai`` qualifies, and the reason is
+#: measured rather than stylistic: 24 of its 27 papers from 2025 onward are
+#: strictly agentic (89%), against 1 of 8 before 2025 (12%). "Agent" acquired its
+#: current sense around 2025; earlier hits are reinforcement-learning agents, or
+#: models whose authors simply called them agents. No vocabulary separates those,
+#: because they use the word correctly for their own era. The author set the cut
+#: at 2024 on 2026-09-03 -- one year earlier than the precision data alone would
+#: suggest, which keeps the rise visible rather than starting the line at its
+#: peak. The omitted papers stay in the theme total and in Panel A; only the
+#: drawn line starts late, and the legend says so.
+SERIES_START_YEAR: dict[tuple[str, str], int] = {
+    ("agentic_ai", "all"): 2024,
+}
+
+
 def _series_frame(theme_years: pd.DataFrame, theme: str, domain: str) -> pd.DataFrame:
-    """Return one series' rows, sorted by year."""
-    return theme_years.loc[
+    """Return one series' rows, sorted by year and cut to its drawable span.
+
+    A series listed in :data:`SERIES_START_YEAR` is truncated at the left. This
+    hides no paper from the figure's totals -- it declines to draw years whose
+    counts would be read as meaning something the labels do not support.
+    """
+    frame = theme_years.loc[
         (theme_years["theme"] == theme) & (theme_years["domain"] == domain)
     ].sort_values("year")
+    start = SERIES_START_YEAR.get((theme, domain))
+    if start is not None:
+        frame = frame.loc[frame["year"] >= start]
+    return frame
 
 
 def _peak(theme_years: pd.DataFrame, series: list[tuple[str, str]]) -> float:

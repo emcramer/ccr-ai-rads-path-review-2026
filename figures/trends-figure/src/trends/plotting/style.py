@@ -18,16 +18,18 @@ project-wide. So:
   in the panel -- connectors, bars, rules, bands -- is drawn in ink and line
   greys. A bar is a *combination* of modalities, not one modality, so it carries
   no modality colour.
-* Panel B's foundation-models, multimodal-integration and digital-twins series
-  are themes, not modalities, so they are drawn in ink/greys and told apart by
-  dash pattern and marker. The two clinical lines *are* modality-domain series --
-  radiology against pathology -- so they take the radiology and pathology hues.
-  That is the only place in Panel B where colour means something.
+* Panel B's colour marks the **clinical domain** a theme's papers were pursued
+  in, which is a modality statement and so is semantic. Theme is carried by the
+  dash pattern instead, and marker doubles the domain so that greyscale keeps
+  both dimensions. A series drawn undivided makes no domain claim and takes ink
+  neutrals -- digital twins and agentic AI -- unless its papers state one
+  anyway; see :data:`SERIES_DOMAIN_OVERRIDES`.
 
 Colour is never the sole cue (guide S7). Every Panel B series keeps its own dash
-pattern, its own marker, and a label at the end of the line, and Panel A is
-legible with no colour at all: the matrix, the block order and the bar heights
-carry the content.
+pattern and a label at the end of the line, and within one plot the dash and
+marker together separate every series with no help from hue, so the panel
+survives a monochrome print. Panel A is legible with no colour at all: the
+matrix, the block order and the bar heights carry the content.
 
 **Type** is IBM Plex Serif for panel letters and theme titles, IBM Plex Sans for
 everything else. The faces are vendored under ``assets/fonts/`` and registered
@@ -169,15 +171,16 @@ THEME_ORDER: Final[tuple[str, ...]] = (
     "digital_twins",
     "clinical_fda",
     "virtual_staining",
+    "agentic_ai",
 )
 
 #: The themes Panel A draws as blocks, left to right. This is deliberately NOT
-#: :data:`THEME_ORDER`. ``virtual_staining`` was added to Panel B only: at
-#: thirteen columns per block a fifth block puts the column width below
-#: :data:`panel_a.MIN_COLUMN_WIDTH_IN`, which is the floor that holds a dot
-#: legible, and ``tests/test_plot.py`` fails if it is breached. Author's
-#: decision of 2026-09-02. A theme added here must be added to the width test's
-#: arithmetic too.
+#: :data:`THEME_ORDER`. ``virtual_staining`` and ``agentic_ai`` were added to
+#: Panel B only: at thirteen columns per block a fifth block puts the column
+#: width below :data:`panel_a.MIN_COLUMN_WIDTH_IN`, which is the floor that holds
+#: a dot legible, and ``tests/test_plot.py`` fails if it is breached. Author's
+#: decision of 2026-09-02, and the same arithmetic rules out a sixth. A theme
+#: added here must be added to the width test's arithmetic too.
 PANEL_A_THEMES: Final[tuple[str, ...]] = (
     "foundation_models",
     "multimodal_integration",
@@ -192,6 +195,7 @@ THEME_LABELS: Final[dict[str, str]] = {
     "digital_twins": "Digital Twins",
     "clinical_fda": "Clinical Applications /\nFDA Approval",
     "virtual_staining": "Virtual Staining",
+    "agentic_ai": "Agentic AI",
 }
 
 #: Modality keys in figure row order: pathology, then radiology, then the
@@ -348,6 +352,7 @@ DOMAIN_COLORS: Final[dict[str, str]] = {
     "radiology": RADIOLOGY_IMAGING,
     "pathology": DIGITAL_PATHOLOGY_DEEP,
     "both": STRUCTURAL,
+    "agentic": STRUCTURAL,
     "all": INK,
 }
 
@@ -363,13 +368,39 @@ DOMAIN_COLORS: Final[dict[str, str]] = {
 #: Digital twins is genuinely domain-less and is not overridden: 22 radiology,
 #: 7 pathology, 3 cross-specialty and 24 carrying no imaging modality at all.
 #:
+#: Agentic AI is not overridden either, and for a stronger reason than digital
+#: twins': it is cross-cutting by definition. An agent that reads reports,
+#: images and records is not usefully assigned to one specialty, which is why
+#: the specification draws it undivided in the first place. Overriding it to
+#: ``both`` -- the cross-specialty appearance, which is the tempting reading of
+#: "cross-cutting" -- would be false in the sense ``both`` carries here: ``both``
+#: means one paper carrying a radiologic *and* a pathologic modality, and it is
+#: a claim about the papers, not about the theme's spirit. It would also put a
+#: triangle and a diamond in one plot, which is the pair the measurement below
+#: says is indistinguishable. Two reasons, either one sufficient.
+#:
 #: One override drives colour and marker together, so the two channels can never
 #: contradict each other. The specification's table says "no domain split
 #: (digital twins) | ink neutrals"; it names digital twins, and this reads that
 #: parenthetical as the example it is rather than as the whole rule. Author
 #: confirmed 2026-09-02.
+#: ``agentic_ai`` is the second exception, added 2026-09-03 at the author's
+#: request: it and digital twins are both undivided, so both drew as ink
+#: diamonds and were told apart by dash alone. The style guide settles the
+#: colour rather than leaving it to taste -- its structural/integrative row
+#: names "fusion modules, joint models, **agents**", so ``STRUCTURAL`` is the
+#: semantically correct hue for this theme, not merely a free one.
+#:
+#: The marker was chosen by measurement, not by eye. Rendering each candidate at
+#: its drawn size and measuring the ink inside its bounding box: diamond 0.523,
+#: triangle-down 0.528, thin diamond 0.519 -- all indistinguishable from the
+#: diamond at 1 mm. Circle is 0.761 and hexagon 0.770, so hexagon would have
+#: collided with the radiology circle already in that plot. "X" measures 0.706,
+#: a 0.183 separation from the diamond, with a silhouette no round or
+#: flat-sided marker resembles.
 SERIES_DOMAIN_OVERRIDES: Final[dict[tuple[str, str], str]] = {
     ("virtual_staining", "all"): "pathology",
+    ("agentic_ai", "all"): "agentic",
 }
 
 #: Dash pattern per theme. Under the 2026-09-02 specification, **theme is
@@ -382,6 +413,15 @@ THEME_DASHES: Final[dict[str, tuple]] = {
     "digital_twins": (0, (1, 1.5)),
     "clinical_fda": (0, (5, 1.2, 1, 1.2)),
     "virtual_staining": (0, (3.4, 1.5)),
+    # Agentic AI shares the lower plot with all four of the above, and shares
+    # ink and marker with digital twins, so its dash is the whole of what tells
+    # the two apart. It is therefore chosen against its neighbours rather than
+    # merely being unused: an even dash, dash and gap within 10% of each other,
+    # where virtual staining's dash runs 2.3 times its gap, clinical's carries a
+    # dot, and digital twins' is a fine dot. It is also the only pattern in the
+    # lower plot whose texture survives being drawn flat along zero, which is
+    # where nine of Agentic AI's twelve years sit.
+    "agentic_ai": (0, (2.2, 2.0)),
 }
 
 #: Marker per clinical domain -- the *second* domain channel, and the one that
@@ -398,10 +438,38 @@ THEME_DASHES: Final[dict[str, tuple]] = {
 #:
 #: Four shapes that stay separable at 2.9 pt: circle, square, triangle, diamond.
 #: Square and diamond are the risk pair and they do co-occur, in the lower plot.
+#:
+#: **Two series may share a marker, and two now do in each plot.** The marker
+#: states a domain, not a theme, so every series making the same domain claim
+#: draws the same shape and the dash separates them. Virtual staining and
+#: clinical pathology have both been drawn as deep-pink squares since
+#: 2026-09-02; digital twins and agentic AI are both diamonds from 2026-09-03.
+#: Giving the second domain-less series a neutral shape of its own was
+#: considered and measured, and the measurement argued against it:
+#:
+#: * By ink fill at 2.9 pt: square 1.000, circle 0.762, diamond 0.500. The
+#:   tightest pair already drawn together in the lower plot is circle against
+#:   square, 0.238 apart. **No unused marker clears 0.238 against all three.**
+#:   The best is the star at 0.317, which is 0.183 from the diamond -- and its
+#:   limbs measure 0.19 mm on the page, under the style guide's minimum stroke.
+#:   Plus 0.556 and x 0.625 sit 0.056 and 0.125 from the diamond; hexagon 0.720
+#:   sits 0.042 from the circle. Every candidate is a closer call than the pair
+#:   the panel already tolerates.
+#: * Ink fill is not the whole silhouette, so overlap was measured too, as
+#:   intersection over union with the shapes centred as drawn. Circle against
+#:   diamond is 0.77 and circle against square 0.79 -- the markers the lower plot
+#:   already draws together overlap by three quarters. At 1.02 mm the marker is
+#:   a weak channel for every series on the panel, which is why dash and the
+#:   direct end labels were made to carry the identification in the first place.
+#:
+#: So a fifth shape would buy little, and would cost the rule that makes the
+#: scheme legible: that a shape means a domain and nothing else. Author's call
+#: is welcome to reverse this; it is one entry in this table.
 DOMAIN_MARKERS: Final[dict[str, str]] = {
     "radiology": "o",
     "pathology": "s",
     "both": "^",
+    "agentic": "X",
     "all": "D",
 }
 
@@ -432,6 +500,7 @@ SERIES_END_LABELS: Final[dict[tuple[str, str], str]] = {
     ("multimodal_integration", "both"): "Multimodal Integration\n(cross-specialty)",
     ("digital_twins", "all"): "Digital Twins",
     ("virtual_staining", "all"): "Virtual Staining",
+    ("agentic_ai", "all"): "Agentic AI",
     ("clinical_fda", "radiology"): "Clinical Applications /\nFDA Approval (radiology)",
     ("clinical_fda", "pathology"): "Clinical Applications /\nFDA Approval (pathology)",
 }

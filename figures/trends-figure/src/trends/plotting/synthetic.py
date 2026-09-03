@@ -152,6 +152,29 @@ _TEMPLATES: dict[str, list[tuple[tuple[str, ...], float]]] = {
         (("spatial_transcriptomics",), 2),
         (("he_histology", "pathology_report"), 2),
     ],
+    # An agentic system plans, calls tools, or acts across steps. What it reads
+    # is whatever the workflow holds, so the templates deliberately spread
+    # across the domain rule instead of favouring one side: reports and EHR
+    # data alone (no domain at all), radiologic and pathologic images, and the
+    # mixed sets that make a paper cross-specialty. That spread is the point --
+    # it is what makes the stand-in exercise a genuinely domain-less series,
+    # which is why Panel B draws the theme undivided.
+    "agentic_ai": [
+        (("clinical_data",), 12),
+        (("other",), 9),
+        (("radiology_report",), 8),
+        (("clinical_data", "radiology_report"), 6),
+        (("pathology_report",), 5),
+        (("clinical_data", "pathology_report"), 4),
+        (("ct",), 4),
+        (("he_histology",), 3),
+        (("radiology_report", "pathology_report"), 3),
+        (("clinical_data", "genomics"), 3),
+        (("ct", "radiology_report"), 2),
+        (("he_histology", "pathology_report"), 2),
+        (("ct", "he_histology"), 1),
+        (("mri", "radiology_report"), 1),
+    ],
 }
 
 # Relative frequency of each modality when a rare tail combination is drawn.
@@ -198,6 +221,14 @@ def _theme_probability(theme: str, year: int) -> float:
         # Nothing before about 2019, then a late and still-small ramp, which is
         # the shape of the measured series.
         return float(0.001 + 0.028 * _logistic(year, 2023.8, 1.1))
+    if theme == "agentic_ai":
+        # The latest and smallest theme. "Agentic" barely predates 2024, so the
+        # curve is built to put almost the whole theme in the last two years and
+        # leave a long run of true zeros before it -- the shape Panel B has to
+        # draw honestly, and the one that overlaps the clinical pathology zero
+        # run. The floor is not zero, because a stand-in that could never emit
+        # an early paper would not test that the drawing survives one.
+        return float(0.0004 + 0.026 * _logistic(year, 2025.3, 0.55))
     raise KeyError(theme)
 
 

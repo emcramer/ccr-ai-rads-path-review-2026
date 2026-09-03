@@ -1,6 +1,6 @@
 # file: theme_year_counts.csv
 # records: data/interim/records.parquet
-# themes.yaml v8 sha256:5ff6b0a924166261
+# themes.yaml v10 sha256:756010f21037977e
 # modalities.yaml v6 sha256:6b3065142bc8e5ea
 theme,domain,year,n_papers,partial_year
 foundation_models,all,2015,0,0
@@ -303,3 +303,63 @@ virtual_staining,none,2023,0,0
 virtual_staining,none,2024,0,0
 virtual_staining,none,2025,0,0
 virtual_staining,none,2026,0,1
+agentic_ai,all,2015,0,0
+agentic_ai,all,2016,0,0
+agentic_ai,all,2017,0,0
+agentic_ai,all,2018,0,0
+agentic_ai,all,2019,0,0
+agentic_ai,all,2020,1,0
+agentic_ai,all,2021,1,0
+agentic_ai,all,2022,2,0
+agentic_ai,all,2023,3,0
+agentic_ai,all,2024,1,0
+agentic_ai,all,2025,11,0
+agentic_ai,all,2026,16,1
+agentic_ai,radiology,2015,0,0
+agentic_ai,radiology,2016,0,0
+agentic_ai,radiology,2017,0,0
+agentic_ai,radiology,2018,0,0
+agentic_ai,radiology,2019,0,0
+agentic_ai,radiology,2020,1,0
+agentic_ai,radiology,2021,1,0
+agentic_ai,radiology,2022,1,0
+agentic_ai,radiology,2023,2,0
+agentic_ai,radiology,2024,1,0
+agentic_ai,radiology,2025,3,0
+agentic_ai,radiology,2026,3,1
+agentic_ai,pathology,2015,0,0
+agentic_ai,pathology,2016,0,0
+agentic_ai,pathology,2017,0,0
+agentic_ai,pathology,2018,0,0
+agentic_ai,pathology,2019,0,0
+agentic_ai,pathology,2020,0,0
+agentic_ai,pathology,2021,0,0
+agentic_ai,pathology,2022,0,0
+agentic_ai,pathology,2023,1,0
+agentic_ai,pathology,2024,0,0
+agentic_ai,pathology,2025,7,0
+agentic_ai,pathology,2026,8,1
+agentic_ai,both,2015,0,0
+agentic_ai,both,2016,0,0
+agentic_ai,both,2017,0,0
+agentic_ai,both,2018,0,0
+agentic_ai,both,2019,0,0
+agentic_ai,both,2020,0,0
+agentic_ai,both,2021,0,0
+agentic_ai,both,2022,0,0
+agentic_ai,both,2023,0,0
+agentic_ai,both,2024,0,0
+agentic_ai,both,2025,0,0
+agentic_ai,both,2026,1,1
+agentic_ai,none,2015,0,0
+agentic_ai,none,2016,0,0
+agentic_ai,none,2017,0,0
+agentic_ai,none,2018,0,0
+agentic_ai,none,2019,0,0
+agentic_ai,none,2020,0,0
+agentic_ai,none,2021,0,0
+agentic_ai,none,2022,1,0
+agentic_ai,none,2023,0,0
+agentic_ai,none,2024,0,0
+agentic_ai,none,2025,1,0
+agentic_ai,none,2026,4,1

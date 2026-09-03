@@ -125,8 +125,10 @@ NON_THEME_STRATA: Final[tuple[str, ...]] = ("rare_modality", "no_theme")
 #: ``tests/test_validate.py`` enforces it at test time, because the failure it
 #: prevents is silent: a theme missing from this list does not raise, it simply
 #: falls into ``no_theme`` and is never measured. That is exactly what happened
-#: when ``virtual_staining`` was added at config v7.
+#: when ``virtual_staining`` was added at config v7, and again when
+#: ``agentic_ai`` was added at config v9.
 STRATUM_ORDER: Final[tuple[str, ...]] = (
+    "agentic_ai",
     "virtual_staining",
     "digital_twins",
     "clinical_fda",
@@ -136,8 +138,14 @@ STRATUM_ORDER: Final[tuple[str, ...]] = (
     "no_theme",
 )
 
-#: Papers drawn from each stratum. Sums to 225.
+#: Papers drawn from each stratum. Sums to 250.
+#:
+#: The four small themes take 25 each. Each is smaller than that quota is
+#: generous to — 35, 65, 56 and 93 papers — so in practice each has been read as
+#: a census rather than sampled. The quota is what the generic draw would use if
+#: a theme grew.
 DEFAULT_SAMPLE_SIZES: Final[dict[str, int]] = {
+    "agentic_ai": 25,
     "virtual_staining": 25,
     "digital_twins": 25,
     "clinical_fda": 25,

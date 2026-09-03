@@ -39,6 +39,7 @@ THEME_KEYS: Final[tuple[str, ...]] = (
     "digital_twins",
     "clinical_fda",
     "virtual_staining",
+    "agentic_ai",
 )
 
 #: Modality keys, in figure row order: pathology, then radiology, then the

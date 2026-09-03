@@ -1,6 +1,6 @@
 # file: combination_counts.csv
 # records: data/interim/records.parquet
-# themes.yaml v8 sha256:5ff6b0a924166261
+# themes.yaml v10 sha256:756010f21037977e
 # modalities.yaml v6 sha256:6b3065142bc8e5ea
 theme,modality_set,n_modalities,n_papers,rank_in_theme
 foundation_models,other,1,212,1
@@ -528,3 +528,19 @@ virtual_staining,other,1,1,8
 virtual_staining,spatial_proteomics,1,1,9
 virtual_staining,genomics+he_histology+ihc,3,1,10
 virtual_staining,he_histology+ihc+other+spatial_proteomics,4,1,11
+agentic_ai,he_histology,1,10,1
+agentic_ai,ultrasound,1,4,2
+agentic_ai,mri,1,3,3
+agentic_ai,other,1,3,4
+agentic_ai,clinical_data,1,2,5
+agentic_ai,pathology_report,1,2,6
+agentic_ai,ct+other,2,2,7
+agentic_ai,pet,1,1,8
+agentic_ai,spatial_transcriptomics,1,1,9
+agentic_ai,clinical_data+he_histology,2,1,10
+agentic_ai,ct+he_histology,2,1,11
+agentic_ai,ct+pet,2,1,12
+agentic_ai,genomics+other,2,1,13
+agentic_ai,he_histology+pathology_report,2,1,14
+agentic_ai,clinical_data+genomics+he_histology,3,1,15
+agentic_ai,ct+other+pet,3,1,16

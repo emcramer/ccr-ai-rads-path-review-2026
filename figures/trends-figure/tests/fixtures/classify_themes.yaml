@@ -59,6 +59,24 @@ categories:
       image. Its papers should carry he_histology, and should NOT carry genomics:
       the molecular signal is the model's output, not its input.
 
+  agentic_ai:
+    label: "Agentic AI"
+    type: null
+    include:
+      # Broad on purpose: the fixture's job is to exercise the collision that
+      # makes this theme hard, not to be the shipped vocabulary.
+      - pattern: "(?i)\\bagents?\\b"
+        kind: regex
+      - pattern: "(?i)\\bagentic\\b"
+        kind: regex
+    exclude:
+      - pattern: "(?i)\\b(contrast|therapeutic|chemotherapeutic) agents?\\b"
+        kind: regex
+    notes: >
+      "Agent" is a drug as often as it is software: contrast agents and
+      therapeutic agents. The exclude is what keeps a pharmacology paper out,
+      and record 1023 exists to prove it fires.
+
   clinical_fda:
     label: "Clinical Applications / FDA Approval"
     type: null

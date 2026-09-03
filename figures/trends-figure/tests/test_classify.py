@@ -98,7 +98,7 @@ def test_fixture_dictionaries_load(themes, modalities):
     assert modalities.version == 4
     assert set(modalities.keys) == set(classify.MODALITY_KEYS)
     assert len(themes.sha256) == 64
-    assert themes.n_patterns == 9  # eight includes and one exclude
+    assert themes.n_patterns == 12  # ten includes and two excludes
     assert len(modalities.categories["other"].include) == 2  # additive: it has patterns
 
 
@@ -327,11 +327,11 @@ def test_conjunctive_pattern_reads_title_and_abstract_as_one_string(modalities):
 
 def test_record_filters_are_counted(result):
     """Book records, blank PMIDs, and yearless records are dropped and reported."""
-    assert result.n_records_in == 21
+    assert result.n_records_in == 23
     assert result.exclusions == {
         "book_records": 1, "missing_pmid": 1, "missing_year": 1, "outside_date_range": 0,
     }
-    assert result.n_records_out == 18
+    assert result.n_records_out == 20
     assert "1013" not in set(result.labels["pmid"])  # the book record
 
 
@@ -571,7 +571,7 @@ def test_report_names_the_counts_a_reader_needs(result, themes, modalities):
     text = classify.format_report(
         result, themes, modalities, aggregate.build_combination_counts(result.labels)
     )
-    assert "records analysed :      18" in text
+    assert "records analysed :      20" in text
     assert "book_records" in text
     assert "MOST FREQUENTLY FIRING PATTERNS" in text
     assert "PATTERNS THAT NEVER FIRED" in text
@@ -630,10 +630,10 @@ def test_cli_writes_every_output(tmp_path, capsys):
         assert (output / name).exists(), name
 
     data = io.load_figure_data(output)
-    assert data.n_papers_total == 18
+    assert data.n_papers_total == 20
 
     manifest = json.loads((output / "run_manifest.json").read_text())
-    assert manifest["counts"]["records_in"] == 21
+    assert manifest["counts"]["records_in"] == 23
     assert manifest["counts"]["exclusions"]["book_records"] == 1
     assert manifest["config"]["themes"]["version"] == 7
     assert len(manifest["config"]["themes"]["sha256"]) == 64
@@ -662,7 +662,7 @@ def test_cli_takes_the_partial_year_from_the_corpus_config(tmp_path):
     assert not (output / "pattern_hits.csv").exists()
     # The same date range bounds the corpus: 2014 below, 2026 above.
     assert manifest["year_range_applied"] == {"first": 2015, "last": 2025}
-    assert manifest["counts"]["exclusions"]["outside_date_range"] == 5
+    assert manifest["counts"]["exclusions"]["outside_date_range"] == 6
 
     flagged = pd.read_csv(output / "theme_year_counts.csv", comment="#")
     assert set(flagged.loc[flagged["partial_year"] == 1, "year"]) == {2025}
@@ -779,7 +779,7 @@ def test_records_outside_the_date_window_are_dropped(records, themes, modalities
     )
     assert windowed.exclusions["outside_date_range"] == 1
     assert 2014 not in set(windowed.labels["year"])
-    assert windowed.n_records_out == 17
+    assert windowed.n_records_out == 19
 
 
 def test_no_window_keeps_every_year(result):
@@ -802,3 +802,284 @@ def test_the_window_is_read_from_the_corpus_config(tmp_path):
 
     missing = classify.read_corpus_window(tmp_path / "absent.yaml")
     assert missing.years is None and missing.partial_year is None
+
+
+def test_an_agent_that_is_a_drug_is_excluded_not_matched(labels, result):
+    """"Agent" is a drug as often as it is software.
+
+    In this corpus bare "agent" matches contrast agents and therapeutic agents
+    far more often than it matches an AI one, so the agentic theme lives or dies
+    by its exclude list. The fixture reproduces the collision: one record is a
+    planning, tool-calling system, the other is gadolinium.
+    """
+    assert labels.loc["1022"]["theme_agentic_ai"] == 1
+    assert labels.loc["1023"]["theme_agentic_ai"] == 0
+    assert labels.loc["1023"]["mod_mri"] == 1        # the record itself survives
+
+    hits = result.hits
+    suppressed = hits.loc[(hits["pmid"] == "1023") & (hits["category"] == "agentic_ai")]
+    assert set(suppressed["role"]) == {"include", "exclude"}
+    assert set(suppressed["category_matched"]) == {0}
+    assert "contrast agent" in " ".join(suppressed["excerpt"]).lower()
+
+
+# --------------------------------------------------------------------------
+# The config version ledger
+#
+# A config file's `version` is what a run manifest records, and it is the only
+# thing that lets a reader tie a published count back to the terms that produced
+# it. That guarantee breaks silently when a file is edited without the version
+# moving: the manifest still names a version, but the version no longer means
+# what it meant. It happened three times in one day, twice under themes.yaml and
+# once under modalities.yaml, and was caught each time by hand.
+#
+# `config/VERSIONS.json` freezes each version to a hash, and these tests make it
+# bite. The ledger is append-only: a version, once written, is never re-pointed
+# at different content.
+# --------------------------------------------------------------------------
+
+#: Config files the ledger governs.
+LEDGERED_CONFIGS: tuple[str, ...] = ("themes.yaml", "modalities.yaml", "corpus.yaml")
+
+#: The ledger itself, inside the config directory.
+LEDGER_NAME = "VERSIONS.json"
+
+#: Shortest hash prefix the ledger may record and still be checkable.
+_MIN_HASH_PREFIX = 8
+
+
+def _keep_duplicate_pairs(pairs: list[tuple[str, object]]) -> list[tuple[str, object]]:
+    """``object_pairs_hook`` that preserves repeated keys instead of collapsing them.
+
+    ``json.load`` keeps the last of a repeated key, which would hide exactly the
+    mistake this checks for.
+    """
+    return pairs
+
+
+def _entry_hash(value: object) -> str | None:
+    """Pull the hash out of a ledger entry.
+
+    Accepts a bare string, or a mapping carrying the hash under ``sha256``,
+    ``hash``, or ``digest`` — the shape a reconstructed entry takes when it is
+    marked as such. Returns ``None`` when no hash can be read, which the caller
+    treats as "not recorded" rather than as a violation.
+    """
+    if isinstance(value, list):  # a nested object, from the pairs hook
+        value = dict(value)
+    if isinstance(value, str):
+        text = value.strip()
+    elif isinstance(value, dict):
+        for key in ("sha256", "hash", "digest"):
+            found = value.get(key)
+            if isinstance(found, str):
+                text = found.strip()
+                break
+        else:
+            return None
+    else:
+        return None
+    text = text.rstrip("….").strip()
+    if len(text) < _MIN_HASH_PREFIX or any(c not in "0123456789abcdefABCDEF" for c in text):
+        return None
+    return text.lower()
+
+
+def _file_sections(raw: list) -> list[tuple[str, list]]:
+    """Return the ``(filename, versions)`` sections of a parsed ledger.
+
+    Two shapes are accepted: entries at the top level, and entries nested under
+    a ``files`` key beside metadata. Keys beginning with ``_`` are commentary —
+    the ledger carries its own README and a record of past breaches — and are
+    skipped, as is anything that is not a mapping of versions.
+    """
+    pairs = [item for item in raw if isinstance(item, (list, tuple)) and len(item) == 2]
+    for key, value in pairs:
+        if key == "files" and isinstance(value, list):
+            pairs = [item for item in value if isinstance(item, (list, tuple)) and len(item) == 2]
+            break
+    return [
+        (str(key), value)
+        for key, value in pairs
+        if not str(key).startswith("_") and isinstance(value, list)
+    ]
+
+
+def _parse_ledger(path: Path) -> tuple[dict[str, dict[str, str]], list[str]]:
+    """Read ``VERSIONS.json``.
+
+    Returns the recorded hashes as ``{filename: {version: hash}}``, and a list of
+    reuse problems: a version written twice with different hashes.
+    """
+    raw = json.loads(path.read_text(encoding="utf-8"), object_pairs_hook=_keep_duplicate_pairs)
+    entries: dict[str, dict[str, str]] = {}
+    problems: list[str] = []
+    for filename, versions in _file_sections(raw):
+        recorded: dict[str, str] = {}
+        for item in versions:
+            if not (isinstance(item, (list, tuple)) and len(item) == 2):
+                continue
+            version, value = item
+            digest = _entry_hash(value)
+            if digest is None:
+                continue
+            version = str(version)
+            if version in recorded and recorded[version] != digest:
+                problems.append(
+                    f"{path} records {filename} version {version} twice, with different "
+                    f"hashes ({recorded[version][:12]}… and {digest[:12]}…). A version is "
+                    "frozen once. Give the later content a new version number and append "
+                    "it as a new entry; never re-point an existing one."
+                )
+            recorded[version] = digest
+        entries[filename] = recorded
+    return entries, problems
+
+
+def _hash_mismatches(config_dir: Path, entries: dict[str, dict[str, str]]) -> list[str]:
+    """Compare each config file on disk with the hash its own version froze.
+
+    Files absent from disk, files the ledger does not carry, and versions the
+    ledger does not carry are skipped: an unrecorded version is not evidence of
+    a violation.
+    """
+    import yaml
+
+    problems: list[str] = []
+    for filename in LEDGERED_CONFIGS:
+        path = config_dir / filename
+        recorded = entries.get(filename)
+        if not path.exists() or not recorded:
+            continue
+        version = str(yaml.safe_load(path.read_text(encoding="utf-8")).get("version"))
+        expected = recorded.get(version)
+        if expected is None:
+            continue
+        actual = classify.file_digest(path)
+        if not actual.startswith(expected):
+            problems.append(
+                f"config/{filename} says version {version}, and {LEDGER_NAME} froze "
+                f"version {version} at {expected[:12]}…, but the file now hashes to "
+                f"{actual[:12]}…. The file was edited without the version moving, so "
+                f"every manifest naming {filename} v{version} is now ambiguous. Fix it by "
+                f"bumping `version` in config/{filename} and appending the new version "
+                f"and its hash to config/{LEDGER_NAME} — not by editing the hash recorded "
+                "for the existing version."
+            )
+    return problems
+
+
+def test_config_files_match_the_version_ledger():
+    """A config file may not change without its version moving.
+
+    This is the guard that replaces catching it by hand.
+    """
+    config = PROJECT_ROOT / "config"
+    ledger = config / LEDGER_NAME
+    if not ledger.exists():
+        pytest.skip(f"config/{LEDGER_NAME} does not exist yet")
+    entries, _ = _parse_ledger(ledger)
+    problems = _hash_mismatches(config, entries)
+    assert not problems, "\n\n".join(problems)
+
+
+def test_the_version_ledger_never_reuses_a_version():
+    """The ledger is append-only: one version, one hash, forever."""
+    config = PROJECT_ROOT / "config"
+    ledger = config / LEDGER_NAME
+    if not ledger.exists():
+        pytest.skip(f"config/{LEDGER_NAME} does not exist yet")
+    _, problems = _parse_ledger(ledger)
+    assert not problems, "\n\n".join(problems)
+
+
+# -- and the guard's own tests, so it is not itself taken on trust ------------
+
+
+def _write_ledger(tmp_path: Path, body: str) -> Path:
+    """Write a config directory holding one dictionary and a ledger."""
+    config = tmp_path / "config"
+    config.mkdir(exist_ok=True)
+    (config / LEDGER_NAME).write_text(body, encoding="utf-8")
+    return config
+
+
+def test_the_ledger_guard_passes_a_change_followed_by_a_bump(tmp_path):
+    """The legitimate case: edit the file, bump the version, append an entry."""
+    config = _write_ledger(tmp_path, "{}")
+    path = config / "themes.yaml"
+    path.write_text("version: 4\ncategories: {}\n", encoding="utf-8")
+    first = classify.file_digest(path)
+
+    path.write_text("version: 5\ncategories: {}\n", encoding="utf-8")
+    second = classify.file_digest(path)
+    (config / LEDGER_NAME).write_text(
+        json.dumps({"themes.yaml": {"4": first, "5": second}}), encoding="utf-8"
+    )
+    entries, reuse = _parse_ledger(config / LEDGER_NAME)
+    assert _hash_mismatches(config, entries) == []
+    assert reuse == []
+
+
+def test_the_ledger_guard_catches_an_edit_without_a_bump(tmp_path):
+    """Failure mode one, and the message must say what to do about it."""
+    config = _write_ledger(tmp_path, "{}")
+    path = config / "themes.yaml"
+    path.write_text("version: 9\ncategories: {}\n", encoding="utf-8")
+    frozen = classify.file_digest(path)
+    (config / LEDGER_NAME).write_text(
+        json.dumps({"themes.yaml": {"9": frozen}}), encoding="utf-8"
+    )
+    path.write_text("version: 9\ncategories: {}\n# a measurement note\n", encoding="utf-8")
+
+    entries, _ = _parse_ledger(config / LEDGER_NAME)
+    problems = _hash_mismatches(config, entries)
+    assert len(problems) == 1
+    assert "says version 9" in problems[0]
+    assert "edited without the version moving" in problems[0]
+    assert "bumping `version`" in problems[0]
+
+
+def test_the_ledger_guard_catches_a_reused_version(tmp_path):
+    """Failure mode two: the same version written twice with different hashes."""
+    config = _write_ledger(
+        tmp_path,
+        '{"themes.yaml": {"9": "' + "a" * 64 + '", "9": "' + "b" * 64 + '"}}',
+    )
+    _, problems = _parse_ledger(config / LEDGER_NAME)
+    assert len(problems) == 1
+    assert "version 9 twice" in problems[0]
+    assert "frozen once" in problems[0]
+
+
+def test_the_ledger_guard_is_silent_about_what_it_does_not_carry(tmp_path):
+    """Absence is not a violation: an unrecorded file or version is skipped.
+
+    The ledger is being reconstructed and will not carry every past version.
+    """
+    config = _write_ledger(tmp_path, "{}")
+    (config / "themes.yaml").write_text("version: 9\ncategories: {}\n", encoding="utf-8")
+    (config / "modalities.yaml").write_text("version: 2\ncategories: {}\n", encoding="utf-8")
+    (config / LEDGER_NAME).write_text(
+        json.dumps({"themes.yaml": {"7": "c" * 64}}), encoding="utf-8"  # v9 not recorded
+    )
+    entries, reuse = _parse_ledger(config / LEDGER_NAME)
+    assert _hash_mismatches(config, entries) == []      # v9 unrecorded, so nothing to check
+    assert reuse == []
+
+
+def test_the_ledger_guard_accepts_a_marked_reconstructed_entry(tmp_path):
+    """A reconstructed entry carries its hash in a mapping and is still checked."""
+    config = _write_ledger(tmp_path, "{}")
+    path = config / "modalities.yaml"
+    path.write_text("version: 2\ncategories: {}\n", encoding="utf-8")
+    (config / LEDGER_NAME).write_text(
+        json.dumps({
+            "modalities.yaml": {
+                "2": {"sha256": classify.file_digest(path), "reconstructed": True}
+            }
+        }),
+        encoding="utf-8",
+    )
+    entries, _ = _parse_ledger(config / LEDGER_NAME)
+    assert _hash_mismatches(config, entries) == []
