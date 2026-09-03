@@ -1,0 +1,2533 @@
+# GROUP C - adjudication of product codes LLZ and JAK (Radiology/Pathology panel rows only).
+#
+# 261 devices: LLZ 160 ("System, Image Processing, Radiological", 892.2050) and JAK 101
+# ("System, X-Ray, Tomography, Computed", 892.1750). openFDA returns an EMPTY "definition"
+# string for both codes, verified in data/raw/2026-03-30/classification_001.json, so the code
+# carries no signal whatsoever and every call below rests on the device itself. Approach: read
+# each device name and company, identify the commercial product where I know it (marked "Known
+# product:" in the evidence, per the brief), and apply the brief's borderline rules mechanically
+# and consistently - breast density is not_oncology; emphysema/COPD lung density is
+# not_oncology; reconstruction, denoising, enhancement, acquisition, positioning and dose
+# reduction are not_oncology even on cancer-capable hardware; PACS and viewers are
+# not_oncology; organ segmentation with no stated neoplastic target and multi-application
+# vendor platforms whose module list is not stated are unresolved. JAK is dominated by CT
+# scanners, deep-learning reconstruction and coronary calcium scoring; LLZ is a catch-all
+# holding brain volumetry, cardiac, stroke, dental and orthopedic tools alongside the genuine
+# oncology products. Result: 28 oncology (25 radiology_cancer_detection, 3
+# radiology_radiation_therapy), 202 not_oncology, 31 unresolved. The unresolved 12% is
+# concentrated in unnamed vendor platforms (syngo, Xeleris, Ziostation2, Synapse 3D, AVIEW
+# base, uOmnispace.MI, TruSPECT) and in three of the historically important pre-2016 rows.
+version: 1
+codes: [LLZ, JAK]
+n_devices: 261
+adjudicated:
+  - submission_number: K133649
+    device: "HEPATIC VCAR"
+    company: "GE MEDICAL SYSTEMS SCS"
+    product_code: JAK
+    year: 2014
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: GE Hepatic VCAR (Volume Computer Assisted Reading), CT liver analysis for
+      segmentation, volumetry and measurement/tracking of focal hepatic lesions. Liver lesion
+      characterization is oncology per the borderline rule; medium because the same package is
+      also used for living-donor liver volumetry, a non-oncologic use.
+  - submission_number: K141069
+    device: "Lung Density Analysis"
+    company: "IMBIO LLC"
+    product_code: JAK
+    year: 2014
+    decision: not_oncology
+    evidence: >-
+      Known product: Imbio Lung Density Analysis, quantitative CT lung density for
+      emphysema/COPD. Emphysema and COPD density analysis is explicitly not_oncology.
+  - submission_number: K172983
+    device: "HealthCCS"
+    company: "Zebra Medical Vision Ltd."
+    product_code: JAK
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Zebra Medical Vision HealthCCS, automated coronary artery calcium scoring
+      on CT. Cardiovascular.
+  - submission_number: K173821
+    device: "LungQ Software"
+    company: "Thirona Corporation"
+    product_code: JAK
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Thirona LungQ, quantitative CT lobar/airway/emphysema analysis for COPD
+      and interstitial lung disease. Density and airway quantification, not neoplasm.
+  - submission_number: K182901
+    device: "Aquilion Precision (TSX-304A/1 and /2) V8.8 with AiCE"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion Precision CT scanner with AiCE deep-learning reconstruction. CT scanner /
+      deep-learning image reconstruction clearance. Reconstruction and acquisition on a
+      cancer-capable scanner are not_oncology per the borderline rule.
+  - submission_number: K183046
+    device: "Aquilion ONE (TSX-305A/6) V8.9 with AiCE"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion ONE CT scanner with AiCE deep-learning reconstruction. CT scanner / deep-
+      learning image reconstruction clearance. Reconstruction and acquisition on a cancer-
+      capable scanner are not_oncology per the borderline rule.
+  - submission_number: K183202
+    device: "Deep Learning Image Reconstruction"
+    company: "GE Medical Systems, LLC."
+    product_code: JAK
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      GE Deep Learning Image Reconstruction (TrueFidelity) for CT. CT scanner / deep-learning
+      image reconstruction clearance. Reconstruction and acquisition on a cancer-capable
+      scanner are not_oncology per the borderline rule.
+  - submission_number: K183204
+    device: "Bone VCAR (BVCAR)"
+    company: "GE Medical Systems SCS"
+    product_code: JAK
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: GE Bone VCAR, automatic spine labelling and bone segmentation on CT.
+      Musculoskeletal.
+  - submission_number: K183268
+    device: "AI-Rad Companion (Cardiovascular)"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Cardiovascular module, automated aortic
+      measurement and cardiac chamber volumetry on chest CT. Cardiac.
+  - submission_number: K183271
+    device: "AI-Rad Companion (Pulmonary)"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2019
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Chest CT pulmonary module, whose primary named
+      function is automatic detection and volumetric measurement of lung lesions (pulmonary
+      nodules) on chest CT, the lung-cancer-screening/follow-up function. Medium because the
+      same module also reports emphysema density, which is not oncologic; the call is made
+      consistently for all four AI-Rad Companion (Pulmonary) clearances (K183271, K213096,
+      K213713, K233753).
+  - submission_number: K192763
+    device: "syngo.CT CaScoring"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Siemens syngo.CT CaScoring, coronary artery calcium scoring.
+      Cardiovascular.
+  - submission_number: K193170
+    device: "Deep Learning Image Reconstruction"
+    company: "GE Healthcare Japan Corporation"
+    product_code: JAK
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      GE Deep Learning Image Reconstruction (TrueFidelity) for CT. CT scanner / deep-learning
+      image reconstruction clearance. Reconstruction and acquisition on a cancer-capable
+      scanner are not_oncology per the borderline rule.
+  - submission_number: K191550
+    device: "Broncholab"
+    company: "Fluidda Inc."
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: Fluidda Broncholab, functional respiratory imaging reporting airway
+      volumes and resistance from CT for asthma and COPD. Respiratory, not neoplastic.
+  - submission_number: K192828
+    device: "Aquilion ONE (TSX-306A/3) V10.0 with Spectral Imaging System"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion ONE CT scanner with the Spectral Imaging System. Acquisition and
+      reconstruction.
+  - submission_number: K192832
+    device: "Aquilion Prime SP (TSX-303B8) V10.2 with AiCE-i"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion Prime SP CT scanner with AiCE-i reconstruction. CT scanner / deep-
+      learning image reconstruction clearance. Reconstruction and acquisition on a cancer-
+      capable scanner are not_oncology per the borderline rule.
+  - submission_number: K192956
+    device: "Auto Positioning"
+    company: "GE Hangwei Medical Systems, Co., Ltd."
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      GE Auto Positioning, camera-based automatic patient positioning at the CT gantry.
+      Positioning is not_oncology per the borderline rule.
+  - submission_number: K193073
+    device: "Deep Recon"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      United Imaging Deep Recon, deep-learning CT image reconstruction. CT scanner / deep-
+      learning image reconstruction clearance. Reconstruction and acquisition on a cancer-
+      capable scanner are not_oncology per the borderline rule.
+  - submission_number: K193267
+    device: "Al-Rad Companion (Musculoskeletal)"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Musculoskeletal module, automated vertebral body
+      height measurement and spine labelling. Musculoskeletal.
+  - submission_number: K193281
+    device: "Hepatic VCAR"
+    company: "GE Medical Systems SCS"
+    product_code: JAK
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: GE Hepatic VCAR, CT liver segmentation, volumetry and focal hepatic
+      lesion measurement and tracking. Same product as K133649; called consistently. Medium
+      for the same reason: living-donor volumetry is a non-oncologic use of the same package.
+  - submission_number: K193289
+    device: "FastStroke, CT Perfusion 4D"
+    company: "GE Medical Systems SCS"
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: GE FastStroke with CT Perfusion 4D, acute stroke perfusion and collateral
+      assessment. Stroke.
+  - submission_number: K200990
+    device: "VIDAvision"
+    company: "VIDA Diagnostics Inc."
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: VIDA Diagnostics VIDAvision, quantitative CT lung analysis for emphysema,
+      air trapping and airway disease in COPD and ILD. Density analysis, explicitly
+      not_oncology.
+  - submission_number: K201034
+    device: "Syngo.CT CaScoring"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Siemens syngo.CT CaScoring, coronary artery calcium scoring. Cardiovascular.
+  - submission_number: K201745
+    device: "Deep Learning Image Reconstruction for Gemstone Spectral Imaging"
+    company: "GE Medical Systems, LLC"
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      GE Deep Learning Image Reconstruction for Gemstone Spectral Imaging. CT scanner / deep-
+      learning image reconstruction clearance. Reconstruction and acquisition on a cancer-
+      capable scanner are not_oncology per the borderline rule.
+  - submission_number: K203042
+    device: "Aquilion Exceed LB (TSX-202A/3) V10.6 with AiCE-I"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion Exceed LB, a large-bore CT scanner with AiCE-i reconstruction. Large-bore
+      CT is used for radiotherapy simulation, but the cleared AI function is reconstruction,
+      which is not_oncology per the borderline rule.
+  - submission_number: K203169
+    device: "Revolution Ascend"
+    company: "GE Healthcare Japan Corporation"
+    product_code: JAK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      GE Revolution Ascend CT scanner. Acquisition and reconstruction hardware.
+  - submission_number: K201836
+    device: "Aquilion Lightning (TSX-036A/7) V10.2 with AiCE-i"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion Lightning CT scanner with AiCE-i reconstruction. CT scanner / deep-
+      learning image reconstruction clearance. Reconstruction and acquisition on a cancer-
+      capable scanner are not_oncology per the borderline rule.
+  - submission_number: K203225
+    device: "Aquilion ONE (TSX-306A/3) V10.4 with Spectral Imaging System"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion ONE CT scanner with the Spectral Imaging System. Acquisition and
+      reconstruction.
+  - submission_number: K203448
+    device: "uCT ATLAS with uWS-CT-Dual Energy Analysis"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: JAK
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      United Imaging uCT ATLAS CT scanner with the uWS-CT dual-energy analysis workstation.
+      Acquisition and spectral post-processing.
+  - submission_number: K203514
+    device: "Precise Position"
+    company: "Philips Healthcare (Suzhou) Co., Ltd."
+    product_code: JAK
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Philips Precise Position, camera-based automatic patient positioning for CT.
+      Positioning.
+  - submission_number: K203617
+    device: "MaxFOV 2"
+    company: "GE Medical Systems, LLC."
+    product_code: JAK
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: GE MaxFOV 2, extended field-of-view CT reconstruction (used among other
+      things for radiotherapy simulation of large patients). Reconstruction, not_oncology per
+      the borderline rule.
+  - submission_number: K210085
+    device: "HealthCCSng"
+    company: "Zebra Medical Vision Ltd."
+    product_code: JAK
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Zebra/Nanox HealthCCSng, automated coronary artery calcium scoring.
+      Cardiovascular.
+  - submission_number: K211828
+    device: "Aquilion Exceed LB"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion Exceed LB large-bore CT scanner. Acquisition hardware; see K203042.
+  - submission_number: K212067
+    device: "Deep Learning Image Reconstruction"
+    company: "GE Healthcare Japan Corporation"
+    product_code: JAK
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      GE Deep Learning Image Reconstruction for CT. CT scanner / deep-learning image
+      reconstruction clearance. Reconstruction and acquisition on a cancer-capable scanner are
+      not_oncology per the borderline rule.
+  - submission_number: K213096
+    device: "Al-Rad Companion (Pulmonary)"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Chest CT pulmonary module; lung lesion (nodule)
+      detection and volumetric measurement. Same call as K183271.
+  - submission_number: K210760
+    device: "Precise Image"
+    company: "Philips Medical Systems Nederland, B.V."
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Philips Precise Image, deep-learning CT reconstruction for dose reduction
+      and denoising. CT scanner / deep-learning image reconstruction clearance. Reconstruction
+      and acquisition on a cancer-capable scanner are not_oncology per the borderline rule.
+  - submission_number: K212441
+    device: "Philips Incisive CT"
+    company: "Philips Healthcare (Suzhou) Co., Ltd."
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Philips Incisive CT scanner. Acquisition hardware.
+  - submission_number: K213504
+    device: "Aquilion ONE (TSX-306A/3) V10.12 with Spectral Imaging System, Vitrea Software Package, VSTP-001A"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion ONE CT scanner with the Spectral Imaging System and Vitrea software
+      package. Acquisition and reconstruction.
+  - submission_number: K213713
+    device: "AI-Rad Companion (Pulmonary)"
+    company: "Siemens Healthcare GmBh"
+    product_code: JAK
+    year: 2022
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Chest CT pulmonary module; lung lesion (nodule)
+      detection and volumetric measurement. Same call as K183271.
+  - submission_number: K213725
+    device: "CardIQ Suite"
+    company: "GE Medical Systems SCS"
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: GE CardIQ Suite, cardiac CT post-processing (coronary analysis, calcium
+      scoring, function). Cardiac.
+  - submission_number: K213938
+    device: "Revolution Ascend"
+    company: "GE Healthcare Japan Corporation"
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Revolution Ascend CT scanner. Acquisition hardware.
+  - submission_number: K213944
+    device: "HealthOST"
+    company: "NanoxAI Ltd."
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Nanox AI HealthOST, opportunistic CT screening for vertebral compression
+      fracture and low bone density. Bone density and fracture are excluded indications.
+  - submission_number: K213999
+    device: "Deep Learning Image Reconstruction"
+    company: "GE Medical Systems, LLC."
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Deep Learning Image Reconstruction for CT. CT scanner / deep-learning image
+      reconstruction clearance. Reconstruction and acquisition on a cancer-capable scanner are
+      not_oncology per the borderline rule.
+  - submission_number: K214019
+    device: "syngo.CT Extended Functionality"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2022
+    decision: unresolved
+    evidence: >-
+      Siemens 'syngo.CT Extended Functionality'; same generic application bundle as K221727
+      and unresolvable on the same grounds.
+  - submission_number: K220961
+    device: "Deep Learning Image Reconstruction"
+    company: "GE Healthcare Japan Corporation"
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Deep Learning Image Reconstruction for CT. CT scanner / deep-learning image
+      reconstruction clearance. Reconstruction and acquisition on a cancer-capable scanner are
+      not_oncology per the borderline rule.
+  - submission_number: K220986
+    device: "Aquilion Precision (TSX-304A/4) V10.10 with AiCE"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion Precision CT scanner with AiCE reconstruction. CT scanner / deep-learning
+      image reconstruction clearance. Reconstruction and acquisition on a cancer-capable
+      scanner are not_oncology per the borderline rule.
+  - submission_number: K221219
+    device: "syngo.CT CaScoring"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Siemens syngo.CT CaScoring, coronary artery calcium scoring. Cardiovascular.
+  - submission_number: K221727
+    device: "syngo.CT Extended Functionality"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2022
+    decision: unresolved
+    evidence: >-
+      Siemens 'syngo.CT Extended Functionality' is a bundle of CT post-processing
+      applications; neither the name nor the FDA row states which applications the AI element
+      serves. The bundle historically spans vascular, dental, colonography and bone reading,
+      some of which would be oncologic and most of which would not. Cannot be resolved from
+      available evidence.
+  - submission_number: K222361
+    device: "AI-Rad Companion (Musculoskeletal)"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Siemens AI-Rad Companion Musculoskeletal module, vertebral height and spine labelling.
+      Musculoskeletal.
+  - submission_number: K223311
+    device: "Philips CT 3500"
+    company: "Philips Healthcare (Suzhou) Co., Ltd"
+    product_code: JAK
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Philips CT 3500 scanner. Acquisition hardware.
+  - submission_number: K222360
+    device: "AI-Rad Companion (Cardiovascular)"
+    company: "Siemens Medical Solutions U.S.A."
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Siemens AI-Rad Companion Cardiovascular module, aortic and cardiac chamber measurement.
+      Cardiac.
+  - submission_number: K222819
+    device: "Aquilion Serve (TSX-307A/1) V1.2 with AiCE-i"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion Serve CT scanner with AiCE-i reconstruction. CT scanner / deep-learning
+      image reconstruction clearance. Reconstruction and acquisition on a cancer-capable
+      scanner are not_oncology per the borderline rule.
+  - submission_number: K223028
+    device: "uCT ATLAS Astound with uWS-CT-Dual Energy Analysis"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      United Imaging uCT ATLAS Astound CT scanner with the dual-energy analysis workstation.
+      Acquisition and spectral post-processing.
+  - submission_number: K223424
+    device: "Spine Auto Views"
+    company: "GE Medical Systems SCS"
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      GE Spine Auto Views, automatic vertebral labelling and reformatted spine views.
+      Musculoskeletal workflow.
+  - submission_number: K223514
+    device: "Spectral Bone Marrow"
+    company: "GE Medical Systems, LLC"
+    product_code: JAK
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      GE Spectral Bone Marrow, dual-energy CT virtual non-calcium bone marrow imaging. The
+      dominant clinical use is marrow oedema from vertebral fracture and trauma, but the same
+      technique is used for marrow infiltration by myeloma and metastasis, and the row does
+      not say which indication was cleared.
+  - submission_number: K223726
+    device: "Aquilion Precision (TSX-304A/4) V10.14 with AiCE"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion Precision CT scanner with AiCE reconstruction. CT scanner / deep-learning
+      image reconstruction clearance. Reconstruction and acquisition on a cancer-capable
+      scanner are not_oncology per the borderline rule.
+  - submission_number: K230112
+    device: "CAC Software"
+    company: "Imbio, Inc."
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Imbio CAC Software, coronary artery calcium quantification. Cardiovascular.
+  - submission_number: K230220
+    device: "NeuViz 128 Multi-Slice CT Scanner System"
+    company: "Neusoft Medical Systems Co., Ltd."
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Neusoft NeuViz 128 multi-slice CT scanner. Acquisition hardware.
+  - submission_number: K230223
+    device: "iCAC Device"
+    company: "Bunkerhill, Inc"
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Bunkerhill iCAC, coronary artery calcium quantification. Cardiovascular.
+  - submission_number: K230370
+    device: "SpotLight/SpotLight Duo (with DLIR option)"
+    company: "Arineta Ltd."
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Arineta SpotLight / SpotLight Duo cardiac CT scanner with a deep-learning reconstruction
+      option. Acquisition and reconstruction.
+  - submission_number: K230807
+    device: "Deep Learning Image Reconstruction"
+    company: "GE Healthcare Japan Corporation"
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      GE Deep Learning Image Reconstruction for CT. CT scanner / deep-learning image
+      reconstruction clearance. Reconstruction and acquisition on a cancer-capable scanner are
+      not_oncology per the borderline rule.
+  - submission_number: K231281
+    device: "Aquilion Serve (TSX-307A/1) V1.3"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion Serve CT scanner, version release. Acquisition hardware.
+  - submission_number: K231631
+    device: "BriefCase-Quantification"
+    company: "Aidoc Medical, Ltd."
+    product_code: JAK
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      Aidoc BriefCase-Quantification. The BriefCase family is per-finding, and the
+      quantification variants Aidoc has marketed are coronary artery calcium and vertebral
+      compression fracture, neither oncologic, but the row does not name the finding for this
+      clearance and Aidoc also markets nodule products. Not resolvable from the name.
+  - submission_number: K232045
+    device: "MeVis Liver Suite"
+    company: "MeVis Medical Solutions AG"
+    product_code: JAK
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      Known product: MeVis Liver Suite, CT/MR liver segmentation, vascular territory analysis
+      and volumetry supporting hepatic resection planning. It is used both for tumour
+      resection and for living-donor transplant volumetry, and the name states no neoplastic
+      target, so it falls under the general-organ-segmentation rule.
+  - submission_number: K233334
+    device: "Aquilion Serve SP (TSX-307B/1) V1.3"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion Serve SP CT scanner, version release. Acquisition hardware.
+  - submission_number: K232412
+    device: "LungQ v3.0.0"
+    company: "Thirona BV"
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Thirona LungQ, quantitative CT lung/airway/emphysema analysis for COPD and ILD. Density
+      analysis, explicitly not_oncology.
+  - submission_number: K232491
+    device: "CT 5300"
+    company: "Philips Healthcare (Suzhou) Co., Ltd."
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Philips CT 5300 scanner. Acquisition hardware.
+  - submission_number: K232835
+    device: "Aquilion ONE (TSX-308A/3) V1.4 with PIQE Reconstruction System"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion ONE CT scanner with PIQE deep-learning reconstruction. CT scanner / deep-
+      learning image reconstruction clearance. Reconstruction and acquisition on a cancer-
+      capable scanner are not_oncology per the borderline rule.
+  - submission_number: K233080
+    device: "HealthFLD"
+    company: "Nano-X AI Ltd."
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Nanox AI HealthFLD, opportunistic CT detection of hepatic steatosis (fatty liver
+      disease). Not neoplastic.
+  - submission_number: K233650
+    device: "SOMATOM go.Up; SOMATOM go.Now; SOMATOM go.All; SOMATOM go.Top; SOMATOM go.Sim; SOMATOM go.Open Pro; SOMATOM X.cite; SOMATOM X.ceed"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Siemens SOMATOM go and SOMATOM X CT scanner family (including SOMATOM go.Sim, the
+      radiotherapy simulation configuration). Acquisition hardware; not_oncology per the
+      borderline rule even where the scanner serves radiotherapy planning.
+  - submission_number: K233657
+    device: "NAEOTOM Alpha"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Siemens NAEOTOM Alpha photon-counting CT scanner. Acquisition hardware.
+  - submission_number: K233698
+    device: "True Enhance DL"
+    company: "GE Healthcare Japan Corporation"
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      GE True Enhance DL, deep-learning contrast/spectral image enhancement on CT. Enhancement
+      is not_oncology per the borderline rule.
+  - submission_number: K233731
+    device: "CardIQ Suite"
+    company: "GE Medical Systems SCS"
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      GE CardIQ Suite, cardiac CT post-processing. Cardiac.
+  - submission_number: K233749
+    device: "Revolution Ascend Sliding"
+    company: "GE Hangwei Medical Systems Co., Ltd."
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      GE Revolution Ascend Sliding CT scanner. Acquisition hardware.
+  - submission_number: K233753
+    device: "AI-Rad Companion (Pulmonary)"
+    company: "Siemens Healthcare GmbH"
+    product_code: JAK
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Chest CT pulmonary module; lung lesion (nodule)
+      detection and volumetric measurement. Same call as K183271.
+  - submission_number: K240369
+    device: "CAC (gated) Algorithm"
+    company: "BunkerHill Health"
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Bunkerhill CAC (gated) algorithm, coronary artery calcium scoring. Cardiovascular.
+  - submission_number: K241440
+    device: "HealthCCSng"
+    company: "Nano-X AI Ltd."
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Nanox AI HealthCCSng, coronary artery calcium scoring. Cardiovascular.
+  - submission_number: K242188
+    device: "ClearRead CT CAC"
+    company: "Riverain Technologies, Inc."
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Riverain ClearRead CT CAC. Riverain's ClearRead CT family includes lung nodule
+      detection, but this clearance is the coronary artery calcium variant named in the device
+      string. Cardiovascular.
+  - submission_number: K242403
+    device: "Aquilion ONE (TSX-308A/3) V1.5"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion ONE CT scanner, version release. Acquisition hardware.
+  - submission_number: K241079
+    device: "uCT 780"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      United Imaging uCT 780 scanner. Acquisition hardware.
+  - submission_number: K241166
+    device: "uCT 550"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      United Imaging uCT 550 scanner. Acquisition hardware.
+  - submission_number: K241200
+    device: "SpotLight/SpotLight Duo with Low Dose Lung Cancer Screening Option"
+    company: "Arineta Ltd."
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Arineta SpotLight / SpotLight Duo CT scanner with a low-dose lung cancer screening
+      acquisition option. Same call as K250650, applied consistently.
+  - submission_number: K243229
+    device: "Bunkerhill AVC"
+    company: "BunkerHill Health"
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Bunkerhill AVC, aortic valve calcium quantification. Cardiovascular.
+  - submission_number: K243523
+    device: "NAEOTOM Alpha.Peak/ NAEOTOM Alpha; NAEOTOM Alpha.Pro; NAEOTOM Alpha.Prime"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Siemens NAEOTOM Alpha photon-counting CT scanner family. Acquisition hardware.
+  - submission_number: K243617
+    device: "uCT ATLAS Astound with uWS-CT-Dual Energy Analysis; uCT ATLAS with uWS-CT-Dual Energy Analysis"
+    company: "Shanghai United Imaging Healthcare Co.,Ltd."
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      United Imaging uCT ATLAS / ATLAS Astound scanners with the dual-energy analysis
+      workstation. Acquisition and spectral post-processing.
+  - submission_number: K243672
+    device: "CardIQ Suite"
+    company: "GE Medical Systems SCS"
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      GE CardIQ Suite, cardiac CT post-processing. Cardiac.
+  - submission_number: K250370
+    device: "SCENARIA View Phase 5.0"
+    company: "FUJIFILM Corporation"
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Fujifilm SCENARIA View CT scanner. Acquisition hardware.
+  - submission_number: K250650
+    device: "SpotLight / SpotLight Duo with Low Dose Lung Cancer Screening Option"
+    company: "Arineta Ltd."
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Arineta SpotLight / SpotLight Duo CT scanner with a low-dose lung cancer screening
+      acquisition option. The indication named is cancer screening, but what is cleared is a
+      scanner acquisition and dose-reduction option rather than an image-analysis tool, and
+      the borderline rule makes acquisition and dose reduction not_oncology even on a cancer-
+      capable scanner. Flagged as a rule-driven call a reader could reasonably dispute.
+  - submission_number: K250662
+    device: "Bunkerhill MAC"
+    company: "Bunkerhill Health"
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Bunkerhill MAC, mitral annular calcium quantification. Cardiovascular.
+  - submission_number: K250766
+    device: "LungQ 4"
+    company: "Thirona BV"
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Thirona LungQ 4, quantitative CT lung/airway/emphysema analysis. Density analysis,
+      explicitly not_oncology.
+  - submission_number: K250941
+    device: "Revolution Vibe"
+    company: "GE Medical Systems, LLC"
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      GE Revolution Vibe cardiac CT scanner. Acquisition hardware.
+  - submission_number: K252217
+    device: "CT VScore+"
+    company: "Canon Medical Informatics, Inc."
+    product_code: JAK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Canon CT VScore+, vascular calcium scoring. Cardiovascular.
+  - submission_number: K252992
+    device: "CT Rembra RT; CT Areta RT; CT Rembra"
+    company: "Philips Healthcare (Suzhou) Co., Ltd."
+    product_code: JAK
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Philips CT Rembra / CT Areta scanners, including the 'RT' radiotherapy-simulation
+      configurations. Acquisition hardware; not_oncology per the borderline rule even where
+      the scanner serves radiotherapy planning.
+  - submission_number: K253173
+    device: "uCT 780 with uWS-CT-Dual Energy Analysis"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: JAK
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      United Imaging uCT 780 with the dual-energy analysis workstation. Acquisition and
+      spectral post-processing.
+  - submission_number: K253520
+    device: "Photonova Spectra, Photonova Spectra Select"
+    company: "Ge Medical Systems, LLC"
+    product_code: JAK
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      GE Photonova Spectra CT scanner. Acquisition hardware.
+  - submission_number: K253574
+    device: "SOMATOM X.cite; SOMATOM X.ceed"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: JAK
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Siemens SOMATOM X.cite / X.ceed CT scanners. Acquisition hardware.
+  - submission_number: K253649
+    device: "Spectral CT Verida Family"
+    company: "Philips Medical Systems Technologies , Ltd."
+    product_code: JAK
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Philips Spectral CT Verida family scanners. Acquisition hardware.
+  - submission_number: K253686
+    device: "True Definition DL"
+    company: "Ge Healthcare Japan Corporation"
+    product_code: JAK
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      GE True Definition DL, deep-learning CT image enhancement. Enhancement is not_oncology
+      per the borderline rule.
+  - submission_number: K260078
+    device: "Aquilion ServeSP (TSX-307B) V2.0"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAK
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Canon Aquilion ServeSP CT scanner, version release. Acquisition hardware.
+  - submission_number: K260166
+    device: "Bunkerhill Contrast CAC"
+    company: "BunkerHill Health"
+    product_code: JAK
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Bunkerhill Contrast CAC, coronary artery calcium on contrast CT. Cardiovascular.
+  - submission_number: K260167
+    device: "Bunkerhill Contrast AVC"
+    company: "BunkerHill Health"
+    product_code: JAK
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Bunkerhill Contrast AVC, aortic valve calcium on contrast CT. Cardiovascular.
+  - submission_number: K260169
+    device: "AV Cardiac CT"
+    company: "Philips Medical Systems Nederland B.V."
+    product_code: JAK
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Philips AV Cardiac CT. Cardiac.
+  - submission_number: K082483
+    device: "QUANTRA"
+    company: "HOLOGIC, INC."
+    product_code: LLZ
+    year: 2008
+    decision: not_oncology
+    evidence: >-
+      Known product: Hologic Quantra, automated volumetric breast density assessment from
+      digital mammograms. Breast density measurement. Called not_oncology per the borderline
+      rule: density is a risk factor and the device measures tissue composition, not cancer.
+  - submission_number: K111776
+    device: "DELTAVIEW MODEL 2.1"
+    company: "RIVERAIN MEDICAL GROUP,LLC"
+    product_code: LLZ
+    year: 2011
+    decision: unresolved
+    evidence: >-
+      Known product: Riverain DeltaView, temporal-comparison (subtraction) software that
+      highlights interval change between serial chest radiographs. Riverain is a lung-nodule-
+      CAD vendor (RapidScreen RS-2000, OnGuard, ClearRead) and DeltaView was positioned around
+      early lung cancer detection, but what is cleared is generic interval-change detection on
+      chest radiographs, not a nodule-specific function, so it falls under the multi-finding-
+      chest rule. Vendor identity alone is weak evidence. A reader who weighted the vendor's
+      product line more heavily would call this oncology.
+  - submission_number: K120161
+    device: "ALPHAPOINT IMAGING SOFTWARE"
+    company: "RADLOGICS, INC."
+    product_code: LLZ
+    year: 2012
+    decision: unresolved
+    evidence: >-
+      Known product: RadLogics AlphaPoint, an automated image-analysis and structured-
+      reporting platform ('virtual resident') that detects and measures anatomic structures
+      and findings and pre-populates a report. RadLogics's best-known application is automated
+      pulmonary nodule and lymph node measurement on chest CT, but the platform is multi-
+      region and multi-finding and the cleared indication is not stated in the row. Not
+      resolvable without the 510(k) summary.
+  - submission_number: K123526
+    device: "CLEARREAD +CONFIRM"
+    company: "RIVERAIN TECHNOLOGIES"
+    product_code: LLZ
+    year: 2012
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Riverain ClearRead +Confirm, the nodule-confirmation component of
+      Riverain's ClearRead chest radiography suite, which sits alongside ClearRead +Detect
+      (pulmonary nodule CAD) and bone suppression and is intended to help the reader confirm
+      suspected pulmonary nodules. Medium confidence because the underlying mechanism is bone-
+      suppressed image display, an enhancement, and the oncologic purpose rests on the
+      product's role in the nodule workflow rather than on the row itself.
+  - submission_number: K141480
+    device: "CVI42"
+    company: "CIRCLE CARDIOVASCULAR IMAGING INC"
+    product_code: LLZ
+    year: 2014
+    decision: not_oncology
+    evidence: >-
+      Known product: Circle Cardiovascular Imaging cvi42, cardiac MR post-processing
+      (function, flow, tissue characterization). Cardiac.
+  - submission_number: K142037
+    device: "QUANTRA"
+    company: "HOLOGIC, INC."
+    product_code: LLZ
+    year: 2014
+    decision: not_oncology
+    evidence: >-
+      Known product: Hologic Quantra, volumetric breast density. Breast density measurement.
+      Called not_oncology per the borderline rule: density is a risk factor and the device
+      measures tissue composition, not cancer.
+  - submission_number: K153351
+    device: "Quantib Brain 1"
+    company: "QUANTIB BV"
+    product_code: LLZ
+    year: 2016
+    decision: not_oncology
+    evidence: >-
+      Known product: Quantib Brain, automated brain MRI volumetry and white matter
+      hyperintensity quantification. Automated brain MRI segmentation and volumetry for
+      neurodegenerative disease, dementia and multiple sclerosis. Neurological, not
+      neoplastic.
+  - submission_number: K153427
+    device: "Volpara Imaging Software"
+    company: "Matakina Technology LTD"
+    product_code: LLZ
+    year: 2016
+    decision: not_oncology
+    evidence: >-
+      Known product: Matakina/Volpara Imaging Software, volumetric breast density. Breast
+      density measurement. Called not_oncology per the borderline rule: density is a risk
+      factor and the device measures tissue composition, not cancer.
+  - submission_number: K161148
+    device: "icobrain"
+    company: "Icometrix"
+    product_code: LLZ
+    year: 2016
+    decision: not_oncology
+    evidence: >-
+      Known product: icometrix icobrain, automated brain MRI volumetry for multiple sclerosis
+      and dementia. Automated brain MRI segmentation and volumetry for neurodegenerative
+      disease, dementia and multiple sclerosis. Neurological, not neoplastic.
+  - submission_number: K161322
+    device: "CT CoPilot"
+    company: "ZEPMED, LLC."
+    product_code: LLZ
+    year: 2016
+    decision: unresolved
+    evidence: >-
+      ZEPMED 'CT CoPilot'. The name states no clinical target and the product is not one I can
+      identify from public knowledge. No basis to classify.
+  - submission_number: K161382
+    device: "LVivo Software Application"
+    company: "DIACARDIO, LTD."
+    product_code: LLZ
+    year: 2016
+    decision: not_oncology
+    evidence: >-
+      Known product: DiA Imaging / DiaCardio LVivo, automated left ventricular ejection
+      fraction from echocardiography. Cardiac.
+  - submission_number: K161625
+    device: "PixelShine"
+    company: "ALGOMEDICA"
+    product_code: LLZ
+    year: 2016
+    decision: not_oncology
+    evidence: >-
+      Known product: AlgoMedica PixelShine, deep-learning CT denoising for dose reduction.
+      Denoising is not_oncology per the borderline rule.
+  - submission_number: K161959
+    device: "ClearView cCAD"
+    company: "ClearView Diagnostics Inc."
+    product_code: LLZ
+    year: 2016
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: ClearView Diagnostics cCAD, computer-aided diagnosis for breast
+      ultrasound that characterizes breast masses and maps them to BI-RADS categories.
+      ClearView Diagnostics is the company that became Koios Medical, whose sole product line
+      is breast (and thyroid) lesion characterization.
+  - submission_number: K162830
+    device: "SIS Software"
+    company: "Surgical Information Sciences, Inc."
+    product_code: LLZ
+    year: 2017
+    decision: not_oncology
+    evidence: >-
+      Known product: Surgical Information Sciences SIS System, high-resolution visualization
+      of the subthalamic nucleus and globus pallidus for deep brain stimulation lead
+      targeting. Functional neurosurgery.
+  - submission_number: K163013
+    device: "Quantib Brain 1.2"
+    company: "Quantib BV"
+    product_code: LLZ
+    year: 2017
+    decision: not_oncology
+    evidence: >-
+      Quantib Brain 1.2, brain MRI volumetry. Automated brain MRI segmentation and volumetry
+      for neurodegenerative disease, dementia and multiple sclerosis. Neurological, not
+      neoplastic.
+  - submission_number: K163253
+    device: "Arterys Cardio DL"
+    company: "ARTERYS INC."
+    product_code: LLZ
+    year: 2017
+    decision: not_oncology
+    evidence: >-
+      Known product: Arterys Cardio DL, deep-learning cardiac MR flow and ventricular function
+      analysis. Cardiac.
+  - submission_number: K163622
+    device: "Lung Vision"
+    company: "BODY VISION MEDICAL LTD."
+    product_code: LLZ
+    year: 2017
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Body Vision Medical LungVision, intraoperative tomographic imaging and
+      navigation that guides a bronchoscope to peripheral pulmonary lesions for biopsy. The
+      target is the suspicious pulmonary nodule and the purpose is tissue diagnosis of
+      suspected lung cancer. Medium because it is image guidance for a biopsy rather than
+      image interpretation, and the category scheme has no interventional-oncology bucket;
+      placed in cancer detection/diagnosis.
+  - submission_number: K163623
+    device: "Quantra"
+    company: "HOLOGIC, INC."
+    product_code: LLZ
+    year: 2017
+    decision: not_oncology
+    evidence: >-
+      Hologic Quantra, volumetric breast density. Breast density measurement. Called
+      not_oncology per the borderline rule: density is a risk factor and the device measures
+      tissue composition, not cancer.
+  - submission_number: K170069
+    device: "AmCAD-UV"
+    company: "AmCad BioMed Corporation"
+    product_code: LLZ
+    year: 2017
+    decision: unresolved
+    evidence: >-
+      AmCad BioMed AmCAD-UV, quantitative ultrasound tissue characterization. AmCad's thyroid
+      nodule product is AmCAD-UT and its airway product is AmCAD-UO; 'UV' is a generic
+      echogenicity/tissue-quantification tool whose target organ is not stated in the row.
+      Cannot be resolved.
+  - submission_number: K170172
+    device: "UNiD Spine Analyzer"
+    company: "MEDICREA INTERNATIONAL"
+    product_code: LLZ
+    year: 2017
+    decision: not_oncology
+    evidence: >-
+      Known product: Medicrea UNiD Spine Analyzer, pre-operative spinal alignment measurement
+      and rod planning for deformity surgery. Orthopedic.
+  - submission_number: K170250
+    device: "SmartTarget"
+    company: "SmartTarget, Ltd."
+    product_code: LLZ
+    year: 2017
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: SmartTarget, MRI-ultrasound fusion software (UCL spin-out) that overlays
+      MRI-defined prostate lesions onto live transrectal ultrasound for targeted prostate
+      biopsy. Prostate MRI lesion targeting is oncology per the borderline rule.
+  - submission_number: K170747
+    device: "syngo Application Software"
+    company: "Siemens Medical Solutions, USA, Inc."
+    product_code: LLZ
+    year: 2017
+    decision: unresolved
+    evidence: >-
+      Siemens 'syngo Application Software', a generic post-processing application platform.
+      The row names no clinical application; the syngo application set spans neuro, cardiac,
+      vascular and oncologic tools. Not resolvable.
+  - submission_number: K170981
+    device: "NeuroQuant"
+    company: "CorTechs Labs, Inc"
+    product_code: LLZ
+    year: 2017
+    decision: not_oncology
+    evidence: >-
+      Known product: CorTechs Labs NeuroQuant, automated brain MRI volumetry against normative
+      data for dementia and atrophy assessment. Automated brain MRI segmentation and volumetry
+      for neurodegenerative disease, dementia and multiple sclerosis. Neurological, not
+      neoplastic.
+  - submission_number: K172803
+    device: "Infinitt PACS 7.0"
+    company: "Infinitt Healthcare Co.,Ltd."
+    product_code: LLZ
+    year: 2017
+    decision: not_oncology
+    evidence: >-
+      INFINITT PACS 7.0, a picture archiving and communication system. PACS with no cancer-
+      specific function is not_oncology per the borderline rule.
+  - submission_number: K173420
+    device: "Radiomics App v1.0"
+    company: "Microsoft Corp."
+    product_code: LLZ
+    year: 2017
+    decision: unresolved
+    evidence: >-
+      Microsoft 'Radiomics App v1.0'. Radiomics as a technique is overwhelmingly applied to
+      tumour phenotyping, and Microsoft's imaging work (Project InnerEye) included tumour
+      segmentation, but what the name describes is generic quantitative feature extraction
+      with no stated organ or disease. Classifying it oncologic would rest on the connotation
+      of the word 'radiomics' rather than on evidence.
+  - submission_number: K170540
+    device: "DM-Density"
+    company: "Densitas, Inc."
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Densitas DM-Density, automated mammographic breast density. Breast
+      density measurement. Called not_oncology per the borderline rule: density is a risk
+      factor and the device measures tissue composition, not cancer.
+  - submission_number: K171328
+    device: "cNeuro cMRI"
+    company: "Combinostics Oy"
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Combinostics cNeuro cMRI, brain MRI volumetry and decision support for
+      dementia. Automated brain MRI segmentation and volumetry for neurodegenerative disease,
+      dementia and multiple sclerosis. Neurological, not neoplastic.
+  - submission_number: K173444
+    device: "Quantitative Total Extensible Imaging (QTxI)"
+    company: "AIQ Solutions, Inc."
+    product_code: LLZ
+    year: 2018
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: AIQ Solutions' Quantitative Total Extensible Imaging, lesion-level
+      quantitative response assessment across whole-body imaging (bone scintigraphy, PET/CT)
+      in metastatic cancer; it is the predecessor of the same company's TRAQinform prostate-
+      cancer response product (K233998). Response assessment is oncology per the decision
+      definition. Medium because the device name itself carries nothing and the call rests
+      entirely on the vendor's single-purpose oncology product line.
+  - submission_number: K173542
+    device: "Arterys Oncology DL"
+    company: "Arterys Inc."
+    product_code: LLZ
+    year: 2018
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Device name says 'Oncology'. Known product: Arterys Oncology AI/DL, automated
+      segmentation, measurement and longitudinal tracking of lung and liver lesions on CT and
+      MR for treatment response assessment.
+  - submission_number: K173574
+    device: "DenSeeMammo"
+    company: "Statlife"
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Statlife DenSeeMammo, automated mammographic breast density. Breast
+      density measurement. Called not_oncology per the borderline rule: density is a risk
+      factor and the device measures tissue composition, not cancer.
+  - submission_number: K173588
+    device: "Illumeo System"
+    company: "Philips Medical Systems Technologies, Ltd."
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Philips Illumeo, an 'adaptive intelligence' image viewer that recognizes
+      anatomy and pre-loads contextual measurement tools. Viewing and workflow, not_oncology
+      per the PACS/workflow rule.
+  - submission_number: K173605
+    device: "iQMR"
+    company: "Medic Vision - Imaging Solutions Ltd"
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Medic Vision iQMR, MRI image denoising and enhancement. Not_oncology per
+      the enhancement rule.
+  - submission_number: K173780
+    device: "EchoMD Automated Ejection Fraction Software"
+    company: "Bay Labs, Inc."
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Bay Labs (now Caption Health) EchoMD automated ejection fraction.
+      Cardiac.
+  - submission_number: K173939
+    device: "Quantib Brain"
+    company: "Quantib BV"
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Quantib Brain, brain MRI volumetry. Automated brain MRI segmentation and volumetry for
+      neurodegenerative disease, dementia and multiple sclerosis. Neurological, not
+      neoplastic.
+  - submission_number: K180091
+    device: "UNiD Spine Analyzer"
+    company: "Medicrea International"
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Medicrea UNiD Spine Analyzer, pre-operative spinal alignment measurement
+      and rod planning for deformity surgery. Orthopedic.
+  - submission_number: K180161
+    device: "Viz CTP"
+    company: "Viz.ai, Inc."
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Viz.ai Viz CTP, CT perfusion for acute stroke triage. Stroke.
+  - submission_number: K180867
+    device: "AmCAD-UO"
+    company: "AmCad BioMed Corporation"
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: AmCad BioMed AmCAD-UO, quantitative ultrasound assessment of upper airway
+      obstruction in sleep-disordered breathing. Not neoplastic.
+  - submission_number: K181247
+    device: "Vitrea CT Brain Perfusion"
+    company: "Vital Images, Inc."
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Vital Images Vitrea CT Brain Perfusion, acute stroke perfusion. Stroke.
+  - submission_number: K181892
+    device: "Ziostation2"
+    company: "Ziosoft, Inc."
+    product_code: LLZ
+    year: 2018
+    decision: unresolved
+    evidence: >-
+      Ziosoft Ziostation2, a general advanced-visualization workstation hosting many organ-
+      specific analysis applications (cardiac, vascular, liver, lung, orthopedic). Which
+      application the AI element serves is not stated. Not resolvable.
+  - submission_number: K181939
+    device: "icobrain"
+    company: "icometrix NV"
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      icometrix icobrain, brain MRI volumetry. Automated brain MRI segmentation and volumetry
+      for neurodegenerative disease, dementia and multiple sclerosis. Neurological, not
+      neoplastic.
+  - submission_number: K182034
+    device: "Arterys MICA"
+    company: "Arterys Inc."
+    product_code: LLZ
+    year: 2018
+    decision: unresolved
+    evidence: >-
+      Arterys MICA, the Arterys Medical Imaging Cloud AI platform. The platform clearance
+      covers the hosting and viewing infrastructure for Arterys's modules, which span cardiac,
+      neuro, lung and liver; the oncologic module (Arterys Oncology DL) is cleared separately
+      as K173542. The platform itself has no stated clinical target.
+  - submission_number: K182130
+    device: "iSchemaView RAPID"
+    company: "iSchemaView, Inc."
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: iSchemaView RAPID, CT/MR perfusion for acute stroke selection. Stroke.
+  - submission_number: K182310
+    device: "Volpara Imaging Software"
+    company: "Volpara Health Technologies Limited"
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Volpara Imaging Software, volumetric breast density. Breast density measurement. Called
+      not_oncology per the borderline rule: density is a risk factor and the device measures
+      tissue composition, not cancer.
+  - submission_number: K182419
+    device: "Centricity Universal Viewer"
+    company: "GE Healthcare"
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      GE Centricity Universal Viewer, an enterprise PACS viewer. Not_oncology per the PACS
+      rule.
+  - submission_number: K182564
+    device: "Quantib ND"
+    company: "Quantib BV"
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Quantib ND, brain MRI volumetry for neurodegenerative disease. Automated
+      brain MRI segmentation and volumetry for neurodegenerative disease, dementia and
+      multiple sclerosis. Neurological, not neoplastic.
+  - submission_number: K183012
+    device: "vascuCAP"
+    company: "Elucid Bioimaging Inc."
+    product_code: LLZ
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Elucid Bioimaging vascuCAP, quantitative characterization of
+      atherosclerotic plaque composition on CT angiography. Cardiovascular.
+  - submission_number: K183019
+    device: "SIS Software version 3.3.0"
+    company: "Surgical Information Sciences, Inc."
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Surgical Information Sciences SIS System, high-resolution visualization
+      of the subthalamic nucleus and globus pallidus for deep brain stimulation lead
+      targeting. Functional neurosurgery.
+  - submission_number: K183133
+    device: "MRCP+ v1.0"
+    company: "Perspectum Diagnostics Ltd"
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Perspectum MRCP+, quantitative analysis of magnetic resonance
+      cholangiopancreatography for biliary tree geometry in cholangiopathies. Hepatobiliary,
+      not neoplastic.
+  - submission_number: K183272
+    device: "AI Rad Companion (Engine)"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Siemens AI-Rad Companion Engine, the deployment and orchestration platform that hosts
+      the AI-Rad Companion modules. Infrastructure with no diagnostic function of its own; the
+      oncologic module (AI-Rad Companion Pulmonary) is cleared separately under JAK.
+  - submission_number: K183460
+    device: "ClariCT.AI"
+    company: "ClariPI Inc."
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: ClariPi ClariCT.AI, deep-learning CT denoising for low-dose imaging.
+      Denoising is not_oncology per the borderline rule.
+  - submission_number: K183489
+    device: "D2P"
+    company: "3D Systems, Inc."
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: 3D Systems D2P ('DICOM to PRINT'), segmentation of CT/MR into
+      3D-printable and VR anatomic models. General segmentation for model building with no
+      stated clinical target and no analysis function.
+  - submission_number: K183593
+    device: "Lung Vision System"
+    company: "Body Vision Medical Ltd."
+    product_code: LLZ
+    year: 2019
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Body Vision Medical LungVision System, intraoperative navigation to
+      peripheral pulmonary lesions for bronchoscopic biopsy. Same call as K163622.
+  - submission_number: K190764
+    device: "SurgicalAR"
+    company: "MEDIVIS, Inc."
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: MEDIVIS SurgicalAR, augmented-reality display of segmented imaging for
+      surgical planning and navigation. No stated clinical target; visualization and
+      navigation infrastructure.
+  - submission_number: K190868
+    device: "Cleerly Labs"
+    company: "Cleerly Inc"
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Cleerly Labs, AI coronary CT angiography plaque and stenosis
+      quantification. Cardiovascular.
+  - submission_number: K191026
+    device: "MEDIP PRO"
+    company: "MEDICALIP Co., Ltd"
+    product_code: LLZ
+    year: 2019
+    decision: unresolved
+    evidence: >-
+      MEDICALIP MEDIP PRO, general medical image segmentation and 3D modelling software. Organ
+      segmentation with no stated neoplastic target falls under the general-segmentation rule.
+  - submission_number: K191262
+    device: "aBSI"
+    company: "EXINI Diagnostics AB"
+    product_code: LLZ
+    year: 2019
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: EXINI/Lantheus aBSI, the automated Bone Scan Index, which segments and
+      quantifies skeletal metastases on Tc-99m bone scintigraphy and reports tumour burden in
+      metastatic prostate cancer. Cancer staging and burden quantification.
+  - submission_number: K191278
+    device: "RSI-MRI+"
+    company: "MultiModal Imaging Services Corporation (dba HealthLytix)"
+    product_code: LLZ
+    year: 2019
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: HealthLytix RSI-MRI+, an implementation of Restriction Spectrum Imaging,
+      a diffusion-MRI post-processing method developed at UC San Diego and commercialized
+      specifically to raise the conspicuity and specificity of clinically significant prostate
+      cancer on MRI. Medium because what is cleared is a diffusion map generator, and RSI has
+      also been applied to brain tumour and other tissue; the oncologic purpose rests on
+      knowledge of the product rather than the row.
+  - submission_number: K191493
+    device: "Ventripoint Medical System Plus (VMS+) 3.0"
+    company: "Ventripoint Diagnostics, Ltd."
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Ventripoint VMS+, knowledge-based right ventricular volume reconstruction
+      from echocardiography. Cardiac.
+  - submission_number: K191585
+    device: "iNtuition-Structural Heart Module"
+    company: "TeraRecon Inc."
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      TeraRecon iNtuition Structural Heart Module, pre-procedural planning for structural
+      heart intervention. Cardiac.
+  - submission_number: K191688
+    device: "SubtleMR"
+    company: "Subtle Medical, Inc."
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Subtle Medical SubtleMR, deep-learning MRI denoising and resolution
+      enhancement for accelerated acquisition. Not_oncology per the enhancement rule.
+  - submission_number: K192109
+    device: "KOALA"
+    company: "IB Lab GmbH"
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: IB Lab KOALA, automated Kellgren-Lawrence grading of knee osteoarthritis
+      on radiographs. Musculoskeletal.
+  - submission_number: K192130
+    device: "Icobrain"
+    company: "Icometrix NV"
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      icometrix icobrain, brain MRI volumetry. Automated brain MRI segmentation and volumetry
+      for neurodegenerative disease, dementia and multiple sclerosis. Neurological, not
+      neoplastic.
+  - submission_number: K192279
+    device: "PhantomMSK Trauma"
+    company: "OrthoGrid Systems Inc."
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: OrthoGrid PhantomMSK Trauma, intraoperative fluoroscopic alignment
+      guidance in orthopedic trauma. Musculoskeletal.
+  - submission_number: K192304
+    device: "SIS Software Version 3.6.0"
+    company: "Surgical Information Sciences, Inc."
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Surgical Information Sciences SIS System, high-resolution visualization
+      of the subthalamic nucleus and globus pallidus for deep brain stimulation lead
+      targeting. Functional neurosurgery.
+  - submission_number: K192455
+    device: "Merge PACS"
+    company: "Merge Healthcare Incorporated"
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Merge PACS. Not_oncology per the PACS rule.
+  - submission_number: K192531
+    device: "QyScore Software"
+    company: "Qynapse"
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Qynapse QyScore, brain MRI volumetry for neurodegenerative disease.
+      Automated brain MRI segmentation and volumetry for neurodegenerative disease, dementia
+      and multiple sclerosis. Neurological, not neoplastic.
+  - submission_number: K192571
+    device: "NemoScan"
+    company: "Software Nemotec S.L."
+    product_code: LLZ
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Nemotec NemoScan, dental CBCT visualization and implant/orthodontic
+      planning. Dental.
+  - submission_number: K191125
+    device: "ADAS 3D"
+    company: "Galgo Medical S.L"
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: Galgo Medical ADAS 3D, left atrial and ventricular scar characterization
+      for cardiac ablation planning. Cardiac electrophysiology.
+  - submission_number: K192051
+    device: "THINQ"
+    company: "CorticoMetrics LLC"
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: CorticoMetrics THINQ, cortical thickness and subcortical volume
+      measurement from brain MRI. Automated brain MRI segmentation and volumetry for
+      neurodegenerative disease, dementia and multiple sclerosis. Neurological, not
+      neoplastic.
+  - submission_number: K192962
+    device: "icobrain-ctp"
+    company: "Icometrix NV"
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      icometrix icobrain-ctp, CT perfusion for acute stroke. Stroke.
+  - submission_number: K192973
+    device: "densitas densityai"
+    company: "Densitas, Inc."
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: Densitas densityai, automated mammographic breast density. Breast density
+      measurement. Called not_oncology per the borderline rule: density is a risk factor and
+      the device measures tissue composition, not cancer.
+  - submission_number: K193220
+    device: "AVIEW LCS"
+    company: "Coreline Soft Co., Ltd"
+    product_code: LLZ
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Device name says 'LCS' - Lung Cancer Screening. Known product: Coreline Soft AVIEW LCS,
+      pulmonary nodule detection and volumetry for low-dose CT lung cancer screening.
+  - submission_number: K193287
+    device: "CorInsights MRI"
+    company: "ADM Diagnostics, Inc."
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: ADM Diagnostics CorInsights MRI, brain MRI quantification for
+      neurodegenerative disease. Automated brain MRI segmentation and volumetry for
+      neurodegenerative disease, dementia and multiple sclerosis. Neurological, not
+      neoplastic.
+  - submission_number: K193290
+    device: "AI-Rad Companion Brain MR"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Siemens AI-Rad Companion Brain MR, automated brain volumetry. Automated brain MRI
+      segmentation and volumetry for neurodegenerative disease, dementia and multiple
+      sclerosis. Neurological, not neoplastic.
+  - submission_number: K193294
+    device: "AI-Rad Companion Engine"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Siemens AI-Rad Companion Engine, the hosting platform for AI-Rad Companion modules.
+      Infrastructure; see K183272.
+  - submission_number: K193306
+    device: "PROView"
+    company: "GE Medical Systems SCS"
+    product_code: LLZ
+    year: 2020
+    decision: unresolved
+    evidence: >-
+      GE 'PROView'. The name states no clinical target and I cannot identify the product with
+      enough confidence to classify it. No basis either way.
+  - submission_number: K200714
+    device: "AVIEW"
+    company: "Coreline Soft Co., Ltd"
+    product_code: LLZ
+    year: 2020
+    decision: unresolved
+    evidence: >-
+      Coreline Soft AVIEW, the base platform of a multi-module CT analysis suite whose modules
+      span lung cancer screening (cleared separately as AVIEW LCS), COPD, cardiac and body
+      composition. The base clearance names no clinical target.
+  - submission_number: K200750
+    device: "Neuro.Al Algorithm"
+    company: "TeraRecon, Inc."
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      TeraRecon Neuro.AI, automated neuro image processing for stroke workflow. Neuro/stroke.
+  - submission_number: K200852
+    device: "EchoPAC Software Only, EchoPAC Plug-In"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      GE EchoPAC, echocardiography analysis software. Cardiac.
+  - submission_number: K201103
+    device: "Xeleris V Processing and Review Systems"
+    company: "GE Healthcare"
+    product_code: LLZ
+    year: 2020
+    decision: unresolved
+    evidence: >-
+      GE Xeleris V Processing and Review System, a nuclear medicine processing workstation
+      that hosts many quantification applications, including oncologic ones (bone scan, PSMA,
+      SPECT tumour dosimetry) and non-oncologic ones (cardiac perfusion, renal, thyroid
+      uptake). The clearance names no application.
+  - submission_number: K201232
+    device: "Limbus Contour"
+    company: "Limbus AI Inc."
+    product_code: LLZ
+    year: 2020
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Limbus AI Limbus Contour, deep-learning automatic contouring of organs at
+      risk and target volumes for radiation therapy treatment planning. Limbus is a single-
+      purpose radiotherapy vendor.
+  - submission_number: K201369
+    device: "AVA (Augmented Vascular Analysis)"
+    company: "See-Mode Technologies Pte. Ltd."
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: See-Mode AVA, automated reporting of vascular ultrasound (carotid and
+      peripheral). Vascular.
+  - submission_number: K201632
+    device: "TOMTEC-ARENA"
+    company: "TOMTEC Imaging Systems GmbH"
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      TOMTEC-ARENA, echocardiographic quantification (strain, chamber volumes). Cardiac.
+  - submission_number: K201710
+    device: "A View LCS"
+    company: "Coreline Soft Co., Ltd."
+    product_code: LLZ
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Device name says 'LCS' - Lung Cancer Screening. Known product: Coreline Soft AVIEW LCS,
+      automated pulmonary nodule detection, segmentation and volumetry on low-dose CT for lung
+      cancer screening programmes.
+  - submission_number: K202229
+    device: "AI Metrics"
+    company: "AI Metrics, LLC"
+    product_code: LLZ
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: AI Metrics, radiologist-built software for lesion measurement, RECIST-
+      style tumour response reporting and longitudinal tracking in oncologic imaging. Response
+      assessment is oncology per the decision definition. Medium because the device name
+      carries nothing and the call rests on knowledge of the vendor's product.
+  - submission_number: K202280
+    device: "Cleerly Labs v2.0"
+    company: "Cleerly, Inc."
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Cleerly Labs v2.0, coronary plaque and stenosis quantification. Cardiovascular.
+  - submission_number: K202487
+    device: "HealthJOINT"
+    company: "Zebra Medical Vision Ltd."
+    product_code: LLZ
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: Zebra Medical Vision HealthJOINT, automated detection of hip
+      osteoarthritis on radiographs. Musculoskeletal.
+  - submission_number: K202501
+    device: "Quantib Prostate"
+    company: "Quantib BV"
+    product_code: LLZ
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Quantib Prostate, AI-assisted multiparametric prostate MRI reading with
+      automatic prostate segmentation, PI-RADS structured reporting and lesion annotation.
+      Prostate MRI / PI-RADS is oncology per the borderline rule.
+  - submission_number: K202212
+    device: "TruPlan"
+    company: "Circle Cardiovascular Imaging Inc."
+    product_code: LLZ
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Circle Cardiovascular Imaging TruPlan, cardiac CT planning for structural
+      heart and electrophysiology procedures. Cardiac.
+  - submission_number: K202414
+    device: "BrainInsight"
+    company: "Hyperfine Research, Inc"
+    product_code: LLZ
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine BrainInsight, automated midline shift and ventricular volume
+      measurement on portable low-field brain MRI. Neuro/critical care.
+  - submission_number: K202718
+    device: "Qmenta Care Platform Family"
+    company: "Mint Labs, Inc., d/b/a. QMENTA"
+    product_code: LLZ
+    year: 2021
+    decision: unresolved
+    evidence: >-
+      QMENTA Care Platform Family, a neuroimaging data management and quantitative analysis
+      platform. Its modules span neurodegeneration, MS and brain tumour volumetry; the
+      clearance names no specific analysis. Not resolvable.
+  - submission_number: K202990
+    device: "NinesMeasure"
+    company: "Nines, Inc."
+    product_code: LLZ
+    year: 2021
+    decision: unresolved
+    evidence: >-
+      Nines, Inc. 'NinesMeasure', an automated measurement product. Nines's other cleared
+      product is intracranial haemorrhage and mass-effect triage; NinesMeasure has been
+      described as a chest CT measurement tool, which would make pulmonary nodule measurement
+      likely, but the row names neither organ nor finding. Not resolvable.
+  - submission_number: K203103
+    device: "Synapse 3D, Synapse 3D Base Tools v6.1"
+    company: "Fujifilm Corporation"
+    product_code: LLZ
+    year: 2021
+    decision: unresolved
+    evidence: >-
+      Fujifilm Synapse 3D, a general advanced-visualization suite of organ-specific
+      applications (liver volumetry, lung analysis, cardiac, orthopedic, colonography). Which
+      application carries the AI element is not stated.
+  - submission_number: K203182
+    device: "SubtleMR"
+    company: "Subtle Medical, Inc."
+    product_code: LLZ
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Subtle Medical SubtleMR, MRI denoising and acceleration. Not_oncology per the
+      enhancement rule.
+  - submission_number: K203582
+    device: "QUIBIM Precision Prostate (qp-Prostate)"
+    company: "QUIBIM S.L."
+    product_code: LLZ
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: QUIBIM Precision qp-Prostate, automated multiparametric prostate MRI
+      analysis with lesion detection and PI-RADS support. Prostate MRI / PI-RADS is oncology
+      per the borderline rule.
+  - submission_number: K203696
+    device: "RBknee"
+    company: "Radiobotics ApS"
+    product_code: LLZ
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Radiobotics RBknee, automated knee osteoarthritis assessment on
+      radiographs. Musculoskeletal.
+  - submission_number: K210071
+    device: "SIS System (Version 5.1.0)"
+    company: "Surgical Information Sciences, Inc."
+    product_code: LLZ
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Surgical Information Sciences SIS System, high-resolution visualization
+      of the subthalamic nucleus and globus pallidus for deep brain stimulation lead
+      targeting. Functional neurosurgery.
+  - submission_number: K210187
+    device: "Overjet Dental Assist"
+    company: "Overjet, Inc."
+    product_code: LLZ
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Overjet Dental Assist, caries and bone-level detection on dental
+      radiographs. Dental.
+  - submission_number: K210807
+    device: "FlightPlan for Liver"
+    company: "GE Medical Systems SCS"
+    product_code: LLZ
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: medium
+    evidence: >-
+      Known product: GE FlightPlan for Liver, which segments the hepatic arterial tree and
+      identifies the vessels feeding a targeted liver lesion to plan transarterial
+      embolization - in practice chemoembolization and Y-90 radioembolization of
+      hepatocellular carcinoma and hepatic metastases. Cancer treatment planning per the
+      decision definition. Category is a poor fit: this is interventional-oncology treatment
+      planning, not external-beam radiotherapy, and it is placed in radiation_therapy only
+      because that is the scheme's treatment bucket. Medium because liver embolization is also
+      performed for trauma and haemorrhage.
+  - submission_number: K210999
+    device: "SwiftMR"
+    company: "AIRS Medical Inc."
+    product_code: LLZ
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: AIRS Medical SwiftMR, deep-learning MRI image quality enhancement for
+      accelerated scans. Not_oncology per the enhancement rule.
+  - submission_number: K211279
+    device: "Volpara Imaging Software"
+    company: "Volpara Health Technologies Limited"
+    product_code: LLZ
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Volpara Imaging Software, volumetric breast density. Breast density measurement. Called
+      not_oncology per the borderline rule: density is a risk factor and the device measures
+      tissue composition, not cancer.
+  - submission_number: K211655
+    device: "aPROMISE"
+    company: "EXINI Diagnostics AB"
+    product_code: LLZ
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: EXINI/Lantheus aPROMISE, automated detection, segmentation and
+      quantification of PSMA-avid lesions on PSMA PET/CT in prostate cancer, reporting aPSMA
+      scores and tumour burden. Cancer staging and burden quantification.
+  - submission_number: K212074
+    device: "ClariCT.AI"
+    company: "ClariPi Inc."
+    product_code: LLZ
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      ClariPi ClariCT.AI, deep-learning CT denoising. Not_oncology per the denoising rule.
+  - submission_number: K212230
+    device: "TruSPECT  Radiological Image Processing Station"
+    company: "Spectrum Dynamics Medical Ltd"
+    product_code: LLZ
+    year: 2021
+    decision: unresolved
+    evidence: >-
+      Spectrum Dynamics TruSPECT Radiological Image Processing Station, the processing and
+      review station for the VERITON digital SPECT/CT system. It hosts both reconstruction and
+      quantitative applications spanning cardiac, neuro and oncologic (bone, theranostic
+      dosimetry) uses; the clearance names none of them.
+  - submission_number: K203783
+    device: "ClariPulmo"
+    company: "ClariPi Inc."
+    product_code: LLZ
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: ClariPi ClariPulmo, quantitative CT lung analysis for emphysema and
+      airway disease. Density analysis, explicitly not_oncology.
+  - submission_number: K211443
+    device: "AIBOLIT 3D+"
+    company: "AIbolit Technologies, LLC"
+    product_code: LLZ
+    year: 2022
+    decision: unresolved
+    evidence: >-
+      AIbolit Technologies 'AIBOLIT 3D+', 3D segmentation and visualization software. No
+      clinical target is stated and I cannot identify the product's indication. General
+      segmentation rule applies.
+  - submission_number: K211966
+    device: "Segment 3DPrint"
+    company: "Medviso AB"
+    product_code: LLZ
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Medviso Segment 3DPrint, cardiac segmentation for 3D printing. Cardiac.
+  - submission_number: K212005
+    device: "UNiD Spine Analyzer"
+    company: "MEDICREA International, Inc."
+    product_code: LLZ
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Medicrea UNiD Spine Analyzer, pre-operative spinal alignment measurement
+      and rod planning for deformity surgery. Orthopedic.
+  - submission_number: K213165
+    device: "Rapid"
+    company: "iSchema View Inc."
+    product_code: LLZ
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      iSchemaView RAPID, stroke perfusion and large-vessel-occlusion analysis. Stroke.
+  - submission_number: K213737
+    device: "Quantib ND"
+    company: "Quantib B.V."
+    product_code: LLZ
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Quantib ND, brain MRI volumetry for neurodegenerative disease. Automated brain MRI
+      segmentation and volumetry for neurodegenerative disease, dementia and multiple
+      sclerosis. Neurological, not neoplastic.
+  - submission_number: K220349
+    device: "TeraRecon Neuro"
+    company: "TeraRecon, Inc"
+    product_code: LLZ
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      TeraRecon Neuro, neuro image processing for stroke workflow. Neuro/stroke.
+  - submission_number: K220416
+    device: "SwiftMR"
+    company: "AIRS Medical Inc."
+    product_code: LLZ
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      AIRS Medical SwiftMR, MRI image quality enhancement. Not_oncology per the enhancement
+      rule.
+  - submission_number: K220590
+    device: "aPROMISE X"
+    company: "EXINI Diagnostics AB"
+    product_code: LLZ
+    year: 2022
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: EXINI/Lantheus aPROMISE X, automated PSMA PET/CT lesion detection and
+      quantification in prostate cancer. Same product line as K211655.
+  - submission_number: K220624
+    device: "AI4CMR v1.0"
+    company: "AI4MedImaging Medical Solutions S.A."
+    product_code: LLZ
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      AI4MedImaging AI4CMR, automated cardiac MR function and strain analysis. Cardiac.
+  - submission_number: K221106
+    device: "Quantib Prostate"
+    company: "Quantib BV"
+    product_code: LLZ
+    year: 2022
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Quantib Prostate, prostate MRI segmentation, lesion annotation and PI-
+      RADS reporting. Oncology per the prostate MRI rule.
+  - submission_number: K221463
+    device: "ElucidVivo A.3"
+    company: "Elucid Bioimaging Inc."
+    product_code: LLZ
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Elucid ElucidVivo, quantitative atherosclerotic plaque characterization on CTA.
+      Cardiovascular.
+  - submission_number: K212758
+    device: "Autoplaque"
+    company: "Cedars-Sinai Medical Center: AIM"
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Cedars-Sinai Autoplaque, quantitative coronary plaque analysis on CT
+      angiography. Cardiovascular.
+  - submission_number: K220034
+    device: "NEUROShield"
+    company: "In-Med Prognostics L3C"
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: In-Med Prognostics NEUROShield, brain MRI volumetry with normative
+      comparison for dementia. Automated brain MRI segmentation and volumetry for
+      neurodegenerative disease, dementia and multiple sclerosis. Neurological, not
+      neoplastic.
+  - submission_number: K220437
+    device: "Neurophet AQUA"
+    company: "NEUROPHET, Inc."
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: NEUROPHET AQUA, automated brain MRI segmentation and white matter
+      hyperintensity quantification. Automated brain MRI segmentation and volumetry for
+      neurodegenerative disease, dementia and multiple sclerosis. Neurological, not
+      neoplastic.
+  - submission_number: K221680
+    device: "Xeleris V Processing and Review System"
+    company: "GE Healthcare"
+    product_code: LLZ
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      GE Xeleris V Processing and Review System, a nuclear medicine processing workstation
+      hosting many applications, oncologic and non-oncologic. Same call as K201103.
+  - submission_number: K222458
+    device: "AIBOLIT 3D+"
+    company: "Aibolit Technologies, LLC"
+    product_code: LLZ
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      AIbolit Technologies 'AIBOLIT 3D+', 3D segmentation and visualization software. Same
+      call as K211443.
+  - submission_number: K222593
+    device: "TruPlan Computed Tomography (CT) Imaging Software"
+    company: "Circle Cardiovascular Imaging, Inc."
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Circle Cardiovascular Imaging TruPlan CT, cardiac CT procedural planning. Cardiac.
+  - submission_number: K223180
+    device: "AIRAscore"
+    company: "AIRAmed GmbH"
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: AIRAmed AIRAscore, automated brain MRI volumetry. Automated brain MRI
+      segmentation and volumetry for neurodegenerative disease, dementia and multiple
+      sclerosis. Neurological, not neoplastic.
+  - submission_number: K223490
+    device: "FlightPlan for Embolization"
+    company: "GE Medical Systems SCS"
+    product_code: LLZ
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      Known product: GE FlightPlan for Embolization, vessel-tree analysis identifying arteries
+      feeding a selected target for embolization. Unlike FlightPlan for Liver it is written
+      for embolization generally, which covers uterine fibroid, prostatic artery, bronchial
+      and bleeding embolization as well as liver tumours. The mix is not resolvable from the
+      row.
+  - submission_number: K223502
+    device: "MR Diffusion Perfusion Mismatch V1.0"
+    company: "Olea Medical"
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Olea Medical MR Diffusion Perfusion Mismatch, stroke penumbra assessment. Stroke.
+  - submission_number: K223623
+    device: "SubtleMR (2.3.x)"
+    company: "Subtle Medical Inc."
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Subtle Medical SubtleMR, MRI denoising and acceleration. Not_oncology per the
+      enhancement rule.
+  - submission_number: K223659
+    device: "Jazz"
+    company: "AI Medical AG"
+    product_code: LLZ
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      AI Medical AG 'Jazz'. The name states no clinical target and I cannot identify the
+      product's indication. No basis to classify.
+  - submission_number: K223757
+    device: "Bonelogic"
+    company: "Disior Ltd"
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Disior Bonelogic, 3D bone and joint morphometry from CT for orthopedic
+      planning. Musculoskeletal.
+  - submission_number: K230252
+    device: "OFIX MIS App"
+    company: "Orthofix US LLC"
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Orthofix OFIX MIS App, minimally invasive spine surgery planning. Orthopedic.
+  - submission_number: K230264
+    device: "Ezra Flash"
+    company: "Ezra AI, Inc."
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Ezra Flash, a deep-learning enhancement algorithm that reconstructs
+      diagnostic-quality images from fast, low-resolution MRI so that Ezra's whole-body
+      cancer-screening MRI can be shortened. The purpose it serves is cancer screening, but
+      what is cleared is image enhancement, which the borderline rule makes not_oncology.
+      Flagged as a rule-driven call a reader could reasonably dispute.
+  - submission_number: K230552
+    device: "MR DWI/FLAIR Measurement V1.0"
+    company: "Olea Medical"
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Olea Medical MR DWI/FLAIR Measurement, DWI-FLAIR mismatch for stroke onset-time
+      estimation. Stroke.
+  - submission_number: K230575
+    device: "Limbus Contour"
+    company: "Limbus AI Inc."
+    product_code: LLZ
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Limbus AI Limbus Contour, deep-learning auto-contouring of organs at risk
+      and targets for radiation therapy planning.
+  - submission_number: K230772
+    device: "Quantib Prostate"
+    company: "Quantib BV"
+    product_code: LLZ
+    year: 2023
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Quantib Prostate, prostate MRI segmentation, lesion annotation and PI-
+      RADS reporting. Oncology per the prostate MRI rule.
+  - submission_number: K230854
+    device: "SwiftMR"
+    company: "AIRS Medical Inc."
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      AIRS Medical SwiftMR, MRI image quality enhancement. Not_oncology per the enhancement
+      rule.
+  - submission_number: K231570
+    device: "StrokeViewer Perfusion"
+    company: "NICo-Lab B.V."
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Nicolab StrokeViewer Perfusion, acute stroke perfusion analysis. Stroke.
+  - submission_number: K231642
+    device: "Veuron-Brain-pAb3"
+    company: "Heuron Co., Ltd."
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Heuron Veuron-Brain-pAb, automated quantification of amyloid PET for
+      Alzheimer's disease. Neurodegenerative.
+  - submission_number: K231898
+    device: "DTX Studio Clinic (4.0)"
+    company: "Nobel Biocare AB"
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Nobel Biocare DTX Studio Clinic, dental imaging with automated caries and
+      periapical lesion detection and implant planning. Dental.
+  - submission_number: K232661
+    device: "Myocardial Strain Software Application"
+    company: "Circle Cardiovascular Imaging"
+    product_code: LLZ
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Circle Cardiovascular Imaging Myocardial Strain application. Cardiac.
+  - submission_number: K233176
+    device: "uOmnispace.MI"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: LLZ
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      United Imaging uOmnispace.MI, the molecular-imaging processing and review platform for
+      PET/CT and SPECT/CT. It hosts both reconstruction/review and quantification applications
+      spanning cardiac, neuro and oncologic uses; the clearance names none.
+  - submission_number: K231396
+    device: "CEPHX- Cephalometric Analysis Software"
+    company: "Orca Dental AI LTD"
+    product_code: LLZ
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Orca Dental AI CEPHX, automated cephalometric analysis for orthodontics. Dental.
+  - submission_number: K233582
+    device: "Rapid"
+    company: "iSchema View Inc."
+    product_code: LLZ
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      iSchemaView RAPID, stroke perfusion analysis. Stroke.
+  - submission_number: K233998
+    device: "TRAQinform IQ"
+    company: "AIQ Global, Inc."
+    product_code: LLZ
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: AIQ Solutions/AIQ Global TRAQinform IQ, lesion-level quantitative
+      treatment response assessment across serial whole-body PET/CT and bone scans in
+      metastatic cancer, developed for metastatic prostate cancer. Response assessment is
+      oncology per the decision definition.
+  - submission_number: K240290
+    device: "AiMIFY (1.x)"
+    company: "Subtle Medical, Inc."
+    product_code: LLZ
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Subtle Medical AiMIFY, deep-learning enhancement of contrast-enhanced
+      brain MRI that boosts apparent gadolinium enhancement. Enhancing lesions include brain
+      tumours and metastases, but what is cleared is an image enhancement algorithm with no
+      diagnostic claim, which the borderline rule makes not_oncology. Flagged as a rule-driven
+      call a reader could dispute.
+  - submission_number: K240294
+    device: "Syngo Carbon Enterprise Access (VA40A)"
+    company: "Siemens Healthcare GmbH"
+    product_code: LLZ
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Siemens syngo Carbon Enterprise Access, an enterprise image viewer and distribution
+      product. Not_oncology per the PACS/viewer rule.
+  - submission_number: K240926
+    device: "PeekMed web"
+    company: "Peek Health, S.A."
+    product_code: LLZ
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Peek Health PeekMed, automated orthopedic surgical planning and templating.
+      Musculoskeletal.
+  - submission_number: K241121
+    device: "MICSI-RMT"
+    company: "Microstructure Imaging, Inc."
+    product_code: LLZ
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      Microstructure Imaging MICSI-RMT, advanced diffusion-MRI microstructure mapping
+      (rotationally-invariant/matrix-transform processing). It generates parametric maps
+      rather than a diagnosis; no organ or disease target is stated. Not resolvable.
+  - submission_number: K242062
+    device: "1CMR Pro"
+    company: "Mycardium AI Limited"
+    product_code: LLZ
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Mycardium AI 1CMR Pro, automated cardiac MR analysis. Cardiac.
+  - submission_number: K242362
+    device: "Lightning Viewer"
+    company: "Nexsys Electronics Inc. dba Medweb"
+    product_code: LLZ
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Medweb Lightning Viewer, a diagnostic image viewer. Not_oncology per the PACS/viewer
+      rule.
+  - submission_number: K243209
+    device: "nordicMEDiVA"
+    company: "NordicNeurolab AS"
+    product_code: LLZ
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      NordicNeurolab nordicMEDiVA, a medical image viewing application. Not_oncology per the
+      PACS/viewer rule.
+  - submission_number: K241350
+    device: "Clarify DL"
+    company: "GE Medical Systems Israel, Functional Imaging"
+    product_code: LLZ
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      GE Clarify DL, deep-learning image quality improvement for nuclear medicine (SPECT)
+      images. Reconstruction/enhancement, not_oncology per the borderline rule.
+  - submission_number: K241546
+    device: "aiCockpit AI Viewer"
+    company: "Fovia, Inc."
+    product_code: LLZ
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Fovia aiCockpit AI Viewer, a viewer that displays third-party AI results. Viewing and
+      workflow, not_oncology per the PACS/viewer rule.
+  - submission_number: K242123
+    device: "Brainomix 360 e-CTA"
+    company: "Brainomix Limited"
+    product_code: LLZ
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Brainomix 360 e-CTA, automated CT angiography collateral and large-
+      vessel-occlusion assessment in acute stroke. Stroke.
+  - submission_number: K242240
+    device: "CaRi-Plaque"
+    company: "Caristo Diagnostics Ltd."
+    product_code: LLZ
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Caristo CaRi-Plaque, coronary plaque and perivascular fat quantification
+      on CT. Cardiovascular.
+  - submission_number: K242838
+    device: "QuickRad"
+    company: "Aikenist Technologies Pvt Ltd"
+    product_code: LLZ
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      Aikenist QuickRad, an AI chest radiograph reading tool. Aikenist's chest X-ray work
+      covers multi-finding abnormality detection including tuberculosis screening; a lung
+      nodule output is likely one of several findings, so this falls under the multi-finding-
+      chest rule.
+  - submission_number: K243292
+    device: "brAIn\u0099 Shoulder Positioning"
+    company: "Avatar Medical"
+    product_code: LLZ
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Avatar Medical brAIn Shoulder Positioning, automated shoulder imaging
+      positioning/planning. Musculoskeletal.
+  - submission_number: K243651
+    device: "VersaViewer"
+    company: "GE Medical Systems SCS"
+    product_code: LLZ
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      GE VersaViewer, a diagnostic image viewer. Not_oncology per the PACS/viewer rule.
+  - submission_number: K243681
+    device: "Neuro Insight V1.0"
+    company: "Olea Medical S.A.S."
+    product_code: LLZ
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      Olea Medical 'Neuro Insight V1.0'. Olea's cleared neuro line is stroke perfusion and
+      diffusion, which would make this non-oncologic, and a brain-volumetry reading would also
+      be non-oncologic; but the name states neither, and brain tumour quantification is a
+      plausible reading. Called unresolved rather than assumed.
+  - submission_number: K250290
+    device: "SurgiTwin"
+    company: "Twinsight"
+    product_code: LLZ
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      Twinsight 'SurgiTwin', patient-specific 3D anatomic modelling for surgical planning. No
+      organ or disease target is stated; general-segmentation rule applies.
+  - submission_number: K250686
+    device: "GyriCalc (Version 1.0.0)"
+    company: "NeuroSpectrum Insights Corp."
+    product_code: LLZ
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      NeuroSpectrum Insights GyriCalc, cortical gyral and morphometric measurement from brain
+      MRI. Automated brain MRI segmentation and volumetry for neurodegenerative disease,
+      dementia and multiple sclerosis. Neurological, not neoplastic.
+  - submission_number: K251532
+    device: "Acorn 3D Software (AC-SEG-4009); Acorn 3DP Model (AC-101-XX)"
+    company: "Mighty Oak Medical"
+    product_code: LLZ
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Mighty Oak Medical Acorn 3D software and 3D-printed patient-specific spine surgical
+      guides. Orthopedic.

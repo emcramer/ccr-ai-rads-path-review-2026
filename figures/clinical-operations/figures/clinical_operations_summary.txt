@@ -1,0 +1,58 @@
+Clinical operations figure — numbers for the legend
+source directory : data/processed
+tag              : (none)
+snapshot through : 2026-03-27 (latest decision date in the table)
+year range       : 1995-2026
+partial year     : 2026
+authorizations   : 201 oncology-certain rows
+
+The counts are a FLOOR, not an estimate. A product code counts only where FDA's
+own regulation definition or device-type name states the cancer indication, so
+devices under generic codes (QIH alone holds 274) are excluded even where some
+of them are certainly oncologic. See config/oncology_codes.yaml.
+
+Panel A — cumulative authorizations, log y axis
+  y axis           : 0.8 to 187, log scale; ticks 1, 2, 5, 10, 20, 50, 100
+  x axis           : 1995-2026, continuous, no break in either axis
+
+  category                        total  first year    zero years not drawn
+  Detection and assessment          107        1998     1995-1997 (3 years)
+  Treatment planning                 86        2018    1995-2017 (23 years)
+  Digital pathology                   8        1995                    none
+
+  Each line is drawn only from the first year its cumulative count reaches one.
+  A log axis cannot draw a zero, so the years above are drawn as no line at all
+  rather than as a line along the axis floor. The legend must say so.
+
+  radiology total  : 193 (107 cancer detection + 86 radiation therapy)
+  pathology total  : 8
+  gap              : 24.1x radiology over pathology; 13.4x on cancer detection alone
+
+  pathology devices, in decision order (Panel A labels each one):
+     1. 1995-09-29  P950009   PMA      AUTOPAP(R) 300 QC AUTOMATIC PAP SCREENER/QC SYSTEM
+     2. 1995-11-08  P940029   PMA      PAPNET Testing System
+     3. 2021-09-21  DEN200080 De Novo  Paige Prostate
+     4. 2023-04-28  P210011   PMA      xT CDx
+     5. 2024-01-31  DEN210035 De Novo  Genius Digital Diagnostics System with the Genius Cervical AI algorithm
+     6. 2025-01-24  K241232   510(k)   Galen Second Read
+     7. 2025-07-31  DEN240068 De Novo  ArteraAI Prostate
+     8. 2025-08-29  K250003   510(k)   GENESEEQPRIME NGS Tumor Profiling Assay (FFPE) (GS6005)
+
+Panel B — marketing pathway, normalized to each field's own total
+  domain      pathway     count    share  count printed       
+  Radiology   510(k)        185   95.9%  inside the segment  
+  Radiology   De Novo         2    1.0%  above, on a leader  
+  Radiology   PMA             6    3.1%  above, on a leader  
+  Pathology   510(k)          2   25.0%  inside the segment  
+  Pathology   De Novo         3   37.5%  inside the segment  
+  Pathology   PMA             3   37.5%  inside the segment  
+
+  totals           : Radiology n = 193, Pathology n = 8
+
+  by category, which Panel B aggregates into its two bars:
+    category                          510(k)   De Novo       PMA
+    Detection and assessment              99         2         6
+    Treatment planning                    86         0         0
+    Digital pathology                      2         3         3
+
+Least clearance between any label and the paper edge: 0.084 in

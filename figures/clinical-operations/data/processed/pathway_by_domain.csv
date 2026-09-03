@@ -1,0 +1,18 @@
+# file: pathway_by_domain.csv
+# generated_utc: 2026-09-03T22:40:26Z
+# snapshot: data/raw/2026-03-30
+# snapshot_date: 2026-03-30  (max Date of Final Decision in the FDA list)
+# devices.csv sha256: 4da0d15a1dcc7b6a
+# source.yaml v2 sha256:f76c33fe1bd59a28
+# oncology_codes.yaml v3 sha256:3741b8b2f6975c14
+# tool: clinops.aggregate 0.1.0
+domain,category,pathway,count
+radiology,radiology_cancer_detection,510(k),99
+radiology,radiology_cancer_detection,De Novo,2
+radiology,radiology_cancer_detection,PMA,6
+radiology,radiology_radiation_therapy,510(k),86
+radiology,radiology_radiation_therapy,De Novo,0
+radiology,radiology_radiation_therapy,PMA,0
+pathology,pathology,510(k),2
+pathology,pathology,De Novo,3
+pathology,pathology,PMA,3

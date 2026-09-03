@@ -1,0 +1,2288 @@
+# Group A adjudication fragment: the fourteen generic product codes MYN, QAS, OWB, IYO, QJU, KPR,
+# JAA, QTZ, MQB, NQQ, OUO, OXO, LDK and IZL, restricted to rows whose FDA panel is Radiology or
+# Pathology - 180 devices in the 2026-03-30 snapshot. Each row was adjudicated individually from,
+# in order of preference, its own FDA indications-for-use statement where I could retrieve it, the
+# product code's openFDA regulation definition, and knowledge of the named commercial product;
+# where I relied on the last of these the evidence field says "Known product:" first. Two findings
+# drive the result. First, MYN is confirmed as the pre-2020 catch-all that hides radiology's real
+# oncologic origin: it holds the 1998 M1000 ImageChecker, the 2001 RapidScreen RS-2000 and the 2002
+# SecondLook, so cancer-directed radiology AI begins in 1998, not 2016. Second, MYN is genuinely
+# mixed rather than uniformly oncologic - its 1998 cohort also contains the Logicon Caries Detector,
+# and two devices literally named "Lung-CAD" turn out on their FDA indications to detect interstitial
+# thickening and lung hyperinflation rather than nodules, so the name is not sufficient evidence
+# either way. QTZ is resolved as liver-TUMOUR ablation and moves from indeterminate to oncology.
+# Counts: 14 oncology, 162 not_oncology, 4 unresolved
+# (11 radiology_cancer_detection, 3 radiology_radiation_therapy, 0 pathology).
+version: 1
+codes: [MYN, QAS, OWB, IYO, QJU, KPR, JAA, QTZ, MQB, NQQ, OUO, OXO, LDK, IZL]
+n_devices: 180
+adjudicated:
+
+  # ---------------------------------------------------------------- MYN
+  - submission_number: P970058
+    device: "M1000 IMAGECHECKER"
+    company: "Hologic, Inc."
+    product_code: MYN
+    year: 1998
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: R2 Technology's ImageChecker M1000, the first FDA-approved computer-aided
+      detection system for screening mammography (PMA P970058, 1998; the PMA now sits with
+      Hologic). Cancer detection is the entire purpose of the device. This is the single most
+      important misclassification in the code-level rule: it is authorized under generic MYN
+      because no cancer-specific radiology product code existed in 1998.
+  - submission_number: P980025
+    device: "LOGICON CARIES DETECTOR"
+    company: "CARESTREAM DENTAL LLC"
+    product_code: MYN
+    year: 1998
+    decision: not_oncology
+    evidence: >-
+      Known product: Logicon Caries Detector (Carestream Dental), a neural-network aid for
+      detecting interproximal dental caries on bitewing radiographs. PMA P980025, 1998. Dental
+      caries, not cancer. Notable as a 1998 MYN authorization that is NOT oncologic - MYN's
+      pre-2020 content is mixed, not uniformly cancer.
+  - submission_number: P000041
+    device: "RAPIDSCREEN RS-2000"
+    company: "RIVERAIN MEDICAL GROUP"
+    product_code: MYN
+    year: 2001
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Deus Technologies / Riverain RapidScreen RS-2000, a computer-aided detection
+      system for solitary pulmonary nodules 9-30 mm on posteroanterior chest radiographs,
+      indicated as a second reader for early lung cancer detection. PMA P000041, 2001.
+  - submission_number: P010034
+    device: "SECOND LOOK ™"
+    company: "ICAD, INC."
+    product_code: MYN
+    year: 2002
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: iCAD's SecondLook, a computer-aided detection system for screening
+      mammography; PMA P010034, 2002. Marks masses and microcalcification clusters for the
+      radiologist's second look.
+  - submission_number: P150043
+    device: "QVCAD System"
+    company: "QView Medical, Inc."
+    product_code: MYN
+    year: 2016
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name carries it: "QVCAD System". Known product: QView Medical's QVCAD, computer-aided
+      detection for automated breast ultrasound (ABUS) in women with dense breasts; PMA P150043,
+      2016. "CAD" here is breast cancer detection.
+  - submission_number: P160009
+    device: "PowerLook® Tomo Detection Software"
+    company: "iCAD Inc"
+    product_code: MYN
+    year: 2017
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name carries it: "PowerLook Tomo Detection Software". Known product: iCAD's PowerLook Tomo
+      Detection, concurrent-read CAD for digital breast tomosynthesis; PMA P160009, 2017. Breast
+      cancer detection.
+  - submission_number: K201560
+    device: "Auto Lung Nodule Detection"
+    company: "Samsung Electronics Co.,Ltd."
+    product_code: MYN
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name carries it: "Auto Lung Nodule Detection". Samsung's ALND marks suspected pulmonary
+      nodules on chest radiographs. Pulmonary nodule detection is lung-cancer detection; FDA's own
+      OEB code ("Lung Computed Tomography System, Computer-Aided Detection") is already counted as
+      oncologic on exactly this reasoning.
+  - submission_number: K210666
+    device: "Chest-CAD"
+    company: "Imagen Technologies, Inc"
+    product_code: MYN
+    year: 2021
+    decision: unresolved
+    evidence: >-
+      K210666 indications for use: Chest-CAD is a concurrent-read CADe that highlights suspicious
+      regions of interest on adult chest X-rays and assigns each to one of Cardiac,
+      Mediastinum/Hila, Lungs, Pleura, Bones, Soft Tissues, Hardware, or Other. Non-specific
+      multi-finding detection: a flagged lung or mediastinal ROI may or may not be neoplastic, and
+      the indication makes no cancer claim. Unresolved per the multi-finding rule.
+  - submission_number: K210365
+    device: "Second Opinion"
+    company: "Pearl Inc."
+    product_code: MYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Pearl Second Opinion - dental radiograph findings (caries, calculus,
+      periapical radiolucency) on intraoral images. Not cancer.
+  - submission_number: K212519
+    device: "Overjet Caries Assist"
+    company: "Overjet, Inc."
+    product_code: MYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Overjet Caries Assist - dental caries detection. Not cancer.
+  - submission_number: K213353
+    device: "Aorta-CAD"
+    company: "Imagen Technologies, Inc"
+    product_code: MYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Name carries it: "Aorta-CAD". Imagen Technologies' CADe marks aortic findings
+      (enlargement/aneurysm) on radiographs. Vascular, not neoplastic.
+  - submission_number: K213795
+    device: "Videa Caries Assist"
+    company: "VideaHealth, Inc"
+    product_code: MYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Videa Caries Assist - dental caries detection. Not cancer.
+  - submission_number: K220928
+    device: "Overjet Calculus Assist"
+    company: "Overjet Inc."
+    product_code: MYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Overjet Calculus Assist - detection of dental calculus (tartar) on
+      intraoral radiographs. Not cancer.
+  - submission_number: K221921
+    device: "DTX Studio Clinic 3.0"
+    company: "Nobel Biocare AB"
+    product_code: MYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Nobel Biocare DTX Studio Clinic - dental imaging software with caries
+      detection. Not cancer.
+  - submission_number: K222746
+    device: "Overjet Caries Assist"
+    company: "Overjet, Inc."
+    product_code: MYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Overjet Caries Assist - dental caries detection. Not cancer.
+  - submission_number: K223133
+    device: "VisiRad XR"
+    company: "Imidex Inc."
+    product_code: MYN
+    year: 2023
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: IMIDEX VisiRad XR, cleared August 2023 as a second-read AI that highlights
+      possible lung nodules and masses on chest X-ray, marketed explicitly for earlier lung cancer
+      identification (83% sensitivity for nodules down to 6 mm).
+  - submission_number: K223811
+    device: "Lung-CAD"
+    company: "Imagen Technologies, Inc"
+    product_code: MYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Despite the name "Lung-CAD", the K223811 indications for use are detection of INTERSTITIAL
+      THICKENING on adult chest radiographs, explicitly not for clinical diagnosis. Interstitial
+      lung disease, not nodules and not cancer. Cleared 2023-09-13. A deliberate name-versus-
+      indication check: the brief lists "Lung-CAD" as a name that plainly says what it does, and
+      the FDA record shows it does not.
+  - submission_number: K230085
+    device: "Lung-CAD"
+    company: "Imagen Technologies, Inc"
+    product_code: MYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Second Imagen "Lung-CAD" clearance (2023-10-03). K230085 indications for use are detection
+      of LUNG HYPERINFLATION on adult chest radiographs. Emphysema/COPD-adjacent, not cancer. Same
+      name-versus-indication trap as K223811.
+  - submission_number: K230144
+    device: "Denti.AI Detect"
+    company: "Denti.AI Technology, Inc."
+    product_code: MYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Denti.AI Detect - dental radiograph findings. Not cancer.
+  - submission_number: K231001
+    device: "DeepTek CXR Analyzer v1.0"
+    company: "DeepTek Medical Imaging Pvt Ltd"
+    product_code: MYN
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      K231001 indications for use: DeepTek CXR Analyzer flags suspicious ROIs on adult frontal
+      chest radiographs in the categories Lungs, Pleura, Cardiac and Hardware. Multi-finding, no
+      nodule- or cancer-specific claim. Unresolved per the multi-finding rule.
+  - submission_number: K231678
+    device: "Overjet Periapical Radiolucency Assist"
+    company: "Overjet, Inc"
+    product_code: MYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Overjet Periapical Radiolucency Assist - periapical radiolucency is an
+      inflammatory/endodontic lesion of the tooth apex, not a neoplasm. Not cancer.
+  - submission_number: K231805
+    device: "qXR-LN"
+    company: "Qure.ai Technologies"
+    product_code: MYN
+    year: 2023
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name carries it: "qXR-LN" (LN = lung nodule). Qure.ai's qXR-LN detects and localizes
+      suspected pulmonary nodules 6-30 mm on chest radiographs; cleared January 2024, AUC 0.94 in
+      the pivotal study. Lung-cancer detection.
+  - submission_number: K232384
+    device: "Videa Dental Assist"
+    company: "VideaHealth, Inc."
+    product_code: MYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Videa Dental Assist - dental radiograph findings. Not cancer.
+  - submission_number: K233738
+    device: "Overjet Caries Assist-Pediatric"
+    company: "Overjet, Inc"
+    product_code: MYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Overjet Caries Assist-Pediatric - dental caries detection in children.
+      Not cancer.
+  - submission_number: K240003
+    device: "Velmeni for Dentists (V4D)"
+    company: "Velmeni Inc."
+    product_code: MYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Velmeni for Dentists (V4D) - dental radiograph findings. Not cancer.
+  - submission_number: K241620
+    device: "ChestView US"
+    company: "Gleamer SAS"
+    product_code: MYN
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      K241620: Gleamer ChestView US is a CADe trained on five thoracic abnormalities -
+      pneumothorax, pleural effusion, consolidation, mediastinal or hilar mass, and pulmonary
+      nodule. Two of the five targets (nodule, mediastinal/hilar mass) are the lung-cancer
+      findings and three are not; the device is not cancer-specific and its published performance
+      is reported for the non-cancer findings. Unresolved per the multi-finding rule - a case
+      where a defensible reader could argue either way.
+  - submission_number: K241725
+    device: "Better Diagnostics Caries Assist (BDCA) Version 1.0"
+    company: "Better Diagnostics AI Corp"
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Better Diagnostics Caries Assist - dental caries detection. Not cancer.
+  - submission_number: K242437
+    device: "Smile Dx®"
+    company: "Cube Click, Inc."
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Cube Click Smile Dx - dental radiograph findings. Not cancer.
+  - submission_number: K242522
+    device: "Second Opinion CC"
+    company: "Pearl Inc."
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Pearl Second Opinion CC - Pearl's dental radiograph detection line. Not
+      cancer.
+  - submission_number: K242600
+    device: "Second Opinion Periapical Radiolucency Contours"
+    company: "Pearl Inc."
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Pearl Second Opinion Periapical Radiolucency Contours - periapical
+      radiolucency is an inflammatory/endodontic lesion, not a neoplasm. Not cancer.
+  - submission_number: K243234
+    device: "Second Opinion® CS"
+    company: "Pearl Inc."
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Pearl Second Opinion CS - Pearl's dental radiograph detection line. Not
+      cancer.
+  - submission_number: K243239
+    device: "Lung AI (LAI001)"
+    company: "Exo Inc"
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Exo's Lung AI (LAI001) on the Exo Iris handheld ultrasound; cleared 2025 for
+      detection of pleural effusion and consolidation/atelectasis and identification of B-lines
+      (pulmonary edema). Acute lung ultrasound, not cancer.
+  - submission_number: K243831
+    device: "Rayvolve LN"
+    company: "AZmed"
+    product_code: MYN
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      K243831 indications for use: "Rayvolve LN assists radiologists in identifying suspected
+      pulmonary nodules measuring 6-30mm on frontal chest radiographs of patients 18 years and
+      older" as a second reader. AZmed's other Rayvolve clearances are fracture detection; the LN
+      variant is the lung-nodule one.
+  - submission_number: K243893
+    device: "Second Opinion® Pediatric"
+    company: "Pearl, Inc."
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Pearl Second Opinion Pediatric - pediatric dental radiograph findings.
+      Not cancer.
+  - submission_number: K250264
+    device: "SugarBug (1.x)"
+    company: "Bench7, Inc."
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Bench7 SugarBug - dental caries detection. Not cancer.
+  - submission_number: K250525
+    device: "Second Opinion® Panoramic"
+    company: "Pearl, Inc."
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Pearl Second Opinion Panoramic - dental panoramic radiograph findings.
+      Not cancer.
+  - submission_number: K250753
+    device: "VELMENI for DENTISTS (V4D)"
+    company: "Velmeni Inc."
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Velmeni for Dentists (V4D) - dental radiograph findings. Not cancer.
+  - submission_number: K251002
+    device: "Videa Dental AI"
+    company: "VideaHealth Inc."
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Videa Dental AI - dental radiograph findings. Not cancer.
+  - submission_number: K252086
+    device: "DTX Studio Assist"
+    company: "Nobel Biocare C/O Medicim NV"
+    product_code: MYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Nobel Biocare DTX Studio Assist - dental imaging assistance. Not cancer.
+  - submission_number: K251934
+    device: "qXR-Detect"
+    company: "Qure.Ai Technologies"
+    product_code: MYN
+    year: 2026
+    decision: unresolved
+    evidence: >-
+      Qure.ai qXR-Detect (2026) is the broad qXR chest X-ray platform, which localizes up to ~29
+      abnormalities and screens for tuberculosis. Nodules are among the findings but the device is
+      not nodule- or cancer-specific, unlike the same company's qXR-LN (K231805). Unresolved per
+      the multi-finding rule.
+  - submission_number: K252934
+    device: "Diagnocat"
+    company: "DGNCT, LLC"
+    product_code: MYN
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. DGNCT Diagnocat - dental radiograph and CBCT analysis. Not cancer.
+  - submission_number: K253009
+    device: "DS Core Detect"
+    company: "Dentsply Sirona, Inc."
+    product_code: MYN
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Dental radiography AI. Product code MYN is the pre-2020 catch-all "Analyzer, Medical Image"
+      (21 CFR 892.2070) and its post-2020 population is dominated by intraoral/panoramic dental
+      detection software. Dentsply Sirona DS Core Detect - dental radiograph findings. Not cancer.
+
+  # ---------------------------------------------------------------- QAS
+  - submission_number: DEN170073
+    device: "ContaCT"
+    company: "Viz.Al, Inc."
+    product_code: QAS
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Viz.ai ContaCT - the De Novo that created this code;
+      large vessel occlusion (LVO) stroke triage.
+  - submission_number: K180647
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - Aidoc's triage line; the 2018
+      clearance is intracranial hemorrhage on head CT.
+  - submission_number: K182177
+    device: "Accipiolx"
+    company: "MaxQ-Al Ltd."
+    product_code: QAS
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. MaxQ-AI Accipiolx - intracranial hemorrhage triage on
+      head CT.
+  - submission_number: K182875
+    device: "DeepCT"
+    company: "Deep01 Limited"
+    product_code: QAS
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Deep01 DeepCT - intracranial hemorrhage triage on head
+      CT.
+  - submission_number: K190072
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K190424
+    device: "HealthICH"
+    company: "Zebra Medical Vision Ltd."
+    product_code: QAS
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Zebra Medical Vision HealthICH - intracranial
+      hemorrhage triage.
+  - submission_number: K190896
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K192383
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage (Aidoc's
+      cleared BriefCase indications are ICH, PE, C-spine fracture, pneumothorax, aortic
+      dissection, intra-abdominal free gas, rib fracture and brain aneurysm; none is oncologic).
+  - submission_number: K192167
+    device: "CuraRad-ICH"
+    company: "CuraCloud Corp."
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. CuraCloud CuraRad-ICH - intracranial hemorrhage
+      triage.
+  - submission_number: K193087
+    device: "Rapid ICH"
+    company: "iSchemaView Incorporated"
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. iSchemaView Rapid ICH - intracranial hemorrhage
+      triage.
+  - submission_number: K193298
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K193351
+    device: "NinesAI"
+    company: "Nines, Inc."
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Nines NinesAI - emergency head CT triage for
+      intracranial hemorrhage and mass effect.
+  - submission_number: K193658
+    device: "Viz ICH"
+    company: "Viz.ai, Inc."
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Viz.ai Viz ICH - intracranial hemorrhage triage.
+  - submission_number: K200855
+    device: "CINA"
+    company: "AVICENNA.AI"
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Avicenna.AI CINA - intracranial hemorrhage and LVO
+      stroke triage on head CT/CTA.
+  - submission_number: K200873
+    device: "HALO"
+    company: "NICo-Lab B.V."
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Nico.Lab HALO / StrokeViewer - acute ischemic stroke
+      triage on CT/CTA.
+  - submission_number: K200921
+    device: "qER"
+    company: "Qure.ai Technologies"
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Qure.ai qER - emergency head CT triage (hemorrhage,
+      midline shift, mass effect, cranial fracture).
+  - submission_number: K200941
+    device: "Rapid LVO"
+    company: "iSchemaView Inc."
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. iSchemaView Rapid LVO - large vessel occlusion stroke
+      triage.
+  - submission_number: K201020
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K201310
+    device: "Accipiolx"
+    company: "MaxQ Al Ltd."
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. MaxQ AI Accipiolx - intracranial hemorrhage triage.
+  - submission_number: K203508
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K210209
+    device: "Viz ICH"
+    company: "Viz.ai, Inc."
+    product_code: QAS
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Viz.ai Viz ICH - intracranial hemorrhage triage.
+  - submission_number: K210237
+    device: "CINA CHEST"
+    company: "Avicenna.AI"
+    product_code: QAS
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Avicenna.AI CINA CHEST - chest CT triage for pulmonary
+      embolism, aortic dissection and pneumothorax.
+  - submission_number: K211179
+    device: "InferRead CT Stroke.AI"
+    company: "Infervision Medical Technology Co., Ltd."
+    product_code: QAS
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Infervision InferRead CT Stroke.AI - acute stroke
+      triage.
+  - submission_number: K211788
+    device: "HALO"
+    company: "Nico.Lab B.V."
+    product_code: QAS
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Nico.Lab HALO - acute ischemic stroke triage.
+  - submission_number: K212261
+    device: "StrokeSENS LVO"
+    company: "Circle Neurovascular Imaging, Inc"
+    product_code: QAS
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Circle Neurovascular StrokeSENS LVO - large vessel
+      occlusion stroke triage.
+  - submission_number: K203260
+    device: "syngo.CT Brain Hemorrhage"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "syngo.CT Brain Hemorrhage" -
+      intracranial hemorrhage triage.
+  - submission_number: K213721
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K213886
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K220439
+    device: "Viz SDH"
+    company: "Viz.ai, Inc."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Viz.ai Viz SDH - subdural hematoma triage.
+  - submission_number: K220499
+    device: "Rapid PE Triage and Notification (PETN)"
+    company: "iSchemaView Inc."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Rapid PE Triage and Notification
+      (PETN)" - pulmonary embolism triage.
+  - submission_number: K220709
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K221240
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K221248
+    device: "Rapid LVO"
+    company: "iSchemaView Inc."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. iSchemaView Rapid LVO - large vessel occlusion stroke
+      triage.
+  - submission_number: K221314
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K221330
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K221456
+    device: "Rapid ICH"
+    company: "iSchemaView Inc."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. iSchemaView Rapid ICH - intracranial hemorrhage
+      triage.
+  - submission_number: K221716
+    device: "CINA"
+    company: "AVICENNA.AI"
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Avicenna.AI CINA - hemorrhage/stroke triage.
+  - submission_number: K222277
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K222329
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase - acute-finding triage; none of
+      Aidoc's cleared BriefCase indications is oncologic.
+  - submission_number: K223042
+    device: "Viz LVO ContaCT"
+    company: "Viz.ai, Inc."
+    product_code: QAS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Viz.ai Viz LVO ContaCT - large vessel occlusion stroke
+      triage.
+  - submission_number: K222884
+    device: "Rapid NCCT Stroke"
+    company: "iSchemaView, Inc."
+    product_code: QAS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. iSchemaView Rapid NCCT Stroke - non-contrast CT stroke
+      (ASPECTS) triage.
+  - submission_number: K223240
+    device: "Annalise Enterprise CTB Triage Trauma"
+    company: "Annalise-AI Pty Ltd"
+    product_code: QAS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Annalise Enterprise CTB Triage
+      Trauma" - head CT trauma triage.
+  - submission_number: K231025
+    device: "EFAI NeuroSuite CT ICH Assessment System"
+    company: "Ever Fortune.AI Co., Ltd."
+    product_code: QAS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "EFAI NeuroSuite CT ICH Assessment
+      System" - intracranial hemorrhage.
+  - submission_number: K231094
+    device: "Annalise Enterprise CTB Triage-OH"
+    company: "Annalise-AI Pty Ltd"
+    product_code: QAS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Annalise Enterprise CTB Triage-OH" -
+      obstructive hydrocephalus.
+  - submission_number: K231195
+    device: "Brainomix 360 Triage ICH"
+    company: "Brainomix Limited"
+    product_code: QAS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Brainomix 360 Triage ICH" -
+      intracranial hemorrhage.
+  - submission_number: K231384
+    device: "Annalise Enterprise CTB Triage Trauma"
+    company: "Annalise-AI Pty Ltd."
+    product_code: QAS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Annalise Enterprise CTB Triage
+      Trauma" - head CT trauma triage.
+  - submission_number: K231767
+    device: "Annalise Enterprise CTB Triage Trauma"
+    company: "Annalise-AI Pty Ltd"
+    product_code: QAS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Annalise Enterprise CTB Triage
+      Trauma" - head CT trauma triage.
+  - submission_number: K231837
+    device: "Brainomix 360 Triage LVO"
+    company: "Brainomix Limited"
+    product_code: QAS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Brainomix 360 Triage LVO" - large
+      vessel occlusion.
+  - submission_number: K232436
+    device: "Rapid SDH"
+    company: "iSchemaView, Inc."
+    product_code: QAS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. iSchemaView Rapid SDH - subdural hematoma triage.
+  - submission_number: K232496
+    device: "Brainomix 360 Triage Stroke"
+    company: "Brainomix Limited"
+    product_code: QAS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Brainomix 360 Triage Stroke".
+  - submission_number: K232751
+    device: "BriefCase-Triage"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase-Triage - acute-finding triage; none of
+      Aidoc's cleared indications is oncologic.
+  - submission_number: K232431
+    device: "syngo.CT Brain Hemorrhage"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "syngo.CT Brain Hemorrhage" -
+      intracranial hemorrhage.
+  - submission_number: K233247
+    device: "Heuron ICH"
+    company: "Heuron Co., Ltd."
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Heuron ICH - intracranial hemorrhage triage.
+  - submission_number: K233968
+    device: "CINA-iPE"
+    company: "Avicenna.AI"
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "CINA-iPE" - incidental pulmonary
+      embolism triage.
+  - submission_number: K240291
+    device: "EFAI CARDIOSUITE CTA ACUTE AORTIC SYNDROME ASSESSMENT SYSTEM"
+    company: "Ever Fortune.AI, Co., Ltd."
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "EFAI CARDIOSUITE CTA ACUTE AORTIC
+      SYNDROME ASSESSMENT SYSTEM" - aortic dissection/acute aortic syndrome.
+  - submission_number: K240353
+    device: "Hyper Insight - ICH"
+    company: "SK Inc."
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. SK Inc. Hyper Insight - ICH: intracranial hemorrhage
+      triage.
+  - submission_number: K240942
+    device: "CINA-CSpine"
+    company: "Avicenna.AI"
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "CINA-CSpine" - cervical spine
+      fracture triage.
+  - submission_number: K241480
+    device: "JBS-LVO"
+    company: "JLK, Inc."
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. JLK JBS-LVO - large vessel occlusion stroke triage.
+  - submission_number: K241719
+    device: "NeuroICH"
+    company: "Neurocareai Inc."
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "NeuroICH" - intracranial hemorrhage
+      triage.
+  - submission_number: K241727
+    device: "BriefCase-Triage"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase-Triage - acute-finding triage; none of
+      Aidoc's cleared indications is oncologic.
+  - submission_number: K241923
+    device: "EFAI Neurosuite CT Midline Shift Assessment System (MLS-CT-100)"
+    company: "Ever Fortune.AI, Co., Ltd."
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "EFAI Neurosuite CT Midline Shift
+      Assessment System" - mass effect/midline shift triage, a general acute finding rather than a
+      tumour-specific one.
+  - submission_number: K242292
+    device: "uAI Easy Triage ICH"
+    company: "Shanghai United Imaging Intelligence Co., Ltd."
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "uAI Easy Triage ICH" - intracranial
+      hemorrhage.
+  - submission_number: K242837
+    device: "BriefCase-Triage"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase-Triage - acute-finding triage; none of
+      Aidoc's cleared indications is oncologic.
+  - submission_number: K242821
+    device: "EFAI Chestsuite XR Malpositioned ETT Assessment System (ETT-XR-100)"
+    company: "Ever Fortune.AI, Co., Ltd."
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "EFAI Chestsuite XR Malpositioned ETT
+      Assessment System" - endotracheal tube malposition.
+  - submission_number: K243145
+    device: "syngo.CT LVO Detection"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "syngo.CT LVO Detection" - large
+      vessel occlusion.
+  - submission_number: K243363
+    device: "JLK-ICH"
+    company: "JLK, Inc."
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. JLK-ICH - intracranial hemorrhage triage.
+  - submission_number: K243611
+    device: "JLK-SDH"
+    company: "JLK, Inc."
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. JLK-SDH - subdural hematoma triage.
+  - submission_number: K250248
+    device: "BriefCase-Triage"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase-Triage - acute-finding triage; none of
+      Aidoc's cleared indications is oncologic.
+  - submission_number: K250685
+    device: "Methinks NCCT Stroke"
+    company: "Methinks Software S.L."
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Methinks NCCT Stroke".
+  - submission_number: K250694
+    device: "Scaida BrainCT-ICH (v1.0)"
+    company: "Mlhealth 360"
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Scaida BrainCT-ICH" - intracranial
+      hemorrhage.
+  - submission_number: K251151
+    device: "Rapid CTA 360"
+    company: "iSchemaView"
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. iSchemaView Rapid CTA 360 - stroke CTA triage.
+  - submission_number: K251406
+    device: "BriefCase-Triage"
+    company: "Aidoc Medical, Ltd."
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase-Triage - acute-finding triage; none of
+      Aidoc's cleared indications is oncologic.
+  - submission_number: K251533
+    device: "Rapid Obstructive Hydrocephalus, Rapid OH"
+    company: "iSchemaView Inc."
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Rapid Obstructive Hydrocephalus,
+      Rapid OH".
+  - submission_number: K251590
+    device: "Methinks CTA Stroke"
+    company: "Methinks Software S.L."
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Methinks CTA Stroke".
+  - submission_number: K251610
+    device: "qER-CTA (v1.0)"
+    company: "Qure.ai Technologies"
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Qure.ai qER-CTA - head CTA emergency triage
+      (LVO/aneurysm).
+  - submission_number: K251983
+    device: "Brainomix 360 Triage Stroke"
+    company: "Brainomix Limited"
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Name carries it: "Brainomix 360 Triage Stroke".
+  - submission_number: K252366
+    device: "a2z-Unified-Triage"
+    company: "A2z Radiology Ai, Inc."
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. K252366 indications for use: a2z-Unified-Triage
+      triages abdominal/pelvic CT for seven acute conditions - small bowel obstruction, acute
+      cholecystitis, acute pancreatitis, acute diverticulitis, hydronephrosis, free air, and
+      unruptured abdominal aortic aneurysm. No oncologic indication.
+  - submission_number: K253265
+    device: "BriefCase-Triage"
+    company: "Aidoc Medical , Ltd."
+    product_code: QAS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase-Triage - acute-finding triage; none of
+      Aidoc's cleared indications is oncologic.
+  - submission_number: K251195
+    device: "BriefCase-Triage"
+    company: "Aidoc Medical , Ltd."
+    product_code: QAS
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Aidoc BriefCase-Triage - acute-finding triage; none of
+      Aidoc's cleared indications is oncologic.
+  - submission_number: K252421
+    device: "JLK-NCCT"
+    company: "JLK, Inc."
+    product_code: QAS
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. JLK-NCCT - non-contrast head CT stroke triage.
+  - submission_number: K252970
+    device: "BriefCase-Triage: CARE Multi-triage CT Body"
+    company: "Aidoc Medical , Ltd."
+    product_code: QAS
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. K252970: Aidoc BriefCase-Triage CARE Multi-triage CT
+      Body triages chest/abdomen/pelvis CT across 14 indications (11 new plus 3 prior) of acute
+      findings. Aidoc's cleared triage indications are acute; no cancer indication among them.
+  - submission_number: K253578
+    device: "BriefCase-Triage: CARE Multi-Triage CT for Pneumothorax; Pericardial effusion; Large aortic aneurysm; Shoulder fracture or dislocation device"
+    company: "Aidoc Medical , Ltd."
+    product_code: QAS
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. The device name itself lists the indications:
+      "Pneumothorax; Pericardial effusion; Large aortic aneurysm; Shoulder fracture or
+      dislocation". All acute, none oncologic.
+  - submission_number: K253818
+    device: "Annalise Enterprise"
+    company: "Harrison-AI Medical Pty, Ltd."
+    product_code: QAS
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Product code QAS, 21 CFR 892.2080: "Radiological computer-assisted triage and notification
+      software ... intended to aid in prioritization and triage of TIME SENSITIVE patient
+      detection and diagnosis", and which "does not provide information from the image analysis
+      other than triage and notification". The regulation scopes this code to acute, time-critical
+      findings; cancer detection is not a time-sensitive triage indication and no QAS device in
+      this snapshot carries a cancer claim. Harrison-AI / Annalise Enterprise (2026). Generic
+      product name; Annalise's cleared US triage indications are acute critical findings (CTB
+      trauma, obstructive hydrocephalus, pneumothorax and similar). Called under the QAS scope
+      rule; this is one of my weaker not_oncology calls because the row name alone says nothing.
+
+  # ---------------------------------------------------------------- OWB
+  - submission_number: K160088
+    device: "Cydar EV"
+    company: "Cydar Ltd."
+    product_code: OWB
+    year: 2016
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Cydar EV - cloud image
+      fusion/overlay guidance for endovascular aneurysm repair (EVAR). Vascular intervention.
+  - submission_number: K212336
+    device: "Soteria.AI"
+    company: "Omega Medical Imaging, LLC"
+    product_code: OWB
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Omega Medical Imaging
+      Soteria.AI - AI region-of-interest fluoroscopy that reduces radiation dose during
+      interventional procedures. Dose reduction/acquisition.
+  - submission_number: K212383
+    device: "EndoNaut"
+    company: "Therenva SAS"
+    product_code: OWB
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Therenva EndoNaut -
+      endovascular navigation and image fusion for aortic procedures.
+  - submission_number: K212442
+    device: "Cydar EV (Series B) and Cydar EV Maps"
+    company: "Cydar Ltd."
+    product_code: OWB
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Cydar EV (Series B) and Cydar
+      EV Maps - endovascular aortic repair guidance. Vascular intervention.
+  - submission_number: K222070
+    device: "EndoNaut"
+    company: "Therenva SAS"
+    product_code: OWB
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Therenva EndoNaut -
+      endovascular navigation and image fusion for aortic procedures.
+  - submission_number: K240465
+    device: "O-arm O2 Imaging System"
+    company: "Medtronic Navigation, Inc"
+    product_code: OWB
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Medtronic O-arm O2 Imaging
+      System - intraoperative cone-beam CT/fluoroscopy for surgical navigation, principally spine.
+      Imaging acquisition platform.
+  - submission_number: K243376
+    device: "uAngio AVIVA CX"
+    company: "Shanghai United Imaging Healthcare Co.,Ltd."
+    product_code: OWB
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. United Imaging uAngio AVIVA CX
+      - interventional angiography system. Acquisition hardware.
+  - submission_number: K243446
+    device: "3DXR"
+    company: "GE Medical Systems SCS"
+    product_code: OWB
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. GE 3DXR - 3D rotational
+      angiography reconstruction on interventional X-ray. Reconstruction.
+  - submission_number: K243884
+    device: "TAVIPILOT"
+    company: "Caranx Medical"
+    product_code: OWB
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Caranx Medical TAVIPILOT - AI
+      guidance for transcatheter aortic valve implantation. Structural heart, not cancer.
+  - submission_number: K250660
+    device: "LUMINOS Q.namix T; LUMINOS Q.namix R"
+    company: "Siemens Medical Solutions"
+    product_code: OWB
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Siemens LUMINOS Q.namix R/T -
+      radiography-fluoroscopy systems. Acquisition hardware.
+  - submission_number: K251602
+    device: "Alphenix, INFX-8000V/B, INFX-8000V/S, V9.6 with aEvolve Imaging"
+    company: "Canon Medical Systems Corporation"
+    product_code: OWB
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Canon Alphenix INFX-8000V
+      angiography system with aEvolve imaging - interventional angiography hardware and image
+      processing.
+  - submission_number: K252099
+    device: "Trinias"
+    company: "Shimadzu Corporation"
+    product_code: OWB
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Shimadzu Trinias -
+      interventional angiography system. Acquisition hardware.
+  - submission_number: K252500
+    device: "CARA System"
+    company: "Cara Medical, Ltd."
+    product_code: OWB
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Cara Medical CARA System -
+      CTA-based 3D visualization of the cardiac conduction system for pre-planning and
+      intraprocedural guidance (cleared 2026, breakthrough designation Q250281). Cardiac
+      electrophysiology, not cancer.
+  - submission_number: K253584
+    device: "Alphenix, INFX-8000V/B, INFX-8000V/S, V9.6 with aEvolve Imaging (FOV Extension)"
+    company: "Canon Medical Systems Corporation"
+    product_code: OWB
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Product code OWB (892.1650) is "Interventional Fluoroscopic X-Ray System"; every row is an
+      angiography/interventional platform or its guidance software. Canon Alphenix with aEvolve
+      Imaging (FOV extension) - interventional angiography image processing.
+
+  # ---------------------------------------------------------------- IYO
+  - submission_number: K172356
+    device: "BladderScan Prime PLUS System"
+    company: "Verathon Incorporated"
+    product_code: IYO
+    year: 2017
+    decision: not_oncology
+    evidence: >-
+      Product code IYO (892.1560) is "System, Imaging, Pulsed Echo, Ultrasonic". Verathon
+      BladderScan Prime PLUS - automated bladder volume measurement. Urodynamic, not cancer.
+  - submission_number: K181574
+    device: "Uscan"
+    company: "EchoNous, Inc."
+    product_code: IYO
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Product code IYO (892.1560) is "System, Imaging, Pulsed Echo, Ultrasonic". EchoNous Uscan -
+      handheld bladder volume/vascular access ultrasound.
+  - submission_number: K200980
+    device: "Auto 3D Bladder Volume Tool"
+    company: "Butterfly Network, Inc."
+    product_code: IYO
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code IYO (892.1560) is "System, Imaging, Pulsed Echo, Ultrasonic". Butterfly Network
+      Auto 3D Bladder Volume Tool - automated bladder volume from handheld ultrasound.
+  - submission_number: K220068
+    device: "Butterfly iQ/iQ+ Ultrasound System"
+    company: "Butterfly Network, Inc."
+    product_code: IYO
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code IYO (892.1560) is "System, Imaging, Pulsed Echo, Ultrasonic". Butterfly iQ/iQ+
+      - general-purpose handheld point-of-care ultrasound system. Acquisition platform with no
+      cancer-specific function.
+  - submission_number: K223287
+    device: "Velacur"
+    company: "Sonic Incytes"
+    product_code: IYO
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code IYO (892.1560) is "System, Imaging, Pulsed Echo, Ultrasonic". Sonic Incytes
+      Velacur - quantitative liver ultrasound for stiffness and fat (steatosis/fibrosis). Chronic
+      liver disease, not neoplasm.
+  - submission_number: K231677
+    device: "EdgeFlow UH10"
+    company: "Edgecare Inc."
+    product_code: IYO
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code IYO (892.1560) is "System, Imaging, Pulsed Echo, Ultrasonic". Edgecare EdgeFlow
+      UH10 - general diagnostic ultrasound system (B-mode, harmonic imaging). Acquisition
+      platform, no cancer-specific claim.
+  - submission_number: K233977
+    device: "Velacur"
+    company: "Sonic Incytes"
+    product_code: IYO
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code IYO (892.1560) is "System, Imaging, Pulsed Echo, Ultrasonic". Sonic Incytes
+      Velacur - liver stiffness and fat quantification. Chronic liver disease, not neoplasm.
+  - submission_number: K241029
+    device: "SpineUs\x99 System"
+    company: "Verdure Imaging"
+    product_code: IYO
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Product code IYO (892.1560) is "System, Imaging, Pulsed Echo, Ultrasonic". Verdure Imaging
+      SpineUs - 3D spinal ultrasound for scoliosis/spinal curvature assessment. Musculoskeletal.
+  - submission_number: K243937
+    device: "Accuro 3S"
+    company: "Rivanna Medical, Inc."
+    product_code: IYO
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code IYO (892.1560) is "System, Imaging, Pulsed Echo, Ultrasonic". Rivanna Accuro 3S
+      - automated spinal landmark ultrasound for neuraxial anaesthesia guidance.
+  - submission_number: K253898
+    device: "QT Scanner 2000 Model A"
+    company: "QT Imaging Holdings, Inc."
+    product_code: IYO
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Product code IYO (892.1560) is "System, Imaging, Pulsed Echo, Ultrasonic". QT Imaging QT
+      Scanner 2000 Model A - transmission/reflection ultrasound tomography of the breast; the
+      cleared indication is breast imaging plus calculation of fibroglandular tissue volume and
+      FGV/TBV ratio, and it is explicitly "not intended to be used as a replacement for screening
+      mammography". Breast density/composition measurement with no cancer detection claim, so
+      not_oncology under the brief's breast-density rule (Quantra/Volpara/Densitas). Flagged as a
+      borderline call: it is a dedicated breast modality and a reader who counts DBT (code OTE)
+      might count this too.
+
+  # ---------------------------------------------------------------- QJU
+  - submission_number: DEN190040
+    device: "Caption Guidance"
+    company: "Bay Labs, Inc."
+    product_code: QJU
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QJU, 21 CFR 892.2100: "Image acquisition and/or optimization guided by
+      artificial intelligence ... provides guidance and/or feedback to the operator for improving
+      image and/or signal quality." Acquisition guidance is not_oncology per the brief even on a
+      cancer-capable modality. Bay Labs / Caption Health Caption Guidance - the De Novo that
+      created code QJU; real-time AI guidance for novice operators acquiring transthoracic
+      echocardiograms. Acquisition guidance, and cardiac.
+  - submission_number: K200755
+    device: "Caption Guidance"
+    company: "Caption Health"
+    product_code: QJU
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QJU, 21 CFR 892.2100: "Image acquisition and/or optimization guided by
+      artificial intelligence ... provides guidance and/or feedback to the operator for improving
+      image and/or signal quality." Acquisition guidance is not_oncology per the brief even on a
+      cancer-capable modality. Caption Guidance - AI acquisition guidance for cardiac ultrasound.
+  - submission_number: K201992
+    device: "Caption Guidance"
+    company: "Caption Health"
+    product_code: QJU
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Product code QJU, 21 CFR 892.2100: "Image acquisition and/or optimization guided by
+      artificial intelligence ... provides guidance and/or feedback to the operator for improving
+      image and/or signal quality." Acquisition guidance is not_oncology per the brief even on a
+      cancer-capable modality. Caption Guidance - AI acquisition guidance for cardiac ultrasound.
+  - submission_number: K223347
+    device: "UltraSight AI Guidance"
+    company: "UltraSight Inc."
+    product_code: QJU
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Product code QJU, 21 CFR 892.2100: "Image acquisition and/or optimization guided by
+      artificial intelligence ... provides guidance and/or feedback to the operator for improving
+      image and/or signal quality." Acquisition guidance is not_oncology per the brief even on a
+      cancer-capable modality. UltraSight AI Guidance - real-time guidance for cardiac ultrasound
+      acquisition.
+  - submission_number: K242807
+    device: "HeartFocus (V.1.1.1)"
+    company: "Deski"
+    product_code: QJU
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QJU, 21 CFR 892.2100: "Image acquisition and/or optimization guided by
+      artificial intelligence ... provides guidance and/or feedback to the operator for improving
+      image and/or signal quality." Acquisition guidance is not_oncology per the brief even on a
+      cancer-capable modality. Deski HeartFocus - AI guidance for echocardiogram acquisition by
+      non-experts.
+  - submission_number: K243065
+    device: "Cardiac Guidance"
+    company: "Caption Health, Inc."
+    product_code: QJU
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QJU, 21 CFR 892.2100: "Image acquisition and/or optimization guided by
+      artificial intelligence ... provides guidance and/or feedback to the operator for improving
+      image and/or signal quality." Acquisition guidance is not_oncology per the brief even on a
+      cancer-capable modality. Caption Health Cardiac Guidance - echocardiography acquisition
+      guidance.
+  - submission_number: K251416
+    device: "UltraSight Guidance"
+    company: "Ultrasight , Ltd."
+    product_code: QJU
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Product code QJU, 21 CFR 892.2100: "Image acquisition and/or optimization guided by
+      artificial intelligence ... provides guidance and/or feedback to the operator for improving
+      image and/or signal quality." Acquisition guidance is not_oncology per the brief even on a
+      cancer-capable modality. UltraSight Guidance - real-time guidance for cardiac ultrasound
+      acquisition.
+
+  # ---------------------------------------------------------------- KPR
+  - submission_number: K133259
+    device: "YSIO MAX"
+    company: "SIEMENS MEDICAL SOLUTIONS USA, INC."
+    product_code: KPR
+    year: 2014
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Siemens YSIO MAX - stationary digital radiography system
+      with automated image processing. Acquisition hardware; no diagnostic cancer function. (2014,
+      the oldest non-MYN row in this group.)
+  - submission_number: K233543
+    device: "YSIO X.pree"
+    company: "Siemens Medical Solutions"
+    product_code: KPR
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Siemens YSIO X.pree - digital radiography with AI-assisted
+      collimation and positioning ("MyExam Companion"). Acquisition and positioning.
+  - submission_number: K233662
+    device: "Radiography 7300 C"
+    company: "Philips Medical Systems DMC GmbH"
+    product_code: KPR
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Philips Radiography 7300 C - digital radiography system.
+      Acquisition hardware.
+  - submission_number: K250738
+    device: "YSIO X.pree"
+    company: "Siemens Medical Solutions"
+    product_code: KPR
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Siemens YSIO X.pree - digital radiography with AI-assisted
+      acquisition. Acquisition hardware.
+  - submission_number: K250788
+    device: "Definium Tempo Select"
+    company: "GE Hualun Medical Systems Co., Ltd"
+    product_code: KPR
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. GE Definium Tempo Select - digital radiography system with
+      AI-assisted positioning. Acquisition hardware.
+  - submission_number: K251167
+    device: "uDR Aurora CX"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: KPR
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. United Imaging uDR Aurora CX - digital radiography system.
+      Acquisition hardware.
+
+  # ---------------------------------------------------------------- JAA
+  - submission_number: K180589
+    device: "DR 800 with MUSICA Dynamic"
+    company: "Agfa HealthCare N.V."
+    product_code: JAA
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Agfa DR 800 with MUSICA Dynamic - fluoroscopy/radiography
+      system with dynamic image processing. Acquisition and enhancement.
+  - submission_number: K191713
+    device: "CS-series-FP Radiographic / Fluoroscopic Systems with Optional CA-100S / FluoroShield\x99 (ROI Assembly)"
+    company: "Omega Medical Imaging, LLC"
+    product_code: JAA
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Omega Medical CS-series-FP R/F system with FluoroShield
+      ROI assembly - AI-driven region-of-interest fluoroscopy for radiation dose reduction.
+  - submission_number: K232526
+    device: "XIDF-AWS801, Angio Workstation (Alphenix Workstation), V9.5"
+    company: "Canon Medical Systems Corporation"
+    product_code: JAA
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Canon XIDF-AWS801 Angio Workstation (Alphenix Workstation)
+      - interventional angiography workstation image processing.
+  - submission_number: K242488
+    device: "Soteria E-View"
+    company: "Omega Medical Imaging, LLC"
+    product_code: JAA
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Omega Medical Soteria E-View - fluoroscopic dose-reduction
+      imaging. Dose reduction.
+
+  # ---------------------------------------------------------------- QTZ
+  - submission_number: K223639
+    device: "VisAble.IO"
+    company: "TechsoMed"
+    product_code: QTZ
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      RESOLVED: TUMOUR ablation, not cardiac. Techsomed (Israel) is a liver-tumour ablation
+      company. VisAble.IO received 510(k) clearance in 2023 as software to assist physicians in
+      PLANNING LIVER ABLATION procedures and confirming the ablation zone, released as the first
+      component of Techsomed's BioTrace solution for image-guided ablation therapy. BioTraceIO
+      received FDA De Novo clearance (announced January 2024) as "the first ultrasound-based
+      software for tissue response prediction in LIVER TUMOR ablation", validated in a 50-patient
+      multicentre study against 24-hour contrast-enhanced CT; the supporting trial is NCT05582018,
+      "Safety and Effectiveness of BioTraceIO 360 for Planning, Monitoring and Assessment of Liver
+      Tissue Ablation Procedures". Product code QTZ (892.2050) is "Radiological Image Processing
+      Software For Ablation Therapy Planning And Evaluation"; all three rows are the same
+      Techsomed liver-tumour product line. CATEGORY NOTE: this is cancer treatment planning but it
+      is thermal ablation, not radiotherapy. Assigned to radiology_radiation_therapy as the only
+      treatment-planning category available; see my report - the scheme has no interventional-
+      oncology slot. Row: VisAble.IO, TechsoMed, K223639 (2023).
+  - submission_number: K240773
+    device: "VisAble.IO"
+    company: "Techsomed"
+    product_code: QTZ
+    year: 2024
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      RESOLVED: TUMOUR ablation, not cardiac. Techsomed (Israel) is a liver-tumour ablation
+      company. VisAble.IO received 510(k) clearance in 2023 as software to assist physicians in
+      PLANNING LIVER ABLATION procedures and confirming the ablation zone, released as the first
+      component of Techsomed's BioTrace solution for image-guided ablation therapy. BioTraceIO
+      received FDA De Novo clearance (announced January 2024) as "the first ultrasound-based
+      software for tissue response prediction in LIVER TUMOR ablation", validated in a 50-patient
+      multicentre study against 24-hour contrast-enhanced CT; the supporting trial is NCT05582018,
+      "Safety and Effectiveness of BioTraceIO 360 for Planning, Monitoring and Assessment of Liver
+      Tissue Ablation Procedures". Product code QTZ (892.2050) is "Radiological Image Processing
+      Software For Ablation Therapy Planning And Evaluation"; all three rows are the same
+      Techsomed liver-tumour product line. CATEGORY NOTE: this is cancer treatment planning but it
+      is thermal ablation, not radiotherapy. Assigned to radiology_radiation_therapy as the only
+      treatment-planning category available; see my report - the scheme has no interventional-
+      oncology slot. Row: VisAble.IO, Techsomed, K240773 (2024).
+  - submission_number: K251931
+    device: "BioTraceIO Vision  (V1.7)"
+    company: "Techsomed Medical Technologies"
+    product_code: QTZ
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      RESOLVED: TUMOUR ablation, not cardiac. Techsomed (Israel) is a liver-tumour ablation
+      company. VisAble.IO received 510(k) clearance in 2023 as software to assist physicians in
+      PLANNING LIVER ABLATION procedures and confirming the ablation zone, released as the first
+      component of Techsomed's BioTrace solution for image-guided ablation therapy. BioTraceIO
+      received FDA De Novo clearance (announced January 2024) as "the first ultrasound-based
+      software for tissue response prediction in LIVER TUMOR ablation", validated in a 50-patient
+      multicentre study against 24-hour contrast-enhanced CT; the supporting trial is NCT05582018,
+      "Safety and Effectiveness of BioTraceIO 360 for Planning, Monitoring and Assessment of Liver
+      Tissue Ablation Procedures". Product code QTZ (892.2050) is "Radiological Image Processing
+      Software For Ablation Therapy Planning And Evaluation"; all three rows are the same
+      Techsomed liver-tumour product line. CATEGORY NOTE: this is cancer treatment planning but it
+      is thermal ablation, not radiotherapy. Assigned to radiology_radiation_therapy as the only
+      treatment-planning category available; see my report - the scheme has no interventional-
+      oncology slot. Row: BioTraceIO Vision (V1.7), Techsomed Medical Technologies, K251931
+      (2025).
+
+  # ---------------------------------------------------------------- MQB
+  - submission_number: K202441
+    device: "Eclipse II with Smart Noise Cancellation"
+    company: "Carestream Health, Inc."
+    product_code: MQB
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Carestream Eclipse II with Smart Noise Cancellation -
+      image denoising. Reconstruction/enhancement.
+  - submission_number: K212269
+    device: "Intelligent NR"
+    company: "Canon Inc."
+    product_code: MQB
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Canon Intelligent NR - deep-learning noise reduction for
+      radiographic images. Denoising, not_oncology per the brief even on cancer-capable equipment.
+  - submission_number: K213307
+    device: "Eclipse II with Smart Noise Cancellation"
+    company: "Carestream Health, Inc."
+    product_code: MQB
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Carestream Eclipse II with Smart Noise Cancellation -
+      image denoising. Reconstruction/enhancement.
+
+  # ---------------------------------------------------------------- NQQ
+  - submission_number: K182616
+    device: "NvisionVLE Imaging System, NvisionVLE Optical Probe, NvisionVLE Inflation System"
+    company: "NinePoint Medical, Inc."
+    product_code: NQQ
+    year: 2018
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: NinePoint Medical's NvisionVLE Imaging System with the Intelligent Real-time
+      Image Segmentation (IRIS) AI upgrade, cleared November 2018. Volumetric laser endomicroscopy
+      of the oesophagus; IRIS colourises image features in real time to guide biopsy in Barrett's
+      oesophagus surveillance, and the randomised cross-over trial of the IRIS algorithm (Sci Rep
+      2022) measured dysplasia detection as its endpoint. Target is Barrett's dysplasia / early
+      oesophageal adenocarcinoma, so neoplastic. MEDIUM confidence because the cleared indication
+      is written generically as imaging and segmentation of oesophageal tissue microstructure and
+      does not itself name dysplasia or cancer.
+  - submission_number: K203578
+    device: "OTIS 2.1 Optical Coherence Tomography System, THiA Optical Coherence Tomography System"
+    company: "Perimeter Medical Imaging AI, Inc."
+    product_code: NQQ
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Perimeter Medical Imaging AI's OTIS 2.1 / THiA optical coherence tomography
+      system, cleared 2021-02-25. Point-of-care OCT imaging of EXCISED tissue specimen margins at
+      ~2 mm depth; the company's entire clinical programme and its later PMA (ImgAssist/Claire)
+      are intraoperative margin assessment in breast-conserving surgery (see NCT04314700,
+      "Intraoperative Use of an OCT Imaging System to Guide Additional Margin Cavity Shaves in
+      Breast Conserving Surgery"). Residual-cancer margin assessment is cancer characterisation.
+      MEDIUM confidence because K203578's own indication is written generically as "evaluation of
+      excised human tissue microstructure" with region-of-interest annotation. CATEGORY NOTE:
+      placed in radiology_cancer_detection because the panel is Radiology and it is an imaging
+      device, but it is functionally an intraoperative substitute for frozen-section pathology and
+      would sit equally well under `pathology`.
+  - submission_number: K210458
+    device: "OPTIS Mobile Next Imaging System, OPTIS Integrated Next Imaging System"
+    company: "Abbott Medical"
+    product_code: NQQ
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Abbott OPTIS Mobile/Integrated Next Imaging System - intravascular optical coherence
+      tomography for coronary artery imaging during PCI. Cardiovascular, not cancer.
+
+  # ---------------------------------------------------------------- OUO
+  - submission_number: K234154
+    device: "uPMR 790"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: OUO
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. United Imaging uPMR 790 - integrated PET/MR scanner; the
+      AI content is image reconstruction and attenuation correction. PET/MR is used heavily in
+      oncology, but the device is an acquisition and reconstruction platform with no cancer-
+      specific algorithm, which the brief classifies as not_oncology.
+  - submission_number: K253023
+    device: "BIOGRAPH One"
+    company: "Siemens Healthineers AG"
+    product_code: OUO
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Siemens BIOGRAPH One - PET/CT-class tomographic imager
+      with AI reconstruction. Acquisition and reconstruction platform; same reasoning as uPMR 790.
+
+  # ---------------------------------------------------------------- OXO
+  - submission_number: K253269
+    device: "OEC One CFD"
+    company: "Ge Hualun Medical Systems Co. , Ltd."
+    product_code: OXO
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. GE OEC One CFD - mobile image-intensified fluoroscopy
+      C-arm. Acquisition hardware.
+
+  # ---------------------------------------------------------------- LDK
+  - submission_number: K232023
+    device: "Momentum Spine"
+    company: "Momentum Health Inc."
+    product_code: LDK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. Momentum Health Momentum Spine - smartphone optical
+      contour sensing that builds a 3D torso model to quantify postural asymmetry and scoliosis
+      curve progression without radiation. Musculoskeletal, not cancer.
+
+  # ---------------------------------------------------------------- IZL
+  - submission_number: K212654
+    device: "Micro C Medical Imaging System, M01"
+    company: "OXOS Medical, Inc."
+    product_code: IZL
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Imaging hardware / acquisition / reconstruction, which the brief classifies as not_oncology
+      even on cancer-capable equipment. OXOS Micro C Medical Imaging System - handheld/portable
+      fluoroscopy-radiography unit, marketed for orthopaedic and extremity imaging. Acquisition
+      hardware.

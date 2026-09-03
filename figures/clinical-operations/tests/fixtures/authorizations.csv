@@ -1,0 +1,160 @@
+# FIXTURE — stand-in table for figure development. NOT the real pipeline output.
+# Totals match the measured FDA snapshot through 2026-03-30 (radiology cancer
+# detection 66, radiation therapy 79, pathology 9). Per-year splits in years the
+# source brief did not quote, radiology device names, companies and exact decision
+# dates are invented. Regenerate from data/processed/ before publishing anything.
+submission_number,decision_date,year,device,company,panel_lead,product_code,domain,category,category_label,pathway,regulation_number
+K160001,2016-01-01,2016,Radiology AI device 1,Vendor 2,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2060
+K170002,2017-01-01,2017,Radiology AI device 2,Vendor 3,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2050
+DEN180003,2018-01-01,2018,Radiology AI device 3,Vendor 4,Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,De Novo,892.8500
+K180004,2018-12-08,2018,Radiology AI device 4,Vendor 5,Radiology,OTE,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K190005,2019-01-01,2019,Radiology AI device 5,Vendor 6,Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+P190006,2019-12-08,2019,Radiology AI device 6,Vendor 7,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,PMA,892.2090
+K190007,2019-11-15,2019,Radiology AI device 7,Vendor 8,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2060
+K190008,2019-10-22,2019,Radiology AI device 8,Vendor 9,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2050
+K200009,2020-01-01,2020,Radiology AI device 9,Vendor 10,Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.8500
+K200010,2020-12-08,2020,Radiology AI device 10,Vendor 11,Radiology,OTE,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K200011,2020-11-15,2020,Radiology AI device 11,Vendor 12,Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K200012,2020-10-22,2020,Radiology AI device 12,Vendor 13,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2090
+K200013,2020-09-01,2020,Radiology AI device 13,Vendor 14,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2060
+K200014,2020-08-08,2020,Radiology AI device 14,Vendor 15,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2050
+P210015,2021-01-01,2021,Radiology AI device 15,Vendor 16,Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,PMA,892.8500
+K210016,2021-12-08,2021,Radiology AI device 16,Vendor 17,Radiology,OTE,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K210017,2021-11-15,2021,Radiology AI device 17,Vendor 18,Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K210018,2021-10-22,2021,Radiology AI device 18,Vendor 19,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2090
+K210019,2021-09-01,2021,Radiology AI device 19,Vendor 20,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2060
+K210020,2021-08-08,2021,Radiology AI device 20,Vendor 21,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2050
+K210021,2021-07-15,2021,Radiology AI device 21,Vendor 22,Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.8500
+K220022,2022-01-01,2022,Radiology AI device 22,Vendor 23,Radiology,OTE,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K220023,2022-12-08,2022,Radiology AI device 23,Vendor 24,Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K220024,2022-11-15,2022,Radiology AI device 24,Vendor 25,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2090
+K220025,2022-10-22,2022,Radiology AI device 25,Vendor 26,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2060
+K220026,2022-09-01,2022,Radiology AI device 26,Vendor 27,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2050
+K220027,2022-08-08,2022,Radiology AI device 27,Vendor 28,Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.8500
+K220028,2022-07-15,2022,Radiology AI device 28,Vendor 29,Radiology,OTE,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+DEN230029,2023-01-01,2023,Radiology AI device 29,Vendor 30,Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,De Novo,
+K230030,2023-12-08,2023,Radiology AI device 30,Vendor 31,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2090
+K230031,2023-11-15,2023,Radiology AI device 31,Vendor 32,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2060
+K230032,2023-10-22,2023,Radiology AI device 32,Vendor 33,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2050
+K230033,2023-09-01,2023,Radiology AI device 33,Vendor 34,Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.8500
+K230034,2023-08-08,2023,Radiology AI device 34,Vendor 35,Radiology,OTE,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K230035,2023-07-15,2023,Radiology AI device 35,Vendor 36,Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K230036,2023-06-22,2023,Radiology AI device 36,Vendor 37,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2090
+K230037,2023-05-01,2023,Radiology AI device 37,Vendor 1,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2060
+K240038,2024-01-01,2024,Radiology AI device 38,Vendor 2,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2050
+K240039,2024-12-08,2024,Radiology AI device 39,Vendor 3,Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.8500
+K240040,2024-11-15,2024,Radiology AI device 40,Vendor 4,Radiology,OTE,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K240041,2024-10-22,2024,Radiology AI device 41,Vendor 5,Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K240042,2024-09-01,2024,Radiology AI device 42,Vendor 6,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2090
+K240043,2024-08-08,2024,Radiology AI device 43,Vendor 7,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2060
+K240044,2024-07-15,2024,Radiology AI device 44,Vendor 8,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2050
+K240045,2024-06-22,2024,Radiology AI device 45,Vendor 9,Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.8500
+K240046,2024-05-01,2024,Radiology AI device 46,Vendor 10,Radiology,OTE,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K240047,2024-04-08,2024,Radiology AI device 47,Vendor 11,Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K250048,2025-01-01,2025,Radiology AI device 48,Vendor 12,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2090
+K250049,2025-12-08,2025,Radiology AI device 49,Vendor 13,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2060
+K250050,2025-11-15,2025,Radiology AI device 50,Vendor 14,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2050
+K250051,2025-10-22,2025,Radiology AI device 51,Vendor 15,Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.8500
+K250052,2025-09-01,2025,Radiology AI device 52,Vendor 16,Radiology,OTE,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K250053,2025-08-08,2025,Radiology AI device 53,Vendor 17,Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K250054,2025-07-15,2025,Radiology AI device 54,Vendor 18,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2090
+K250055,2025-06-22,2025,Radiology AI device 55,Vendor 19,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2060
+K250056,2025-05-01,2025,Radiology AI device 56,Vendor 20,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2050
+K250057,2025-04-08,2025,Radiology AI device 57,Vendor 21,Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.8500
+K250058,2025-03-15,2025,Radiology AI device 58,Vendor 22,Radiology,OTE,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K250059,2025-02-22,2025,Radiology AI device 59,Vendor 23,Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K250060,2025-01-01,2025,Radiology AI device 60,Vendor 24,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2090
+K250061,2025-12-08,2025,Radiology AI device 61,Vendor 25,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2060
+K250062,2025-11-15,2025,Radiology AI device 62,Vendor 26,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2050
+K260063,2026-01-01,2026,Radiology AI device 63,Vendor 27,Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.8500
+K260064,2026-03-08,2026,Radiology AI device 64,Vendor 28,Radiology,OTE,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K260065,2026-02-15,2026,Radiology AI device 65,Vendor 29,Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),
+K260066,2026-01-22,2026,Radiology AI device 66,Vendor 30,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and diagnosis,510(k),892.2090
+K180067,2018-01-01,2018,Radiology AI device 1,Vendor 2,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K190068,2019-01-01,2019,Radiology AI device 2,Vendor 3,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K190069,2019-12-08,2019,Radiology AI device 3,Vendor 4,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K200070,2020-01-01,2020,Radiology AI device 4,Vendor 5,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K200071,2020-12-08,2020,Radiology AI device 5,Vendor 6,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K200072,2020-11-15,2020,Radiology AI device 6,Vendor 7,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K200073,2020-10-22,2020,Radiology AI device 7,Vendor 8,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K200074,2020-09-01,2020,Radiology AI device 8,Vendor 9,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K200075,2020-08-08,2020,Radiology AI device 9,Vendor 10,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K200076,2020-07-15,2020,Radiology AI device 10,Vendor 11,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K200077,2020-06-22,2020,Radiology AI device 11,Vendor 12,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K200078,2020-05-01,2020,Radiology AI device 12,Vendor 13,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K210079,2021-01-01,2021,Radiology AI device 13,Vendor 14,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K210080,2021-12-08,2021,Radiology AI device 14,Vendor 15,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K210081,2021-11-15,2021,Radiology AI device 15,Vendor 16,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K210082,2021-10-22,2021,Radiology AI device 16,Vendor 17,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K210083,2021-09-01,2021,Radiology AI device 17,Vendor 18,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K210084,2021-08-08,2021,Radiology AI device 18,Vendor 19,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K210085,2021-07-15,2021,Radiology AI device 19,Vendor 20,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K210086,2021-06-22,2021,Radiology AI device 20,Vendor 21,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K210087,2021-05-01,2021,Radiology AI device 21,Vendor 22,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K210088,2021-04-08,2021,Radiology AI device 22,Vendor 23,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K210089,2021-03-15,2021,Radiology AI device 23,Vendor 24,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K210090,2021-02-22,2021,Radiology AI device 24,Vendor 25,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K210091,2021-01-01,2021,Radiology AI device 25,Vendor 26,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K210092,2021-12-08,2021,Radiology AI device 26,Vendor 27,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K210093,2021-11-15,2021,Radiology AI device 27,Vendor 28,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K210094,2021-10-22,2021,Radiology AI device 28,Vendor 29,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K210095,2021-09-01,2021,Radiology AI device 29,Vendor 30,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+P220096,2022-01-01,2022,Radiology AI device 30,Vendor 31,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,PMA,892.2050
+K220097,2022-12-08,2022,Radiology AI device 31,Vendor 32,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K220098,2022-11-15,2022,Radiology AI device 32,Vendor 33,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K220099,2022-10-22,2022,Radiology AI device 33,Vendor 34,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K220100,2022-09-01,2022,Radiology AI device 34,Vendor 35,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K220101,2022-08-08,2022,Radiology AI device 35,Vendor 36,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K220102,2022-07-15,2022,Radiology AI device 36,Vendor 37,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K220103,2022-06-22,2022,Radiology AI device 37,Vendor 1,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K220104,2022-05-01,2022,Radiology AI device 38,Vendor 2,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K220105,2022-04-08,2022,Radiology AI device 39,Vendor 3,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K230106,2023-01-01,2023,Radiology AI device 40,Vendor 4,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K230107,2023-12-08,2023,Radiology AI device 41,Vendor 5,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K230108,2023-11-15,2023,Radiology AI device 42,Vendor 6,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K230109,2023-10-22,2023,Radiology AI device 43,Vendor 7,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K230110,2023-09-01,2023,Radiology AI device 44,Vendor 8,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K230111,2023-08-08,2023,Radiology AI device 45,Vendor 9,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K230112,2023-07-15,2023,Radiology AI device 46,Vendor 10,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K230113,2023-06-22,2023,Radiology AI device 47,Vendor 11,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K240114,2024-01-01,2024,Radiology AI device 48,Vendor 12,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K240115,2024-12-08,2024,Radiology AI device 49,Vendor 13,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K240116,2024-11-15,2024,Radiology AI device 50,Vendor 14,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K240117,2024-10-22,2024,Radiology AI device 51,Vendor 15,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K240118,2024-09-01,2024,Radiology AI device 52,Vendor 16,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K240119,2024-08-08,2024,Radiology AI device 53,Vendor 17,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K240120,2024-07-15,2024,Radiology AI device 54,Vendor 18,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K240121,2024-06-22,2024,Radiology AI device 55,Vendor 19,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K240122,2024-05-01,2024,Radiology AI device 56,Vendor 20,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K240123,2024-04-08,2024,Radiology AI device 57,Vendor 21,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K240124,2024-03-15,2024,Radiology AI device 58,Vendor 22,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K240125,2024-02-22,2024,Radiology AI device 59,Vendor 23,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K240126,2024-01-01,2024,Radiology AI device 60,Vendor 24,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K250127,2025-01-01,2025,Radiology AI device 61,Vendor 25,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K250128,2025-12-08,2025,Radiology AI device 62,Vendor 26,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K250129,2025-11-15,2025,Radiology AI device 63,Vendor 27,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K250130,2025-10-22,2025,Radiology AI device 64,Vendor 28,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K250131,2025-09-01,2025,Radiology AI device 65,Vendor 29,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K250132,2025-08-08,2025,Radiology AI device 66,Vendor 30,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K250133,2025-07-15,2025,Radiology AI device 67,Vendor 31,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K250134,2025-06-22,2025,Radiology AI device 68,Vendor 32,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K250135,2025-05-01,2025,Radiology AI device 69,Vendor 33,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K250136,2025-04-08,2025,Radiology AI device 70,Vendor 34,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K250137,2025-03-15,2025,Radiology AI device 71,Vendor 35,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K250138,2025-02-22,2025,Radiology AI device 72,Vendor 36,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K260139,2026-01-01,2026,Radiology AI device 73,Vendor 37,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K260140,2026-03-08,2026,Radiology AI device 74,Vendor 1,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K260141,2026-02-15,2026,Radiology AI device 75,Vendor 2,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K260142,2026-01-22,2026,Radiology AI device 76,Vendor 3,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K260143,2026-03-01,2026,Radiology AI device 77,Vendor 4,Radiology,IYE,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+K260144,2026-02-08,2026,Radiology AI device 78,Vendor 5,Radiology,QKB,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.2050
+K260145,2026-01-15,2026,Radiology AI device 79,Vendor 6,Radiology,MUJ,radiology,radiology_radiation_therapy,Radiation therapy planning,510(k),892.5050
+P940029,1995-04-25,1995,PAPNET Testing System,Neuromedical Systems,Pathology,MNM,pathology,pathology,Digital pathology,PMA,
+P950009,1995-12-27,1995,AUTOPAP 300 QC Automatic Pap Screener,NeoPath,Pathology,NMN,pathology,pathology,Digital pathology,PMA,
+DEN200080,2021-09-21,2021,Paige Prostate,Paige.AI,Pathology,QPN,pathology,pathology,Digital pathology,De Novo,864.3750
+P210011,2023-04-13,2023,Tempus xT CDx,Tempus AI,Pathology,PQP,pathology,pathology,Digital pathology,PMA,
+DEN210035,2024-01-08,2024,Genius Digital Diagnostics System,Hologic,Pathology,QYV,pathology,pathology,Digital pathology,De Novo,864.3900
+K241232,2025-02-14,2025,Galen Second Read Prostate,Ibex Medical Analytics,Pathology,QPN,pathology,pathology,Digital pathology,510(k),864.3750
+DEN240068,2025-03-27,2025,ArteraAI Prostate Test,Artera,Pathology,SFH,pathology,pathology,Digital pathology,De Novo,864.3755
+K250003,2025-06-05,2025,GENESEEQPRIME,Genetron Health,Pathology,PZM,pathology,pathology,Digital pathology,510(k),866.6080
+K243449,2025-11-19,2025,INFINITT Digital Pathology Solution,INFINITT Healthcare,Pathology,QKQ,pathology,pathology,Digital pathology,510(k),864.3700

@@ -1,0 +1,84 @@
+{
+  "generated_utc": "2026-09-03T20:20:45Z",
+  "tool": "clinops.fetch",
+  "clinops": "0.1.0",
+  "python": "3.13.1",
+  "pandas": "3.0.5",
+  "snapshot_date": "2026-03-30",
+  "snapshot_date_source": "max(Date of Final Decision) in the downloaded list",
+  "config": {
+    "path": "config/source.yaml",
+    "version": 1,
+    "sha256": "8319ae05e6d006dc84b9d9885b1a6d72fb15cef3608dee140556b7115d5b7a6a"
+  },
+  "device_list": {
+    "name": "FDA Artificial Intelligence-Enabled Medical Devices",
+    "csv_url": "https://www.fda.gov/media/178541/download?attachment",
+    "landing_page": "https://www.fda.gov/medical-devices/software-medical-device-samd/artificial-intelligence-enabled-medical-devices",
+    "alternate_urls": {
+      "xlsx": "https://www.fda.gov/media/178540/download?attachment",
+      "xml": "https://www.fda.gov/media/178565/download?attachment"
+    },
+    "n_rows": 1524,
+    "required_columns": [
+      "Date of Final Decision",
+      "Submission Number",
+      "Device",
+      "Company",
+      "Panel (Lead)",
+      "Primary Product Code"
+    ]
+  },
+  "classification_lookup": {
+    "endpoint": "https://api.fda.gov/device/classification.json",
+    "last_updated": "2026-08-17",
+    "batch_size": 50,
+    "requests_per_second": 2,
+    "fields_kept_downstream": [
+      "product_code",
+      "device_name",
+      "definition",
+      "regulation_number",
+      "device_class",
+      "medical_specialty_description",
+      "review_panel"
+    ],
+    "n_batches": 4,
+    "n_codes_queried": 172,
+    "n_codes_with_record": 172,
+    "codes_without_record": []
+  },
+  "files": {
+    "devices.csv": {
+      "source_url": "https://www.fda.gov/media/178541/download?attachment",
+      "sha256": "4da0d15a1dcc7b6a7d45364f243e85aa4407ba3b63b6922a16fdbf96fea0d41d",
+      "bytes": 132922,
+      "http_last_modified": "Tue, 16 Jun 2026 19:15:37 GMT",
+      "n_rows": 1524
+    },
+    "classification_001.json": {
+      "source_url": "https://api.fda.gov/device/classification.json?search=product_code%3A%28%22BXQ%22%20%22BZD%22%20%22BZG%22%20%22BZQ%22%20%22DPS%22%20%22DPT%22%20%22DQA%22%20%22DQD%22%20%22DQK%22%20%22DRG%22%20%22DSB%22%20%22DSH%22%20%22DSI%22%20%22DXH%22%20%22GEH%22%20%22GKZ%22%20%22GWF%22%20%22GWN%22%20%22GXY%22%20%22GYD%22%20%22HAW%22%20%22HGM%22%20%22IYE%22%20%22IYN%22%20%22IYO%22%20%22IZL%22%20%22JAA%22%20%22JAK%22%20%22JFY%22%20%22JIL%22%20%22JIR%22%20%22JOY%22%20%22KGI%22%20%22KPR%22%20%22KPS%22%20%22KWS%22%20%22LDK%22%20%22LEL%22%20%22LKM%22%20%22LLZ%22%20%22LNH%22%20%22MAX%22%20%22MHX%22%20%22MKJ%22%20%22MLO%22%20%22MNM%22%20%22MNR%22%20%22MQB%22%20%22MRZ%22%20%22MUD%22%29&limit=1000",
+      "sha256": "e8c347e343b23e28678d02f2ecd0141c347c3532d5f584d9cc2f43da2ecd8ba5",
+      "bytes": 675501
+    },
+    "classification_002.json": {
+      "source_url": "https://api.fda.gov/device/classification.json?search=product_code%3A%28%22MUJ%22%20%22MVK%22%20%22MWI%22%20%22MWJ%22%20%22MWM%22%20%22MXD%22%20%22MYE%22%20%22MYN%22%20%22NAY%22%20%22NBW%22%20%22NCG%22%20%22NDC%22%20%22NFJ%22%20%22NMN%22%20%22NQQ%22%20%22NVI%22%20%22OBH%22%20%22OEB%22%20%22OEE%22%20%22OIW%22%20%22OLO%22%20%22OLV%22%20%22OLZ%22%20%22OMB%22%20%22ONV%22%20%22OOG%22%20%22OTE%22%20%22OUO%22%20%22OWB%22%20%22OXO%22%20%22OYD%22%20%22OZE%22%20%22PBH%22%20%22PBZ%22%20%22PCS%22%20%22PEX%22%20%22PGW%22%20%22PHZ%22%20%22PIB%22%20%22PIW%22%20%22PJA%22%20%22PLB%22%20%22PNN%22%20%22POK%22%20%22POS%22%20%22POV%22%20%22PPU%22%20%22PPW%22%20%22PQP%22%20%22PRE%22%29&limit=1000",
+      "sha256": "f65698eb4020a034fe364a58533744b69228231800fc42d5f942adb2e77e3a5f",
+      "bytes": 185629
+    },
+    "classification_003.json": {
+      "source_url": "https://api.fda.gov/device/classification.json?search=product_code%3A%28%22PRH%22%20%22PTA%22%20%22PZM%22%20%22PZP%22%20%22QAQ%22%20%22QAS%22%20%22QBC%22%20%22QBS%22%20%22QCC%22%20%22QCJ%22%20%22QDA%22%20%22QDB%22%20%22QDQ%22%20%22QEA%22%20%22QEK%22%20%22QER%22%20%22QFJ%22%20%22QFM%22%20%22QHA%22%20%22QHE%22%20%22QIH%22%20%22QJB%22%20%22QJU%22%20%22QKB%22%20%22QKQ%22%20%22QME%22%20%22QMS%22%20%22QNK%22%20%22QNL%22%20%22QNP%22%20%22QNV%22%20%22QOK%22%20%22QPF%22%20%22QPN%22%20%22QQI%22%20%22QRG%22%20%22QRY%22%20%22QTZ%22%20%22QUO%22%20%22QVD%22%20%22QVE%22%20%22QVT%22%20%22QWO%22%20%22QWT%22%20%22QWZ%22%20%22QXO%22%20%22QXX%22%20%22QXZ%22%20%22QYE%22%20%22QYV%22%29&limit=1000",
+      "sha256": "c67d3a7d2f956d4a5eeeeed845c6402a0947271b4ea9af13744b01bdaad22949",
+      "bytes": 95312
+    },
+    "classification_004.json": {
+      "source_url": "https://api.fda.gov/device/classification.json?search=product_code%3A%28%22QZB%22%20%22QZF%22%20%22QZS%22%20%22QZW%22%20%22SAK%22%20%22SAO%22%20%22SAR%22%20%22SAT%22%20%22SAX%22%20%22SBC%22%20%22SBF%22%20%22SBQ%22%20%22SDJ%22%20%22SDY%22%20%22SEZ%22%20%22SFE%22%20%22SFH%22%20%22SFR%22%20%22SGH%22%20%22SHE%22%20%22SHH%22%20%22SHL%22%29&limit=1000",
+      "sha256": "11c50d298ecf362f2896b625f60be1e0ab06a4407304511a2ad310307e3317bb",
+      "bytes": 28711
+    }
+  },
+  "cli_args": [
+    "--config",
+    "config/source.yaml"
+  ]
+}

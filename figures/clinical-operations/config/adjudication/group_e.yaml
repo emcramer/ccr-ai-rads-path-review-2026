@@ -1,0 +1,2849 @@
+# Group E - RE-ADJUDICATION OF THE CODES THAT ALREADY CARRY A CODE-LEVEL VERDICT.
+#
+# Scope: the 17 codes counted as oncology in config/oncology_codes.yaml (QDQ, POK, OEB, SEZ, OTE,
+# QNK, QKB, MUJ, IYE, QPN, SFH, QKQ, QYV, PZM, PQP, MNM, NMN; 154 devices) and the 11 codes excluded
+# there as not-oncology (QFM, QBS, QWO, SAO, KGI, QHA, PCS, QVD, SGH, SHE, NFJ; 64 devices), all
+# restricted to Panel (Lead) of Radiology or Pathology. 218 rows, each adjudicated on its own merits
+# with the code-level verdict treated as a prior rather than an answer. The prior fails in BOTH
+# directions. POK, admitted on its device-type NAME ("...Lesions Suspicious For Cancer") when its
+# actual openFDA DEFINITION says only "assist users in characterizing lesions identified on acquired
+# medical images", contains 14 devices that are stroke (6), cardiac (4) or obstetric (4) and only 7
+# that are oncologic. QFM, excluded wholesale, contains 6 mammography triage devices, not the 1 the
+# config documents. The two OTE mammography PMA supplements are acquisition hardware and fall to the
+# brief's hardware rule. QKQ's INFINITT DPS is a whole-slide VIEWER with no cancer-specific function
+# and falls to the brief's PACS/workflow rule, contradicting the config's thesis-driven inclusion -
+# flagged, not resolved. QDQ (32/32), OEB (9/9), QKB+MUJ+IYE (79/79 radiation therapy) and the
+# pathology codes other than QKQ all survive device-by-device review intact, and the two 1995 Pap
+# screeners (PAPNET P940029, AUTOPAP P950009) are confirmed as cervical cytology screeners with the
+# NMN override still necessary.
+#
+# RESULT: 143 oncology, 67 not_oncology, 8 unresolved.
+# By category: radiology_cancer_detection 56, radiology_radiation_therapy 79, pathology 8.
+# Versus the code-level verdict for these same 218 rows (154 counted / 64 excluded), the net change is
+# -14 POK, -2 OTE, -1 QKQ, +6 QFM = 143 counted: radiology_cancer_detection 66 -> 56,
+# radiology_radiation_therapy 79 -> 79, pathology 9 -> 8. Two further scope flags that are raised but
+# NOT acted on: PZM and PQP are NGS sequencing assays inside a figure arguing about imaging AI
+# (removing them would take pathology to 6), and P200003 Imagio is counted against the hardware rule
+# on the grounds that its only cleared output is a benign-versus-malignant determination.
+
+version: 1
+codes: [QDQ, POK, OEB, SEZ, OTE, QNK, QKB, MUJ, IYE, QPN, SFH, QKQ, QYV, PZM, PQP, MNM, NMN, QFM, QBS, QWO, SAO, KGI, QHA, PCS, QVD, SGH, SHE, NFJ]
+n_devices: 218
+adjudicated:
+
+  # ---------------- QDQ ----------------
+  - submission_number: "K181704"
+    device: "Transpara"
+    company: "ScreenPoint Medical BV"
+    product_code: QDQ
+    year: 2018
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: ScreenPoint Medical's Transpara, a concurrent-read AI for screening mammography
+      and digital breast tomosynthesis that marks suspicious lesions and returns a case-level cancer
+      suspicion score. Product code QDQ, 892.2090, whose FDA definition names the indication
+      directly: "aid in the detection, localization, and characterization of lesions suspicious for
+      cancer".
+  - submission_number: "K182373"
+    device: "PowerLook Tomo Detection V2 Software"
+    company: "iCAD Inc."
+    product_code: QDQ
+    year: 2018
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: iCAD's PowerLook Tomo Detection V2, computer-aided detection of malignant soft-
+      tissue densities on digital breast tomosynthesis. Product code QDQ, 892.2090, whose FDA
+      definition names the indication directly: "aid in the detection, localization, and
+      characterization of lesions suspicious for cancer".
+  - submission_number: "K191994"
+    device: "ProFound AI Software V2.1"
+    company: "iCAD Inc."
+    product_code: QDQ
+    year: 2019
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: iCAD's ProFound AI / ProFound Detection, which detects and assigns a Certainty
+      of Finding malignancy score to soft-tissue densities and calcifications on digital breast
+      tomosynthesis. Product code QDQ, 892.2090, whose FDA definition names the indication directly:
+      "aid in the detection, localization, and characterization of lesions suspicious for cancer".
+  - submission_number: "K192287"
+    device: "Transpara"
+    company: "Screenpoint Medical B.V."
+    product_code: QDQ
+    year: 2019
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: ScreenPoint Medical's Transpara, a concurrent-read AI for screening mammography
+      and digital breast tomosynthesis that marks suspicious lesions and returns a case-level cancer
+      suspicion score. Product code QDQ, 892.2090, whose FDA definition names the indication
+      directly: "aid in the detection, localization, and characterization of lesions suspicious for
+      cancer".
+  - submission_number: "K192854"
+    device: "MammoScreen"
+    company: "Therapixel"
+    product_code: QDQ
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Therapixel's MammoScreen, an AI reader for 2D screening mammography that
+      returns a per-lesion and per-breast suspicion-of-malignancy score. Product code QDQ, 892.2090,
+      whose FDA definition names the indication directly: "aid in the detection, localization, and
+      characterization of lesions suspicious for cancer".
+  - submission_number: "K193229"
+    device: "Transpara"
+    company: "ScreenPoint Medical B.V."
+    product_code: QDQ
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: ScreenPoint Medical's Transpara, a concurrent-read AI for screening mammography
+      and digital breast tomosynthesis that marks suspicious lesions and returns a case-level cancer
+      suspicion score. Product code QDQ, 892.2090, whose FDA definition names the indication
+      directly: "aid in the detection, localization, and characterization of lesions suspicious for
+      cancer".
+  - submission_number: "K201019"
+    device: "Genius AI Detection"
+    company: "Hologic, Inc."
+    product_code: QDQ
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Hologic's Genius AI Detection, lesion detection and case scoring on 3D
+      mammography (Genius 3D exams). Product code QDQ, 892.2090, whose FDA definition names the
+      indication directly: "aid in the detection, localization, and characterization of lesions
+      suspicious for cancer".
+  - submission_number: "K203822"
+    device: "ProFound AI Software V3.0"
+    company: "iCAD Inc."
+    product_code: QDQ
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: iCAD's ProFound AI / ProFound Detection, which detects and assigns a Certainty
+      of Finding malignancy score to soft-tissue densities and calcifications on digital breast
+      tomosynthesis. Product code QDQ, 892.2090, whose FDA definition names the indication directly:
+      "aid in the detection, localization, and characterization of lesions suspicious for cancer".
+  - submission_number: "K210404"
+    device: "Transpara 1.7.0"
+    company: "ScreenPoint Medical B.V."
+    product_code: QDQ
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: ScreenPoint Medical's Transpara, a concurrent-read AI for screening mammography
+      and digital breast tomosynthesis that marks suspicious lesions and returns a case-level cancer
+      suspicion score. Product code QDQ, 892.2090, whose FDA definition names the indication
+      directly: "aid in the detection, localization, and characterization of lesions suspicious for
+      cancer".
+  - submission_number: "K210670"
+    device: "BU-CAD"
+    company: "TaiHao Medical Inc."
+    product_code: QDQ
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states the function: TaiHao Medical's "BU-CAD" is breast ultrasound computer-aided
+      detection/diagnosis, producing BI-RADS category assessment of breast lesions. Product code
+      QDQ, 892.2090, whose FDA definition names the indication directly: "aid in the detection,
+      localization, and characterization of lesions suspicious for cancer".
+  - submission_number: "K211541"
+    device: "MammoScreen 2.0"
+    company: "Therapixel"
+    product_code: QDQ
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Therapixel's MammoScreen, an AI reader for 2D screening mammography that
+      returns a per-lesion and per-breast suspicion-of-malignancy score. Product code QDQ, 892.2090,
+      whose FDA definition names the indication directly: "aid in the detection, localization, and
+      characterization of lesions suspicious for cancer".
+  - submission_number: "K211678"
+    device: "Lunit INSIGHT MMG"
+    company: "Lunit Inc."
+    product_code: QDQ
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Lunit INSIGHT MMG, mammography AI that localises malignant lesions and returns
+      an abnormality score. Product code QDQ, 892.2090, whose FDA definition names the indication
+      directly: "aid in the detection, localization, and characterization of lesions suspicious for
+      cancer".
+  - submission_number: "K212783"
+    device: "ProstatID"
+    company: "ScanMed, LLC"
+    product_code: QDQ
+    year: 2022
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: ScanMed's ProstatID, a multiparametric prostate MRI CAD that returns a per-
+      lesion likelihood of clinically significant prostate cancer. Brief lists prostate MRI lesion /
+      PI-RADS tools as oncology. Product code QDQ, 892.2090, whose FDA definition names the
+      indication directly: "aid in the detection, localization, and characterization of lesions
+      suspicious for cancer".
+  - submission_number: "K220105"
+    device: "Saige-Dx"
+    company: "DeepHealth, Inc."
+    product_code: QDQ
+    year: 2022
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: DeepHealth's Saige-Dx, AI detection and per-lesion suspicion scoring of cancer
+      on screening mammography and DBT. Product code QDQ, 892.2090, whose FDA definition names the
+      indication directly: "aid in the detection, localization, and characterization of lesions
+      suspicious for cancer".
+  - submission_number: "K221347"
+    device: "Transpara 1.7.2"
+    company: "ScreenPoint Medical B.V."
+    product_code: QDQ
+    year: 2022
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: ScreenPoint Medical's Transpara, a concurrent-read AI for screening mammography
+      and digital breast tomosynthesis that marks suspicious lesions and returns a case-level cancer
+      suspicion score. Product code QDQ, 892.2090, whose FDA definition names the indication
+      directly: "aid in the detection, localization, and characterization of lesions suspicious for
+      cancer".
+  - submission_number: "K221449"
+    device: "Genius AI Detection 2.0"
+    company: "Hologic, Inc."
+    product_code: QDQ
+    year: 2022
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Hologic's Genius AI Detection, lesion detection and case scoring on 3D
+      mammography (Genius 3D exams). Product code QDQ, 892.2090, whose FDA definition names the
+      indication directly: "aid in the detection, localization, and characterization of lesions
+      suspicious for cancer".
+  - submission_number: "K230096"
+    device: "Genius AI Detection 2.0 with CC-MLO Correlation"
+    company: "Hologic, Inc."
+    product_code: QDQ
+    year: 2023
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Hologic's Genius AI Detection 2.0 with CC-MLO correlation, which matches
+      suspicious mammographic findings across the two standard views. Product code QDQ, 892.2090,
+      whose FDA definition names the indication directly: "aid in the detection, localization, and
+      characterization of lesions suspicious for cancer".
+  - submission_number: "K231470"
+    device: "Lunit INSIGHT DBT"
+    company: "Lunit Inc."
+    product_code: QDQ
+    year: 2023
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Lunit INSIGHT DBT, the digital breast tomosynthesis version of Lunit's
+      mammography malignancy detection AI. Product code QDQ, 892.2090, whose FDA definition names
+      the indication directly: "aid in the detection, localization, and characterization of lesions
+      suspicious for cancer".
+  - submission_number: "K240301"
+    device: "MammoScreen® (3)"
+    company: "Therapixel"
+    product_code: QDQ
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Therapixel's MammoScreen, an AI reader for 2D screening mammography that
+      returns a per-lesion and per-breast suspicion-of-malignancy score. Product code QDQ, 892.2090,
+      whose FDA definition names the indication directly: "aid in the detection, localization, and
+      characterization of lesions suspicious for cancer".
+  - submission_number: "K240417"
+    device: "ProFound Detection (V4.0)"
+    company: "iCAD, Inc."
+    product_code: QDQ
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: iCAD's ProFound AI / ProFound Detection, which detects and assigns a Certainty
+      of Finding malignancy score to soft-tissue densities and calcifications on digital breast
+      tomosynthesis. Product code QDQ, 892.2090, whose FDA definition names the indication directly:
+      "aid in the detection, localization, and characterization of lesions suspicious for cancer".
+  - submission_number: "K240697"
+    device: "See-Mode Augmented Reporting Tool, Thyroid (SMART-T)"
+    company: "See-Mode Technologies Pte. Ltd."
+    product_code: QDQ
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states the organ and the function: See-Mode's "Augmented Reporting Tool, Thyroid
+      (SMART-T)" detects, measures and risk-stratifies thyroid nodules (ACR TI-RADS) on ultrasound.
+      The brief lists thyroid nodule tools as oncology. Product code QDQ, 892.2090, whose FDA
+      definition names the indication directly: "aid in the detection, localization, and
+      characterization of lesions suspicious for cancer".
+  - submission_number: "K241747"
+    device: "Saige-Dx"
+    company: "DeepHealth, Inc"
+    product_code: QDQ
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: DeepHealth's Saige-Dx, AI detection and per-lesion suspicion scoring of cancer
+      on screening mammography and DBT. Product code QDQ, 892.2090, whose FDA definition names the
+      indication directly: "aid in the detection, localization, and characterization of lesions
+      suspicious for cancer".
+  - submission_number: "K241831"
+    device: "Transpara (2.1.0)"
+    company: "ScreenPoint Medical B.V."
+    product_code: QDQ
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: ScreenPoint Medical's Transpara, a concurrent-read AI for screening mammography
+      and digital breast tomosynthesis that marks suspicious lesions and returns a case-level cancer
+      suspicion score. Product code QDQ, 892.2090, whose FDA definition names the indication
+      directly: "aid in the detection, localization, and characterization of lesions suspicious for
+      cancer".
+  - submission_number: "K242652"
+    device: "Lunit INSIGHT DBT v1.1"
+    company: "Lunit Inc."
+    product_code: QDQ
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Lunit INSIGHT DBT, the digital breast tomosynthesis version of Lunit's
+      mammography malignancy detection AI. Product code QDQ, 892.2090, whose FDA definition names
+      the indication directly: "aid in the detection, localization, and characterization of lesions
+      suspicious for cancer".
+  - submission_number: "K243688"
+    device: "Saige-Dx (3.1.0)"
+    company: "DeepHealth, Inc."
+    product_code: QDQ
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: DeepHealth's Saige-Dx, AI detection and per-lesion suspicion scoring of cancer
+      on screening mammography and DBT. Product code QDQ, 892.2090, whose FDA definition names the
+      indication directly: "aid in the detection, localization, and characterization of lesions
+      suspicious for cancer".
+  - submission_number: "K241770"
+    device: "Prostate MR AI (VA10A)"
+    company: "Siemens Healthcare GmbH"
+    product_code: QDQ
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states the organ and modality: Siemens "Prostate MR AI", lesion detection and PI-
+      RADS-style characterization on prostate MRI. Brief: prostate MRI lesion tools are oncology.
+      Product code QDQ, 892.2090, whose FDA definition names the indication directly: "aid in the
+      detection, localization, and characterization of lesions suspicious for cancer".
+  - submission_number: "K242683"
+    device: "QP-Prostate® CAD"
+    company: "Quibim S.L."
+    product_code: QDQ
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states the function: Quibim's "QP-Prostate CAD", computer-aided detection of
+      suspicious lesions on multiparametric prostate MRI. Brief: prostate MRI lesion tools are
+      oncology. Product code QDQ, 892.2090, whose FDA definition names the indication directly: "aid
+      in the detection, localization, and characterization of lesions suspicious for cancer".
+  - submission_number: "K243341"
+    device: "Genius AI Detection 2.0"
+    company: "Hologic, Inc."
+    product_code: QDQ
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Hologic's Genius AI Detection, lesion detection and case scoring on 3D
+      mammography (Genius 3D exams). Product code QDQ, 892.2090, whose FDA definition names the
+      indication directly: "aid in the detection, localization, and characterization of lesions
+      suspicious for cancer".
+  - submission_number: "K243679"
+    device: "MammoScreen® (4)"
+    company: "Therapixel"
+    product_code: QDQ
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Therapixel's MammoScreen, an AI reader for 2D screening mammography that
+      returns a per-lesion and per-breast suspicion-of-malignancy score. Product code QDQ, 892.2090,
+      whose FDA definition names the indication directly: "aid in the detection, localization, and
+      characterization of lesions suspicious for cancer".
+  - submission_number: "K251873"
+    device: "Saige-Dx"
+    company: "DeepHealth, Inc."
+    product_code: QDQ
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: DeepHealth's Saige-Dx, AI detection and per-lesion suspicion scoring of cancer
+      on screening mammography and DBT. Product code QDQ, 892.2090, whose FDA definition names the
+      indication directly: "aid in the detection, localization, and characterization of lesions
+      suspicious for cancer".
+  - submission_number: "K251474"
+    device: "Median LCS (internal name) / eyonis LCS (trade name) (1.0)"
+    company: "Median Technologies"
+    product_code: QDQ
+    year: 2026
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states the function: Median Technologies' "LCS / eyonis LCS" is Lung Cancer Screening
+      software, CADe/CADx for pulmonary nodules on low-dose screening CT. Product code QDQ,
+      892.2090, whose FDA definition names the indication directly: "aid in the detection,
+      localization, and characterization of lesions suspicious for cancer".
+  - submission_number: "K253796"
+    device: "Lunit INSIGHT DBT (V1.2)"
+    company: "Lunit, Inc."
+    product_code: QDQ
+    year: 2026
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Lunit INSIGHT DBT, the digital breast tomosynthesis version of Lunit's
+      mammography malignancy detection AI. Product code QDQ, 892.2090, whose FDA definition names
+      the indication directly: "aid in the detection, localization, and characterization of lesions
+      suspicious for cancer".
+
+  # ---------------- POK ----------------
+  - submission_number: "DEN170022"
+    device: "QuantX"
+    company: "Quantitative Insights, Inc"
+    product_code: POK
+    year: 2017
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Quantitative Insights' QuantX, the first FDA-authorized breast MRI CADx (De
+      Novo DEN170022, 2017); it characterizes breast lesions as benign or malignant and returns a QI
+      score. Note on the code: POK's openFDA DEFINITION is only "Assist users in characterizing
+      lesions identified on acquired medical images" - it never mentions cancer. Only the device-
+      type NAME does. The code therefore cannot carry a wholesale cancer verdict.
+  - submission_number: "K190442"
+    device: "Koios DS for Breast"
+    company: "Koios Medical, Inc."
+    product_code: POK
+    year: 2019
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Koios DS for Breast, breast ultrasound CADx returning a BI-RADS-aligned
+      malignancy risk category. Note on the code: POK's openFDA DEFINITION is only "Assist users in
+      characterizing lesions identified on acquired medical images" - it never mentions cancer. Only
+      the device-type NAME does. The code therefore cannot carry a wholesale cancer verdict.
+  - submission_number: "K200760"
+    device: "Rapid ASPECTS"
+    company: "iSchemaView Inc."
+    product_code: POK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      The name states it: Rapid ASPECTS (iSchemaView) scores the Alberta Stroke Program Early CT
+      Score on non-contrast head CT in acute ischemic stroke. Note on the code: POK's openFDA
+      DEFINITION is only "Assist users in characterizing lesions identified on acquired medical
+      images" - it never mentions cancer. Only the device-type NAME does. The code therefore cannot
+      carry a wholesale cancer verdict.
+  - submission_number: "K201555"
+    device: "EchoGo Pro"
+    company: "Ultromics Ltd"
+    product_code: POK
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: Ultromics' EchoGo Pro, automated stress echocardiography analysis for coronary
+      artery disease. Cardiac, not neoplastic. Note on the code: POK's openFDA DEFINITION is only
+      "Assist users in characterizing lesions identified on acquired medical images" - it never
+      mentions cancer. Only the device-type NAME does. The code therefore cannot carry a wholesale
+      cancer verdict.
+  - submission_number: "K202300"
+    device: "Optellum Virtual Nodule Clinic, Optellum software, Optellum platform"
+    company: "Optellum Ltd"
+    product_code: POK
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Optellum's Virtual Nodule Clinic, which assigns a Lung Cancer Prediction score
+      to indeterminate pulmonary nodules on CT. Note on the code: POK's openFDA DEFINITION is only
+      "Assist users in characterizing lesions identified on acquired medical images" - it never
+      mentions cancer. Only the device-type NAME does. The code therefore cannot carry a wholesale
+      cancer verdict.
+  - submission_number: "K212616"
+    device: "Koios DS"
+    company: "Koios Medical, Inc."
+    product_code: POK
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Koios DS, ultrasound CADx returning a malignancy-risk category for breast
+      lesions and thyroid nodules. Brief lists thyroid nodule tools as oncology. Note on the code:
+      POK's openFDA DEFINITION is only "Assist users in characterizing lesions identified on
+      acquired medical images" - it never mentions cancer. Only the device-type NAME does. The code
+      therefore cannot carry a wholesale cancer verdict.
+  - submission_number: "K221624"
+    device: "Avenda Health AI Prostate Cancer Planning Software"
+    company: "Avenda Health, Inc."
+    product_code: POK
+    year: 2022
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states it: "Avenda Health AI Prostate Cancer Planning Software", which delineates
+      prostate cancer extent to plan focal therapy. Note on the code: POK's openFDA DEFINITION is
+      only "Assist users in characterizing lesions identified on acquired medical images" - it never
+      mentions cancer. Only the device-type NAME does. The code therefore cannot carry a wholesale
+      cancer verdict.
+  - submission_number: "K221564"
+    device: "Brainomix 360 e-ASPECTS"
+    company: "Brainomix Limited"
+    product_code: POK
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      The name states it: Brainomix 360 e-ASPECTS, automated ASPECTS scoring for acute ischemic
+      stroke. Note on the code: POK's openFDA DEFINITION is only "Assist users in characterizing
+      lesions identified on acquired medical images" - it never mentions cancer. Only the device-
+      type NAME does. The code therefore cannot carry a wholesale cancer verdict.
+  - submission_number: "K232156"
+    device: "Rapid ASPECTS (v3)"
+    company: "iSchemaView, Inc."
+    product_code: POK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      The name states it: Rapid ASPECTS (iSchemaView) scores the Alberta Stroke Program Early CT
+      Score on non-contrast head CT in acute ischemic stroke. Note on the code: POK's openFDA
+      DEFINITION is only "Assist users in characterizing lesions identified on acquired medical
+      images" - it never mentions cancer. Only the device-type NAME does. The code therefore cannot
+      carry a wholesale cancer verdict.
+  - submission_number: "K233342"
+    device: "CINA-ASPECTS"
+    company: "Avicenna.AI"
+    product_code: POK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      The name states it: Avicenna.AI's CINA-ASPECTS, automated ASPECTS scoring in acute ischemic
+      stroke. Note on the code: POK's openFDA DEFINITION is only "Assist users in characterizing
+      lesions identified on acquired medical images" - it never mentions cancer. Only the device-
+      type NAME does. The code therefore cannot carry a wholesale cancer verdict.
+  - submission_number: "K234141"
+    device: "AISAP Cardio V1.0"
+    company: "Aisap"
+    product_code: POK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: AISAP Cardio, automated echocardiogram interpretation across cardiac structural
+      and functional findings. Cardiac, not neoplastic. Note on the code: POK's openFDA DEFINITION
+      is only "Assist users in characterizing lesions identified on acquired medical images" - it
+      never mentions cancer. Only the device-type NAME does. The code therefore cannot carry a
+      wholesale cancer verdict.
+  - submission_number: "K241245"
+    device: "EchoSolv AS"
+    company: "Echo IQ Ltd"
+    product_code: POK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Echo IQ's EchoSolv AS, detection of severe aortic stenosis from
+      echocardiography. Cardiac valvular disease. Note on the code: POK's openFDA DEFINITION is only
+      "Assist users in characterizing lesions identified on acquired medical images" - it never
+      mentions cancer. Only the device-type NAME does. The code therefore cannot carry a wholesale
+      cancer verdict.
+  - submission_number: "K242130"
+    device: "Koios DS"
+    company: "Koios Medical, Inc."
+    product_code: POK
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Koios DS, ultrasound CADx returning a malignancy-risk category for breast
+      lesions and thyroid nodules. Brief lists thyroid nodule tools as oncology. Note on the code:
+      POK's openFDA DEFINITION is only "Assist users in characterizing lesions identified on
+      acquired medical images" - it never mentions cancer. Only the device-type NAME does. The code
+      therefore cannot carry a wholesale cancer verdict.
+  - submission_number: "K242342"
+    device: "Fetal EchoScan"
+    company: "BrightHeart"
+    product_code: POK
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: BrightHeart's Fetal EchoScan, AI assessment of the fetal heart on obstetric
+      ultrasound for congenital heart disease. Obstetric/cardiac, not neoplastic. Note on the code:
+      POK's openFDA DEFINITION is only "Assist users in characterizing lesions identified on
+      acquired medical images" - it never mentions cancer. Only the device-type NAME does. The code
+      therefore cannot carry a wholesale cancer verdict.
+  - submission_number: "K243294"
+    device: "Brainomix 360 e-ASPECTS"
+    company: "Brainomix Limited"
+    product_code: POK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      The name states it: Brainomix 360 e-ASPECTS, automated ASPECTS scoring for acute ischemic
+      stroke. Note on the code: POK's openFDA DEFINITION is only "Assist users in characterizing
+      lesions identified on acquired medical images" - it never mentions cancer. Only the device-
+      type NAME does. The code therefore cannot carry a wholesale cancer verdict.
+  - submission_number: "K243614"
+    device: "Sonio Suspect"
+    company: "Sonio"
+    product_code: POK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Sonio Suspect, AI detection of fetal anomalies on second/third-trimester
+      obstetric ultrasound. Obstetric, not neoplastic. Note on the code: POK's openFDA DEFINITION is
+      only "Assist users in characterizing lesions identified on acquired medical images" - it never
+      mentions cancer. Only the device-type NAME does. The code therefore cannot carry a wholesale
+      cancer verdict.
+  - submission_number: "K250221"
+    device: "StrokeSENS ASPECTS Software Application"
+    company: "Circle Cardiovascular Imaging Inc."
+    product_code: POK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      The name states it: "StrokeSENS ASPECTS" (Circle Cardiovascular Imaging), ASPECTS scoring in
+      acute ischemic stroke. Note on the code: POK's openFDA DEFINITION is only "Assist users in
+      characterizing lesions identified on acquired medical images" - it never mentions cancer. Only
+      the device-type NAME does. The code therefore cannot carry a wholesale cancer verdict.
+  - submission_number: "K251071"
+    device: "Fetal EchoScan (v1.1)"
+    company: "BrightHeart"
+    product_code: POK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: BrightHeart's Fetal EchoScan, AI assessment of the fetal heart on obstetric
+      ultrasound for congenital heart disease. Obstetric/cardiac, not neoplastic. Note on the code:
+      POK's openFDA DEFINITION is only "Assist users in characterizing lesions identified on
+      acquired medical images" - it never mentions cancer. Only the device-type NAME does. The code
+      therefore cannot carry a wholesale cancer verdict.
+  - submission_number: "K252294"
+    device: "Fetal EchoScan (v1.2)"
+    company: "Brightheart"
+    product_code: POK
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: BrightHeart's Fetal EchoScan, AI assessment of the fetal heart on obstetric
+      ultrasound for congenital heart disease. Obstetric/cardiac, not neoplastic. Note on the code:
+      POK's openFDA DEFINITION is only "Assist users in characterizing lesions identified on
+      acquired medical images" - it never mentions cancer. Only the device-type NAME does. The code
+      therefore cannot carry a wholesale cancer verdict.
+  - submission_number: "K251769"
+    device: "RevealAI-Lung"
+    company: "Precision Medical Ventures, Inc. Dba Revealdx"
+    product_code: POK
+    year: 2026
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: RevealDx's RevealAI-Lung, radiomic characterization of pulmonary nodules on CT
+      to estimate malignancy likelihood. Company name in the row ("Precision Medical Ventures, Inc.
+      Dba Revealdx") confirms the vendor. Note on the code: POK's openFDA DEFINITION is only "Assist
+      users in characterizing lesions identified on acquired medical images" - it never mentions
+      cancer. Only the device-type NAME does. The code therefore cannot carry a wholesale cancer
+      verdict.
+  - submission_number: "K254161"
+    device: "Automated Aortic Stenosis Software (AutoAS)"
+    company: "GE Medical Systems Ultrasound & Primary Care Diagnostics, LLC"
+    product_code: POK
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      The name states it: GE's "Automated Aortic Stenosis Software (AutoAS)", aortic valve stenosis
+      assessment on echocardiography. Note on the code: POK's openFDA DEFINITION is only "Assist
+      users in characterizing lesions identified on acquired medical images" - it never mentions
+      cancer. Only the device-type NAME does. The code therefore cannot carry a wholesale cancer
+      verdict.
+
+  # ---------------- OEB ----------------
+  - submission_number: "K161201"
+    device: "ClearRead CT"
+    company: "RIVERAIN TECHNOLOGIES, LLC"
+    product_code: OEB
+    year: 2016
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Riverain Technologies' ClearRead CT, vessel suppression plus automated
+      pulmonary nodule detection on chest CT. Product code OEB, "Lung Computed Tomography System,
+      Computer-Aided Detection", whose openFDA definition is to "highlight potential nodules that
+      the radiologist should review". Pulmonary nodule detection on chest CT is lung-cancer
+      detection.
+  - submission_number: "K192880"
+    device: "InferRead Lung CT.AI"
+    company: "Beijing Infervision Technology Co.,Ltd."
+    product_code: OEB
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states modality and function: Infervision's "InferRead Lung CT.AI", pulmonary nodule
+      detection and characterization on chest CT. Product code OEB, "Lung Computed Tomography
+      System, Computer-Aided Detection", whose openFDA definition is to "highlight potential nodules
+      that the radiologist should review". Pulmonary nodule detection on chest CT is lung-cancer
+      detection.
+  - submission_number: "K193216"
+    device: "syngo.CT Lung CAD"
+    company: "Siemens Medical Solutions, Inc"
+    product_code: OEB
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states it: Siemens "syngo.CT Lung CAD", computer-aided detection of solid pulmonary
+      nodules on chest CT. Product code OEB, "Lung Computed Tomography System, Computer-Aided
+      Detection", whose openFDA definition is to "highlight potential nodules that the radiologist
+      should review". Pulmonary nodule detection on chest CT is lung-cancer detection.
+  - submission_number: "K203258"
+    device: "syngo.CT Lung CAD"
+    company: "Siemens Healthcare GmbH"
+    product_code: OEB
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states it: Siemens "syngo.CT Lung CAD", computer-aided detection of solid pulmonary
+      nodules on chest CT. Product code OEB, "Lung Computed Tomography System, Computer-Aided
+      Detection", whose openFDA definition is to "highlight potential nodules that the radiologist
+      should review". Pulmonary nodule detection on chest CT is lung-cancer detection.
+  - submission_number: "K221592"
+    device: "AVIEW Lung Nodule CAD"
+    company: "Coreline Soft Co.,Ltd."
+    product_code: OEB
+    year: 2023
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states it: Coreline Soft's "AVIEW Lung Nodule CAD". Product code OEB, "Lung Computed
+      Tomography System, Computer-Aided Detection", whose openFDA definition is to "highlight
+      potential nodules that the radiologist should review". Pulmonary nodule detection on chest CT
+      is lung-cancer detection.
+  - submission_number: "K231157"
+    device: "syngo.CT Lung CAD (Version VD30)"
+    company: "Siemens Healthcare GmbH"
+    product_code: OEB
+    year: 2023
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states it: Siemens "syngo.CT Lung CAD", computer-aided detection of solid pulmonary
+      nodules on chest CT. Product code OEB, "Lung Computed Tomography System, Computer-Aided
+      Detection", whose openFDA definition is to "highlight potential nodules that the radiologist
+      should review". Pulmonary nodule detection on chest CT is lung-cancer detection.
+  - submission_number: "K240554"
+    device: "InferRead Lung CT.AI"
+    company: "Infervision Medical Technology Co., Ltd."
+    product_code: OEB
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states modality and function: Infervision's "InferRead Lung CT.AI", pulmonary nodule
+      detection and characterization on chest CT. Product code OEB, "Lung Computed Tomography
+      System, Computer-Aided Detection", whose openFDA definition is to "highlight potential nodules
+      that the radiologist should review". Pulmonary nodule detection on chest CT is lung-cancer
+      detection.
+  - submission_number: "K242919"
+    device: "V5med Lung AI"
+    company: "V5med Inc."
+    product_code: OEB
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      "V5med Lung AI" is authorized under OEB, the lung CT CAD code, so its cleared indication is
+      pulmonary nodule detection on chest CT. The brand itself is not independently documented here,
+      so medium. Product code OEB, "Lung Computed Tomography System, Computer-Aided Detection",
+      whose openFDA definition is to "highlight potential nodules that the radiologist should
+      review". Pulmonary nodule detection on chest CT is lung-cancer detection.
+  - submission_number: "K251203"
+    device: "AVIEW Lung Nodule CAD"
+    company: "Coreline Soft Co.,Ltd"
+    product_code: OEB
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      The name states it: Coreline Soft's "AVIEW Lung Nodule CAD". Product code OEB, "Lung Computed
+      Tomography System, Computer-Aided Detection", whose openFDA definition is to "highlight
+      potential nodules that the radiologist should review". Pulmonary nodule detection on chest CT
+      is lung-cancer detection.
+
+  # ---------------- SEZ ----------------
+  - submission_number: "DEN240047"
+    device: "Allix5"
+    company: "Clairity, Inc."
+    product_code: SEZ
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Known product: Clairity Breast (Clairity, Inc.), De Novo DEN240047, a mammography-based five-
+      year breast cancer risk prediction model. Product code SEZ is "Radiological Software Device To
+      Predict Future Breast Cancer Risk". Distinct from breast density, which the brief excludes:
+      this outputs an explicit incident-cancer risk.
+
+  # ---------------- OTE ----------------
+  - submission_number: "P140011/S008"
+    device: "MAMMOMAT B.brilliant with Tomosynthesis Option"
+    company: "SIEMENS MEDICAL SOLUTIONS USA, INC."
+    product_code: OTE
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      ACQUISITION HARDWARE. This row is a PMA SUPPLEMENT to a long-approved full-field digital
+      mammography platform, not an original approval of a diagnostic algorithm: P140011 is Siemens'
+      original mammography PMA (2014 era); this S008 supplement adds the MAMMOMAT B.brilliant with
+      the Tomosynthesis Option. The device is the X-ray gantry, detector and tomosynthesis
+      reconstruction chain; the AI element that put it on the AI-enabled list is image
+      reconstruction/acquisition, and the cancer determination is made by the reading radiologist,
+      not the device. The brief's rule is explicit - "image reconstruction, denoising, acquisition,
+      positioning, dose reduction - not_oncology even on a cancer-capable scanner" - and a
+      mammography unit is the paradigm case of cancer-capable equipment. Called not_oncology. See
+      the fragment header for the effect on the pathway-composition claim.
+  - submission_number: "P130020/S005"
+    device: "Senographe Pristina 3D"
+    company: "GE Healthcare"
+    product_code: OTE
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      ACQUISITION HARDWARE. This row is a PMA SUPPLEMENT to a long-approved full-field digital
+      mammography platform, not an original approval of a diagnostic algorithm: P130020 is GE's
+      original Senographe mammography PMA (2013 era); this S005 supplement adds the Senographe
+      Pristina 3D tomosynthesis configuration. The device is the X-ray gantry, detector and
+      tomosynthesis reconstruction chain; the AI element that put it on the AI-enabled list is image
+      reconstruction/acquisition, and the cancer determination is made by the reading radiologist,
+      not the device. The brief's rule is explicit - "image reconstruction, denoising, acquisition,
+      positioning, dose reduction - not_oncology even on a cancer-capable scanner" - and a
+      mammography unit is the paradigm case of cancer-capable equipment. Called not_oncology. See
+      the fragment header for the effect on the pathway-composition claim.
+
+  # ---------------- QNK ----------------
+  - submission_number: "P200003"
+    device: "Imagio Breast Imaging System"
+    company: "Seno Medical Instruments, Inc."
+    product_code: QNK
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Seno Medical's Imagio Breast Imaging System, PMA P200003 (2021), an ORIGINAL
+      approval (unlike the two OTE rows). Its approved indication is not image production in general
+      but a single cancer determination: use as an adjunct to B-mode ultrasound in patients with a
+      BI-RADS 3, 4A or 4B breast mass, to help differentiate benign from malignant masses, via
+      optoacoustic feature scoring. Product code QNK's definition says "indicated for imaging the
+      breast using optoacoustic technology for breast cancer diagnosis". CALLED CONTRARY TO THE
+      HARDWARE RULE, deliberately: the brief's not_oncology hardware rule exists because a scanner
+      produces images a human then reads for any indication, whereas this system's only cleared
+      output is a benign-versus-malignant characterization, which is squarely the
+      radiology_cancer_detection definition ("characterization ... of cancer from images").
+      Confidence medium and the opposite call is defensible; if the manuscript prefers a strict
+      hardware exclusion, drop this too and radiology_cancer_detection falls from 56 to 55.
+
+  # ---------------- QKB ----------------
+  - submission_number: "K181572"
+    device: "Workflow Box"
+    company: "Mirada Medical Ltd."
+    product_code: QKB
+    year: 2018
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Mirada Medical's Workflow Box, automated target and organ-at-risk contouring
+      for radiotherapy treatment planning. Product code QKB, "Radiological Image Processing Software
+      For Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K191928"
+    device: "AccuContour"
+    company: "Xiamen Manteia Technology LTD."
+    product_code: QKB
+    year: 2020
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Manteia's AccuContour, deep-learning auto-segmentation for radiotherapy
+      planning. Product code QKB, "Radiological Image Processing Software For Radiation Therapy";
+      the code's own openFDA definition scopes every device under it to radiation-therapy image
+      processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K193252"
+    device: "Contour ProtegeAI"
+    company: "MIM Software Inc."
+    product_code: QKB
+    year: 2020
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: MIM Software's Contour ProtegeAI / ProtegeAI+, automated contouring of targets
+      and organs at risk for radiotherapy planning. Product code QKB, "Radiological Image Processing
+      Software For Radiation Therapy"; the code's own openFDA definition scopes every device under
+      it to radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K193562"
+    device: "AI-Rad Companion Organs RT"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QKB
+    year: 2020
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Organs RT, deep-learning organ-at-risk segmentation
+      for radiotherapy planning. Product code QKB, "Radiological Image Processing Software For
+      Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K200323"
+    device: "AutoContour"
+    company: "Radformation, Inc."
+    product_code: QKB
+    year: 2020
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Radformation's AutoContour (RADAC model series), deep-learning auto-contouring
+      for radiotherapy treatment planning. Product code QKB, "Radiological Image Processing Software
+      For Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K202700"
+    device: "ART-Plan"
+    company: "TheraPanacea"
+    product_code: QKB
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: TheraPanacea's ART-Plan, deep-learning contouring and synthetic-CT for
+      radiotherapy planning. Product code QKB, "Radiological Image Processing Software For Radiation
+      Therapy"; the code's own openFDA definition scopes every device under it to radiation-therapy
+      image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K202928"
+    device: "DV. Target"
+    company: "Deepvoxel INC"
+    product_code: QKB
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Deepvoxel's DV.Target; the name states the function - automated delineation of radiotherapy
+      TARGET volumes. Product code QKB, "Radiological Image Processing Software For Radiation
+      Therapy"; the code's own openFDA definition scopes every device under it to radiation-therapy
+      image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K203235"
+    device: "VBrain"
+    company: "Vysioneer Inc."
+    product_code: QKB
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Vysioneer's VBrain, automatic segmentation of BRAIN METASTASES on MRI for
+      stereotactic radiosurgery planning; the contoured target is itself neoplastic. Product code
+      QKB, "Radiological Image Processing Software For Radiation Therapy"; the code's own openFDA
+      definition scopes every device under it to radiation-therapy image processing and analysis.
+      Radiotherapy is cancer treatment.
+  - submission_number: "K203610"
+    device: "Automatic Anatomy Recognition (AAR)"
+    company: "Quantitative Radiology Solutions, LLC"
+    product_code: QKB
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Quantitative Radiology Solutions' Automatic Anatomy Recognition (AAR), automated anatomy
+      segmentation cleared for radiation therapy planning. Product code QKB, "Radiological Image
+      Processing Software For Radiation Therapy"; the code's own openFDA definition scopes every
+      device under it to radiation-therapy image processing and analysis. Radiotherapy is cancer
+      treatment.
+  - submission_number: "K210632"
+    device: "Contour ProtegeAI"
+    company: "MIM Software Inc."
+    product_code: QKB
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: MIM Software's Contour ProtegeAI / ProtegeAI+, automated contouring of targets
+      and organs at risk for radiotherapy planning. Product code QKB, "Radiological Image Processing
+      Software For Radiation Therapy"; the code's own openFDA definition scopes every device under
+      it to radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K212116"
+    device: "VBrain-OAR"
+    company: "Vysioneer Inc."
+    product_code: QKB
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Vysioneer's VBrain-OAR, organ-at-risk segmentation companion to VBrain for
+      cranial radiosurgery planning. Product code QKB, "Radiological Image Processing Software For
+      Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K212218"
+    device: "Advanced Algorithms for Treatment Management Applications (AATMA)"
+    company: "Elekta Solutions AB"
+    product_code: QKB
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Elekta's Advanced Algorithms for Treatment Management Applications (AATMA), image processing
+      for Elekta radiotherapy treatment management. Product code QKB, "Radiological Image Processing
+      Software For Radiation Therapy"; the code's own openFDA definition scopes every device under
+      it to radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K213155"
+    device: "RT-Mind-AI"
+    company: "MedMind Technology Co., Ltd."
+    product_code: QKB
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      MedMind Technology's RT-Mind-AI; "RT" in the name and the QKB code place it as radiotherapy
+      contouring software. Product code QKB, "Radiological Image Processing Software For Radiation
+      Therapy"; the code's own openFDA definition scopes every device under it to radiation-therapy
+      image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K213628"
+    device: "VBrain"
+    company: "Vysioneer Inc."
+    product_code: QKB
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Vysioneer's VBrain, automatic segmentation of BRAIN METASTASES on MRI for
+      stereotactic radiosurgery planning; the contoured target is itself neoplastic. Product code
+      QKB, "Radiological Image Processing Software For Radiation Therapy"; the code's own openFDA
+      definition scopes every device under it to radiation-therapy image processing and analysis.
+      Radiotherapy is cancer treatment.
+  - submission_number: "K212915"
+    device: "MVision AI Segmentation"
+    company: "MVision AI"
+    product_code: QKB
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: MVision AI Segmentation / Contour+, cloud auto-contouring for radiotherapy
+      planning. MVision is a single-purpose radiotherapy vendor. Product code QKB, "Radiological
+      Image Processing Software For Radiation Therapy"; the code's own openFDA definition scopes
+      every device under it to radiation-therapy image processing and analysis. Radiotherapy is
+      cancer treatment.
+  - submission_number: "K213976"
+    device: "Contour ProtégéAI"
+    company: "MIM Software Inc."
+    product_code: QKB
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: MIM Software's Contour ProtegeAI / ProtegeAI+, automated contouring of targets
+      and organs at risk for radiotherapy planning. Product code QKB, "Radiological Image Processing
+      Software For Radiation Therapy"; the code's own openFDA definition scopes every device under
+      it to radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K220264"
+    device: "EFAI RTSuite CT HN-Segmentation System"
+    company: "Ever Fortune.AI Co., Ltd."
+    product_code: QKB
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Ever Fortune.AI's EFAI RTSuite CT HN-Segmentation System; "RTSuite" and head-and-neck
+      segmentation for radiotherapy planning are stated in the name. Product code QKB, "Radiological
+      Image Processing Software For Radiation Therapy"; the code's own openFDA definition scopes
+      every device under it to radiation-therapy image processing and analysis. Radiotherapy is
+      cancer treatment.
+  - submission_number: "K220408"
+    device: "AVIEW RT ACS"
+    company: "Coreline Soft Co.,Ltd"
+    product_code: QKB
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Coreline Soft's AVIEW RT ACS (auto-contouring system) for radiotherapy planning; "RT" is in
+      the name. Product code QKB, "Radiological Image Processing Software For Radiation Therapy";
+      the code's own openFDA definition scopes every device under it to radiation-therapy image
+      processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K220598"
+    device: "AutoContour Model RADAC V2"
+    company: "Radformation, Inc."
+    product_code: QKB
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Radformation's AutoContour (RADAC model series), deep-learning auto-contouring
+      for radiotherapy treatment planning. Product code QKB, "Radiological Image Processing Software
+      For Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K220813"
+    device: "ART-PLAN"
+    company: "TheraPanacea"
+    product_code: QKB
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: TheraPanacea's ART-Plan, deep-learning contouring and synthetic-CT for
+      radiotherapy planning. Product code QKB, "Radiological Image Processing Software For Radiation
+      Therapy"; the code's own openFDA definition scopes every device under it to radiation-therapy
+      image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K221305"
+    device: "AI-Rad Companion Organs RT"
+    company: "Siemens Medical Solutions USA, Inc"
+    product_code: QKB
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Organs RT, deep-learning organ-at-risk segmentation
+      for radiotherapy planning. Product code QKB, "Radiological Image Processing Software For
+      Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K221706"
+    device: "AccuContour"
+    company: "Manteia Technologies Co., Ltd."
+    product_code: QKB
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Manteia's AccuContour, deep-learning auto-segmentation for radiotherapy
+      planning. Product code QKB, "Radiological Image Processing Software For Radiation Therapy";
+      the code's own openFDA definition scopes every device under it to radiation-therapy image
+      processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K223774"
+    device: "Contour ProtégéAI"
+    company: "MIM Software Inc."
+    product_code: QKB
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: MIM Software's Contour ProtegeAI / ProtegeAI+, automated contouring of targets
+      and organs at risk for radiotherapy planning. Product code QKB, "Radiological Image Processing
+      Software For Radiation Therapy"; the code's own openFDA definition scopes every device under
+      it to radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K230023"
+    device: "ART-Plan"
+    company: "Therapanacea SAS"
+    product_code: QKB
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: TheraPanacea's ART-Plan, deep-learning contouring and synthetic-CT for
+      radiotherapy planning. Product code QKB, "Radiological Image Processing Software For Radiation
+      Therapy"; the code's own openFDA definition scopes every device under it to radiation-therapy
+      image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K230082"
+    device: "Auto Segmentation"
+    company: "GE Medical Systems, LLC"
+    product_code: QKB
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: medium
+    evidence: >-
+      GE's Auto Segmentation, cleared under the radiation-therapy image processing code for
+      automatic structure contouring in RT planning. Product code QKB, "Radiological Image
+      Processing Software For Radiation Therapy"; the code's own openFDA definition scopes every
+      device under it to radiation-therapy image processing and analysis. Radiotherapy is cancer
+      treatment.
+  - submission_number: "K230685"
+    device: "AutoContour Model RADAC V3"
+    company: "Radformation, Inc."
+    product_code: QKB
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Radformation's AutoContour (RADAC model series), deep-learning auto-contouring
+      for radiotherapy treatment planning. Product code QKB, "Radiological Image Processing Software
+      For Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K231765"
+    device: "Contour ProtégéAI"
+    company: "MIM Software Inc."
+    product_code: QKB
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: MIM Software's Contour ProtegeAI / ProtegeAI+, automated contouring of targets
+      and organs at risk for radiotherapy planning. Product code QKB, "Radiological Image Processing
+      Software For Radiation Therapy"; the code's own openFDA definition scopes every device under
+      it to radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K231928"
+    device: "EFAI RTSUITE CT HCAP-Segmentation System"
+    company: "Ever Fortune.AI Co., Ltd."
+    product_code: QKB
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Ever Fortune.AI's EFAI RTSUITE CT HCAP-Segmentation System, the thoracic/abdominopelvic
+      companion to the HN product; "RTSUITE" is stated in the name. Product code QKB, "Radiological
+      Image Processing Software For Radiation Therapy"; the code's own openFDA definition scopes
+      every device under it to radiation-therapy image processing and analysis. Radiotherapy is
+      cancer treatment.
+  - submission_number: "K231855"
+    device: "QOCA® image Smart RT Contouring System"
+    company: "Quanta Computer Inc."
+    product_code: QKB
+    year: 2024
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Quanta Computer's QOCA image Smart RT Contouring System; the name states radiotherapy
+      contouring. Product code QKB, "Radiological Image Processing Software For Radiation Therapy";
+      the code's own openFDA definition scopes every device under it to radiation-therapy image
+      processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K232899"
+    device: "AI-Rad Companion Organs RT"
+    company: "Siemens Medical Solutions U.S.A."
+    product_code: QKB
+    year: 2024
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Organs RT, deep-learning organ-at-risk segmentation
+      for radiotherapy planning. Product code QKB, "Radiological Image Processing Software For
+      Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K232928"
+    device: "DeepContour (V1.0)"
+    company: "Wisdom Technologies., Inc."
+    product_code: QKB
+    year: 2024
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: medium
+    evidence: >-
+      Wisdom Technologies' DeepContour, deep-learning contouring under the radiotherapy image
+      processing code. Product code QKB, "Radiological Image Processing Software For Radiation
+      Therapy"; the code's own openFDA definition scopes every device under it to radiation-therapy
+      image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K241490"
+    device: "Contour+ (MVision AI Segmentation)"
+    company: "MVision AI Oy"
+    product_code: QKB
+    year: 2024
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: MVision AI Segmentation / Contour+, cloud auto-contouring for radiotherapy
+      planning. MVision is a single-purpose radiotherapy vendor. Product code QKB, "Radiological
+      Image Processing Software For Radiation Therapy"; the code's own openFDA definition scopes
+      every device under it to radiation-therapy image processing and analysis. Radiotherapy is
+      cancer treatment.
+  - submission_number: "K241837"
+    device: "Limbus Contour"
+    company: "Limbus AI Inc."
+    product_code: QKB
+    year: 2024
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Limbus AI's Limbus Contour, deep-learning auto-contouring used exclusively in
+      radiotherapy planning. Limbus is a single-purpose radiotherapy vendor. Product code QKB,
+      "Radiological Image Processing Software For Radiation Therapy"; the code's own openFDA
+      definition scopes every device under it to radiation-therapy image processing and analysis.
+      Radiotherapy is cancer treatment.
+  - submission_number: "K242729"
+    device: "AutoContour (Model RADAC V4)"
+    company: "Radformation, Inc."
+    product_code: QKB
+    year: 2024
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Radformation's AutoContour (RADAC model series), deep-learning auto-contouring
+      for radiotherapy treatment planning. Product code QKB, "Radiological Image Processing Software
+      For Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K242745"
+    device: "AI-Rad Companion Organs RT"
+    company: "Siemens Healthcare GmbH"
+    product_code: QKB
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Organs RT, deep-learning organ-at-risk segmentation
+      for radiotherapy planning. Product code QKB, "Radiological Image Processing Software For
+      Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K242925"
+    device: "MR Contour DL"
+    company: "GE HealthCare"
+    product_code: QKB
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      GE HealthCare's MR Contour DL, deep-learning contouring on MR for radiotherapy planning.
+      Product code QKB, "Radiological Image Processing Software For Radiation Therapy"; the code's
+      own openFDA definition scopes every device under it to radiation-therapy image processing and
+      analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K242994"
+    device: "OncoStudio (OS-01)"
+    company: "OncoSoft. Co., Ltd."
+    product_code: QKB
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: medium
+    evidence: >-
+      OncoSoft's OncoStudio (OS-01); vendor and product name are oncology-specific and the QKB code
+      scopes it to radiotherapy image processing. Product code QKB, "Radiological Image Processing
+      Software For Radiation Therapy"; the code's own openFDA definition scopes every device under
+      it to radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K250035"
+    device: "Contour ProtégéAI+"
+    company: "MIM Software Inc."
+    product_code: QKB
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: MIM Software's Contour ProtegeAI / ProtegeAI+, automated contouring of targets
+      and organs at risk for radiotherapy planning. Product code QKB, "Radiological Image Processing
+      Software For Radiation Therapy"; the code's own openFDA definition scopes every device under
+      it to radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K250427"
+    device: "TAIMedImg DeepMets"
+    company: "Taiwan Medical Imaging Co., Ltd."
+    product_code: QKB
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Taiwan Medical Imaging's TAIMedImg DeepMets; the name states the target - brain METASTASES -
+      segmented for radiotherapy planning. Neoplastic target. Product code QKB, "Radiological Image
+      Processing Software For Radiation Therapy"; the code's own openFDA definition scopes every
+      device under it to radiation-therapy image processing and analysis. Radiotherapy is cancer
+      treatment.
+  - submission_number: "K250780"
+    device: "ARTAssistant"
+    company: "Manteia Technologies Co., Ltd."
+    product_code: QKB
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Manteia's ARTAssistant; "ART" is adaptive radiation therapy, and the QKB code scopes it to
+      radiotherapy image processing. Product code QKB, "Radiological Image Processing Software For
+      Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K251306"
+    device: "Seg Pro V3 (RT-300)"
+    company: "Ever Fortune.Ai, Co., Ltd."
+    product_code: QKB
+    year: 2026
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: medium
+    evidence: >-
+      Ever Fortune.AI's Seg Pro V3, model number RT-300; "RT" in the model number and the QKB code
+      place it as radiotherapy segmentation. Product code QKB, "Radiological Image Processing
+      Software For Radiation Therapy"; the code's own openFDA definition scopes every device under
+      it to radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K251351"
+    device: "AccuContour 4.0"
+    company: "Manteia Technologies Co., Ltd."
+    product_code: QKB
+    year: 2026
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Manteia's AccuContour, deep-learning auto-segmentation for radiotherapy
+      planning. Product code QKB, "Radiological Image Processing Software For Radiation Therapy";
+      the code's own openFDA definition scopes every device under it to radiation-therapy image
+      processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K253270"
+    device: "Contour ProtégéAI+"
+    company: "Mim Software, Inc."
+    product_code: QKB
+    year: 2026
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: MIM Software's Contour ProtegeAI / ProtegeAI+, automated contouring of targets
+      and organs at risk for radiotherapy planning. Product code QKB, "Radiological Image Processing
+      Software For Radiation Therapy"; the code's own openFDA definition scopes every device under
+      it to radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+  - submission_number: "K260509"
+    device: "AutoContour (RADAC V5)"
+    company: "Radformation, Inc."
+    product_code: QKB
+    year: 2026
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Radformation's AutoContour (RADAC model series), deep-learning auto-contouring
+      for radiotherapy treatment planning. Product code QKB, "Radiological Image Processing Software
+      For Radiation Therapy"; the code's own openFDA definition scopes every device under it to
+      radiation-therapy image processing and analysis. Radiotherapy is cancer treatment.
+
+  # ---------------- MUJ ----------------
+  - submission_number: "K190387"
+    device: "RayStation"
+    company: "RaySearch Laboratories AB (publ)"
+    product_code: MUJ
+    year: 2019
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: RaySearch's RayStation (and RayPlan), a radiotherapy treatment planning system
+      with deep-learning segmentation and dose planning. Product code MUJ, "System, Planning,
+      Radiation Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but
+      892.5050 is the radiation-therapy treatment-planning system regulation and every device here
+      is an RT planning product.
+  - submission_number: "K191384"
+    device: "RayCare 2.3"
+    company: "RaySearch Laboratories AB (publ)"
+    product_code: MUJ
+    year: 2019
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: RaySearch's RayCare, the oncology information system that manages radiotherapy
+      treatment workflow. RaySearch is a single-purpose radiotherapy vendor. Product code MUJ,
+      "System, Planning, Radiation Therapy Treatment", regulation 892.5050. openFDA returns no
+      definition text, but 892.5050 is the radiation-therapy treatment-planning system regulation
+      and every device here is an RT planning product.
+  - submission_number: "K192065"
+    device: "Syngo.Via RT Image Suite"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: MUJ
+    year: 2019
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Siemens/Varian syngo.via RT Image Suite, image processing and contouring
+      feeding radiotherapy treatment planning. Product code MUJ, "System, Planning, Radiation
+      Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but 892.5050 is
+      the radiation-therapy treatment-planning system regulation and every device here is an RT
+      planning product.
+  - submission_number: "K193109"
+    device: "MRCAT brain"
+    company: "Philips Medical Systems MR Finland"
+    product_code: MUJ
+    year: 2020
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: medium
+    evidence: >-
+      Known product: Philips MRCAT (Magnetic Resonance for Calculating ATtenuation), which
+      synthesises a CT-equivalent density map from MR SOLELY as the dose-calculation input for MR-
+      only radiotherapy planning of brain and head-and-neck targets. It is reconstruction-shaped,
+      but its only purpose is radiotherapy planning, so it is counted; flagged in the header as a
+      borderline call. Product code MUJ, "System, Planning, Radiation Therapy Treatment", regulation
+      892.5050. openFDA returns no definition text, but 892.5050 is the radiation-therapy treatment-
+      planning system regulation and every device here is an RT planning product.
+  - submission_number: "K200569"
+    device: "RayStation"
+    company: "RaySearch Laboratories AB (publ)"
+    product_code: MUJ
+    year: 2020
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: RaySearch's RayStation (and RayPlan), a radiotherapy treatment planning system
+      with deep-learning segmentation and dose planning. Product code MUJ, "System, Planning,
+      Radiation Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but
+      892.5050 is the radiation-therapy treatment-planning system regulation and every device here
+      is an RT planning product.
+  - submission_number: "K201444"
+    device: "Syngo.via RT Image Suite"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: MUJ
+    year: 2020
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Siemens/Varian syngo.via RT Image Suite, image processing and contouring
+      feeding radiotherapy treatment planning. Product code MUJ, "System, Planning, Radiation
+      Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but 892.5050 is
+      the radiation-therapy treatment-planning system regulation and every device here is an RT
+      planning product.
+  - submission_number: "K202284"
+    device: "Oncospace"
+    company: "Oncospace, Inc."
+    product_code: MUJ
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Oncospace, a radiotherapy planning platform using predicted achievable dose-
+      volume histograms. Single-purpose radiation-oncology vendor. Product code MUJ, "System,
+      Planning, Radiation Therapy Treatment", regulation 892.5050. openFDA returns no definition
+      text, but 892.5050 is the radiation-therapy treatment-planning system regulation and every
+      device here is an RT planning product.
+  - submission_number: "K203469"
+    device: "AI Segmentation"
+    company: "Varian Medical Systems, Inc."
+    product_code: MUJ
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Varian's AI Segmentation, deep-learning structure contouring inside the Eclipse
+      radiotherapy planning workflow. Varian is a radiation-oncology vendor. Product code MUJ,
+      "System, Planning, Radiation Therapy Treatment", regulation 892.5050. openFDA returns no
+      definition text, but 892.5050 is the radiation-therapy treatment-planning system regulation
+      and every device here is an RT planning product.
+  - submission_number: "K210645"
+    device: "RayStation 10.1"
+    company: "RaySearch Laboratories AB (publ)"
+    product_code: MUJ
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: RaySearch's RayStation (and RayPlan), a radiotherapy treatment planning system
+      with deep-learning segmentation and dose planning. Product code MUJ, "System, Planning,
+      Radiation Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but
+      892.5050 is the radiation-therapy treatment-planning system regulation and every device here
+      is an RT planning product.
+  - submission_number: "K211379"
+    device: "syngo.via RT Image Suite"
+    company: "Siemens Medical Solutions USA Inc."
+    product_code: MUJ
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Siemens/Varian syngo.via RT Image Suite, image processing and contouring
+      feeding radiotherapy treatment planning. Product code MUJ, "System, Planning, Radiation
+      Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but 892.5050 is
+      the radiation-therapy treatment-planning system regulation and every device here is an RT
+      planning product.
+  - submission_number: "K211867"
+    device: "RayStation 11.0"
+    company: "RaySearch Laboratories AB (publ)"
+    product_code: MUJ
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: RaySearch's RayStation (and RayPlan), a radiotherapy treatment planning system
+      with deep-learning segmentation and dose planning. Product code MUJ, "System, Planning,
+      Radiation Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but
+      892.5050 is the radiation-therapy treatment-planning system regulation and every device here
+      is an RT planning product.
+  - submission_number: "K211881"
+    device: "AI Segmentation"
+    company: "Varian Medical Systems, Inc."
+    product_code: MUJ
+    year: 2021
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Varian's AI Segmentation, deep-learning structure contouring inside the Eclipse
+      radiotherapy planning workflow. Varian is a radiation-oncology vendor. Product code MUJ,
+      "System, Planning, Radiation Therapy Treatment", regulation 892.5050. openFDA returns no
+      definition text, but 892.5050 is the radiation-therapy treatment-planning system regulation
+      and every device here is an RT planning product.
+  - submission_number: "K211841"
+    device: "MRI Planner"
+    company: "Spectronic Medical AB"
+    product_code: MUJ
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: medium
+    evidence: >-
+      Known product: Spectronic Medical's MRI Planner, synthetic-CT generation from MR for MR-only
+      radiotherapy dose planning. Same reconstruction-shaped caveat as MRCAT; counted because its
+      only purpose is RT planning. Product code MUJ, "System, Planning, Radiation Therapy
+      Treatment", regulation 892.5050. openFDA returns no definition text, but 892.5050 is the
+      radiation-therapy treatment-planning system regulation and every device here is an RT planning
+      product.
+  - submission_number: "K212274"
+    device: "INT Contour"
+    company: "Carina Medical LLC"
+    product_code: MUJ
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Carina Medical's INT Contour, automated contouring for radiotherapy treatment planning;
+      cleared under the RT treatment planning code. Product code MUJ, "System, Planning, Radiation
+      Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but 892.5050 is
+      the radiation-therapy treatment-planning system regulation and every device here is an RT
+      planning product.
+  - submission_number: "K214081"
+    device: "MRCAT Head & Neck"
+    company: "Philips Oy"
+    product_code: MUJ
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: medium
+    evidence: >-
+      Known product: Philips MRCAT (Magnetic Resonance for Calculating ATtenuation), which
+      synthesises a CT-equivalent density map from MR SOLELY as the dose-calculation input for MR-
+      only radiotherapy planning of brain and head-and-neck targets. It is reconstruction-shaped,
+      but its only purpose is radiotherapy planning, so it is counted; flagged in the header as a
+      borderline call. Product code MUJ, "System, Planning, Radiation Therapy Treatment", regulation
+      892.5050. openFDA returns no definition text, but 892.5050 is the radiation-therapy treatment-
+      planning system regulation and every device here is an RT planning product.
+  - submission_number: "K220141"
+    device: "RayStation 11B"
+    company: "RaySearch Laboratories AB (publ)"
+    product_code: MUJ
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: RaySearch's RayStation (and RayPlan), a radiotherapy treatment planning system
+      with deep-learning segmentation and dose planning. Product code MUJ, "System, Planning,
+      Radiation Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but
+      892.5050 is the radiation-therapy treatment-planning system regulation and every device here
+      is an RT planning product.
+  - submission_number: "K220783"
+    device: "syngo.via RT Image Suite"
+    company: "Siemens Medical Solutions USA Inc."
+    product_code: MUJ
+    year: 2022
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Siemens/Varian syngo.via RT Image Suite, image processing and contouring
+      feeding radiotherapy treatment planning. Product code MUJ, "System, Planning, Radiation
+      Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but 892.5050 is
+      the radiation-therapy treatment-planning system regulation and every device here is an RT
+      planning product.
+  - submission_number: "K222312"
+    device: "RayStation 12A"
+    company: "RaySearch Laboratories AB (publ)"
+    product_code: MUJ
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: RaySearch's RayStation (and RayPlan), a radiotherapy treatment planning system
+      with deep-learning segmentation and dose planning. Product code MUJ, "System, Planning,
+      Radiation Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but
+      892.5050 is the radiation-therapy treatment-planning system regulation and every device here
+      is an RT planning product.
+  - submission_number: "K222728"
+    device: "Radiation Planning Assistant (RPA)"
+    company: "University of Texas, MD Anderson Cancer Center"
+    product_code: MUJ
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: MD Anderson's Radiation Planning Assistant (RPA), automated radiotherapy
+      contouring and plan generation, developed for cervical/head-and-neck cancer treatment in low-
+      resource settings. Company field is "University of Texas, MD Anderson Cancer Center". Product
+      code MUJ, "System, Planning, Radiation Therapy Treatment", regulation 892.5050. openFDA
+      returns no definition text, but 892.5050 is the radiation-therapy treatment-planning system
+      regulation and every device here is an RT planning product.
+  - submission_number: "K222803"
+    device: "Oncospace"
+    company: "Oncospace, Inc."
+    product_code: MUJ
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Oncospace, a radiotherapy planning platform using predicted achievable dose-
+      volume histograms. Single-purpose radiation-oncology vendor. Product code MUJ, "System,
+      Planning, Radiation Therapy Treatment", regulation 892.5050. openFDA returns no definition
+      text, but 892.5050 is the radiation-therapy treatment-planning system regulation and every
+      device here is an RT planning product.
+  - submission_number: "K223724"
+    device: "MOZI TPS"
+    company: "Manteia Technologies Co., Ltd."
+    product_code: MUJ
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Manteia's MOZI TPS; "TPS" in the name is treatment planning system, under the radiation-
+      therapy treatment planning code. Product code MUJ, "System, Planning, Radiation Therapy
+      Treatment", regulation 892.5050. openFDA returns no definition text, but 892.5050 is the
+      radiation-therapy treatment-planning system regulation and every device here is an RT planning
+      product.
+  - submission_number: "K232479"
+    device: "ART-Plan"
+    company: "TheraPanacea"
+    product_code: MUJ
+    year: 2023
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: TheraPanacea's ART-Plan / ART-Plan+, adaptive radiotherapy contouring and
+      planning. Product code MUJ, "System, Planning, Radiation Therapy Treatment", regulation
+      892.5050. openFDA returns no definition text, but 892.5050 is the radiation-therapy treatment-
+      planning system regulation and every device here is an RT planning product.
+  - submission_number: "K232799"
+    device: "syngo.via RT Image Suite"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: MUJ
+    year: 2024
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Siemens/Varian syngo.via RT Image Suite, image processing and contouring
+      feeding radiotherapy treatment planning. Product code MUJ, "System, Planning, Radiation
+      Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but 892.5050 is
+      the radiation-therapy treatment-planning system regulation and every device here is an RT
+      planning product.
+  - submission_number: "K234068"
+    device: "ART-Plan (v.2.2.0)"
+    company: "Therapanacea SAS"
+    product_code: MUJ
+    year: 2024
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: TheraPanacea's ART-Plan / ART-Plan+, adaptive radiotherapy contouring and
+      planning. Product code MUJ, "System, Planning, Radiation Therapy Treatment", regulation
+      892.5050. openFDA returns no definition text, but 892.5050 is the radiation-therapy treatment-
+      planning system regulation and every device here is an RT planning product.
+  - submission_number: "K240398"
+    device: "RayStation 2023B, RayPlan 2023B, RayStation 2024A, RayPlan 2024A, RayStation 2024A SP3, RayPlan 2024A SP3"
+    company: "RaySearch Laboratories AB (PUBL)"
+    product_code: MUJ
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: RaySearch's RayStation (and RayPlan), a radiotherapy treatment planning system
+      with deep-learning segmentation and dose planning. Product code MUJ, "System, Planning,
+      Radiation Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but
+      892.5050 is the radiation-therapy treatment-planning system regulation and every device here
+      is an RT planning product.
+  - submission_number: "K242748"
+    device: "Oncospace"
+    company: "Oncospace, Inc."
+    product_code: MUJ
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Oncospace, a radiotherapy planning platform using predicted achievable dose-
+      volume histograms. Single-purpose radiation-oncology vendor. Product code MUJ, "System,
+      Planning, Radiation Therapy Treatment", regulation 892.5050. openFDA returns no definition
+      text, but 892.5050 is the radiation-therapy treatment-planning system regulation and every
+      device here is an RT planning product.
+  - submission_number: "K242822"
+    device: "ART-Plan+ (v.3.0.0)"
+    company: "Therapanacea SAS"
+    product_code: MUJ
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: TheraPanacea's ART-Plan / ART-Plan+, adaptive radiotherapy contouring and
+      planning. Product code MUJ, "System, Planning, Radiation Therapy Treatment", regulation
+      892.5050. openFDA returns no definition text, but 892.5050 is the radiation-therapy treatment-
+      planning system regulation and every device here is an RT planning product.
+  - submission_number: "K250064"
+    device: "Dose+ (1.0)"
+    company: "Mvision AI Oy"
+    product_code: MUJ
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      MVision AI's Dose+, automated radiotherapy dose planning. MVision is a single-purpose
+      radiotherapy vendor. Product code MUJ, "System, Planning, Radiation Therapy Treatment",
+      regulation 892.5050. openFDA returns no definition text, but 892.5050 is the radiation-therapy
+      treatment-planning system regulation and every device here is an RT planning product.
+  - submission_number: "K250440"
+    device: "RT Elements  (4.5); (Elements) Multiple Brain Mets SRS; (Elements) Cranial SRS; (Elements) Spine SRS; (Elements) Cranial SRS w/ Cones; (Elements) RT Planning Platform; (Elements) Dose Review; (Elements) Retreatment Review; Elements Segmentation [Cranial , Basal Ganglia, Head & Neck, Pelvic, Spine, Thoracic & Spine, Extracranial] RT; Elements AI Tumor Segmentation RT; Elements SmartBrush [Angio, Spine] RT; Elements Object Management RT"
+    company: "Brainlab AG"
+    product_code: MUJ
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Brainlab RT Elements. The row itself enumerates the modules: Multiple Brain
+      Mets SRS, Cranial SRS, Spine SRS, RT Planning Platform, Dose Review, and "Elements AI Tumor
+      Segmentation RT". Stereotactic radiosurgery planning with an explicit tumor-segmentation
+      module. Product code MUJ, "System, Planning, Radiation Therapy Treatment", regulation
+      892.5050. openFDA returns no definition text, but 892.5050 is the radiation-therapy treatment-
+      planning system regulation and every device here is an RT planning product.
+  - submission_number: "K253091"
+    device: "ART-Plan+ (v3.1.0)"
+    company: "Therapanacea Sas"
+    product_code: MUJ
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: TheraPanacea's ART-Plan / ART-Plan+, adaptive radiotherapy contouring and
+      planning. Product code MUJ, "System, Planning, Radiation Therapy Treatment", regulation
+      892.5050. openFDA returns no definition text, but 892.5050 is the radiation-therapy treatment-
+      planning system regulation and every device here is an RT planning product.
+  - submission_number: "K252002"
+    device: "Monaco RTP System (6.3)"
+    company: "Elekta Solutions AB"
+    product_code: MUJ
+    year: 2026
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Elekta's Monaco, a Monte Carlo radiotherapy treatment planning system. Product
+      code MUJ, "System, Planning, Radiation Therapy Treatment", regulation 892.5050. openFDA
+      returns no definition text, but 892.5050 is the radiation-therapy treatment-planning system
+      regulation and every device here is an RT planning product.
+  - submission_number: "K252304"
+    device: "syngo.via RT Image Suite VC10"
+    company: "Varian Medical Systems, Inc."
+    product_code: MUJ
+    year: 2026
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Siemens/Varian syngo.via RT Image Suite, image processing and contouring
+      feeding radiotherapy treatment planning. Product code MUJ, "System, Planning, Radiation
+      Therapy Treatment", regulation 892.5050. openFDA returns no definition text, but 892.5050 is
+      the radiation-therapy treatment-planning system regulation and every device here is an RT
+      planning product.
+
+  # ---------------- IYE ----------------
+  - submission_number: "K192377"
+    device: "Ethos Treatment Management, Ethos Treatment Planning, Ethos Radiotherapy System, Halcyon"
+    company: "Varian Medical Systems, Inc."
+    product_code: IYE
+    year: 2020
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Varian's Ethos Treatment Management / Treatment Planning on the Halcyon
+      accelerator, an online adaptive radiotherapy platform that re-contours and re-plans at each
+      fraction. Product code IYE, "Accelerator, Linear, Medical". Medical linear accelerators
+      deliver external-beam radiotherapy; the AI-list entries under this code are the vendors'
+      adaptive radiotherapy platforms.
+  - submission_number: "K232923"
+    device: "Ethos Treatment Management (3.0); Ethos Treatment Planning (2.0)"
+    company: "Varian Medical Systems Inc."
+    product_code: IYE
+    year: 2024
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: high
+    evidence: >-
+      Known product: Varian's Ethos Treatment Management / Treatment Planning on the Halcyon
+      accelerator, an online adaptive radiotherapy platform that re-contours and re-plans at each
+      fraction. Product code IYE, "Accelerator, Linear, Medical". Medical linear accelerators
+      deliver external-beam radiotherapy; the AI-list entries under this code are the vendors'
+      adaptive radiotherapy platforms.
+  - submission_number: "K252188"
+    device: "EMLA (Elekta Evo); EMLA (VersaHD); EMLA (Elekta Harmony Pro); EMLA (Elekta Infintiy); EMLA (Elekta Harmony); EMLA (Elekta Synergy)"
+    company: "Elekta Solutions AB"
+    product_code: IYE
+    year: 2026
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: medium
+    evidence: >-
+      Elekta's EMLA released across the Elekta Evo, Versa HD, Harmony, Harmony Pro, Infinity and
+      Synergy linear accelerators - i.e. a machine-learning-aided component of Elekta's external-
+      beam radiotherapy delivery platform. The acronym is not independently documented here, hence
+      medium, but every device named in the row is a radiotherapy linac. Product code IYE,
+      "Accelerator, Linear, Medical". Medical linear accelerators deliver external-beam
+      radiotherapy; the AI-list entries under this code are the vendors' adaptive radiotherapy
+      platforms.
+
+  # ---------------- QPN ----------------
+  - submission_number: "DEN200080"
+    device: "Paige Prostate"
+    company: "Paige.AI"
+    product_code: QPN
+    year: 2021
+    decision: oncology
+    category: pathology
+    confidence: high
+    evidence: >-
+      Known product: Paige Prostate (De Novo DEN200080, 2021), the first FDA-authorized AI for
+      cancer detection on whole-slide images; it flags prostate biopsy slides suspicious for cancer.
+      Product code QPN, "Software Algorithm Device To Assist Users In Digital Pathology".
+  - submission_number: "K241232"
+    device: "Galen\x99 Second Read\x99"
+    company: "Ibex Medical Analytics Ltd."
+    product_code: QPN
+    year: 2025
+    decision: oncology
+    category: pathology
+    confidence: high
+    evidence: >-
+      Known product: Ibex Medical Analytics' Galen Second Read, whole-slide AI that flags prostate
+      biopsy cores suspicious for carcinoma as a quality-control second read. Product code QPN.
+
+  # ---------------- SFH ----------------
+  - submission_number: "DEN240068"
+    device: "ArteraAI Prostate"
+    company: "Artera Inc."
+    product_code: SFH
+    year: 2025
+    decision: oncology
+    category: pathology
+    confidence: high
+    evidence: >-
+      Known product: ArteraAI Prostate (De Novo DEN240068), a multimodal AI prognostic/predictive
+      test on H&E prostate biopsy whole-slide images. Product code SFH is literally "Pathology
+      Software Algorithm Device Analyzing Digital Images For Cancer Prognosis".
+
+  # ---------------- QKQ ----------------
+  - submission_number: "K243449"
+    device: "INFINITT DPS"
+    company: "Infinitt Healthcare Co., Ltd."
+    product_code: QKQ
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      INFINITT DPS is digital pathology image VIEWING AND MANAGEMENT software. Product code QKQ's
+      openFDA definition: "software intended for viewing and management of digital images of scanned
+      surgical pathology slides ... an aid to the pathologist to review and interpret these digital
+      images for the purposes of primary diagnosis". It performs no cancer-specific function; it is
+      a whole-slide viewer for surgical pathology of any kind. The brief's rule for viewer/workflow
+      infrastructure - "PACS, worklist, reporting, routing with no cancer-specific function -
+      not_oncology" - covers it exactly, so that is the call. FLAGGED, NOT RESOLVED:
+      config/oncology_codes.yaml counts it on a different basis ("counted because the digitization
+      it enables is the field's rate-limiting step"), which is an argument about the field's
+      development rather than about this device's purpose, and the brief's pathology CATEGORY text
+      does say "whole-slide infrastructure". The two rules in the brief conflict here. See the
+      header for the count impact (pathology 9 -> 8) and note that this is a thesis-driven
+      inclusion, not a mechanical one.
+
+  # ---------------- QYV ----------------
+  - submission_number: "DEN210035"
+    device: "\x93Genius\x99 Digital Diagnostics System with the Genius\x99 Cervical AI algorithm\x94"
+    company: "Hologic Inc."
+    product_code: QYV
+    year: 2024
+    decision: oncology
+    category: pathology
+    confidence: high
+    evidence: >-
+      Known product: Hologic's Genius Digital Diagnostics System with the Genius Cervical AI
+      algorithm (De Novo DEN210035), which selects diagnostic objects of interest from digitized Pap
+      test slides. Cervical cancer screening. Product code QYV.
+
+  # ---------------- PZM ----------------
+  - submission_number: "K250003"
+    device: "GENESEEQPRIME NGS Tumor Profiling Assay (FFPE) (GS6005)"
+    company: "Geneseeq Technology Inc."
+    product_code: PZM
+    year: 2025
+    decision: oncology
+    category: pathology
+    confidence: medium
+    evidence: >-
+      The name states it: "GENESEEQPRIME NGS Tumor Profiling Assay (FFPE)". Product code PZM, "Next
+      Generation Sequencing Based Tumor Profiling Test", 866.6080, defined as detecting mutations
+      "somatically altered in malignant neoplasms". Unambiguously oncologic BY PURPOSE. Confidence
+      is medium only because of scope, not identity: FLAGGED - this is a sequencing assay, not
+      imaging AI, and it is being counted inside a figure whose argument is about radiology-versus-
+      pathology IMAGING. See the header.
+
+  # ---------------- PQP ----------------
+  - submission_number: "P210011"
+    device: "xT CDx"
+    company: "Tempus Labs, Inc."
+    product_code: PQP
+    year: 2023
+    decision: oncology
+    category: pathology
+    confidence: medium
+    evidence: >-
+      Known product: Tempus xT CDx (PMA P210011, 2023), a 648-gene NGS companion diagnostic for
+      solid tumors. Product code PQP, "Next Generation Sequencing Oncology Panel". Unambiguously
+      oncologic by purpose; same scope flag as PZM - a sequencing assay, not imaging AI. See the
+      header.
+
+  # ---------------- MNM ----------------
+  - submission_number: "P940029"
+    device: "PAPNET Testing System"
+    company: "Neuromedical Systems, Inc."
+    product_code: MNM
+    year: 1995
+    decision: oncology
+    category: pathology
+    confidence: high
+    evidence: >-
+      Known product: Neuromedical Systems' PAPNET Testing System (PMA P940029, 1995), a neural-
+      network rescreener for conventional cervical cytology (Pap) smears - one of the earliest
+      neural-network medical devices FDA approved. CONFIRMED as a cervical cytology screener.
+      Product code MNM, "Reader, Cervical Cytology Slide, Automated". Pre-2016 device.
+
+  # ---------------- NMN ----------------
+  - submission_number: "P950009"
+    device: "AUTOPAP(R) 300 QC AUTOMATIC PAP SCREENER/QC SYSTEM"
+    company: "BD DIAGNOSTICS"
+    product_code: NMN
+    year: 1995
+    decision: oncology
+    category: pathology
+    confidence: high
+    evidence: >-
+      The row's own device string confirms it: "AUTOPAP(R) 300 QC AUTOMATIC PAP SCREENER/QC SYSTEM"
+      (PMA P950009, 1995, NeoPath, now under BD). An automated primary/QC screener for conventional
+      Pap smears - cervical cytology, cervical cancer screening. CONFIRMED, and the existing
+      override is correct and still needed: openFDA's current record for product code NMN is
+      "Instrument, Clip, Forming/Cutting, Reprocessed" under NEUROLOGY, regulation 882.4190, which
+      cannot be this device; the code was reassigned after 1995. Classified from the device identity
+      and FDA's own Pathology panel label. Pre-2016 device.
+
+  # ---------------- QFM ----------------
+  - submission_number: "K183182"
+    device: "Critical Care Suite"
+    company: "GE Medical Systems, LLC."
+    product_code: QFM
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: GE's Critical Care Suite, on-device chest X-ray triage for PNEUMOTHORAX.
+      Product code QFM, "Radiological Computer-Assisted Prioritization Software For Lesions",
+      892.2080, whose definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K183285"
+    device: "cmTriage"
+    company: "CureMetrix, Inc"
+    product_code: QFM
+    year: 2019
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      MOVED IN: QFM is excluded wholesale as not-oncology in config/oncology_codes.yaml (which
+      documents "one of 39 is oncologic"); there are six mammography devices in it. Known product:
+      CureMetrix's cmTriage, the first FDA-cleared mammography triage AI - it flags screening
+      mammograms as suspicious and reprioritizes the worklist. Product code QFM, "Radiological
+      Computer-Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage
+      of "time sensitive" findings - not cancer.
+  - submission_number: "K190362"
+    device: "HealthPNX"
+    company: "Zebra Medical Vision  Ltd."
+    product_code: QFM
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      The name states it: Zebra's HealthPNX - PNX is pneumothorax. Product code QFM, "Radiological
+      Computer-Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage
+      of "time sensitive" findings - not cancer.
+  - submission_number: "K192320"
+    device: "HealthCXR"
+    company: "Zebra Medical Vision, Ltd."
+    product_code: QFM
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Zebra Medical Vision's HealthCXR, chest X-ray triage for pleural effusion.
+      Product code QFM, "Radiological Computer-Assisted Prioritization Software For Lesions",
+      892.2080, whose definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K191556"
+    device: "Red Dot"
+    company: "Behold.AI Technologies Limited"
+    product_code: QFM
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: behold.ai's Red Dot, chest X-ray triage cleared in the US for pneumothorax.
+      Product code QFM, "Radiological Computer-Assisted Prioritization Software For Lesions",
+      892.2080, whose definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K192901"
+    device: "HealthVCF"
+    company: "Zebra Medical Vision Ltd."
+    product_code: QFM
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      The name states it: Zebra's HealthVCF - VCF is vertebral compression fracture. Product code
+      QFM, "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K193300"
+    device: "AIMI-Triage CXR PTX"
+    company: "RADLogics, Inc."
+    product_code: QFM
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      The name states it: RADLogics' AIMI-Triage CXR PTX - PTX is pneumothorax. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K200905"
+    device: "HealthMammo"
+    company: "Zebra Medical Vision Ltd."
+    product_code: QFM
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      MOVED IN: QFM is excluded wholesale as not-oncology in config/oncology_codes.yaml (which
+      documents "one of 39 is oncologic"); there are six mammography devices in it. Known product:
+      Zebra Medical Vision's HealthMammo, triage of screening mammograms with suspicious findings.
+      The name states the modality. Product code QFM, "Radiological Computer-Assisted Prioritization
+      Software For Lesions", 892.2080, whose definition is triage of "time sensitive" findings - not
+      cancer.
+  - submission_number: "K193271"
+    device: "uAI EasyTriage-Rib"
+    company: "Shanghai United Imaging Intelligence Co., Ltd."
+    product_code: QFM
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      The name states it: United Imaging Intelligence's uAI EasyTriage-Rib, rib fracture triage.
+      Product code QFM, "Radiological Computer-Assisted Prioritization Software For Lesions",
+      892.2080, whose definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K202992"
+    device: "BriefCase, RIB Fractures Triage (RibFx)"
+    company: "Aidoc Medical, Ltd."
+    product_code: QFM
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      The name states it: Aidoc BriefCase, RIB Fractures Triage (RibFx). Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K203517"
+    device: "Saige-Q"
+    company: "DeepHealth, Inc."
+    product_code: QFM
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      MOVED IN: QFM is excluded wholesale as not-oncology in config/oncology_codes.yaml (which
+      documents "one of 39 is oncologic"); there are six mammography devices in it. Known product:
+      DeepHealth's Saige-Q, mammography triage that flags the most suspicious screening exams for
+      prioritized reading; sibling of Saige-Dx (QDQ, counted). Product code QFM, "Radiological
+      Computer-Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage
+      of "time sensitive" findings - not cancer.
+  - submission_number: "K211733"
+    device: "Lunit INSIGHT CXR Triage"
+    company: "Lunit Inc."
+    product_code: QFM
+    year: 2021
+    decision: unresolved
+    evidence: >-
+      Lunit INSIGHT CXR Triage. Lunit INSIGHT CXR is a multi-finding chest radiograph AI whose
+      findings include pulmonary NODULE/MASS alongside pneumothorax, consolidation, pneumoperitoneum
+      and others, and Lunit is an oncology-focused vendor - but the row does not say which finding
+      this triage clearance covers. Exactly the brief's "multi-finding chest triage that includes
+      but is not specific to nodules" case. Product code QFM, "Radiological Computer-Assisted
+      Prioritization Software For Lesions", 892.2080, whose definition is triage of "time sensitive"
+      findings - not cancer.
+  - submission_number: "K211803"
+    device: "HealthPPT"
+    company: "Zebra Medical Vision Ltd."
+    product_code: QFM
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Zebra Medical Vision's HealthPPT, part of the same acute-finding chest/abdominal triage line
+      as HealthPNX and HealthCXR; Zebra's single mammography entry under this code is HealthMammo
+      (K200905), which is adjudicated separately above. No cancer indication. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K213319"
+    device: "Viz ANEURYSM, Viz ANX"
+    company: "Viz.ai, Inc."
+    product_code: QFM
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      The name states it: Viz.ai's Viz ANEURYSM / Viz ANX, intracranial aneurysm triage. Product
+      code QFM, "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080,
+      whose definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K213566"
+    device: "ClearRead Xray Pneumothorax"
+    company: "Riverain Technologies, Inc."
+    product_code: QFM
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      The name states it: Riverain's ClearRead Xray Pneumothorax. Product code QFM, "Radiological
+      Computer-Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage
+      of "time sensitive" findings - not cancer.
+  - submission_number: "K213941"
+    device: "Annalise Enterprise CXR Triage Pneumothorax"
+    company: "Annalise-AI"
+    product_code: QFM
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      The name states it: Annalise Enterprise CXR Triage Pneumothorax. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K214043"
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QFM
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Aidoc "BriefCase" / "BriefCase-Triage" rows that do not name the module. Aidoc's entire QFM
+      portfolio is acute time-sensitive findings - intracranial haemorrhage, pulmonary embolism
+      (including incidental PE), cervical-spine and rib fracture, pneumothorax, aortic dissection,
+      brain aneurysm - and Aidoc holds no cancer-triage clearance under this code. Called
+      not_oncology on the portfolio rather than the row; if the parent prefers, these four are the
+      most defensible candidates to reclassify as unresolved. Product code QFM, "Radiological
+      Computer-Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage
+      of "time sensitive" findings - not cancer.
+  - submission_number: "K220080"
+    device: "CogNet QmTRIAGE"
+    company: "MedCognetics, Inc."
+    product_code: QFM
+    year: 2022
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      MOVED IN: QFM is excluded wholesale as not-oncology in config/oncology_codes.yaml (which
+      documents "one of 39 is oncologic"); there are six mammography devices in it. Known product:
+      MedCognetics' CogNet QmTRIAGE, mammography triage software flagging exams suspicious for
+      breast cancer. Product code QFM, "Radiological Computer-Assisted Prioritization Software For
+      Lesions", 892.2080, whose definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K221241"
+    device: "DrAid for Radiology v1"
+    company: "VinBrain Joint Stock Company"
+    product_code: QFM
+    year: 2022
+    decision: unresolved
+    evidence: >-
+      VinBrain's DrAid for Radiology v1, a multi-finding chest radiograph AI. Its finding list
+      includes lung nodule/mass among many non-oncologic findings, and the row does not identify the
+      triage target. Multi-finding chest triage, unresolved per the brief. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K221552"
+    device: "EFAI ChestSuite XR Pneumothorax Assessment System"
+    company: "Ever Fortune AI Co., Ltd."
+    product_code: QFM
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      The name states it: EFAI ChestSuite XR Pneumothorax Assessment System. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K222076"
+    device: "EFAI ChestSuite XR Pleural Effusion Assessment System"
+    company: "Ever Fortune.AI Co., Ltd."
+    product_code: QFM
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      The name states it: EFAI ChestSuite XR Pleural Effusion Assessment System. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K222692"
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QFM
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Aidoc "BriefCase" / "BriefCase-Triage" rows that do not name the module. Aidoc's entire QFM
+      portfolio is acute time-sensitive findings - intracranial haemorrhage, pulmonary embolism
+      (including incidental PE), cervical-spine and rib fracture, pneumothorax, aortic dissection,
+      brain aneurysm - and Aidoc holds no cancer-triage clearance under this code. Called
+      not_oncology on the portfolio rather than the row; if the parent prefers, these four are the
+      most defensible candidates to reclassify as unresolved. Product code QFM, "Radiological
+      Computer-Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage
+      of "time sensitive" findings - not cancer.
+  - submission_number: "K221868"
+    device: "QOCA image Smart CXR Image Processing System"
+    company: "Quanta Computer Inc."
+    product_code: QFM
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      Quanta Computer's QOCA image Smart CXR Image Processing System - a generic chest radiograph
+      processing and triage name with no stated finding. Product code QFM, "Radiological Computer-
+      Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage of "time
+      sensitive" findings - not cancer.
+  - submission_number: "K222179"
+    device: "Annalise Enterprise CXR Triage Trauma"
+    company: "Annalise-AI Pty Ltd"
+    product_code: QFM
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      The name states it: Annalise Enterprise CXR Triage Trauma. Product code QFM, "Radiological
+      Computer-Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage
+      of "time sensitive" findings - not cancer.
+  - submission_number: "K222268"
+    device: "Annalise Enterprise CXR Triage Trauma"
+    company: "Annalise-AI Pty Ltd"
+    product_code: QFM
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      The name states it: Annalise Enterprise CXR Triage Trauma. Product code QFM, "Radiological
+      Computer-Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage
+      of "time sensitive" findings - not cancer.
+  - submission_number: "K223443"
+    device: "Viz AAA"
+    company: "Viz. ai, Inc."
+    product_code: QFM
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      The name states it: Viz.ai's Viz AAA - abdominal aortic aneurysm. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K223754"
+    device: "BraveCX"
+    company: "Bering Ltd"
+    product_code: QFM
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      Bering Ltd's BraveCX, a chest radiograph triage product. The brand carries no indication and
+      the vendor's finding set is not established here. Not stretched to a call. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K230020"
+    device: "BriefCase"
+    company: "Aidoc Medical, Ltd."
+    product_code: QFM
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Aidoc "BriefCase" / "BriefCase-Triage" rows that do not name the module. Aidoc's entire QFM
+      portfolio is acute time-sensitive findings - intracranial haemorrhage, pulmonary embolism
+      (including incidental PE), cervical-spine and rib fracture, pneumothorax, aortic dissection,
+      brain aneurysm - and Aidoc holds no cancer-triage clearance under this code. Called
+      not_oncology on the portfolio rather than the row; if the parent prefers, these four are the
+      most defensible candidates to reclassify as unresolved. Product code QFM, "Radiological
+      Computer-Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage
+      of "time sensitive" findings - not cancer.
+  - submission_number: "K230074"
+    device: "Rapid Aneurysm Triage and Notification"
+    company: "iSchemaView Inc."
+    product_code: QFM
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      The name states it: iSchemaView's Rapid Aneurysm Triage and Notification. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K230899"
+    device: "qXR-PTX-PE"
+    company: "Qure.ai Technologies"
+    product_code: QFM
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      The name states it: Qure.ai's qXR-PTX-PE - pneumothorax and pleural effusion. Product code
+      QFM, "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K231871"
+    device: "Radify Triage"
+    company: "Envisionit DeepAI Ltd"
+    product_code: QFM
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      Envisionit DeepAI's Radify Triage, a chest radiograph triage product with no finding stated in
+      the row. Product code QFM, "Radiological Computer-Assisted Prioritization Software For
+      Lesions", 892.2080, whose definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K232410"
+    device: "SmartChest"
+    company: "Milvue"
+    product_code: QFM
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      Milvue's SmartChest, a multi-finding chest radiograph AI (pneumothorax, pleural effusion,
+      consolidation, nodule among others). Includes but is not specific to nodules. Product code
+      QFM, "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K233108"
+    device: "VinDr-Mammo"
+    company: "VinBigData Joint Stock Company"
+    product_code: QFM
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      MOVED IN: QFM is excluded wholesale as not-oncology in config/oncology_codes.yaml (which
+      documents "one of 39 is oncologic"); there are six mammography devices in it. The name states
+      the modality: VinBigData's VinDr-Mammo, mammography AI triage. This is the one device the
+      existing config already acknowledges as oncologic inside QFM. Product code QFM, "Radiological
+      Computer-Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage
+      of "time sensitive" findings - not cancer.
+  - submission_number: "K240612"
+    device: "CINA-VCF"
+    company: "Avicenna.AI"
+    product_code: QFM
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      The name states it: Avicenna.AI's CINA-VCF - vertebral compression fracture. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K241439"
+    device: "VUNO Med-Chest X-ray Triage/VUNO Med-CXR Link Triage"
+    company: "Vuno Inc."
+    product_code: QFM
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      VUNO Med-Chest X-ray Triage / VUNO Med-CXR Link Triage. VUNO Med-Chest X-ray detects multiple
+      thoracic abnormalities including nodule; the triage clearance's specific finding is not stated
+      in the row. Multi-finding chest triage, unresolved per the brief. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K243548"
+    device: "BriefCase-Triage"
+    company: "Aidoc Medical, Ltd."
+    product_code: QFM
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Aidoc "BriefCase" / "BriefCase-Triage" rows that do not name the module. Aidoc's entire QFM
+      portfolio is acute time-sensitive findings - intracranial haemorrhage, pulmonary embolism
+      (including incidental PE), cervical-spine and rib fracture, pneumothorax, aortic dissection,
+      brain aneurysm - and Aidoc holds no cancer-triage clearance under this code. Called
+      not_oncology on the portfolio rather than the row; if the parent prefers, these four are the
+      most defensible candidates to reclassify as unresolved. Product code QFM, "Radiological
+      Computer-Assisted Prioritization Software For Lesions", 892.2080, whose definition is triage
+      of "time sensitive" findings - not cancer.
+  - submission_number: "K243808"
+    device: "Rayvolve PTX-PE"
+    company: "AZmed"
+    product_code: QFM
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      The name states it: AZmed's Rayvolve PTX-PE - pneumothorax and pulmonary embolism. Product
+      code QFM, "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080,
+      whose definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K250831"
+    device: "Annalise Enterprise"
+    company: "Annalise-AI"
+    product_code: QFM
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      Annalise Enterprise (bare, 2025). Unlike this vendor's other rows here, which name
+      Pneumothorax or Trauma, this row names no finding; Annalise's comprehensive CXR product covers
+      ~120 findings including lung nodule/mass. Multi-finding, unresolved. Product code QFM,
+      "Radiological Computer-Assisted Prioritization Software For Lesions", 892.2080, whose
+      definition is triage of "time sensitive" findings - not cancer.
+  - submission_number: "K252482"
+    device: "CogNet AI-MT+"
+    company: "Medcognetics, Inc."
+    product_code: QFM
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      MOVED IN: QFM is excluded wholesale as not-oncology in config/oncology_codes.yaml (which
+      documents "one of 39 is oncologic"); there are six mammography devices in it. MedCognetics'
+      CogNet AI-MT+ ("MT" = mammography triage), the successor to the same company's CogNet QmTRIAGE
+      (K220080) under the same product code. MedCognetics is a breast-imaging-only vendor. Medium
+      because the expansion of "AI-MT+" is inferred from the vendor's product line rather than the
+      row. Product code QFM, "Radiological Computer-Assisted Prioritization Software For Lesions",
+      892.2080, whose definition is triage of "time sensitive" findings - not cancer.
+
+  # ---------------- QBS ----------------
+  - submission_number: "DEN180005"
+    device: "OsteoDetect"
+    company: "Imagen Technologies, Inc."
+    product_code: QBS
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Imagen's OsteoDetect (De Novo DEN180005), detection of distal radius fracture
+      on wrist radiographs. Product code QBS is detection/diagnosis software for FRACTURE.
+  - submission_number: "K193417"
+    device: "FractureDetect (FX)"
+    company: "Imagen Technologies, Inc."
+    product_code: QBS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      The name states it: Imagen's FractureDetect (FX). Product code QBS is detection/diagnosis
+      software for FRACTURE.
+  - submission_number: "K212365"
+    device: "BoneView"
+    company: "Gleamer"
+    product_code: QBS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Gleamer's BoneView, fracture detection on musculoskeletal radiographs. Product
+      code QBS is detection/diagnosis software for FRACTURE.
+  - submission_number: "K220164"
+    device: "Rayvolve"
+    company: "AZmed SAS"
+    product_code: QBS
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: AZmed's Rayvolve, fracture detection on musculoskeletal radiographs. Product
+      code QBS is detection/diagnosis software for FRACTURE.
+  - submission_number: "K222176"
+    device: "BoneView"
+    company: "Gleamer"
+    product_code: QBS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Gleamer's BoneView, fracture detection on musculoskeletal radiographs. Product
+      code QBS is detection/diagnosis software for FRACTURE.
+  - submission_number: "K223491"
+    device: "Critical Care Suite with Pneumothorax Detection AI Algorithm, Critical Care Suite 2.1, Critical Care Suite"
+    company: "GE Medical Systems, LLC"
+    product_code: QBS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      The name states it: GE's Critical Care Suite with Pneumothorax Detection AI Algorithm. Product
+      code QBS is detection/diagnosis software for FRACTURE.
+  - submission_number: "K240712"
+    device: "icobrain aria"
+    company: "icometrix NV"
+    product_code: QBS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: icometrix's icobrain aria, which quantifies Amyloid-Related Imaging
+      Abnormalities on brain MRI for patients on anti-amyloid Alzheimer's therapy. Neurology, not
+      neoplastic. Product code QBS is detection/diagnosis software for FRACTURE.
+  - submission_number: "K240845"
+    device: "Rayvolve"
+    company: "AZmed SAS"
+    product_code: QBS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: AZmed's Rayvolve, fracture detection on musculoskeletal radiographs. Product
+      code QBS is detection/diagnosis software for FRACTURE.
+  - submission_number: "K242171"
+    device: "TechCare Trauma"
+    company: "Milvue"
+    product_code: QBS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      The name states it: Milvue's TechCare Trauma, musculoskeletal trauma/fracture detection.
+      Product code QBS is detection/diagnosis software for FRACTURE.
+
+  # ---------------- QWO ----------------
+  - submission_number: "DEN220040"
+    device: "Fibresolve"
+    company: "Imvaria, Inc"
+    product_code: QWO
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Imvaria's Fibresolve (De Novo DEN220040), a CT-based classifier supporting the
+      diagnosis of idiopathic pulmonary fibrosis. Product code QWO covers referral of findings
+      related to FIBROTIC LUNG DISEASE - interstitial lung disease, not cancer.
+  - submission_number: "K242467"
+    device: "IQ-UIP"
+    company: "Imbio, Inc."
+    product_code: QWO
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Imbio's IQ-UIP, which classifies CT chest patterns as usual interstitial
+      pneumonia. Interstitial lung disease. Product code QWO covers referral of findings related to
+      FIBROTIC LUNG DISEASE - interstitial lung disease, not cancer.
+  - submission_number: "K241891"
+    device: "ScreenDx"
+    company: "Imvaria, Inc"
+    product_code: QWO
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Imvaria's ScreenDx, cleared under the fibrotic-lung-disease referral code; the company's
+      product line is interstitial lung disease, not cancer. Despite the generic "Screen" in the
+      name this is not a cancer screening tool. Product code QWO covers referral of findings related
+      to FIBROTIC LUNG DISEASE - interstitial lung disease, not cancer.
+  - submission_number: "K252041"
+    device: "Fibresolve (with PCCP)"
+    company: "Imvaria, Inc."
+    product_code: QWO
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Imvaria's Fibresolve (De Novo DEN220040), a CT-based classifier supporting the
+      diagnosis of idiopathic pulmonary fibrosis. Product code QWO covers referral of findings
+      related to FIBROTIC LUNG DISEASE - interstitial lung disease, not cancer.
+
+  # ---------------- SAO ----------------
+  - submission_number: "DEN230023"
+    device: "Rho"
+    company: "16 Bit Inc"
+    product_code: SAO
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: 16 Bit's Rho (De Novo DEN230023), opportunistic screening for low bone mineral
+      density on existing radiographs. Product code SAO. Bone density, not cancer.
+  - submission_number: "K251408"
+    device: "OsteoSight\x99 Hip (v1)"
+    company: "Naitive Technologies Ltd"
+    product_code: SAO
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      The name states it: Naitive Technologies' OsteoSight Hip, opportunistic osteoporosis/low-BMD
+      assessment from hip radiographs. Product code SAO.
+
+  # ---------------- KGI ----------------
+  - submission_number: "K213760"
+    device: "ABMD Software"
+    company: "HeartLung Corporation"
+    product_code: KGI
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      HeartLung Corporation's ABMD Software - automated bone mineral density from CT. Product code
+      KGI, bone densitometer.
+  - submission_number: "K242295"
+    device: "BunkerHill BMD"
+    company: "BunkerHill Health"
+    product_code: KGI
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      The name states it: BunkerHill BMD - bone mineral density. Product code KGI, bone
+      densitometer.
+
+  # ---------------- QHA ----------------
+  - submission_number: "K243769"
+    device: "QFR (3.0)"
+    company: "QFR Solutions bv"
+    product_code: QHA
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      QFR Solutions' QFR - quantitative flow ratio, an angiography-derived coronary physiology
+      index. Product code QHA.
+  - submission_number: "K251355"
+    device: "X1-FFR"
+    company: "Spectrawave, Inc."
+    product_code: QHA
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Spectrawave's X1-FFR - fractional flow reserve, coronary physiology. Product code QHA,
+      coronary vascular simulation from X-ray angiography.
+
+  # ---------------- PCS ----------------
+  - submission_number: "K182218"
+    device: "FerriSmart Analysis System"
+    company: "Resonance Health Analysis Services Pty Ltd"
+    product_code: PCS
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Resonance Health's FerriSmart, automated MRI measurement of liver iron
+      concentration. Product code PCS. Iron overload, not cancer.
+  - submission_number: "K213776"
+    device: "LiverSmart"
+    company: "Resonance Health Analysis Services Pty Ltd"
+    product_code: PCS
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Resonance Health's LiverSmart, MRI quantification of liver fat/iron and
+      fibrosis markers. Product code PCS. Diffuse liver disease, not a neoplastic lesion tool.
+
+  # ---------------- QVD ----------------
+  - submission_number: "DEN220063"
+    device: "Caption Interpretation Automated Ejection Fraction Software"
+    company: "Caption Health, Inc"
+    product_code: QVD
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      The name states it: Caption Interpretation Automated Ejection Fraction Software (De Novo
+      DEN220063). Cardiac function. Product code QVD.
+
+  # ---------------- SGH ----------------
+  - submission_number: "K251673"
+    device: "X9 Ultrasound System"
+    company: "X9, Inc."
+    product_code: SGH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      X9, Inc.'s X9 Ultrasound System under product code SGH, ultrasound for VASCULAR ACCESS for
+      hemodialysis. Not diagnostic imaging for cancer.
+
+  # ---------------- SHE ----------------
+  - submission_number: "DEN250007"
+    device: "Delivery Date AI"
+    company: "Ultrasound AI"
+    product_code: SHE
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      The name states it: Ultrasound AI's Delivery Date AI (De Novo DEN250007), obstetric prediction
+      of delivery date. Product code SHE.
+
+  # ---------------- NFJ ----------------
+  - submission_number: "K141922"
+    device: "IRIS INTELLIGENT RETINAL IMAGING SYSTEM"
+    company: "INTELLIGENT RETINAL IMAGING SYSTEMS, LLC"
+    product_code: NFJ
+    year: 2015
+    decision: not_oncology
+    evidence: >-
+      The name states it: IRIS Intelligent Retinal Imaging System (2015), diabetic retinopathy
+      screening / ophthalmic image management. Product code NFJ. The only pre-2016 device in the
+      excluded half of this group, and it is not oncologic.

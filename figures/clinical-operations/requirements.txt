@@ -1,0 +1,34 @@
+# Pinned to the same versions as ../trends-figure, so the two projects share one
+# resolved environment and the figures cannot drift apart on a matplotlib change.
+#
+# NOT LISTED HERE, but required: an editable install of the sibling project.
+# The plotting layer imports the shared style tokens rather than re-declaring
+# them (see ../AGENTS.md), so the build needs:
+#
+#     pip install -r requirements.txt -e . -e ../trends-figure
+#
+# It is a path dependency, not a published package, so it cannot be pinned here.
+# `from trends.plotting import style` fails without it.
+certifi==2026.7.22
+charset-normalizer==3.5.1
+contourpy==1.3.3
+cycler==0.12.1
+fonttools==4.64.0
+idna==3.19
+iniconfig==2.3.0
+kiwisolver==1.5.1
+matplotlib==3.11.1
+numpy==2.5.2
+packaging==26.3
+pandas==3.0.5
+pillow==12.3.0
+pluggy==1.6.0
+pyarrow==25.0.1
+Pygments==2.21.0
+pyparsing==3.3.2
+pytest==9.1.1
+python-dateutil==2.9.0.post0
+PyYAML==6.0.3
+requests==2.34.2
+six==1.17.0
+urllib3==2.7.0

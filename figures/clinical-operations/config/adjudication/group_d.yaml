@@ -1,0 +1,2555 @@
+# Group D adjudication: product codes IYN, LNH and KPS - 240 devices, all on FDA's
+# Radiology panel (no Pathology rows fall in these codes). These three codes are
+# imaging-SYSTEM codes, not analysis-software codes: IYN is pulsed Doppler ultrasound
+# (116 rows), LNH is MRI (99 rows), KPS is emission computed tomography (25 rows). The
+# approach was therefore deliberately strict in the direction the brief warns about:
+# modality is never evidence of a cancer indication, so a scanner, a reconstruction
+# engine or an acquisition-automation package is not_oncology even where the modality
+# (breast ultrasound, prostate MRI, FDG-PET) is overwhelmingly used in oncology. Every
+# row was read for a device name that states a neoplastic target - tumour, lesion,
+# nodule, mets, prostate/PI-RADS, breast cancer - and none does. The named non-scanner
+# tools that do exist here are obstetric (Sonio Detect, FETOLY, BioticsAI, DEEPECHO,
+# Butterfly Gestational Age Tool, Clarius OB AI), cardiac (Vivid, Kosmos, Ventripoint,
+# RTHawk), hepatic-steatosis and body-composition quantification (LiverMultiScan,
+# HepaFat, Hepatica, AMRA Profiler, Prenuvo Body Composition, MuscleView), nerve
+# localisation (SonoVision), or deep-learning reconstruction (AIR Recon DL, Sonic DL,
+# AiCE, SubtlePET, HYPER DLR, HYPER AiR, Precision DL). Result: 0 oncology, 239
+# not_oncology, 1 unresolved. The single unresolved row is IB NEURO (K080762, 2008),
+# the only pre-2016 row in these codes: a DSC-MR perfusion rCBV package from a
+# neuro-oncology vendor whose cleared indication is nonetheless generic perfusion
+# mapping, used for stroke as well as glioma. Two caveats are recorded rather than
+# silently resolved: (1) several general-purpose ultrasound platforms here (Samsung
+# V/H/RS85 series, GE LOGIQ, Philips EPIQ/Affiniti, Canon Aplio, Siemens ACUSON) can
+# be configured with breast/thyroid lesion-characterisation packages such as S-Detect
+# or Breast Assistant, which are cleared separately under the cancer-specific codes -
+# the FDA row names only the scanner and does not say which AI feature earned the
+# listing, so the scanner is not counted; (2) Hepatica performs liver volumetry used
+# pre-hepatectomy, but its cleared function is whole-liver quantification, not lesion
+# detection. Codes IYN, LNH and KPS therefore contribute nothing to the cancer-directed
+# count, which is itself a useful finding: the generic-code undercount the brief is
+# chasing does not live in the scanner codes.
+version: 1
+codes: [IYN, LNH, KPS]
+n_devices: 240
+adjudicated:
+  - submission_number: K163138
+    device: "Clarius Ultrasound System"
+    company: "Clarius Mobile Health Corp."
+    product_code: IYN
+    year: 2016
+    decision: not_oncology
+    evidence: >-
+      Handheld general-purpose point-of-care ultrasound scanner (Clarius). Acquisition
+      hardware with no stated neoplastic target.
+  - submission_number: K172385
+    device: "Clarius Ultrasound System"
+    company: "Clarius Mobile Health Corp."
+    product_code: IYN
+    year: 2017
+    decision: not_oncology
+    evidence: >-
+      Handheld general-purpose point-of-care ultrasound scanner (Clarius). Acquisition
+      hardware with no stated neoplastic target.
+  - submission_number: K173810
+    device: "Ventripoint Medical System Plus (VMS+)"
+    company: "Ventripoint Diagnostics, Ltd."
+    product_code: IYN
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Ventripoint's VMS+ derives right- and left-ventricular volumes and
+      ejection fraction from 2D echocardiography by knowledge-based reconstruction. Cardiac
+      function; no neoplastic target.
+  - submission_number: K180599
+    device: "Venue"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics,"
+    product_code: IYN
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      GE Venue family: point-of-care ultrasound for cardiac, lung and vascular assessment.
+      No cancer-specific function.
+  - submission_number: K180799
+    device: "Clarius Ultrasound Scanner"
+    company: "Clarius Mobile Health Corp."
+    product_code: IYN
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Handheld general-purpose point-of-care ultrasound scanner (Clarius). Acquisition
+      hardware with no stated neoplastic target.
+  - submission_number: K181685
+    device: "Vivid E80, Vivid E90, Vivid E95"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics,"
+    product_code: IYN
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K192107
+    device: "Clarius Ultrasound Scanner"
+    company: "Clarius Mobile Health Corp."
+    product_code: IYN
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Handheld general-purpose point-of-care ultrasound scanner (Clarius). Acquisition
+      hardware with no stated neoplastic target.
+  - submission_number: K192388
+    device: "SonoVision Ultrasound Imaging System"
+    company: "Tissue Differentiation Intelligence, LLC"
+    product_code: IYN
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: Tissue Differentiation Intelligence's SonoVision identifies nerve and
+      soft-tissue structures on intraoperative ultrasound for spinal surgery. Nerve
+      localisation, not a cancer indication.
+  - submission_number: K193518
+    device: "KOSMOS"
+    company: "EchoNous, Inc."
+    product_code: IYN
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: EchoNous Kosmos is a handheld cardiac/lung point-of-care ultrasound
+      with AI-guided view acquisition and ejection-fraction estimation. Cardiac.
+  - submission_number: K200497
+    device: "Vivid S60N, Vivid S70N"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K200708
+    device: "Vivid iq"
+    company: "GE Medical Systems Ultrasound and"
+    product_code: IYN
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K200743
+    device: "Vivid E80/ Vivid E90/ Vivid E95"
+    company: "GE Medical Systems Ultrasound and"
+    product_code: IYN
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K200851
+    device: "Vivid T8, Vivid T9"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K201012
+    device: "EPIQ Diagnostic Ultrasound System Series, Affiniti Diagnostic Ultrasound System Series, CX50 Diagnostic Ultrasound System, Sparq Diagnostic Ultrasound System, Lumify Diagnostic Ultrasound System"
+    company: "Philips Ultrasound, Inc."
+    product_code: IYN
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K210426
+    device: "HS40 Diagnostic Ultrasound System"
+    company: "Samsung Medison CO., LTD."
+    product_code: IYN
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Samsung Medison women's-health/obstetric ultrasound systems (HERA, HS40, HM70 lines).
+      General-purpose acquisition hardware with obstetric AI features; no cancer indication
+      stated in the row.
+  - submission_number: K210438
+    device: "Versana Premier"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics,"
+    product_code: IYN
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K211597
+    device: "EPIQ Series Diagnostic Ultrasound System, Affiniti Series Diagnostic Ultrasound System"
+    company: "Philips Medical Systems"
+    product_code: IYN
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K211824
+    device: "HERA W9, HERA W10 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Samsung Medison women's-health/obstetric ultrasound systems (HERA, HS40, HM70 lines).
+      General-purpose acquisition hardware with obstetric AI features; no cancer indication
+      stated in the row.
+  - submission_number: K211945
+    device: "V8 Diagnostic Ultrasound System"
+    company: "Samsung Medison CO., LTD."
+    product_code: IYN
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K212100
+    device: "Kosmos"
+    company: "EchoNous, Inc."
+    product_code: IYN
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: EchoNous Kosmos is a handheld cardiac/lung point-of-care ultrasound
+      with AI-guided view acquisition and ejection-fraction estimation. Cardiac.
+  - submission_number: K212265
+    device: "TEX20/TEX20 Pro/TEX20S/TEX20T/TEX20 Exp/TEX20 Elite Diagnostic Ultrasound System, TEX10/ TEX10 Pro/TEX10S/TEX10T/TEX10 Exp/TEX10 Elite/TE X/TE X Lite Diagnostic Ultrasound System"
+    company: "Shenzhen Mindray Bio-Medical Electronics Co.,LTD"
+    product_code: IYN
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K212704
+    device: "Philips EPIQ Diagnostic Ultrasound System, Philips Affiniti Diagnostic Ultrasound System"
+    company: "Philips Medical Systems"
+    product_code: IYN
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K213436
+    device: "Clarius Ultrasound Scanner"
+    company: "Clarius Mobile Health Corp."
+    product_code: IYN
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Handheld general-purpose point-of-care ultrasound scanner (Clarius). Acquisition
+      hardware with no stated neoplastic target.
+  - submission_number: K212333
+    device: "Aplio i900/i800/i700 Diagnostic Ultrasound System, Software V6.5"
+    company: "Canon Medical Systems Corporation"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K212960
+    device: "Aplio a550, Aplio a450, and Aplio a, Diagnostic Ultrasound System, Software V6.5"
+    company: "Canon Medical Systems Corporation"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K213642
+    device: "Voluson S6, Voluson S8, Voluson S8t, Voluson S10, Voluson S10 Expert"
+    company: "GE Healthcare"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Voluson family: women's-health and obstetric/gynaecologic ultrasound systems.
+      Obstetric, which the brief lists as not_oncology.
+  - submission_number: K213689
+    device: "Voluson P6, Voluson P8"
+    company: "GE Healthcare"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Voluson family: women's-health and obstetric/gynaecologic ultrasound systems.
+      Obstetric, which the brief lists as not_oncology.
+  - submission_number: K220043
+    device: "HERA W10 Diagnostic Ultrasound System, HERA W9 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., LTD"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Samsung Medison women's-health/obstetric ultrasound systems (HERA, HS40, HM70 lines).
+      General-purpose acquisition hardware with obstetric AI features; no cancer indication
+      stated in the row.
+  - submission_number: K220358
+    device: "Voluson Expert 22, Voluson Expert 20, Voluson Expert 18"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics,"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Voluson family: women's-health and obstetric/gynaecologic ultrasound systems.
+      Obstetric, which the brief lists as not_oncology.
+  - submission_number: K220446
+    device: "Versana Balance"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics,"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K220619
+    device: "Vivid S60N, Vivid S70N"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics,"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K220800
+    device: "Venue Go"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Venue family: point-of-care ultrasound for cardiac, lung and vascular assessment.
+      No cancer-specific function.
+  - submission_number: K220848
+    device: "Venue Fit"
+    company: "GE Medical Systems"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Venue family: point-of-care ultrasound for cardiac, lung and vascular assessment.
+      No cancer-specific function.
+  - submission_number: K220851
+    device: "Venue"
+    company: "GE Medical Systems"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Venue family: point-of-care ultrasound for cardiac, lung and vascular assessment.
+      No cancer-specific function.
+  - submission_number: K220882
+    device: "Vivid E80, Vivid E90, Vivid E95"
+    company: "GE Medical Systems Ultrasound and"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K220975
+    device: "V8 Diagnostic Ultrasound System, V7 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K221147
+    device: "Vivid T8, Vivid T9"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics,"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K221148
+    device: "Vivid iq"
+    company: "GE Medical Systems Ultrasound & Primary Care Diagnostics LLC"
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K221599
+    device: "HS40 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Samsung Medison women's-health/obstetric ultrasound systems (HERA, HS40, HM70 lines).
+      General-purpose acquisition hardware with obstetric AI features; no cancer indication
+      stated in the row.
+  - submission_number: K223387
+    device: "V8 Diagnostic Ultrasound System, V7 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K223771
+    device: "Lumify Diagnostic Ultrasound System"
+    company: "Philips Ultrasound"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K223830
+    device: "Ultrasound System 2300"
+    company: "BK Medical Aps"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K230084
+    device: "HERA W10 Diagnostic Ultrasound System; HERA W9 Diagnostic Ultrasound System"
+    company: "Samsung Medison CO., LTD."
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Samsung Medison women's-health/obstetric ultrasound systems (HERA, HS40, HM70 lines).
+      General-purpose acquisition hardware with obstetric AI features; no cancer indication
+      stated in the row.
+  - submission_number: K230179
+    device: "6440 MyLabX90"
+    company: "Esaote S.p.A."
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K230346
+    device: "Voluson SWIFT; Voluson SWIFT+"
+    company: "GE Medical Systems Ultrasound & Primary Care Diagnostic, LLC"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      GE Voluson family: women's-health and obstetric/gynaecologic ultrasound systems.
+      Obstetric, which the brief lists as not_oncology.
+  - submission_number: K230365
+    device: "Sonio Detect"
+    company: "Sonio"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Sonio Detect checks the completeness and quality of second- and third-
+      trimester fetal ultrasound views. Obstetric, which the brief lists as not_oncology.
+  - submission_number: K231190
+    device: "EPIQ Series Diagnostic Ultrasound System"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K231764
+    device: "Ultrasound System 1300"
+    company: "BK Medical Aps"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K231772
+    device: "V8/H8 Diagnostic Ultrasound System, V7/H7 Diagnostic Ultrasound System, V6/H6 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K231965
+    device: "Voluson Expert 22, Voluson Expert 20, Voluson Expert 18"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics,"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      GE Voluson family: women's-health and obstetric/gynaecologic ultrasound systems.
+      Obstetric, which the brief lists as not_oncology.
+  - submission_number: K231966
+    device: "LOGIQ E10"
+    company: "GE Medical Systems Ultrasound and Primary care Diagnostics,"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K231989
+    device: "LOGIQ E10s, LOGIQ Fortis"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostic,"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K232145
+    device: "ACUSON Sequoia Diagnostic Ultrasound System, ACUSON Sequoia Select Diagnostic Ultrasound System, ACUSON Origin Diagnostic Ultrasound System"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K232381
+    device: "LOGIQ Totus"
+    company: "GE Medical Systems Ultrasound and Primary care Diagnostics,"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K232500
+    device: "Lumify Diagnostic Ultrasound System"
+    company: "Philips Ultrasound"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K232704
+    device: "Clarius Ultrasound Scanner"
+    company: "Clarius Mobile Health Corp."
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Handheld general-purpose point-of-care ultrasound scanner (Clarius). Acquisition
+      hardware with no stated neoplastic target.
+  - submission_number: K233112
+    device: "HM70 EVO Diagnostic Ultrasound System"
+    company: "Samsung Medison CO., LTD."
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Samsung Medison women's-health/obstetric ultrasound systems (HERA, HS40, HM70 lines).
+      General-purpose acquisition hardware with obstetric AI features; no cancer indication
+      stated in the row.
+  - submission_number: K233545
+    device: "EPIQ Series Diagnostic Ultrasound System"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K232808
+    device: "Butterfly iQ3 Ultrasound System"
+    company: "Butterfly Network, Inc."
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Handheld general-purpose point-of-care ultrasound scanner (Butterfly iQ3). Acquisition
+      hardware with no stated neoplastic target.
+  - submission_number: K233195
+    device: "Aplio i900, Aplio i800 and Aplio i700 Software V8.1 Diagnostic Ultrasound System"
+    company: "Canon Medical Systems Corporation"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K233692
+    device: "Voluson Signature 20, Voluson Signature 18"
+    company: "GE Medical Systems Ultrasound and Primary care Diagnostics,"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      GE Voluson family: women's-health and obstetric/gynaecologic ultrasound systems.
+      Obstetric, which the brief lists as not_oncology.
+  - submission_number: K233788
+    device: "EPIQ Series Diagnostic Ultrasound System, Affiniti Series Diagnostic Ultrasound System"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K233826
+    device: "Kosmos"
+    company: "EchoNous, Inc."
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: EchoNous Kosmos is a handheld cardiac/lung point-of-care ultrasound
+      with AI-guided view acquisition and ejection-fraction estimation. Cardiac.
+  - submission_number: K233955
+    device: "Clarius OB AI"
+    company: "Clarius Mobile Health Corp."
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the function: obstetric AI on the Clarius handheld scanner. Obstetric.
+  - submission_number: K240406
+    device: "Sonio Detect"
+    company: "Sonio"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Sonio Detect checks the completeness and quality of second- and third-
+      trimester fetal ultrasound views. Obstetric, which the brief lists as not_oncology.
+  - submission_number: K240516
+    device: "RS85 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K240631
+    device: "V8/XV8/XH8, V7/XV7/XH7, V6/XV6/XH6 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K240704
+    device: "ACUSON Sequoia Diagnostic Ultrasound System, ACUSON Sequoia Select Diagnostic Ultrasound System, ACUSON Origin Diagnostic Ultrasound System, ACUSON Origin ICE  Diagnostic Ultrasound System"
+    company: "Siemens Medical Solutions, USA, Inc."
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K240850
+    device: "EPIQ Series Diagnostic Ultrasound Systems; Affiniti Series Diagnostic Ultrasound Systems"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K240980
+    device: "EPIQ Series Diagnostic Ultrasound System"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K241380
+    device: "FETOLY-HEART"
+    company: "Diagnoly"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Diagnoly's FETOLY / FETOLY-HEART support fetal cardiac screening on
+      obstetric ultrasound. Obstetric.
+  - submission_number: K241582
+    device: "Aplio i900/i800/i700 Diagnostic Ultrasound System, Software V7.0 (TUS-AI900, TUS-AI800, TUS-AI700)"
+    company: "Canon Medical Systems Corporation"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K241971
+    device: "HERA Z20, R20, HERA Z30, R30 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Samsung Medison women's-health/obstetric ultrasound systems (HERA, HS40, HM70 lines).
+      General-purpose acquisition hardware with obstetric AI features; no cancer indication
+      stated in the row.
+  - submission_number: K242005
+    device: "Versana Premier; Versana Premier Lotus; LOGIQ F"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K242020
+    device: "EPIQ Series Diagnostic Ultrasound System; Affiniti Series Diagnostic Ultrasound System"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K242168
+    device: "Voluson Expert 18; Voluson Expert 20; Voluson Expert 22"
+    company: "GE Medical Systems Ultrasound and Primary care Diagnostics"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      GE Voluson family: women's-health and obstetric/gynaecologic ultrasound systems.
+      Obstetric, which the brief lists as not_oncology.
+  - submission_number: K242444
+    device: "HERA W10 Diagnostic Ultrasound System; HERA W9 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Samsung Medison women's-health/obstetric ultrasound systems (HERA, HS40, HM70 lines).
+      General-purpose acquisition hardware with obstetric AI features; no cancer indication
+      stated in the row.
+  - submission_number: K242511
+    device: "V5 Diagnostic Ultrasound System, H5 Diagnostic Ultrasound System, XV5 Diagnostic Ultrasound System, XH5 Diagnostic Ultrasound System, V4 Diagnostic Ultrasound System, H4 Diagnostic Ultrasound System, XV4 Diagnostic Ultrasound System, XH4 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K242523
+    device: "ACUSON Sequoia Diagnostic Ultrasound System; ACUSON Sequoia Select Diagnostic Ultrasound System; ACUSON Origin Diagnostic Ultrasound System; ACUSON Origin ICE Diagnostic Ultrasound System"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K242800
+    device: "The 5000 Compact Series Ultrasound Systems"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K241671
+    device: "6450 Ultrasound System (MyLabE80); 6450 Ultrasound System (MyLabE85)"
+    company: "Esaote S.p.A."
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K241949
+    device: "Digital Color Doppler Ultrasound System (P60 Series)"
+    company: "Sonoscape Medical Corp."
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system (colour Doppler / point-of-care).
+      Acquisition hardware; no stated neoplastic target.
+  - submission_number: K242594
+    device: "DEEPECHO"
+    company: "DeepEcho"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: DeepEcho's DEEPECHO performs fetal biometry and gestational-age
+      estimation on obstetric ultrasound. Obstetric.
+  - submission_number: K243253
+    device: "6600 Ultrasound System (MyLabA50); 6600 Ultrasound System (MyLabA70)"
+    company: "Esaote S.p.A."
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K243620
+    device: "Vivid iq"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K243628
+    device: "Vivid T9/Vivid T8"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K243702
+    device: "V8 Diagnostic Ultrasound System; cV8 Diagnostic Ultrasound System; V7 Diagnostic Ultrasound System; cV7 Diagnostic Ultrasound System; V6 Diagnostic Ultrasound System; cV6 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K243793
+    device: "EPIQ Series Diagnostic Ultrasound System; Affiniti Series Diagnostic Ultrasound System"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K243794
+    device: "EPIQ Series Diagnostic Ultrasound System; Affiniti Series Diagnostic Ultrasound System"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K250087
+    device: "Vscan Air"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      GE Vscan Air handheld point-of-care ultrasound. Acquisition hardware; no stated
+      neoplastic target.
+  - submission_number: K250177
+    device: "EPIQ Series Diagnostic Ultrasound System; Affiniti Series Diagnostic Ultrasound System"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K250543
+    device: "Voluson\x99 Performance 16; Voluson\x99 Performance 18"
+    company: "GE Medical Systems Ultrasound and Primary care Diagnostics"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      GE Voluson family: women's-health and obstetric/gynaecologic ultrasound systems.
+      Obstetric, which the brief lists as not_oncology.
+  - submission_number: K250886
+    device: "EPIQ Series Diagnostic Ultrasound Systems; Affiniti Series Diagnostic Ultrasound Systems"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K250959
+    device: "BioticsAI"
+    company: "Bioticsai, Inc."
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: BioticsAI analyses obstetric ultrasound for fetal anomaly screening and
+      view/plane quality. Obstetric.
+  - submission_number: K250999
+    device: "V8 Diagnostic Ultrasound System; cV8 Diagnostic Ultrasound System; V7 Diagnostic Ultrasound System; cV7 Diagnostic Ultrasound System; V6 Diagnostic Ultrasound System; cV6 Diagnostic Ultrasound System; V5 Diagnostic Ultrasound System; cV5 Diagnostic Ultrasound System; V4 Diagnostic Ultrasound System; cV4 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K251106
+    device: "Sonosite LX and Sonosite PX Ultrasound Systems"
+    company: "Fujifilm Sonosite Inc"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system (colour Doppler / point-of-care).
+      Acquisition hardware; no stated neoplastic target.
+  - submission_number: K251110
+    device: "EPIQ Series Diagnostic Ultrasound Systems; Affiniti Series Diagnostic Ultrasound Systems"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K251169
+    device: "Vivid Pioneer"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      GE Vivid family: cardiovascular ultrasound systems (echocardiography). Cardiac, which
+      the brief lists as not_oncology.
+  - submission_number: K251322
+    device: "Venue; Venue Go; Venue Fit; Venue Sprint"
+    company: "GE Medical Systems Ultrasound and Primary care Diagnostics,"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      GE Venue family: point-of-care ultrasound for cardiac, lung and vascular assessment.
+      No cancer-specific function.
+  - submission_number: K251368
+    device: "FETOLY"
+    company: "Diagnoly"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Diagnoly's FETOLY / FETOLY-HEART support fetal cardiac screening on
+      obstetric ultrasound. Obstetric.
+  - submission_number: K251455
+    device: "EPIQ Series Diagnostic Ultrasound System; Affiniti Series Diagnostic Ultrasound System"
+    company: "Philips Ultrasound LLC"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K251481
+    device: "ACUSON Sequoia Diagnostic Ultrasound System; ACUSON Sequoia Select Diagnostic Ultrasound System; ACUSON Origin Diagnostic Ultrasound System; ACUSON Origin ICE Diagnostic Ultrasound System"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K251651
+    device: "EPIQ Series Diagnostic Ultrasound System; Affiniti Series Diagnostic Ultrasound System"
+    company: "Philips Ultrasound, LLC"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K251963
+    device: "LOGIQ E10s"
+    company: "Ge Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K251985
+    device: "LOGIQ E10"
+    company: "Ge Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K252074
+    device: "Aplio i900, Aplio i800 and Aplio i700 Software V9.0 Diagnostic Ultrasound System"
+    company: "Canon Medical Systems Corporation"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K252328
+    device: "Voluson Expert 18; Voluson Expert 20; Voluson Expert 22"
+    company: "Ge Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      GE Voluson family: women's-health and obstetric/gynaecologic ultrasound systems.
+      Obstetric, which the brief lists as not_oncology.
+  - submission_number: K252557
+    device: "Lumify Diagnostic Ultrasound System"
+    company: "Philips Ultrasound, LLC"
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K253310
+    device: "7600 Ultrasound System (MyLabC25); 7600 Ultrasound System (MyLabC30)"
+    company: "Esaote, S.P.A."
+    product_code: IYN
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target.
+  - submission_number: K252018
+    device: "HERA Z20 Diagnostic Ultrasound System; HERA Z20e Diagnostic Ultrasound System; HERA Z20s Diagnostic Ultrasound System; R20 Diagnostic Ultrasound System; HERA Z30 Diagnostic Ultrasound System; R30 Diagnostic Ultrasound System"
+    company: "Samsung Medison Co., Ltd."
+    product_code: IYN
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Samsung Medison women's-health/obstetric ultrasound systems (HERA, HS40, HM70 lines).
+      General-purpose acquisition hardware with obstetric AI features; no cancer indication
+      stated in the row.
+  - submission_number: K252148
+    device: "Butterfly Gestational Age Tool"
+    company: "Butterfly Network, Inc."
+    product_code: IYN
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Name states the function: a gestational-age estimation tool on Butterfly handheld
+      ultrasound. Obstetric.
+  - submission_number: K252433
+    device: "Sonio Detect  (v3)"
+    company: "Sonio"
+    product_code: IYN
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Known product: Sonio Detect checks the completeness and quality of second- and third-
+      trimester fetal ultrasound views. Obstetric, which the brief lists as not_oncology.
+  - submission_number: K253366
+    device: "LOGIQ Fortis"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K253370
+    device: "LOGIQ Totus"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K253595
+    device: "EPIQ Series Diagnostic Ultrasound System, Affiniti Series Diagnostic Ultrasound System"
+    company: "Philips Ultrasound, LLC"
+    product_code: IYN
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K260673
+    device: "LOGIQ Vita; LOGIQ Vita Pro; LOGIQ Vita Express; LOGIQ Vita Plus; LOGIQ Vita Power; LOGIQ S20; LOGIQ S20 Pro; LOGIQ S20 Express; LOGIQ S20 Plus; LOGIQ S20 Power"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: IYN
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      General-purpose diagnostic ultrasound system under IYN, "System, Imaging, Pulsed
+      Doppler, Ultrasonic" (892.1550). Acquisition hardware whose row states no neoplastic
+      target. Note: this platform family can be configured with optional breast/thyroid
+      lesion-characterisation packages (Samsung S-Detect, GE Breast Assistant/Koios), which
+      are cleared separately under the cancer-specific codes; the row itself names only the
+      scanner, so the scanner is not counted.
+  - submission_number: K080762
+    device: "IB NEURO, VERSION 1.0"
+    company: "IMAGING BIOMETRICS, LLC"
+    product_code: LNH
+    year: 2008
+    decision: unresolved
+    evidence: >-
+      Known product: Imaging Biometrics' IB Neuro post-processes dynamic susceptibility-
+      contrast MR perfusion data to produce relative cerebral blood volume (rCBV) maps. Its
+      dominant clinical use is brain-tumour grading and treatment-response assessment in
+      glioma, and Imaging Biometrics is a neuro-oncology imaging vendor - but the cleared
+      indication (K080762, 2008) is generic perfusion-parameter map generation, and DSC
+      perfusion is equally used for stroke and cerebrovascular disease. The row does not
+      state a neoplastic target, so this is unresolved rather than stretched into oncology.
+      This is the only pre-2016 row in the three assigned codes.
+  - submission_number: K173749
+    device: "AMRA Profiler"
+    company: "AMRA Medical AB"
+    product_code: LNH
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: AMRA Medical's Profiler quantifies body composition (visceral and
+      subcutaneous adipose tissue, muscle volume, liver fat) from whole-body MRI. Metabolic
+      body composition, not cancer.
+  - submission_number: K183231
+    device: "SIGNA Premier"
+    company: "GE Medical Systems, LLC"
+    product_code: LNH
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K183274
+    device: "RTHawk, HeartVista Cardiac Package"
+    company: "HeartVista, Inc."
+    product_code: LNH
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: HeartVista/Vista AI RTHawk automates MR acquisition and prescription
+      (cardiac package). Acquisition automation, which the brief lists as not_oncology.
+  - submission_number: K190017
+    device: "LiverMultiScan (LMSv3)"
+    company: "Perspectum Diagnostics Ltd"
+    product_code: LNH
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Perspectum's LiverMultiScan quantifies liver fibroinflammation (cT1),
+      fat and iron for chronic liver disease. Diffuse liver disease, not a focal neoplastic
+      target.
+  - submission_number: K192574
+    device: "Vantage Galan 3T, MRT-3020, V6.0 with AiCE Reconstruction Processing Unit for MR"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Canon MR scanner with the AiCE (Advanced intelligent Clear-IQ Engine) deep-learning
+      reconstruction unit. Scanner plus reconstruction; not_oncology per the brief's
+      reconstruction rule.
+  - submission_number: K193097
+    device: "Vantage Orian 1.5T, MRT-1550, V6.0 with AiCE Reconstruction Processing Unit for MR"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Canon MR scanner with the AiCE (Advanced intelligent Clear-IQ Engine) deep-learning
+      reconstruction unit. Scanner plus reconstruction; not_oncology per the brief's
+      reconstruction rule.
+  - submission_number: K193176
+    device: "uMR 780"
+    company: "Shanghai United Imaging Healthcare Co., Ltd"
+    product_code: LNH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K193282
+    device: "SIGNA Premier"
+    company: "GE Healthcare (GE Medical Systems, LLC)"
+    product_code: LNH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K201039
+    device: "HepaFat-AI"
+    company: "Resonance Health Analysis Services Pty Ltd"
+    product_code: LNH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: Resonance Health's HepaFat measures liver fat fraction from MRI.
+      Steatosis quantification, not cancer.
+  - submission_number: K201615
+    device: "SIGNA 7.0T"
+    company: "GE Medical Systems, LLC"
+    product_code: LNH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K202170
+    device: "LiverMultiScan"
+    company: "Perspectum LTD"
+    product_code: LNH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: Perspectum's LiverMultiScan quantifies liver fibroinflammation (cT1),
+      fat and iron for chronic liver disease. Diffuse liver disease, not a focal neoplastic
+      target.
+  - submission_number: K202238
+    device: "SIGNA Artist"
+    company: "GE Healthcare (Tianjin) Company Limited"
+    product_code: LNH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K202767
+    device: "Vantage Orian 1.5T, MRT-1550, V6.0"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K203280
+    device: "Hepatica v1 (Hepatica v1.0.0)"
+    company: "Perspectum Ltd."
+    product_code: LNH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Perspectum's Hepatica combines liver volumetry/segmentation with cT1
+      tissue characterisation for liver health and surgical planning. The cleared function
+      is whole-liver quantification, not detection or characterisation of a neoplasm; called
+      not_oncology, and the call is noted because Hepatica is used pre-hepatectomy in
+      patients who may have tumours.
+  - submission_number: K203323
+    device: "Vantage Galan 3T, MRT-3020, V6.0 with AiCE Reconstruction Processing Unit for MR"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Canon MR scanner with the AiCE (Advanced intelligent Clear-IQ Engine) deep-learning
+      reconstruction unit. Scanner plus reconstruction; not_oncology per the brief's
+      reconstruction rule.
+  - submission_number: K203443
+    device: "MAGNETOM Vida, MAGNETOM Sola, MAGNETOM Lumina, MAGNETOM Altea"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K210611
+    device: "MAGNETOM Free.Max"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K211118
+    device: "SIGNA 7.0T"
+    company: "GE Medical Systems, LLC"
+    product_code: LNH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K212456
+    device: "Swoop Point-of-Care Magnetic Resonance Imaging (POC MRI) Scanner System"
+    company: "Hyperfine, Inc."
+    product_code: LNH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's Swoop is a portable low-field point-of-care brain MRI
+      scanner with deep-learning reconstruction. Scanner hardware; no cancer indication.
+  - submission_number: K213305
+    device: "Vantage Fortian 1.5T, MRT-1550, V8.0 with AiCE Reconstruction Processing Unit for MR"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Canon MR scanner with the AiCE (Advanced intelligent Clear-IQ Engine) deep-learning
+      reconstruction unit. Scanner plus reconstruction; not_oncology per the brief's
+      reconstruction rule.
+  - submission_number: K211980
+    device: "SIGNA Prime"
+    company: "GE Healthcare (Tianjin) Company Limited"
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K213583
+    device: "Achieva, Ingenia, Ingenia CX, Ingenia Elition and Ingenia Ambition MR Systems"
+    company: "Philips Medical Systems Nederland B.V."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K213603
+    device: "SIGNA Artist Evo"
+    company: "GE Healthcare(Tianjin) Company Limited"
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K213668
+    device: "SIGNA Hero"
+    company: "GE Healthcare (GE Medical Systems, LLC)"
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K213693
+    device: "MAGNETOM Vida with syngo MR XA50A"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K213717
+    device: "AIR Recon DL"
+    company: "GE Medical Systems,LLC (GE Healthcare)"
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: GE's AIR Recon DL is a deep-learning MR image reconstruction algorithm
+      (denoising, sharper images, shorter scans). Reconstruction, which the brief lists as
+      not_oncology even on a cancer-capable scanner.
+  - submission_number: K213960
+    device: "LiverMultiScan v5 (LMSv5)"
+    company: "Perspectum"
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Perspectum's LiverMultiScan quantifies liver fibroinflammation (cT1),
+      fat and iron for chronic liver disease. Diffuse liver disease, not a focal neoplastic
+      target.
+  - submission_number: K220151
+    device: "MAGNETOM Avanto Fit"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K220192
+    device: "Vantage Galan 3T, MRT-3020, V8.0 with AiCE Reconstruction Processing Unit for MR"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Canon MR scanner with the AiCE (Advanced intelligent Clear-IQ Engine) deep-learning
+      reconstruction unit. Scanner plus reconstruction; not_oncology per the brief's
+      reconstruction rule.
+  - submission_number: K220332
+    device: "uMR Omega with uWS-MR-MRS"
+    company: "Shanghai United Imaging Healthcare Co.,Ltd."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K220575
+    device: "MAGNETOM Free.Max, MAGNETOM Free.Star"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K220589
+    device: "MAGNETOM Skyra Fit"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K220939
+    device: "MAGNETOM Lumina and MAGNETOM Vida Fit with syngo MR XA50A"
+    company: "Siemens Medical Solutions USA Inc."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K221393
+    device: "Swoop Portable MR Imaging System"
+    company: "Hyperfine, Inc."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's Swoop is a portable low-field point-of-care brain MRI
+      scanner with deep-learning reconstruction. Scanner hardware; no cancer indication.
+  - submission_number: K221733
+    device: "MAGNETOM Sola, MAGNETOM Altea, MAGNETOM Sola Fit"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K221923
+    device: "Swoop Portable MR Imaging System"
+    company: "Hyperfine, Inc."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's Swoop is a portable low-field point-of-care brain MRI
+      scanner with deep-learning reconstruction. Scanner hardware; no cancer indication.
+  - submission_number: K223247
+    device: "Swoop Portable MR Imaging System"
+    company: "Hyperfine, Inc."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's Swoop is a portable low-field point-of-care brain MRI
+      scanner with deep-learning reconstruction. Scanner hardware; no cancer indication.
+  - submission_number: K223442
+    device: "MR 5300 and MR 7700 R11 MR Systems"
+    company: "Philips Medical Systems Nederlands B.V."
+    product_code: LNH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K222755
+    device: "uMR 680"
+    company: "Shanghai United Imaging Intelligence Co., Ltd."
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K223343
+    device: "MAGNETOM Amira; MAGNETOM Sempra"
+    company: "Siemens Medical Solutions USA Inc."
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K223426
+    device: "ECHELON Synergy MRI system"
+    company: "FUJIFILM Healthcare Corporation"
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K223439
+    device: "SIGNA Victor"
+    company: "GE Healthcare (Tianjin) Company Limited"
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K223458
+    device: "Ingenia, Ingenia CX, Ingenia Elition, Ingenia Ambition, MR 5300 and MR 7700 MR Systems"
+    company: "Philips Medical Systems Nederland B.V."
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K223523
+    device: "Sonic DL"
+    company: "GE Medical Systems,LLC (GE Healthcare)"
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: GE's Sonic DL is a deep-learning accelerated MR
+      acquisition/reconstruction method (rapid cine). Reconstruction/acquisition.
+  - submission_number: K230208
+    device: "Swoop® Portable MR Imaging System\x99"
+    company: "Hyperfine, Inc."
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's Swoop is a portable low-field point-of-care brain MRI
+      scanner with deep-learning reconstruction. Scanner hardware; no cancer indication.
+  - submission_number: K230355
+    device: "Vantage Galan 3T, MRT-3020, V9.0 with AiCE Reconstruction Processing Unit for MR"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Canon MR scanner with the AiCE (Advanced intelligent Clear-IQ Engine) deep-learning
+      reconstruction unit. Scanner plus reconstruction; not_oncology per the brief's
+      reconstruction rule.
+  - submission_number: K231459
+    device: "HepaFatSmart (V2.0.0)"
+    company: "Resonance Health Analysis Services Pty Ltd"
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Resonance Health's HepaFat measures liver fat fraction from MRI.
+      Steatosis quantification, not cancer.
+  - submission_number: K231560
+    device: "MAGNETOM Vida; MAGNETOM Lumina; MAGNETOM Aera; MAGNETOM Skyra; MAGNETOM Prisma; MAGNETOM Prisma fit"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K231587
+    device: "MAGNETOM Cima.X"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K231617
+    device: "MAGNETOM Free.Max; MAGNETOM Free.Star"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K232482
+    device: "MAGNETOM Viato.Mobile"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K232494
+    device: "MAGNETOM Avanto fit; MAGNETOM Skyra fit"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K232535
+    device: "MAGNETOM Sola; MAGNETOM Altea"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K232760
+    device: "Swoop® Portable MR Imaging System®"
+    company: "Hyperfine, Inc."
+    product_code: LNH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's Swoop is a portable low-field point-of-care brain MRI
+      scanner with deep-learning reconstruction. Scanner hardware; no cancer indication.
+  - submission_number: K232322
+    device: "MAGNETOM Terra; MAGNETOM Terra.X"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K232765
+    device: "MAGNETOM Cima.X Fit"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K233673
+    device: "uMR Jupiter"
+    company: "Shanghai United Imaging Healthcare Co., Ltd"
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K233687
+    device: "ECHELON Synergy V10.0"
+    company: "Fujifilm Healthcare Americas Corporation"
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K233728
+    device: "SIGNA Champion"
+    company: "GE Healthcare (Tianjin) Company Limited"
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K240238
+    device: "Vantage Fortian/Orian 1.5T, MRT-1550, V9.0 with AiCE Reconstruction Processing Unit for MR"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Canon MR scanner with the AiCE (Advanced intelligent Clear-IQ Engine) deep-learning
+      reconstruction unit. Scanner plus reconstruction; not_oncology per the brief's
+      reconstruction rule.
+  - submission_number: K240540
+    device: "uMR Omega"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K240744
+    device: "uMR 680"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K240944
+    device: "Swoop® Portable MR Imaging® System"
+    company: "Hyperfine, Inc."
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's Swoop is a portable low-field point-of-care brain MRI
+      scanner with deep-learning reconstruction. Scanner hardware; no cancer indication.
+  - submission_number: K241242
+    device: "SIGNA MAGNUS"
+    company: "GE Medical Systems, LLC"
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K241331
+    device: "MuscleView"
+    company: "Springbok, Inc."
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Springbok's MuscleView segments and quantifies individual skeletal
+      muscles on MRI for musculoskeletal and sports medicine. No cancer indication.
+  - submission_number: K241429
+    device: "ECHELON Synergy MRI System"
+    company: "FUJIFILM Healthcare Corporation"
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K241496
+    device: "Vantage Galan 3T, MRT-3020, V10.0 with AiCE Reconstruction Processing Unit for MR"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Canon MR scanner with the AiCE (Advanced intelligent Clear-IQ Engine) deep-learning
+      reconstruction unit. Scanner plus reconstruction; not_oncology per the brief's
+      reconstruction rule.
+  - submission_number: K242825
+    device: "Prenuvo Body Composition"
+    company: "Prenuvo"
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the function: body-composition quantification (fat, muscle) from whole-
+      body MRI. Prenuvo markets whole-body screening broadly, but this cleared device is
+      body composition, not lesion detection.
+  - submission_number: K243122
+    device: "uMR Omega"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K243335
+    device: "Vantage Galan 3T, MRT-3020, V10.0 with AiCE Reconstruction Processing Unit for MR"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Canon MR scanner with the AiCE (Advanced intelligent Clear-IQ Engine) deep-learning
+      reconstruction unit. Scanner plus reconstruction; not_oncology per the brief's
+      reconstruction rule.
+  - submission_number: K243397
+    device: "uMR 680"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K243547
+    device: "uMR Ultra"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K243667
+    device: "Sonic DL"
+    company: "GE Medical Systems, LLC"
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: GE's Sonic DL is a deep-learning accelerated MR
+      acquisition/reconstruction method (rapid cine). Reconstruction/acquisition.
+  - submission_number: K250236
+    device: "Swoop® Portable MR Imaging® System (V2)"
+    company: "Hyperfine, Inc."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's Swoop is a portable low-field point-of-care brain MRI
+      scanner with deep-learning reconstruction. Scanner hardware; no cancer indication.
+  - submission_number: K250246
+    device: "uMR Jupiter"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K250379
+    device: "SIGNA Prime Elite"
+    company: "GE Medical Systems, LLC"
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K250436
+    device: "MAGNETOM Flow.Ace; MAGNETOM Flow.Plus"
+    company: "Siemens Shenzhen Magnetic Resonance , Ltd."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K250443
+    device: "MAGNETOM Avanto Fit; MAGNETOM Skyra Fit; MAGNETOM Sola Fit; MAGNETOM Viato.Mobile"
+    company: "Siemens Healthcare GmbH"
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K250901
+    device: "Vantage Fortian/Orian 1.5T, MRT-1550, V10.0 with AiCE Reconstruction Processing Unit for MR"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Canon MR scanner with the AiCE (Advanced intelligent Clear-IQ Engine) deep-learning
+      reconstruction unit. Scanner plus reconstruction; not_oncology per the brief's
+      reconstruction rule.
+  - submission_number: K251029
+    device: "Vista OS, Vista AI Scan, RTHawk"
+    company: "Vista AI, Inc."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: HeartVista/Vista AI RTHawk automates MR acquisition and prescription
+      (cardiac package). Acquisition automation, which the brief lists as not_oncology.
+  - submission_number: K251276
+    device: "Swoop® Portable MR Imaging® System"
+    company: "Hyperfine, Inc."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's Swoop is a portable low-field point-of-care brain MRI
+      scanner with deep-learning reconstruction. Scanner hardware; no cancer indication.
+  - submission_number: K251386
+    device: "ECHELON Synergy"
+    company: "Fujifilm Corporation"
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K251397
+    device: "Ingenia, Ingenia CX, Ingenia Elition, Ingenia Ambition, BlueSeal, MR 5300 and MR 7700 MR System"
+    company: "Philips Medical Systems Nederland B.V."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K251399
+    device: "SIGNA\x99 Sprint"
+    company: "GE Medical Systems, LLC"
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K251682
+    device: "MuscleView 2.0"
+    company: "Springbok, Inc. (dba Springbok Analytics)"
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Springbok's MuscleView segments and quantifies individual skeletal
+      muscles on MRI for musculoskeletal and sports medicine. No cancer indication.
+  - submission_number: K251822
+    device: "MAGNETOM Free.Max; MAGNETOM Free.Star"
+    company: "Siemens Shenzhen Magnetic Resonance , Ltd."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K252371
+    device: "uMR 680"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K252379
+    device: "AIR Recon DL"
+    company: "Ge Medical Systems, LLC"
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: GE's AIR Recon DL is a deep-learning MR image reconstruction algorithm
+      (denoising, sharper images, shorter scans). Reconstruction, which the brief lists as
+      not_oncology even on a cancer-capable scanner.
+  - submission_number: K252838
+    device: "MAGNETOM Sola; MAGNETOM Altea; MAGNETOM Sola Fit; MAGNETOM Viato.Mobile; MAGNETOM Vida; MAGNETOM Lumina; MAGNETOM Vida Fit; MAGNETOM Flow.Elite; MAGNETOM Flow.Neo; MAGNETOM Flow.Rise"
+    company: "Siemens Healthcare GmbH"
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K253489
+    device: "Swoop® Portable MR Imaging® System"
+    company: "Hyperfine, Inc."
+    product_code: LNH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's Swoop is a portable low-field point-of-care brain MRI
+      scanner with deep-learning reconstruction. Scanner hardware; no cancer indication.
+  - submission_number: K251901
+    device: "Magnifico Open (100009900)"
+    company: "Esaote, S.p.A."
+    product_code: LNH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K253413
+    device: "LiverMultiScan (v6.0)"
+    company: "Perspectum, Ltd."
+    product_code: LNH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Known product: Perspectum's LiverMultiScan quantifies liver fibroinflammation (cT1),
+      fat and iron for chronic liver disease. Diffuse liver disease, not a focal neoplastic
+      target.
+  - submission_number: K253625
+    device: "Vantage Fortian/Orian 1.5T, MRT-1550, V10.0 with AiCE Reconstruction Processing Unit for MR"
+    company: "Canon Medical Systems Corporation"
+    product_code: LNH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Canon MR scanner with the AiCE (Advanced intelligent Clear-IQ Engine) deep-learning
+      reconstruction unit. Scanner plus reconstruction; not_oncology per the brief's
+      reconstruction rule.
+  - submission_number: K253648
+    device: "Ingenia, Ingenia CX, Ingenia Elition S/X, Ingenia Ambition S/X, BlueSeal SE/XE/QE, MR 5300 and MR 7700 MR Systems including Upgrades"
+    company: "Philips Medical Systems Nederland B.V."
+    product_code: LNH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K253779
+    device: "SIGNA\x99 Sprint Select"
+    company: "Ge Medical Systems, LLC"
+    product_code: LNH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K253780
+    device: "SIGNA\x99 Bolt"
+    company: "Ge Medical Systems, LLC"
+    product_code: LNH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K260265
+    device: "MAGNETOM Flow.Ace; MAGNETOM Flow.Plus"
+    company: "Siemens Shenzhen Magnetic Resonance , Ltd."
+    product_code: LNH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K260746
+    device: "S-scan Open (100001800)"
+    company: "Esaote, S.p.A."
+    product_code: LNH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      MRI scanner cleared under LNH, "System, Nuclear Magnetic Resonance Imaging"
+      (892.1000). General-purpose imaging hardware and its acquisition/reconstruction
+      software; not_oncology per the brief's reconstruction/acquisition rule.
+  - submission_number: K182336
+    device: "SubtlePET"
+    company: "Subtle Medical, Inc."
+    product_code: KPS
+    year: 2018
+    decision: not_oncology
+    evidence: >-
+      Known product: Subtle Medical's SubtlePET is a deep-learning PET image
+      enhancement/denoising algorithm enabling reduced dose or scan time. PET/SPECT is
+      heavily used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K193178
+    device: "Biograph Horizon"
+    company: "Siemens Medical Solution USA, Inc."
+    product_code: KPS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K193210
+    device: "HYPER DLR"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: KPS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: United Imaging's HYPER DLR / HYPER AiR are deep-learning image
+      reconstruction engines for PET and MR. PET/SPECT is heavily used in oncology, but this
+      row is general-purpose emission-tomography hardware/reconstruction with no cancer-
+      specific analytic function; not_oncology under the brief's reconstruction/acquisition
+      rule.
+  - submission_number: K193248
+    device: "Biograph Vision, Biograph mCT Family of PET/CTs"
+    company: "Siemens Medical Solutions USA, Inc"
+    product_code: KPS
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K203314
+    device: "Cartesion Prime (PCD-1000A/3) V10.8"
+    company: "Canon Medical Systems Corporation"
+    product_code: KPS
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K210001
+    device: "HYPER AiR"
+    company: "Shanghai United Imaging Healthcare Co.,Ltd."
+    product_code: KPS
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: United Imaging's HYPER DLR / HYPER AiR are deep-learning image
+      reconstruction engines for PET and MR. PET/SPECT is heavily used in oncology, but this
+      row is general-purpose emission-tomography hardware/reconstruction with no cancer-
+      specific analytic function; not_oncology under the brief's reconstruction/acquisition
+      rule.
+  - submission_number: K211764
+    device: "Vereos PET/CT"
+    company: "Philips Medical Systems Nederland B.V."
+    product_code: KPS
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K211846
+    device: "Discovery MI Gen2"
+    company: "GE Medical Systems, LLC."
+    product_code: KPS
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K211964
+    device: "SubtlePET"
+    company: "Subtle Medical, Inc."
+    product_code: KPS
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Subtle Medical's SubtlePET is a deep-learning PET image
+      enhancement/denoising algorithm enabling reduced dose or scan time. PET/SPECT is
+      heavily used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K223212
+    device: "Precision DL"
+    company: "GE Healthcare"
+    product_code: KPS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: GE's Precision DL is a deep-learning PET image-quality enhancement
+      algorithm for the Omni Legend detector. PET/SPECT is heavily used in oncology, but
+      this row is general-purpose emission-tomography hardware/reconstruction with no
+      cancer-specific analytic function; not_oncology under the brief's
+      reconstruction/acquisition rule.
+  - submission_number: K223325
+    device: "uMI Panorama"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: KPS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K231572
+    device: "uMI Panorama"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: KPS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K231748
+    device: "Cartesion Prime (PCD-1000A/3) V10.15"
+    company: "Canon Medical Systems Corporation"
+    product_code: KPS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K231833
+    device: "Biograph Vision.X and Biograph Vision.X Edge"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: KPS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K232712
+    device: "uMI Panorama"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: KPS
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K233677
+    device: "Biograph VK10"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: KPS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K241585
+    device: "uMI Panorama"
+    company: "Shanghai United Imaging Healthcare Co.,Ltd."
+    product_code: KPS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K241596
+    device: "uMI Panvivo"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: KPS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K241665
+    device: "Omni Legend"
+    company: "GE Medical Systems Israel, Functional Imaging"
+    product_code: KPS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K243538
+    device: "uMI Panvivo (uMI Panvivo); uMI Panvivo (uMI Panvivo S)"
+    company: "Shanghai United Imaging Healthcare Co.,Ltd."
+    product_code: KPS
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K251153
+    device: "Aurora"
+    company: "GE Medical Systems Israel"
+    product_code: KPS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K251370
+    device: "Cartesion Prime (PCD-1000A/3) V10.21"
+    company: "Canon Medical Systems Corporation"
+    product_code: KPS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K251839
+    device: "uMI Panvivo (uMI Panvivo); uMI Panvivo (uMI Panvivo S)"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: KPS
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K253564
+    device: "uMI Panvivo (uMI Panvivo); uMI Panvivo (uMI Panvivo S); uMI Panvivo (uMI Panvivo EX); uMI Panvivo (uMI Panvivo ES)"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: KPS
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      PET/CT scanner cleared under KPS, "System, Tomography, Computed, Emission" (892.1200).
+      General-purpose scanner hardware and its reconstruction software. PET/SPECT is heavily
+      used in oncology, but this row is general-purpose emission-tomography
+      hardware/reconstruction with no cancer-specific analytic function; not_oncology under
+      the brief's reconstruction/acquisition rule.
+  - submission_number: K254001
+    device: "VERITON CT 300 Series Digital SPECT/CT System (VERITON CT 316/364); VERITON CT 400 Series Digital SPECT/CT System (VERITON CT 416/464)"
+    company: "Spectrum Dynamics Medical, Ltd."
+    product_code: KPS
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Known product: Spectrum Dynamics' VERITON-CT is a digital SPECT/CT scanner. Whole-body
+      SPECT/CT hardware. PET/SPECT is heavily used in oncology, but this row is general-
+      purpose emission-tomography hardware/reconstruction with no cancer-specific analytic
+      function; not_oncology under the brief's reconstruction/acquisition rule.

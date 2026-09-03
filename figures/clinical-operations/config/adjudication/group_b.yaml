@@ -1,0 +1,3001 @@
+# Adjudication fragment for product code QIH ("Automated Radiological Image Processing
+# Software", 21 CFR 892.2050), the largest indeterminate bucket in
+# config/oncology_codes.yaml. All 274 QIH rows in the 2026-03-30 snapshot carry
+# Panel (Lead) = Radiology (none are Pathology), so this fragment covers the whole code.
+# Approach: the 274 rows were first grouped by company and by name pattern, then adjudicated
+# one at a time. QIH is a horizontal "post-processing software" code created in 2019, and its
+# residents are dominated by cardiac echo/CT quantification, neuro volumetry, musculoskeletal
+# and spine planning, dental imaging, and vendor viewing/post-processing platforms. Devices
+# were called `oncology` only where the name states a neoplastic target (RECIST, HGlio, Brain
+# Mets, TumorSight, Lymphoma) or where a specific commercial product with a stated neoplastic
+# indication is identifiable (AmCAD-UT, MEDO-Thyroid, Medihub Prostate, AI-Rad Companion
+# Prostate MR, qCT LN Quant, breastscape, LungVision, Voxel Dosimetry, DrAid for Liver
+# Segmentation). Per the brief, breast density products (Saige-Density, PowerLook Density,
+# Transpara Density, MammoScreen BD, Visage Breast Density, WRDensity, AutoDensity) are
+# not_oncology, as are reconstruction/denoising, acquisition, positioning and PACS/viewer
+# infrastructure. Multi-application vendor platforms whose module list mixes oncologic and
+# non-oncologic apps (Arterys MICA, AVIEW unsuffixed, uAI Portal, syngo.via MI Workflows
+# bundles, InferOperate Suite) and general 3D surgical-planning segmentation (Ceevra, IRISeg,
+# Axial3D, Brainlab Elements, 3D-Side) are `unresolved` rather than guessed. QIH's earliest
+# entry is 2019, so this code contributes nothing to the pre-2016 correction.
+# Counts: 16 oncology (15 radiology_cancer_detection,
+# 1 radiology_radiation_therapy), 216 not_oncology,
+# 42 unresolved, of 274 rows.
+version: 1
+codes: [QIH]
+n_devices: 274
+adjudicated:
+
+  - submission_number: "K191171"
+    device: "EchoGo Core"
+    company: "Ultromics Ltd"
+    product_code: QIH
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Ultromics EchoGo Core automates echocardiographic volumes, ejection
+      fraction and strain. Cardiac.
+
+  - submission_number: "K191647"
+    device: "QLAB Advanced Quantification Software"
+    company: "Philips Healthcare"
+    product_code: QIH
+    year: 2019
+    decision: not_oncology
+    evidence: >-
+      Known product: Philips QLAB is the ultrasound advanced quantification package,
+      dominated by cardiac and vascular measurement. General ultrasound quantification with
+      no cancer-specific function.
+
+  - submission_number: "K192437"
+    device: "Arterys MICA"
+    company: "Arterys Inc."
+    product_code: QIH
+    year: 2020
+    decision: unresolved
+    evidence: >-
+      Arterys MICA is Arterys' multi-application cloud imaging platform. The Arterys app
+      portfolio contained both oncologic modules (lung and liver nodule/lesion tracking) and
+      non-oncologic ones (cardiac MR flow, neuro). A platform clearance does not say which
+      modules the entry stands for.
+
+  - submission_number: "K192601"
+    device: "uWS-MR"
+    company: "Shanghai United Imaging Healthcare Co., Ltd"
+    product_code: QIH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: United Imaging's uWS-MR, uOmnispace, uOmnispace.CT and uOmnispace.MR
+      are the vendor's general image post-processing and reading workstations. Platform
+      infrastructure with no cancer-specific stated function, treated like PACS/reporting
+      per the brief.
+
+  - submission_number: "K192969"
+    device: "Ezra Plexo Software"
+    company: "Ezra AI Inc."
+    product_code: QIH
+    year: 2020
+    decision: unresolved
+    evidence: >-
+      "Ezra Plexo" is a bare product name. Ezra AI's business is full-body MRI screening
+      marketed for early cancer detection, which leans oncologic, but the cleared software
+      module is not identifiable from the row and Ezra's other clearance in this code (Ezra
+      Flash) is an image-acceleration tool. Company-level inference is too weak here.
+
+  - submission_number: "K193283"
+    device: "AI-Rad Companion Prostate MR"
+    company: "Siemens Medical Solutions USA Inc."
+    product_code: QIH
+    year: 2020
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Prostate MR automatically segments the
+      prostate and supports lesion marking/PI-RADS documentation on multiparametric MRI for
+      prostate biopsy planning. Prostate MRI lesion / PI-RADS work is oncology per the
+      brief. Medium because the cleared function is gland segmentation and reporting support
+      rather than autonomous lesion detection.
+
+  - submission_number: "K200232"
+    device: "LVivo Software Application"
+    company: "DiA Imaging Analysis Ltd"
+    product_code: QIH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: DiA Imaging Analysis' LVivo family automates echocardiographic
+      measurement - ejection fraction, strain, chamber volumes - and LVivo IQS is
+      image-quality scoring for echo acquisition. Cardiac.
+
+  - submission_number: "K200356"
+    device: "MEDO ARIA"
+    company: "Medo.ai"
+    product_code: QIH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: MEDO ARIA measures the hip on infant ultrasound for developmental
+      dysplasia of the hip. Paediatric orthopaedic.
+
+  - submission_number: "K200621"
+    device: "Caption Interpretation Automated Ejection Fraction Software"
+    company: "Caption Health"
+    product_code: QIH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Name states the measurement: automated left-ventricular ejection fraction from
+      echocardiography. Cardiac.
+
+  - submission_number: "K200974"
+    device: "QLAB Advanced Quantification Software"
+    company: "Philips Healthcare"
+    product_code: QIH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: Philips QLAB is the ultrasound advanced quantification package,
+      dominated by cardiac and vascular measurement. General ultrasound quantification with
+      no cancer-specific function.
+
+  - submission_number: "K201195"
+    device: "syngo.via MI Workflows, syngo MBF"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QIH
+    year: 2020
+    decision: unresolved
+    evidence: >-
+      "syngo.via MI Workflows; Scenium; syngo MBF" bundles Siemens molecular-imaging reading
+      packages. Two named modules are non-oncologic (Scenium is brain PET for
+      neurodegenerative disease; syngo MBF is myocardial blood flow), but "MI Workflows" is
+      the general PET/CT reading package whose dominant real-world use is oncologic SUV and
+      tumour-burden reading. The bundle mixes both and cannot be assigned.
+
+  - submission_number: "K202013"
+    device: "WRDensity by Whiterabbit.ai"
+    company: "Whiterabbit.ai Inc."
+    product_code: QIH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Breast density assessment (WRDensity by Whiterabbit.ai). Per the brief's borderline
+      rule, density is tissue composition and a risk factor, not cancer detection:
+      not_oncology.
+
+  - submission_number: "K202546"
+    device: "LVivo Seamless"
+    company: "DiA Imaging Analysis Ltd"
+    product_code: QIH
+    year: 2020
+    decision: not_oncology
+    evidence: >-
+      Known product: DiA Imaging Analysis' LVivo family automates echocardiographic
+      measurement - ejection fraction, strain, chamber volumes - and LVivo IQS is
+      image-quality scoring for echo acquisition. Cardiac.
+
+  - submission_number: "K201411"
+    device: "Visage Breast Density"
+    company: "Visage Imaging GmbH"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Breast density assessment (Visage Breast Density). Per the brief's borderline rule,
+      density is tissue composition and a risk factor, not cancer detection: not_oncology.
+
+  - submission_number: "K202404"
+    device: "BoneMRI"
+    company: "MRIguidance B.V"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: MRIguidance BoneMRI synthesises CT-like bone images from MRI for
+      orthopaedic and spinal assessment. Image synthesis for musculoskeletal anatomy;
+      synthesis is not_oncology per the brief.
+
+  - submission_number: "K203256"
+    device: "Imbio RV/LV Software"
+    company: "Imbio, LLC"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Name states the measurement: right/left ventricular diameter ratio on CT, used for
+      pulmonary-embolism right-heart strain. Cardiac.
+
+  - submission_number: "K203502"
+    device: "MEDO-Thyroid"
+    company: "MEDO DX Pte. Ltd."
+    product_code: QIH
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Name states the organ: "MEDO-Thyroid". Known product: MEDO's thyroid ultrasound
+      software segments and characterises thyroid nodules for risk stratification. Thyroid
+      nodule tools are oncology per the brief. Medium because the name says thyroid, not
+      nodule.
+
+  - submission_number: "K203555"
+    device: "AmCAD-UT"
+    company: "AmCad BioMed Corporation"
+    product_code: QIH
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name states the target: "AmCAD-UT". Known product: AmCad BioMed's AmCAD-UT is
+      computer-aided characterization of thyroid nodules on ultrasound (echogenicity/texture
+      quantification to support TI-RADS-style malignancy assessment). Thyroid nodule tools
+      are oncology per the brief.
+
+  - submission_number: "K203785"
+    device: "ClariSIGMAM"
+    company: "ClariPi Inc."
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known vendor: ClariPi's product line is CT/MR image-quality enhancement (ClariCT.AI
+      deep-learning denoising); this 2021 clearance is an image-quality product, not a
+      disease-specific analyser. Denoising/enhancement is not_oncology per the brief.
+      Flagged as a knowledge-based call on an opaque name.
+
+  - submission_number: "K210053"
+    device: "LVivo Software Application"
+    company: "DiA Imaging Analysis Ltd"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: DiA Imaging Analysis' LVivo family automates echocardiographic
+      measurement - ejection fraction, strain, chamber volumes - and LVivo IQS is
+      image-quality scoring for echo acquisition. Cardiac.
+
+  - submission_number: "K210556"
+    device: "Preview Shoulder"
+    company: "Genesis Software Innovations"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Name states the joint: Preview Shoulder is preoperative planning for shoulder
+      arthroplasty. Orthopaedic.
+
+  - submission_number: "K210719"
+    device: "Change Healthcare Anatomical AI"
+    company: "Change Healthcare Canada Company"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Change Healthcare's Anatomical AI identifies body region and anatomy in
+      enterprise imaging to drive routing, hanging protocols and worklist behaviour.
+      Workflow infrastructure with no cancer-specific function.
+
+  - submission_number: "K210791"
+    device: "Us2.v1"
+    company: "eko.ai Pte. Ltd. d/b/a Us2.ai"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Us2.ai (Eko) automates full echocardiographic report measurement.
+      Cardiac.
+
+  - submission_number: "K210831"
+    device: "OnQ Neuro"
+    company: "CorTechs Labs, Inc"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: CorTechs Labs' NeuroQuant/OnQ Neuro line performs brain-structure
+      volumetry and white-matter lesion quantification for neurodegenerative and
+      demyelinating disease (dementia, MS, TBI). Neurologic, not neoplastic.
+
+  - submission_number: "K211161"
+    device: "Critical Care Suite with Endotracheal Tube Positing AI algorithm"
+    company: "GE Medical Systems, LLC"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Name states the function: endotracheal tube position assessment on chest radiographs
+      (GE Critical Care Suite). Critical-care device placement, not cancer.
+
+  - submission_number: "K211222"
+    device: "qER-Quant"
+    company: "Qure.ai Technologies"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Qure.ai's qER-Quant quantifies non-contrast head CT findings -
+      haemorrhage volume, midline shift, ventricular measures. Acute neuro.
+
+  - submission_number: "K211431"
+    device: "breastscape v1.0"
+    company: "Olea Medical"
+    product_code: QIH
+    year: 2021
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Olea Medical's breastscape is a breast MRI post-processing application
+      (DCE kinetic curve analysis, lesion characterisation). Breast MRI is performed almost
+      exclusively for cancer - high-risk screening, staging of known cancer, and neoadjuvant
+      response - so a dedicated breast MRI analysis package is cancer-directed. Medium: the
+      name does not itself say cancer and breast MRI has a small non-oncologic use (implant
+      integrity).
+
+  - submission_number: "K211459"
+    device: "syngo.via MI WorkFlows, Scenium, syngo MBF"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QIH
+    year: 2021
+    decision: unresolved
+    evidence: >-
+      "syngo.via MI Workflows; Scenium; syngo MBF" bundles Siemens molecular-imaging reading
+      packages. Two named modules are non-oncologic (Scenium is brain PET for
+      neurodegenerative disease; syngo MBF is myocardial blood flow), but "MI Workflows" is
+      the general PET/CT reading package whose dominant real-world use is oncologic SUV and
+      tumour-burden reading. The bundle mixes both and cannot be assigned.
+
+  - submission_number: "K211506"
+    device: "PowerLook Density Assessment V4.0"
+    company: "iCAD, Inc."
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Breast density assessment (iCAD PowerLook Density Assessment). Per the brief's
+      borderline rule, density is tissue composition and a risk factor, not cancer
+      detection: not_oncology. Noted that iCAD's mammography CAD products sit under other
+      codes.
+
+  - submission_number: "K212466"
+    device: "LVivo Seamless"
+    company: "DiA Imaging Analysis Ltd"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: DiA Imaging Analysis' LVivo family automates echocardiographic
+      measurement - ejection fraction, strain, chamber volumes - and LVivo IQS is
+      image-quality scoring for echo acquisition. Cardiac.
+
+  - submission_number: "K212690"
+    device: "qXR-BT"
+    company: "Qure.ai Technologies"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Qure.ai's qXR-BT assesses breathing-tube (endotracheal tube) position
+      on chest radiographs. Critical-care device placement.
+
+  - submission_number: "K213275"
+    device: "EchoGo Core (2.0)"
+    company: "Ultromics Limited"
+    product_code: QIH
+    year: 2021
+    decision: not_oncology
+    evidence: >-
+      Known product: Ultromics EchoGo Core automates echocardiographic volumes, ejection
+      fraction and strain. Cardiac.
+
+  - submission_number: "K203744"
+    device: "Arterys MICA"
+    company: "Arterys Inc."
+    product_code: QIH
+    year: 2022
+    decision: unresolved
+    evidence: >-
+      Arterys MICA is Arterys' multi-application cloud imaging platform. The Arterys app
+      portfolio contained both oncologic modules (lung and liver nodule/lesion tracking) and
+      non-oncologic ones (cardiac MR flow, neuro). A platform clearance does not say which
+      modules the entry stands for.
+
+  - submission_number: "K210747"
+    device: "Caption Interpretation Automated Ejection Fraction Software"
+    company: "Caption Health"
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Name states the measurement: automated left-ventricular ejection fraction from
+      echocardiography. Cardiac.
+
+  - submission_number: "K211611"
+    device: "QIR Suite"
+    company: "CASIS Cardiac Simulation & Imaging Software"
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: CASIS (Cardiac Simulation & Imaging Software) QIR Suite is cardiac MR
+      quantification. Cardiac.
+
+  - submission_number: "K212012"
+    device: "Follicle Clarity"
+    company: "Cycle Clarity"
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Name states the target: ovarian follicle measurement on ultrasound for fertility/IVF
+      monitoring. Reproductive, not cancer.
+
+  - submission_number: "K212624"
+    device: "EFAI Intelligent Cardiothoracic Ratio (iCTR) Assessment System"
+    company: "Ever Fortune. AI Co., Ltd."
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Name states the measurement: cardiothoracic ratio on chest radiographs, a cardiomegaly
+      screen. Cardiac.
+
+  - submission_number: "K213544"
+    device: "TOMTEC-ARENA"
+    company: "TOMTEC Imaging Systems GmbH"
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: TOMTEC-ARENA is the vendor's echocardiographic quantification
+      workstation. Cardiac.
+
+  - submission_number: "K213645"
+    device: "ClearPoint Maestro Brain Model"
+    company: "ClearPoint Neuro, Inc."
+    product_code: QIH
+    year: 2022
+    decision: unresolved
+    evidence: >-
+      ClearPoint Maestro Brain Model automatically segments brain structures to support
+      stereotactic targeting. Its platform serves DBS, laser interstitial thermal therapy
+      and biopsy - functional, epilepsy and tumour cases alike. General organ segmentation
+      with no stated neoplastic target.
+
+  - submission_number: "K213706"
+    device: "AI-Rad Companion Brain MR"
+    company: "Siemens Healthcare GmBh"
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Brain MR performs automated brain-structure
+      volumetry and white-matter lesion quantification, marketed for neurodegenerative and
+      demyelinating disease. Neurologic.
+
+  - submission_number: "K213779"
+    device: "Customize"
+    company: "3D-Side SA"
+    product_code: QIH
+    year: 2022
+    decision: unresolved
+    evidence: >-
+      "Customize" is a bare product name. 3D-Side SA makes patient-specific 3D printed
+      surgical guides and planning software for bone reconstruction; its case mix spans
+      trauma/deformity and bone-tumour resection. Neither the name nor the row states which,
+      so the neoplastic share cannot be assigned.
+
+  - submission_number: "K213998"
+    device: "cvi42 Auto Imaging Software Application"
+    company: "Circle Cardiovascular Imaging Inc"
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Names state the target: Circle Cardiovascular Imaging's cvi42 cardiac CT/MR function,
+      chamber and coronary-plaque applications. Cardiac.
+
+  - submission_number: "K214036"
+    device: "AVIEW"
+    company: "Coreline Soft Co.,Ltd."
+    product_code: QIH
+    year: 2022
+    decision: unresolved
+    evidence: >-
+      "AVIEW" without a module suffix is Coreline's whole platform. Coreline's modules
+      include AVIEW LCS (lung cancer screening, oncologic) alongside AVIEW CAC (coronary
+      calcium) and COPD quantification. The unsuffixed clearances cannot be resolved to one;
+      the suffixed CAC entries in this code are called not_oncology separately.
+
+  - submission_number: "K220497"
+    device: "CoLumbo"
+    company: "Smart Soft Healthcare AD"
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Smart Soft Healthcare's CoLumbo/CoLumboX reads lumbar spine MRI and
+      radiographs for degenerative findings. Musculoskeletal/spine.
+
+  - submission_number: "K220815"
+    device: "BrainInsight"
+    company: "Hyperfine, Inc."
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's BrainInsight processes portable low-field brain MRI
+      (reconstruction, reformatting, midline/ventricle measures) at the point of care. Neuro
+      imaging infrastructure, no neoplastic target.
+
+  - submission_number: "K220940"
+    device: "EchoPAC Software Only, EchoPAC Plug-in"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics,"
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: GE EchoPAC is the echocardiography review and quantification
+      workstation. Cardiac.
+
+  - submission_number: "K220956"
+    device: "Libby Echo:Prio"
+    company: "Dyad Medical, Inc"
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Name states the modality and use: "Libby Echo:Prio" prioritises echocardiographic
+      studies. Cardiac.
+
+  - submission_number: "K221100"
+    device: "Viz RV/LV"
+    company: "Viz.ai, Inc."
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Name states the measurement: right/left ventricular diameter ratio on CT, used for
+      pulmonary-embolism right-heart strain. Cardiac.
+
+  - submission_number: "K221432"
+    device: "Customize"
+    company: "3D-Side SA"
+    product_code: QIH
+    year: 2022
+    decision: unresolved
+    evidence: >-
+      "Customize" is a bare product name. 3D-Side SA makes patient-specific 3D printed
+      surgical guides and planning software for bone reconstruction; its case mix spans
+      trauma/deformity and bone-tumour resection. Neither the name nor the row states which,
+      so the neoplastic share cannot be assigned.
+
+  - submission_number: "K221632"
+    device: "Spine CAMP\u0099"
+    company: "Medical Metrics, Inc."
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Name states the anatomy: Spine CAMP measures spinal motion and alignment on
+      radiographs. Musculoskeletal/spine.
+
+  - submission_number: "K221738"
+    device: "NS-HGlio"
+    company: "Neosoma Inc."
+    product_code: QIH
+    year: 2022
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name states the target: "NS-HGlio" = high-grade glioma. Known product: Neosoma HGlio,
+      automated segmentation and volumetric response assessment of high-grade glioma on
+      brain MRI.
+
+  - submission_number: "K221762"
+    device: "BoneMRI v1.4"
+    company: "MRlguidance B.V."
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: MRIguidance BoneMRI synthesises CT-like bone images from MRI for
+      orthopaedic and spinal assessment. Image synthesis for musculoskeletal anatomy;
+      synthesis is not_oncology per the brief.
+
+  - submission_number: "K222172"
+    device: "MI View&GO"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: MI View&GO is Siemens' molecular-imaging viewing and reporting
+      application - a general nuclear-medicine viewer, infrastructure rather than a
+      cancer-specific analysis.
+
+  - submission_number: "K222275"
+    device: "Saige-Density"
+    company: "DeepHealth, Inc."
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Breast density assessment (DeepHealth Saige-Density). Per the brief's borderline rule,
+      breast density measures tissue composition and is a risk factor, not cancer detection:
+      not_oncology. Noted that DeepHealth's mammography CAD products sit under other codes.
+
+  - submission_number: "K222428"
+    device: "Syngo Dynamics (Version VA40F)"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: syngo Dynamics is Siemens' cardiovascular image management and
+      reporting system (echo/cath lab). Cardiac workflow.
+
+  - submission_number: "K223032"
+    device: "SIS System (Version 5.6.0)"
+    company: "Surgical Information Sciences, Inc."
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Surgical Information Sciences' SIS System visualises the subthalamic
+      nucleus and adjacent structures for deep-brain-stimulation targeting. Functional
+      neurosurgery.
+
+  - submission_number: "K223268"
+    device: "BrainInsight"
+    company: "Hyperfine, Inc."
+    product_code: QIH
+    year: 2022
+    decision: not_oncology
+    evidence: >-
+      Known product: Hyperfine's BrainInsight processes portable low-field brain MRI
+      (reconstruction, reformatting, midline/ventricle measures) at the point of care. Neuro
+      imaging infrastructure, no neoplastic target.
+
+  - submission_number: "K213272"
+    device: "Formus Hip"
+    company: "Formus Labs, Ltd"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Name states the joint: Formus Hip is automated 3D planning for total hip arthroplasty.
+      Orthopaedic.
+
+  - submission_number: "K213986"
+    device: "CerebralGo Plus"
+    company: "Yukun (Beijing) Technology Co., Ltd"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Yukun (Beijing) produces vascular CT analysis (coronary and
+      cerebrovascular); "CerebralGo" denotes intracranial vascular/neuro analysis.
+      Neurovascular, not neoplastic. Flagged as a vendor-based call on an opaque name.
+
+  - submission_number: "K222036"
+    device: "MPXA-2000"
+    company: "Medipixel, Inc."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Medipixel's MPXA line analyses coronary angiography for percutaneous
+      coronary intervention guidance. Cardiac.
+
+  - submission_number: "K222174"
+    device: "RadioLens v1.0"
+    company: "Synapsica"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Synapsica is a spine imaging AI company; RadioLens is its reading and
+      reporting platform for spine MRI/radiographs. Musculoskeletal/spine plus reporting
+      workflow.
+
+  - submission_number: "K222406"
+    device: "Clarius AI"
+    company: "Clarius Mobile Health Corp."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product line: Clarius's handheld point-of-care ultrasound AI performs automated
+      anatomy labelling and measurement (bladder volume, nerve identification, ejection
+      fraction). Point-of-care measurement, no cancer-specific function.
+
+  - submission_number: "K222676"
+    device: "Ceevra Reveal 3"
+    company: "Ceevra, Inc."
+    product_code: QIH
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      Ceevra Reveal builds interactive 3D anatomical models from CT/MR for surgical
+      planning. Its most-cited clinical use is robotic partial nephrectomy for renal masses
+      and prostatectomy, which would be oncologic, but the cleared function is general 3D
+      visualisation with no stated neoplastic target.
+
+  - submission_number: "K222745"
+    device: "Axial3D Insight"
+    company: "Axial Medical Printing Limited"
+    product_code: QIH
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      Axial3D Insight is automated anatomical segmentation of CT/MR for patient-specific 3D
+      printing. It is general organ segmentation with no stated neoplastic target; Axial3D's
+      published case mix is largely orthopaedic, craniomaxillofacial and cardiac, but
+      oncologic resection models are within its scope.
+
+  - submission_number: "K222970"
+    device: "LVivo IQS"
+    company: "DiA Imaging Analysis Ltd"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: DiA Imaging Analysis' LVivo family automates echocardiographic
+      measurement - ejection fraction, strain, chamber volumes - and LVivo IQS is
+      image-quality scoring for echo acquisition. Cardiac.
+
+  - submission_number: "K223106"
+    device: "Brainlab Elements Image Fusion, Contouring (4.5);Image Fusion  (4.5);Fibertracking (2.0);BOLD MRI Mapping  (1.0);Image Fusion Angio  (1.0)"
+    company: "Brainlab AG"
+    product_code: QIH
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      Brainlab Elements Image Fusion / Contouring / Fibertracking / BOLD MRI Mapping are
+      general cranial image-processing modules. Contouring feeds both stereotactic
+      radiosurgery (oncologic) and functional/vascular neurosurgical navigation (not);
+      fibertracking and BOLD mapping are eloquent-cortex mapping used for both tumour and
+      epilepsy surgery. The bundle cannot be assigned to one category.
+
+  - submission_number: "K223296"
+    device: "Videa Perio Assist"
+    company: "VideaHealth, Inc."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Name states the target: "Videa Perio Assist" - periodontal bone-level assessment on
+      dental radiographs. Dental.
+
+  - submission_number: "K223396"
+    device: "Rapid RV/LV"
+    company: "iSchema View Inc."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Name states the measurement: right/left ventricular diameter ratio on CT, used for
+      pulmonary-embolism right-heart strain. Cardiac.
+
+  - submission_number: "K223501"
+    device: "ViewFinder Software Version 1.1"
+    company: "Elaitra Ltd"
+    product_code: QIH
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      "ViewFinder" is a bare product name from Elaitra Ltd; neither the name nor the row
+      identifies modality, organ or finding.
+
+  - submission_number: "K223556"
+    device: "DeepCatch"
+    company: "MEDICALIP Co., Ltd"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: MEDICALIP's DeepCatch segments whole-body composition (fat, muscle,
+      bone, organs) on CT for body-composition analysis. Not a neoplastic target.
+
+  - submission_number: "K223621"
+    device: "DeepXray"
+    company: "Alpha Intelligence Manifolds, Inc."
+    product_code: QIH
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      "DeepXray" states a modality, not a finding. Alpha Intelligence Manifolds' radiograph
+      product is not identifiable from the row.
+
+  - submission_number: "K223646"
+    device: "IB Lab LAMA"
+    company: "IB Lab GmbH"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: ImageBiopsy Lab's LAMA is the Leg Alignment Measurement Assistant for
+      long-leg radiographs. Orthopaedic.
+
+  - submission_number: "K223855"
+    device: "FEops HEARTguideTM, FEops HEARTguideTM ALPACA"
+    company: "FEops nv"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: FEops HEARTguide simulates transcatheter structural-heart device
+      deployment (left atrial appendage occlusion, TAVR). Cardiac.
+
+  - submission_number: "K230039"
+    device: "uOmnispace"
+    company: "Shanghai United Imaging Healthcare Co., Ltd"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: United Imaging's uWS-MR, uOmnispace, uOmnispace.CT and uOmnispace.MR
+      are the vendor's general image post-processing and reading workstations. Platform
+      infrastructure with no cancer-specific stated function, treated like PACS/reporting
+      per the brief.
+
+  - submission_number: "K230045"
+    device: "HipCheck"
+    company: "Stryker Corp."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Stryker HipCheck provides intraoperative measurement during hip
+      arthroplasty. Orthopaedic.
+
+  - submission_number: "K230150"
+    device: "OptimMRI"
+    company: "RebrAIn, SAS"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: RebrAIn's OptimMRI localises the subthalamic nucleus for
+      deep-brain-stimulation targeting in Parkinson's disease. Functional neurosurgery.
+
+  - submission_number: "K230197"
+    device: "BoneMRI v1.6"
+    company: "MRIguidance B.V."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: MRIguidance BoneMRI synthesises CT-like bone images from MRI for
+      orthopaedic and spinal assessment. Image synthesis for musculoskeletal anatomy;
+      synthesis is not_oncology per the brief.
+
+  - submission_number: "K230209"
+    device: "Sonix Health"
+    company: "Ontact Health Co., Ltd."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Name states the modality: "Sonix Health" (Ontact Health) automates echocardiographic
+      analysis. Cardiac.
+
+  - submission_number: "K230497"
+    device: "Bladder AI (AIBV01)"
+    company: "Exo Inc"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Name states the target: automated bladder volume from point-of-care ultrasound.
+      Urologic volumetry, not cancer.
+
+  - submission_number: "K230534"
+    device: "BriefCase-Quantification"
+    company: "Aidoc Medical, Ltd."
+    product_code: QIH
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      "BriefCase-Quantification" names Aidoc's quantification product family without naming
+      the finding quantified. Aidoc's quantification clearances span aortic aneurysm, PE
+      right-heart strain, incidental findings and vertebral compression fracture; four
+      separate 510(k)s under this name cannot be told apart from the row.
+
+  - submission_number: "K230913"
+    device: "ANDI"
+    company: "Imeka Solutions, Inc."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Imeka's ANDI quantifies white-matter microstructure from diffusion MRI
+      for neurodegenerative and neuroinflammatory disease. Neurologic.
+
+  - submission_number: "K230977"
+    device: "SIS System"
+    company: "Surgical Information Sciences, Inc."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Surgical Information Sciences' SIS System visualises the subthalamic
+      nucleus and adjacent structures for deep-brain-stimulation targeting. Functional
+      neurosurgery.
+
+  - submission_number: "K231130"
+    device: "TumorSight Viz"
+    company: "SimBioSys, Inc."
+    product_code: QIH
+    year: 2023
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name states the target: "TumorSight Viz". Known product: SimBioSys TumorSight Viz
+      derives 3D tumour geometry and volumetrics from breast MRI in patients with diagnosed
+      breast cancer, for surgical planning.
+
+  - submission_number: "K231149"
+    device: "qXR-CTR"
+    company: "Qure.ai Technologies"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Name states the measurement: cardiothoracic ratio on chest radiographs, a cardiomegaly
+      screen. Cardiac.
+
+  - submission_number: "K231398"
+    device: "VUNO Med-DeepBrain"
+    company: "VUNO Inc."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: VUNO Med-DeepBrain segments brain MRI and reports regional atrophy for
+      dementia assessment. Neurodegenerative.
+
+  - submission_number: "K231668"
+    device: "Spine CAMP\u0099 (1.1)"
+    company: "Medical Metrics, Inc."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Name states the anatomy: Spine CAMP measures spinal motion and alignment on
+      radiographs. Musculoskeletal/spine.
+
+  - submission_number: "K231757"
+    device: "Ez3D-i /E3"
+    company: "Ewoosoft Co., Ltd"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Ewoosoft is a dental imaging company; Ez3D-i and Clever One are dental
+      CBCT/intraoral imaging and analysis software. Dental.
+
+  - submission_number: "K231929"
+    device: "iQ-solutions"
+    company: "Sydney Neuroimaging Analysis Centre Pty Ltd"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: the Sydney Neuroimaging Analysis Centre's iQ-solutions quantifies brain
+      and lesion volumes for multiple sclerosis follow-up. Demyelinating disease.
+
+  - submission_number: "K231955"
+    device: "aprevo\u00ae Digital Segmentation"
+    company: "Carlsmed, Inc."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Carlsmed aprevo is personalised spinal-fusion implant planning; the
+      digital segmentation module segments vertebrae for that workflow.
+      Musculoskeletal/spine.
+
+  - submission_number: "K232000"
+    device: "syngo.via MI Workflows; Scenium; syngo MBF"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QIH
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      "syngo.via MI Workflows; Scenium; syngo MBF" bundles Siemens molecular-imaging reading
+      packages. Two named modules are non-oncologic (Scenium is brain PET for
+      neurodegenerative disease; syngo MBF is myocardial blood flow), but "MI Workflows" is
+      the general PET/CT reading package whose dominant real-world use is oncologic SUV and
+      tumour-burden reading. The bundle mixes both and cannot be assigned.
+
+  - submission_number: "K232083"
+    device: "BriefCase-Quantification"
+    company: "Aidoc Medical, Ltd."
+    product_code: QIH
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      "BriefCase-Quantification" names Aidoc's quantification product family without naming
+      the finding quantified. Aidoc's quantification clearances span aortic aneurysm, PE
+      right-heart strain, incidental findings and vertebral compression fracture; four
+      separate 510(k)s under this name cannot be told apart from the row.
+
+  - submission_number: "K232096"
+    device: "Transpara Density 1.0.0"
+    company: "Screenpoint Medical B.V."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Breast density assessment (ScreenPoint Transpara Density). Per the brief's borderline
+      rule this is tissue composition, not cancer detection: not_oncology. Noted explicitly
+      because ScreenPoint is a single-purpose mammography-CAD vendor - but this specific
+      clearance is the density module, and Transpara's cancer CAD sits under other codes.
+
+  - submission_number: "K232231"
+    device: "QP-Brain\u00ae"
+    company: "Quibim S.L."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Quibim's QP-Brain quantifies brain volumes and white-matter lesions for
+      neurodegenerative and demyelinating disease. Quibim's oncologic product line
+      (QP-Prostate) is a separate device and is not this entry.
+
+  - submission_number: "K232257"
+    device: "Clarius Bladder AI"
+    company: "Clarius Mobile Health Corp."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Name states the target: automated bladder volume from point-of-care ultrasound.
+      Urologic volumetry, not cancer.
+
+  - submission_number: "K232305"
+    device: "AI-Rad Companion Brain MR"
+    company: "Siemens Medical Solutions U.S.A."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Brain MR performs automated brain-structure
+      volumetry and white-matter lesion quantification, marketed for neurodegenerative and
+      demyelinating disease. Neurologic.
+
+  - submission_number: "K232367"
+    device: "cmAngio\u00ae V1.0"
+    company: "CureMetrix, Inc."
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: CureMetrix cmAngio detects breast arterial calcification on screening
+      mammograms as an incidental cardiovascular-risk marker. CureMetrix's other products
+      (cmTriage, cmAssist) are mammography cancer CAD, but this one is explicitly
+      cardiovascular, not cancer detection.
+
+  - submission_number: "K232440"
+    device: "Adravision Perio"
+    company: "Adra Corporation"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Name states the target: "Adravision Perio" - periodontal (gum/bone-level) assessment
+      on dental radiographs. Dental.
+
+  - submission_number: "K232501"
+    device: "AI Platform (AIP001)"
+    company: "Exo Inc"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product line: Exo's handheld point-of-care ultrasound AI platform performs
+      automated bladder volume, cardiac ejection fraction and lung assessment at the point
+      of care. No cancer-specific function.
+
+  - submission_number: "K232841"
+    device: "Axial3D Insight"
+    company: "Axial Medical Printing Limited"
+    product_code: QIH
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      Axial3D Insight is automated anatomical segmentation of CT/MR for patient-specific 3D
+      printing. It is general organ segmentation with no stated neoplastic target; Axial3D's
+      published case mix is largely orthopaedic, craniomaxillofacial and cardiac, but
+      oncologic resection models are within its scope.
+
+  - submission_number: "K232856"
+    device: "Syngo Carbon Clinicals"
+    company: "Siemens Healthcare GmbH"
+    product_code: QIH
+    year: 2023
+    decision: not_oncology
+    evidence: >-
+      Known product: syngo Carbon Clinicals is Siemens' enterprise reading and reporting
+      platform. Reading/reporting infrastructure with no cancer-specific function.
+
+  - submission_number: "K233568"
+    device: "Ceevra Reveal 3+"
+    company: "Ceevra, Inc."
+    product_code: QIH
+    year: 2023
+    decision: unresolved
+    evidence: >-
+      Ceevra Reveal builds interactive 3D anatomical models from CT/MR for surgical
+      planning. Its most-cited clinical use is robotic partial nephrectomy for renal masses
+      and prostatectomy, which would be oncologic, but the cleared function is general 3D
+      visualisation with no stated neoplastic target.
+
+  - submission_number: "K231324"
+    device: "DASI Dimensions (V1.0)"
+    company: "DASI Simulations"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: DASI Simulations models aortic valve haemodynamics for TAVR planning.
+      Cardiac/structural heart.
+
+  - submission_number: "K231683"
+    device: "inHEART Models"
+    company: "inHEART, SAS"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: inHEART Models builds cardiac digital twins from CT for
+      ventricular-tachycardia ablation planning. Cardiac.
+
+  - submission_number: "K231690"
+    device: "iCAS-LV"
+    company: "HighRAD Ltd."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the target: "iCAS-LV" - left ventricular assessment. Cardiac.
+
+  - submission_number: "K231917"
+    device: "VEA Align"
+    company: "EOS imaging"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Names state the function: EOS imaging's VEA Align / spineEOS are spinal alignment
+      measurement and deformity-correction planning on biplanar radiographs.
+      Musculoskeletal/spine.
+
+  - submission_number: "K232331"
+    device: "InVision Precision LVEF (LVEF)"
+    company: "InVision Medical Technology Corporation"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the measurement: "InVision Precision LVEF" - left ventricular ejection
+      fraction. Cardiac.
+
+  - submission_number: "K232363"
+    device: "Viz HDS, Viz Volume Plus, Viz ICH+"
+    company: "Viz.ai, Inc."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Names state the findings: Viz.ai's hyperdense-sign, ICH+ and Subdural+ modules detect
+      intracranial haemorrhage and subdural haematoma. Acute neuro/stroke.
+
+  - submission_number: "K232613"
+    device: "CT Cardiomegaly"
+    company: "Innolitics, LLC"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the finding: CT cardiomegaly detection. Cardiac.
+
+  - submission_number: "K232698"
+    device: "NemoScan"
+    company: "Software Nemotec S.L."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Software Nemotec produces dental and maxillofacial implant and
+      orthognathic planning software. Dental/maxillofacial.
+
+  - submission_number: "K233030"
+    device: "BoneMRI"
+    company: "MRIguidance B.V"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: MRIguidance BoneMRI synthesises CT-like bone images from MRI for
+      orthopaedic and spinal assessment. Image synthesis for musculoskeletal anatomy;
+      synthesis is not_oncology per the brief.
+
+  - submission_number: "K233186"
+    device: "uOmnispace.MR"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: United Imaging's uWS-MR, uOmnispace, uOmnispace.CT and uOmnispace.MR
+      are the vendor's general image post-processing and reading workstations. Platform
+      infrastructure with no cancer-specific stated function, treated like PACS/reporting
+      per the brief.
+
+  - submission_number: "K233196"
+    device: "Medihub Prostate"
+    company: "JLK Inc."
+    product_code: QIH
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: JLK Inc.'s prostate MRI algorithm (marketed as Medihub Prostate /
+      JLK-PRO) detects and localises prostate lesions on multiparametric MRI to support
+      PI-RADS reading. Prostate MRI lesion / PI-RADS tools are oncology per the brief.
+
+  - submission_number: "K233209"
+    device: "uOmnispace.CT"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: United Imaging's uWS-MR, uOmnispace, uOmnispace.CT and uOmnispace.MR
+      are the vendor's general image post-processing and reading workstations. Platform
+      infrastructure with no cancer-specific stated function, treated like PACS/reporting
+      per the brief.
+
+  - submission_number: "K233211"
+    device: "AVIEW CAC"
+    company: "Coreline Soft Co., Ltd."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the target: "AVIEW CAC" - coronary artery calcium scoring. Cardiac.
+
+  - submission_number: "K233457"
+    device: "RUS"
+    company: "Hutom Inc."
+    product_code: QIH
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      "RUS" is an unexpanded acronym. Hutom Inc. is a Korean surgical-AI company whose
+      academic roots are in gastrectomy (gastric cancer) analytics, but nothing in the row
+      identifies this device.
+
+  - submission_number: "K233512"
+    device: "Rapid (6.0)"
+    company: "iSchemaView, Inc."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: iSchemaView's Rapid platform is acute stroke imaging - perfusion
+      mismatch, large-vessel occlusion, ICH; "Rapid MLS" is midline shift and "Rapid
+      Neuro3D" is 3D neurovascular rendering. Stroke/neurovascular.
+
+  - submission_number: "K233590"
+    device: "Overjet Charting Assist"
+    company: "Overjet, Inc"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Overjet is a dental AI company; its Charting, CBCT and Image Enhancement
+      Assist products annotate caries, bone level and restorations on dental radiographs.
+      Dental.
+
+  - submission_number: "K233676"
+    device: "Us2.v2"
+    company: "Eko.ai Pte. Ltd d/b/a Us2.ai"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Us2.ai (Eko) automates full echocardiographic report measurement.
+      Cardiac.
+
+  - submission_number: "K233822"
+    device: "i2Contour"
+    company: "MRIMath LLC"
+    product_code: QIH
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      "i2Contour" is an interactive contouring tool from MRIMath LLC. Contouring software
+      serves both radiotherapy target delineation (oncologic) and general anatomical
+      segmentation; the row does not distinguish, and MRIMath's product is not identifiable
+      with confidence.
+
+  - submission_number: "K233925"
+    device: "Relu Creator"
+    company: "Relu BV"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Relu BV produces dental CBCT segmentation (teeth, mandibular canal,
+      sinus) for implant and orthodontic planning. Dental.
+
+  - submission_number: "K234009"
+    device: "Acorn 3D Software (AC-SEG-4009); Acorn 3DP Model (AC-101-XX)"
+    company: "Mighty Oak Medical"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Mighty Oak Medical's Acorn/FIREFLY line produces patient-specific 3D
+      printed spinal pedicle-screw guides from segmented CT. Musculoskeletal/spine
+      instrumentation.
+
+  - submission_number: "K234042"
+    device: "EFAI Bonesuite XR Bone Age Pro Assessment System (BAP-XR-100)"
+    company: "Ever Fortune.AI Co., Ltd."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the target: bone age assessment from hand radiographs. Paediatric skeletal
+      maturity.
+
+  - submission_number: "K240036"
+    device: "PIUR tUS Infinity"
+    company: "PIUR Imaging GmbH"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: PIUR tUS adds tomographic 3D reconstruction to freehand 2D ultrasound.
+      This is image reconstruction/acquisition, which the brief places in not_oncology.
+
+  - submission_number: "K240094"
+    device: "LumiNE US; Lumi"
+    company: "Augmedit B.V."
+    product_code: QIH
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      "LumiNE US; Lumi" - Augmedit's Lumi is 3D/augmented-reality visualisation and
+      segmentation for neurosurgical planning. Cranial neurosurgery covers tumour, vascular
+      and functional cases; the row states no neoplastic target.
+
+  - submission_number: "K240172"
+    device: "Preview Shoulder"
+    company: "Genesis Software Innovations"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the joint: Preview Shoulder is preoperative planning for shoulder
+      arthroplasty. Orthopaedic.
+
+  - submission_number: "K240411"
+    device: "uAI Portal"
+    company: "Shanghai United Imaging Intelligence Co., Ltd."
+    product_code: QIH
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      "uAI Portal" is United Imaging Intelligence's AI application platform. The uAI app
+      catalogue includes chest CT lung-nodule detection (oncologic) alongside stroke, rib
+      fracture and cardiac apps; a portal clearance does not say which apps the entry
+      covers.
+
+  - submission_number: "K240553"
+    device: "LVivo Software Application"
+    company: "DiA Imaging Analysis Ltd."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: DiA Imaging Analysis' LVivo family automates echocardiographic
+      measurement - ejection fraction, strain, chamber volumes - and LVivo IQS is
+      image-quality scoring for echo acquisition. Cardiac.
+
+  - submission_number: "K240582"
+    device: "VEA Align; spineEOS"
+    company: "EOS imaging"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Names state the function: EOS imaging's VEA Align / spineEOS are spinal alignment
+      measurement and deformity-correction planning on biplanar radiographs.
+      Musculoskeletal/spine.
+
+  - submission_number: "K240642"
+    device: "SMART Bun-Yo-Matic CT"
+    company: "Disior Ltd"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Names state the target: Disior's SMART Bun-Yo-Matic (hallux valgus/bunion) and SMART
+      PCFD (progressive collapsing foot deformity) are foot and ankle deformity analysis.
+      Orthopaedic.
+
+  - submission_number: "K240645"
+    device: "Sonix Health"
+    company: "Ontact Health Co., Ltd"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the modality: "Sonix Health" (Ontact Health) automates echocardiographic
+      analysis. Cardiac.
+
+  - submission_number: "K240680"
+    device: "CDM Insights"
+    company: "Oxford Brain Diagnostics Ltd"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Oxford Brain Diagnostics' Cortical Disarray Measurement quantifies
+      cortical microstructure for dementia assessment. Neurodegenerative.
+
+  - submission_number: "K240736"
+    device: "SMART Bun-Yo-Matic X-Ray"
+    company: "Disior Ltd"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Names state the target: Disior's SMART Bun-Yo-Matic (hallux valgus/bunion) and SMART
+      PCFD (progressive collapsing foot deformity) are foot and ankle deformity analysis.
+      Orthopaedic.
+
+  - submission_number: "K240740"
+    device: "qCT LN Quant"
+    company: "Qure.ai Technologies"
+    product_code: QIH
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product/naming convention: Qure.ai uses "LN" for lung nodule (cf. qXR-LN, its
+      chest-radiograph lung-nodule product); qCT LN Quant is the CT lung-nodule detection
+      and volumetric follow-up tool in the qCT line. Pulmonary nodule quantification is
+      lung-cancer screening/surveillance. Medium because "LN" could in principle read as
+      lymph node - which would also be oncologic.
+
+  - submission_number: "K240769"
+    device: "LVivo IQS"
+    company: "DiA Imaging Analysis Ltd."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: DiA Imaging Analysis' LVivo family automates echocardiographic
+      measurement - ejection fraction, strain, chamber volumes - and LVivo IQS is
+      image-quality scoring for echo acquisition. Cardiac.
+
+  - submission_number: "K240791"
+    device: "ADAS 3D"
+    company: "Adas3D Medical S.L"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: ADAS 3D processes cardiac MR/CT to map left-atrial fibrosis and
+      ventricular scar for atrial-fibrillation and ventricular-tachycardia ablation.
+      Cardiac.
+
+  - submission_number: "K240793"
+    device: "MSKai"
+    company: "MSKai"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the domain: "MSKai" - musculoskeletal imaging AI. Orthopaedic.
+
+  - submission_number: "K240943"
+    device: "LungVision"
+    company: "BodyVision Medical Ltd."
+    product_code: QIH
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: Body Vision Medical's LungVision, an intraoperative
+      tomographic/augmented-fluoroscopy navigation system for bronchoscopic biopsy of
+      peripheral lung nodules. Its purpose is tissue diagnosis of suspicious pulmonary
+      nodules, i.e. lung-cancer workup. Called medium because it is a navigation aid rather
+      than an image-interpretation algorithm.
+
+  - submission_number: "K240953"
+    device: "AI Platform 2.0 (AIP002)"
+    company: "Exo Imaging"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product line: Exo's handheld point-of-care ultrasound AI platform performs
+      automated bladder volume, cardiac ejection fraction and lung assessment at the point
+      of care. No cancer-specific function.
+
+  - submission_number: "K241038"
+    device: "Cardiac CT Function Software Application"
+    company: "Circle Cardiovascular Imaging"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Names state the target: Circle Cardiovascular Imaging's cvi42 cardiac CT/MR function,
+      chamber and coronary-plaque applications. Cardiac.
+
+  - submission_number: "K241083"
+    device: "SIS System"
+    company: "Surgical Information Sciences, Inc."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Surgical Information Sciences' SIS System visualises the subthalamic
+      nucleus and adjacent structures for deep-brain-stimulation targeting. Functional
+      neurosurgery.
+
+  - submission_number: "K241098"
+    device: "NeuroQuant"
+    company: "CorTechs Labs, Inc."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: CorTechs Labs' NeuroQuant/OnQ Neuro line performs brain-structure
+      volumetry and white-matter lesion quantification for neurodegenerative and
+      demyelinating disease (dementia, MS, TBI). Neurologic, not neoplastic.
+
+  - submission_number: "K241108"
+    device: "RemedyLogic AI MRI Lumbar Spine Reader"
+    company: "Remedy Logic Inc."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the anatomy: lumbar spine MRI reading (degenerative disc, stenosis,
+      herniation). Musculoskeletal/spine.
+
+  - submission_number: "K241112"
+    device: "BriefCase-Quantification"
+    company: "Aidoc Medical, Ltd."
+    product_code: QIH
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      "BriefCase-Quantification" names Aidoc's quantification product family without naming
+      the finding quantified. Aidoc's quantification clearances span aortic aneurysm, PE
+      right-heart strain, incidental findings and vertebral compression fracture; four
+      separate 510(k)s under this name cannot be told apart from the row.
+
+  - submission_number: "K241211"
+    device: "CoLumbo"
+    company: "Smart Soft Healthcare"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Smart Soft Healthcare's CoLumbo/CoLumboX reads lumbar spine MRI and
+      radiographs for degenerative findings. Musculoskeletal/spine.
+
+  - submission_number: "K241280"
+    device: "Constellation (CON-001)"
+    company: "Q Bio, Inc."
+    product_code: QIH
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      Q Bio's Constellation is a whole-body quantitative MR acquisition and analysis
+      platform for general health assessment. Whole-body screening includes incidental
+      cancer detection but is not cancer-directed by design; no organ or finding is stated.
+
+  - submission_number: "K241312"
+    device: "TeraRecon Cardiac.Chambers.MR (1.0.0)"
+    company: "TeraRecon,Inc."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Names state the target: TeraRecon Aorta.CT (aortic measurement), Cardiac.Chambers.MR
+      (cardiac chamber quantification) and Cardiovascular.Calcification.CT (calcium
+      scoring). Cardiovascular.
+
+  - submission_number: "K241329"
+    device: "SubtleSYNTH (1.x)"
+    company: "Subtle Medical, Inc."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known products: Subtle Medical's SubtleSYNTH synthesises MR contrasts and SubtleHD
+      denoises/enhances MR images. Synthesis, denoising and enhancement are not_oncology per
+      the brief.
+
+  - submission_number: "K241430"
+    device: "EchoMeasure"
+    company: "iCardio.ai"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the modality: automated echocardiographic measurement (iCardio.ai
+      EchoMeasure). Cardiac.
+
+  - submission_number: "K241543"
+    device: "DrAid\u0099 for Liver Segmentation"
+    company: "VinBrain Joint Stock Company"
+    product_code: QIH
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: medium
+    evidence: >-
+      Known product: VinBrain's DrAid for Liver Segmentation segments the liver, hepatic
+      vasculature and hepatic lesions on CT/MR to support liver resection planning and
+      lesion follow-up; it is the device the project's own config/oncology_codes.yaml header
+      cites as a clearly oncologic QIH resident. Medium and flagged: the device NAME says
+      only "Liver Segmentation", so under the brief's plain-segmentation rule this would be
+      unresolved; the oncology call rests on knowledge of the product's hepatic-lesion
+      indication, not on the row.
+
+  - submission_number: "K241561"
+    device: "MammoScreen BD"
+    company: "Therapixel"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      "MammoScreen BD" is the breast density module of Therapixel's MammoScreen. Per the
+      brief's borderline rule, density is tissue composition and a risk factor, not cancer
+      detection: not_oncology. Flagged because Therapixel is a single-purpose mammography
+      vendor whose CAD product is oncologic and sits under another code.
+
+  - submission_number: "K241681"
+    device: "Overjet Image Enhancement Assist"
+    company: "Overjet Inc"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Overjet is a dental AI company; its Charting, CBCT and Image Enhancement
+      Assist products annotate caries, bone level and restorations on dental radiographs.
+      Dental.
+
+  - submission_number: "K241684"
+    device: "Overjet Charting Assist"
+    company: "Overjet, Inc"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Overjet is a dental AI company; its Charting, CBCT and Image Enhancement
+      Assist products annotate caries, bone level and restorations on dental radiographs.
+      Dental.
+
+  - submission_number: "K241847"
+    device: "Imbio PHA (4.0.0)"
+    company: "Imbio, Inc"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the target: "Imbio PHA" - pulmonary hypertension analysis.
+      Cardiopulmonary.
+
+  - submission_number: "K242054"
+    device: "OptimMRI (v2)"
+    company: "Rebrain, SAS"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: RebrAIn's OptimMRI localises the subthalamic nucleus for
+      deep-brain-stimulation targeting in Parkinson's disease. Functional neurosurgery.
+
+  - submission_number: "K242203"
+    device: "BriefCase-Quantification"
+    company: "Aidoc Medical, Ltd."
+    product_code: QIH
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      "BriefCase-Quantification" names Aidoc's quantification product family without naming
+      the finding quantified. Aidoc's quantification clearances span aortic aneurysm, PE
+      right-heart strain, incidental findings and vertebral compression fracture; four
+      separate 510(k)s under this name cannot be told apart from the row.
+
+  - submission_number: "K242215"
+    device: "Neurophet AQUA (V3.1)"
+    company: "Neurophet, Inc."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Neurophet AQUA segments brain MRI for atrophy and white-matter
+      quantification, and "AQUA AD Plus" names Alzheimer's disease. Neurodegenerative.
+
+  - submission_number: "K242270"
+    device: "OrthoNext Platform System"
+    company: "Orthofix Srl"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: Orthofix's OrthoNext is limb-reconstruction and deformity correction
+      planning. Orthopaedic.
+
+  - submission_number: "K242275"
+    device: "syngo.via MI Workflows; Scenium; syngo MBF"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QIH
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      "syngo.via MI Workflows; Scenium; syngo MBF" bundles Siemens molecular-imaging reading
+      packages. Two named modules are non-oncologic (Scenium is brain PET for
+      neurodegenerative disease; syngo MBF is myocardial blood flow), but "MI Workflows" is
+      the general PET/CT reading package whose dominant real-world use is oncologic SUV and
+      tumour-burden reading. The bundle mixes both and cannot be assigned.
+
+  - submission_number: "K242300"
+    device: "MI View&GO"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Known product: MI View&GO is Siemens' molecular-imaging viewing and reporting
+      application - a general nuclear-medicine viewer, infrastructure rather than a
+      cancer-specific analysis.
+
+  - submission_number: "K242359"
+    device: "Strain AI (SAI001)"
+    company: "Exo Inc"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Name states the measurement: automated myocardial strain from echocardiography.
+      Cardiac.
+
+  - submission_number: "K242461"
+    device: "IRISeg"
+    company: "Intuitive Surgical Inc."
+    product_code: QIH
+    year: 2024
+    decision: unresolved
+    evidence: >-
+      IRISeg is the segmentation component of Intuitive Surgical's IRIS 3D anatomical
+      modelling for robotic surgery. IRIS launched in renal-mass partial nephrectomy and
+      prostatectomy, which would be oncologic, but the cleared function is anatomical
+      segmentation with no stated neoplastic target - the same call made for Ceevra Reveal.
+
+  - submission_number: "K242781"
+    device: "cvi42 Software Application"
+    company: "Circle Cardiovascular Imaging Inc."
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Names state the target: Circle Cardiovascular Imaging's cvi42 cardiac CT/MR function,
+      chamber and coronary-plaque applications. Cardiac.
+
+  - submission_number: "K243189"
+    device: "TumorSight Viz"
+    company: "SimBioSys, Inc."
+    product_code: QIH
+    year: 2024
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name states the target: "TumorSight Viz". Known product: SimBioSys TumorSight Viz
+      derives 3D tumour geometry and volumetrics from breast MRI in patients with diagnosed
+      breast cancer, for surgical planning.
+
+  - submission_number: "K243705"
+    device: "Saige-Density (2.5.0)"
+    company: "DeepHealth, Inc"
+    product_code: QIH
+    year: 2024
+    decision: not_oncology
+    evidence: >-
+      Breast density assessment (DeepHealth Saige-Density). Per the brief's borderline rule,
+      breast density measures tissue composition and is a risk factor, not cancer detection:
+      not_oncology. Noted that DeepHealth's mammography CAD products sit under other codes.
+
+  - submission_number: "K241222"
+    device: "Ventripoint Medical System Plus (VMS+) 4.0"
+    company: "Ventripoint Diagnostics Ltd."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: the Ventripoint Medical System measures right-ventricular volume from
+      echocardiography. Cardiac.
+
+  - submission_number: "K241593"
+    device: "BoneMetrics (US)"
+    company: "Gleamer SAS"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Gleamer BoneMetrics performs automated lower-limb and skeletal
+      measurements on radiographs; Gleamer's line is musculoskeletal (BoneView fracture
+      detection). Orthopaedic.
+
+  - submission_number: "K241659"
+    device: "Ultrasound Workspace (UWS 6.0)"
+    company: "Philips Ultrasound LLC"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      "Ultrasound Workspace" is Philips' ultrasound review and reporting workstation
+      (cardiology-led). Workstation/reporting infrastructure with no cancer-specific
+      function.
+
+  - submission_number: "K241696"
+    device: "Ortho AI"
+    company: "Ortho AI LLC"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the domain: "Ortho AI" - orthopaedic radiograph analysis. Musculoskeletal.
+
+  - submission_number: "K241922"
+    device: "Myomics"
+    company: "Phantomics Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      "Myomics" denotes muscle or myocardium; on either reading (skeletal-muscle /
+      sarcopenia quantification or myocardial tissue characterisation) the target is
+      non-neoplastic. Called on the name's morphology, which is why it is listed among my
+      weaker calls.
+
+  - submission_number: "K241961"
+    device: "Vent Creativity Knee v1.0 (Hermes)"
+    company: "Vent Creativity"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the joint: knee arthroplasty planning. Orthopaedic.
+
+  - submission_number: "K241982"
+    device: "DeepFoqus (DeepFoqus-Accelerate)"
+    company: "Foqus Technologies Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the function: "DeepFoqus-Accelerate" is accelerated MR
+      acquisition/reconstruction. Not_oncology per the brief's reconstruction rule.
+
+  - submission_number: "K241984"
+    device: "Hi-D Imaging 4TAVR"
+    company: "Hi-D Imaging AG"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Hi-D Imaging 4TAVR models the aortic root for transcatheter aortic
+      valve replacement sizing. Cardiac/structural heart.
+
+  - submission_number: "K242166"
+    device: "TribusConnect"
+    company: "TribusMed Beheer BV"
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      "TribusConnect" is a bare product name from TribusMed Beheer BV. The name suggests
+      connectivity/integration, which would be workflow infrastructure, but that is an
+      inference from a word, not evidence; no modality, organ or finding is identifiable.
+
+  - submission_number: "K242334"
+    device: "Ezra Flash"
+    company: "Ezra AI, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Ezra Flash is a deep-learning reconstruction that produces
+      diagnostic-quality MRI from shortened acquisitions. Reconstruction/acceleration is
+      not_oncology per the brief even where the exam it shortens is a cancer-screening MRI.
+
+  - submission_number: "K242338"
+    device: "Cleerly LABS (v2.0)"
+    company: "Cleerly, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the target: coronary plaque and stenosis analysis from CT angiography
+      (Cleerly LABS). Cardiac.
+
+  - submission_number: "K242500"
+    device: "LARALAB"
+    company: "LARALAB GmbH"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: LARALAB analyses cardiac valve anatomy from CT for structural-heart
+      intervention planning. Cardiac.
+
+  - submission_number: "K242551"
+    device: "syngo Dynamics (Version VA41D)"
+    company: "Siemens Healthcare GmbH"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: syngo Dynamics is Siemens' cardiovascular image management and
+      reporting system (echo/cath lab). Cardiac workflow.
+
+  - submission_number: "K242607"
+    device: "ScanDiags Ortho L-Spine MR-Q"
+    company: "ScanDiags AG"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the anatomy: "Ortho L-Spine MR-Q" - lumbar spine MRI quantification.
+      Musculoskeletal/spine.
+
+  - submission_number: "K242624"
+    device: "Medical Image Post-processing Software (uOmnispace.CT)"
+    company: "Shanghai United Imaging Healthcare Co., Ltd."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: United Imaging's uWS-MR, uOmnispace, uOmnispace.CT and uOmnispace.MR
+      are the vendor's general image post-processing and reading workstations. Platform
+      infrastructure with no cancer-specific stated function, treated like PACS/reporting
+      per the brief.
+
+  - submission_number: "K243005"
+    device: "AudaxCeph Cephalogram Analysis Software"
+    company: "Audax d.o.o."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the function: cephalometric (orthodontic) landmark analysis on lateral
+      skull radiographs. Dental/orthodontic.
+
+  - submission_number: "K243038"
+    device: "Salix Central"
+    company: "Artrya Limited"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the target: coronary plaque characterisation and the vendor's coronary
+      platform (Artrya Salix). Cardiac.
+
+  - submission_number: "K243158"
+    device: "TeraRecon Aorta.CT (1.1.0)"
+    company: "TeraRecon, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Names state the target: TeraRecon Aorta.CT (aortic measurement), Cardiac.Chambers.MR
+      (cardiac chamber quantification) and Cardiovascular.Calcification.CT (calcium
+      scoring). Cardiovascular.
+
+  - submission_number: "K243230"
+    device: "Second Opinion\u00ae BLE"
+    company: "Pearl Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Pearl Inc. is a dental radiology AI company; Second Opinion detects
+      dental pathology (caries, bone level) on intraoral and CBCT images. Dental.
+
+  - submission_number: "K243235"
+    device: "LVivo Software Application"
+    company: "DiA Imaging Analysis Ltd."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: DiA Imaging Analysis' LVivo family automates echocardiographic
+      measurement - ejection fraction, strain, chamber volumes - and LVivo IQS is
+      image-quality scoring for echo acquisition. Cardiac.
+
+  - submission_number: "K243250"
+    device: "SubtleHD (1.x)"
+    company: "Subtle Medical, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known products: Subtle Medical's SubtleSYNTH synthesises MR contrasts and SubtleHD
+      denoises/enhances MR images. Synthesis, denoising and enhancement are not_oncology per
+      the brief.
+
+  - submission_number: "K243331"
+    device: "LVivo Seamless"
+    company: "DiA Imaging Analysis Ltd."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: DiA Imaging Analysis' LVivo family automates echocardiographic
+      measurement - ejection fraction, strain, chamber volumes - and LVivo IQS is
+      image-quality scoring for echo acquisition. Cardiac.
+
+  - submission_number: "K243350"
+    device: "Rapid Neuro3D"
+    company: "iSchemaView, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: iSchemaView's Rapid platform is acute stroke imaging - perfusion
+      mismatch, large-vessel occlusion, ICH; "Rapid MLS" is midline shift and "Rapid
+      Neuro3D" is 3D neurovascular rendering. Stroke/neurovascular.
+
+  - submission_number: "K243378"
+    device: "Rapid MLS"
+    company: "iSchemaview Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: iSchemaView's Rapid platform is acute stroke imaging - perfusion
+      mismatch, large-vessel occlusion, ICH; "Rapid MLS" is midline shift and "Rapid
+      Neuro3D" is 3D neurovascular rendering. Stroke/neurovascular.
+
+  - submission_number: "K243633"
+    device: "Brainlab Elements (7.0); Brainlab Elements Image Fusion (5.0); Brainlab Elements Image Fusion Angio (1.0); Brainlab Elements Contouring (5.0); Brainlab Elements Fibertracking (3.0); Brainlab Elements BOLD MRI Mapping (1.0)"
+    company: "Brainlab AG"
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      Brainlab Elements Image Fusion / Contouring / Fibertracking / BOLD MRI Mapping are
+      general cranial image-processing modules. Contouring feeds both stereotactic
+      radiosurgery (oncologic) and functional/vascular neurosurgical navigation (not);
+      fibertracking and BOLD mapping are eloquent-cortex mapping used for both tumour and
+      epilepsy surgery. The bundle cannot be assigned to one category.
+
+  - submission_number: "K243647"
+    device: "Synapse PACS (7.5)"
+    company: "FUJIFILM Healthcare Americas Corporation"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      "Synapse PACS" is a picture archiving and communication system. PACS with no
+      cancer-specific function is not_oncology per the brief.
+
+  - submission_number: "K243684"
+    device: "BrightHeart View Classifier"
+    company: "BrightHeart"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: BrightHeart's View Classifier evaluates fetal cardiac ultrasound views
+      to support congenital heart disease screening. Obstetric/cardiac.
+
+  - submission_number: "K243685"
+    device: "MammoScreen BD"
+    company: "Therapixel"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      "MammoScreen BD" is the breast density module of Therapixel's MammoScreen. Per the
+      brief's borderline rule, density is tissue composition and a risk factor, not cancer
+      detection: not_oncology. Flagged because Therapixel is a single-purpose mammography
+      vendor whose CAD product is oncologic and sits under another code.
+
+  - submission_number: "K243689"
+    device: "AVIEW"
+    company: "Coreline Soft Co., Ltd."
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      "AVIEW" without a module suffix is Coreline's whole platform. Coreline's modules
+      include AVIEW LCS (lung cancer screening, oncologic) alongside AVIEW CAC (coronary
+      calcium) and COPD quantification. The unsuffixed clearances cannot be resolved to one;
+      the suffixed CAC entries in this code are called not_oncology separately.
+
+  - submission_number: "K243696"
+    device: "AVIEW CAC"
+    company: "Coreline Soft Co., Ltd."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the target: "AVIEW CAC" - coronary artery calcium scoring. Cardiac.
+
+  - submission_number: "K243762"
+    device: "Synapse 3D Base Tools (V7.0)"
+    company: "FUJIFILM Corporation"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      "Synapse 3D Base Tools" is FUJIFILM's core 3D post-processing workstation - general
+      viewing, segmentation and measurement infrastructure with no cancer-specific stated
+      function. Treated like PACS/reporting per the brief.
+
+  - submission_number: "K243779"
+    device: "Bunkerhill Abdominal Aortic Quantification (AAQ)"
+    company: "BunkerHill Health"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the function: "Bunkerhill Abdominal Aortic Quantification" - abdominal
+      aortic aneurysm measurement. Vascular.
+
+  - submission_number: "K243810"
+    device: "TraumaCad Neo (1.1)"
+    company: "Brainlab Ltd."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: TraumaCad is orthopaedic digital templating and preoperative planning
+      for trauma and arthroplasty. Orthopaedic.
+
+  - submission_number: "K243853"
+    device: "Clarius Prostate AI"
+    company: "Clarius Mobile Health Corp."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product line: Clarius handheld point-of-care ultrasound. The prostate tool
+      measures gland volume transabdominally (benign prostatic hyperplasia, post-void
+      residual workflows); it is not multiparametric MRI lesion detection or PI-RADS. Called
+      not_oncology on that reading and flagged as one of my less certain calls.
+
+  - submission_number: "K243859"
+    device: "PRAEVAorta\u00ae2"
+    company: "Nurea"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Nurea's PRAEVAorta segments and measures the aorta for abdominal aortic
+      aneurysm surveillance. Vascular.
+
+  - submission_number: "K243862"
+    device: "LVivo Software Application"
+    company: "DiA Imaging Analysis Ltd."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: DiA Imaging Analysis' LVivo family automates echocardiographic
+      measurement - ejection fraction, strain, chamber volumes - and LVivo IQS is
+      image-quality scoring for echo acquisition. Cardiac.
+
+  - submission_number: "K243863"
+    device: "Opulus\u0099 Lymphoma Precision"
+    company: "Roche Molecular Systems, Inc."
+    product_code: QIH
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name states the disease: "Opulus Lymphoma Precision" (Roche). Lymphoma is named in the
+      device name; the product is lymphoma image quantification.
+
+  - submission_number: "K243919"
+    device: "Voxel Dosimetry (00859873006226)"
+    company: "Hermes Medical Solutions AB"
+    product_code: QIH
+    year: 2025
+    decision: oncology
+    category: radiology_radiation_therapy
+    confidence: medium
+    evidence: >-
+      Known product: Hermes Medical Solutions' Voxel Dosimetry computes voxel-level absorbed
+      dose from post-therapy SPECT/PET for molecular radiotherapy. Molecular radiotherapy in
+      practice means Lu-177 DOTATATE/PSMA, Y-90 radioembolisation and I-131, which are
+      cancer treatments; dosimetry for them is radiotherapy treatment planning. Medium
+      because I-131 is also used for benign hyperthyroidism.
+
+  - submission_number: "K243933"
+    device: "Ceevra Reveal 3+"
+    company: "Ceevra, Inc."
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      Ceevra Reveal builds interactive 3D anatomical models from CT/MR for surgical
+      planning. Its most-cited clinical use is robotic partial nephrectomy for renal masses
+      and prostatectomy, which would be oncologic, but the cleared function is general 3D
+      visualisation with no stated neoplastic target.
+
+  - submission_number: "K243989"
+    device: "Second Opinion\u00ae 3D"
+    company: "Pearl, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Pearl Inc. is a dental radiology AI company; Second Opinion detects
+      dental pathology (caries, bone level) on intraoral and CBCT images. Dental.
+
+  - submission_number: "K244002"
+    device: "AngioWaveNet"
+    company: "Angiowave Imaging, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: AngioWave's imaging is cardiac/coronary angiographic acquisition and
+      analysis. Cardiovascular.
+
+  - submission_number: "K250005"
+    device: "Clever One"
+    company: "Ewoosoft Co., Ltd"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Ewoosoft is a dental imaging company; Ez3D-i and Clever One are dental
+      CBCT/intraoral imaging and analysis software. Dental.
+
+  - submission_number: "K250023"
+    device: "SMART PCFD"
+    company: "Disior Ltd"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Names state the target: Disior's SMART Bun-Yo-Matic (hallux valgus/bunion) and SMART
+      PCFD (progressive collapsing foot deformity) are foot and ankle deformity analysis.
+      Orthopaedic.
+
+  - submission_number: "K250042"
+    device: "PeekMed web"
+    company: "Peek Health, S.A."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: PeekMed is preoperative orthopaedic surgical planning and templating.
+      Orthopaedic.
+
+  - submission_number: "K250226"
+    device: "Clarius Median Nerve AI"
+    company: "Clarius Mobile Health Corp."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the target: median nerve identification for regional anaesthesia / carpal
+      tunnel assessment on point-of-care ultrasound. Not cancer.
+
+  - submission_number: "K250237"
+    device: "InferOperate Suite"
+    company: "Beijing Infervision Healthcare Medical Technology Co., Ltd."
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      "InferOperate Suite" is Infervision's surgical-planning suite. Infervision's
+      InferOperate line is best known for lung-nodule resection planning, which would be
+      oncologic, but "Suite" does not name a target organ or finding and Infervision also
+      fields non-oncologic products.
+
+  - submission_number: "K250288"
+    device: "TeraRecon Cardiovascular.Calcification.CT"
+    company: "Terarecon,Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Names state the target: TeraRecon Aorta.CT (aortic measurement), Cardiac.Chambers.MR
+      (cardiac chamber quantification) and Cardiovascular.Calcification.CT (calcium
+      scoring). Cardiovascular.
+
+  - submission_number: "K250328"
+    device: "UltraExtend NX CUW-U001S V2.0 Ultrasound Image Analysis Program"
+    company: "Canon Medical Systems Corporation"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      "UltraExtend NX ... Ultrasound Image Analysis Program" is Canon's off-cart ultrasound
+      review/analysis workstation - general-purpose measurement and reporting software with
+      no cancer-specific function, which the brief places in not_oncology alongside PACS and
+      reporting.
+
+  - submission_number: "K250330"
+    device: "3mensio Workstation"
+    company: "Pie Medical Imaging BV"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Pie Medical's 3mensio Workstation is structural-heart and vascular
+      intervention sizing and planning. Cardiac/vascular.
+
+  - submission_number: "K250337"
+    device: "AiORTA - Plan"
+    company: "ViTAA Medical Solutions, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: ViTAA Medical's AiORTA analyses aortic wall biomechanics for abdominal
+      aortic aneurysm management. Vascular.
+
+  - submission_number: "K250354"
+    device: "Viz Subdural+, Viz SUBDURAL PLUS"
+    company: "Viz.ai, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Names state the findings: Viz.ai's hyperdense-sign, ICH+ and Subdural+ modules detect
+      intracranial haemorrhage and subdural haematoma. Acute neuro/stroke.
+
+  - submission_number: "K250367"
+    device: "CoLumboX"
+    company: "Smart Soft Healthcare AD"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Smart Soft Healthcare's CoLumbo/CoLumboX reads lumbar spine MRI and
+      radiographs for degenerative findings. Musculoskeletal/spine.
+
+  - submission_number: "K250369"
+    device: "Axial3D Insight"
+    company: "Axial Medical Printing Limited"
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      Axial3D Insight is automated anatomical segmentation of CT/MR for patient-specific 3D
+      printing. It is general organ segmentation with no stated neoplastic target; Axial3D's
+      published case mix is largely orthopaedic, craniomaxillofacial and cardiac, but
+      oncologic resection models are within its scope.
+
+  - submission_number: "K250416"
+    device: "GBrain MRI"
+    company: "Galileo CDS, Inc"
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      "GBrain MRI" states an organ and modality, not a finding. Galileo CDS's brain MRI
+      product is not identifiable from the row; brain MRI quantification under this code is
+      predominantly volumetry for neurodegeneration, but that is an assumption, not
+      evidence.
+
+  - submission_number: "K250484"
+    device: "PIUR tUS inside"
+    company: "PIUR Imaging GmbH"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: PIUR tUS adds tomographic 3D reconstruction to freehand 2D ultrasound.
+      This is image reconstruction/acquisition, which the brief places in not_oncology.
+
+  - submission_number: "K250670"
+    device: "EchoConfidence (USA)"
+    company: "Mycardium AI Limited"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the domain: "EchoConfidence" from Mycardium AI - echocardiographic
+      analysis. Cardiac.
+
+  - submission_number: "K250754"
+    device: "cmAngio\u00ae (V1.6)"
+    company: "CureMetrix, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: CureMetrix cmAngio detects breast arterial calcification on screening
+      mammograms as an incidental cardiovascular-risk marker. CureMetrix's other products
+      (cmTriage, cmAssist) are mammography cancer CAD, but this one is explicitly
+      cardiovascular, not cancer detection.
+
+  - submission_number: "K250755"
+    device: "DS Core Diagnosis"
+    company: "Dentsply Sirona Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Dentsply Sirona DS Core Diagnosis detects dental findings (caries,
+      periapical lesions) on intraoral radiographs. Dental.
+
+  - submission_number: "K250914"
+    device: "MediAI-BA"
+    company: "Crescom Co., Ltd."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the target: "MediAI-BA" - bone age assessment from hand radiographs.
+      Paediatric endocrine/skeletal maturity.
+
+  - submission_number: "K251009"
+    device: "Cirrus Resting State fMRI Software"
+    company: "Sora Neuroscience, Inc."
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      Resting-state fMRI processing (Sora Neuroscience Cirrus) is used for presurgical
+      eloquent-cortex mapping, which serves both brain-tumour resection and epilepsy
+      surgery, and for research/neurologic assessment. No neoplastic target is stated.
+
+  - submission_number: "K251027"
+    device: "cvi42 Coronary Plaque Software Application"
+    company: "Circle Cardiovascular Imaging, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Names state the target: Circle Cardiovascular Imaging's cvi42 cardiac CT/MR function,
+      chamber and coronary-plaque applications. Cardiac.
+
+  - submission_number: "K251059"
+    device: "Syngo Carbon Clinicals (VA41)"
+    company: "Siemens Healthineers AG"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: syngo Carbon Clinicals is Siemens' enterprise reading and reporting
+      platform. Reading/reporting infrastructure with no cancer-specific function.
+
+  - submission_number: "K251072"
+    device: "Segmentron Viewer"
+    company: "DGNCT, LLC"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      "Segmentron Viewer" is image-viewing software; a viewer with no cancer-specific stated
+      function falls under the brief's viewer/workflow rule. DGNCT LLC's imaging work is
+      dental.
+
+  - submission_number: "K251078"
+    device: "AutoDensity"
+    company: "Eos Imaging"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      "AutoDensity" (EOS imaging) is bone mineral density measurement. Densitometry is
+      excluded as non-cancer in the existing code rule (KGI, SAO) and is not breast density.
+
+  - submission_number: "K251096"
+    device: "PeekMed web"
+    company: "Peek Health, S.A."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: PeekMed is preoperative orthopaedic surgical planning and templating.
+      Orthopaedic.
+
+  - submission_number: "K251342"
+    device: "EchoPAC Software Only / EchoPAC Plug-in"
+    company: "GE Medical Systems Ultrasound and Primary Care Diagnostics"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: GE EchoPAC is the echocardiography review and quantification
+      workstation. Cardiac.
+
+  - submission_number: "K251456"
+    device: "BrightHeart View Classifier"
+    company: "BrightHeart"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: BrightHeart's View Classifier evaluates fetal cardiac ultrasound views
+      to support congenital heart disease screening. Obstetric/cardiac.
+
+  - submission_number: "K251483"
+    device: "SwiftSight-Brain"
+    company: "AIRS Medical Inc."
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      "SwiftSight-Brain" is a brain image-analysis product from AIRS Medical, a vendor
+      otherwise known for MR acceleration (SwiftMR). The name states an organ, not a
+      finding; brain analysis under this code is mostly volumetry for neurodegeneration but
+      the row does not say.
+
+  - submission_number: "K251514"
+    device: "Overjet CBCT Assist"
+    company: "Overjet, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known vendor: Overjet is a dental AI company; its Charting, CBCT and Image Enhancement
+      Assist products annotate caries, bone level and restorations on dental radiographs.
+      Dental.
+
+  - submission_number: "K251527"
+    device: "Brain WMH"
+    company: "Quantib BV"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the finding: white matter hyperintensity quantification (Quantib Brain
+      WMH), a marker of cerebral small-vessel disease. Neurologic.
+
+  - submission_number: "K251528"
+    device: "syngo.via MI Workflows; Scenium; syngo MBF"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      "syngo.via MI Workflows; Scenium; syngo MBF" bundles Siemens molecular-imaging reading
+      packages. Two named modules are non-oncologic (Scenium is brain PET for
+      neurodegenerative disease; syngo MBF is myocardial blood flow), but "MI Workflows" is
+      the general PET/CT reading package whose dominant real-world use is oncologic SUV and
+      tumour-burden reading. The bundle mixes both and cannot be assigned.
+
+  - submission_number: "K251629"
+    device: "UNiD\u0099 Spine Analyzer"
+    company: "Medicrea International S.A.S. (Medtronic)"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Medtronic's UNiD Spine Analyzer measures spinopelvic parameters for
+      spinal deformity surgery planning. Musculoskeletal/spine.
+
+  - submission_number: "K251656"
+    device: "Careverse CoronaryDoc (Careverse CoronaryDoc)"
+    company: "Careverse Technology Pte. Ltd."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the target: "CoronaryDoc" - coronary artery analysis. Cardiac.
+
+  - submission_number: "K251747"
+    device: "VEA Align; spineEOS"
+    company: "EOS imaging"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Names state the function: EOS imaging's VEA Align / spineEOS are spinal alignment
+      measurement and deformity-correction planning on biplanar radiographs.
+      Musculoskeletal/spine.
+
+  - submission_number: "K251763"
+    device: "IRISeg"
+    company: "Intuitive Surgical, Inc."
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      IRISeg is the segmentation component of Intuitive Surgical's IRIS 3D anatomical
+      modelling for robotic surgery. IRIS launched in renal-mass partial nephrectomy and
+      prostatectomy, which would be oncologic, but the cleared function is anatomical
+      segmentation with no stated neoplastic target - the same call made for Ceevra Reveal.
+
+  - submission_number: "K251766"
+    device: "TumorSight Viz"
+    company: "SimBioSys, Inc."
+    product_code: QIH
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name states the target: "TumorSight Viz". Known product: SimBioSys TumorSight Viz
+      derives 3D tumour geometry and volumetrics from breast MRI in patients with diagnosed
+      breast cancer, for surgical planning.
+
+  - submission_number: "K251837"
+    device: "Salix Coronary Plaque (V1.0.0)"
+    company: "Artrya Limited"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the target: coronary plaque characterisation and the vendor's coronary
+      platform (Artrya Salix). Cardiac.
+
+  - submission_number: "K251987"
+    device: "Rapid Aortic Measurements"
+    company: "iSchemaView, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the target: automated aortic diameter measurement. Vascular.
+
+  - submission_number: "K252007"
+    device: "BlineSlide"
+    company: "Deep Breathe, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the target: "BlineSlide" - B-line quantification on lung ultrasound, a
+      marker of pulmonary congestion/interstitial syndrome. Not cancer.
+
+  - submission_number: "K252029"
+    device: "AI-CVD"
+    company: "HeartLung Corporation"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the target: "AI-CVD" - cardiovascular disease quantification from CT
+      (HeartLung). Cardiac.
+
+  - submission_number: "K252103"
+    device: "Acorn 3D Software (AC-SEG-4009); Acorn 3DP Model (AC-101-XX)"
+    company: "Mighty Oak Medical"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Mighty Oak Medical's Acorn/FIREFLY line produces patient-specific 3D
+      printed spinal pedicle-screw guides from segmented CT. Musculoskeletal/spine
+      instrumentation.
+
+  - submission_number: "K252105"
+    device: "Ligence Heart"
+    company: "Ligence, UAB"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the organ: "Ligence Heart" automates echocardiographic measurement.
+      Cardiac.
+
+  - submission_number: "K252214"
+    device: "AIAS Cephalon"
+    company: "Metamorphosis GmbH"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the function: cephalometric (orthodontic) landmark analysis on lateral
+      skull radiographs. Dental/orthodontic.
+
+  - submission_number: "K252235"
+    device: "PVAD IQ Software"
+    company: "Ultrasight , Ltd."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: UltraSight's software guides and assesses percutaneous ventricular
+      assist device / cardiac ultrasound acquisition. Cardiac.
+
+  - submission_number: "K252298"
+    device: "ANDI 2.0"
+    company: "Imeka Solutions, Inc."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: Imeka's ANDI quantifies white-matter microstructure from diffusion MRI
+      for neurodegenerative and neuroinflammatory disease. Neurologic.
+
+  - submission_number: "K252362"
+    device: "GBrain MRI"
+    company: "Galileo CDS, Inc"
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      "GBrain MRI" states an organ and modality, not a finding. Galileo CDS's brain MRI
+      product is not identifiable from the row; brain MRI quantification under this code is
+      predominantly volumetry for neurodegeneration, but that is an assumption, not
+      evidence.
+
+  - submission_number: "K252452"
+    device: "PeekMed web"
+    company: "Peek Health, S.A."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: PeekMed is preoperative orthopaedic surgical planning and templating.
+      Orthopaedic.
+
+  - submission_number: "K252539"
+    device: "Tempus Pixel"
+    company: "Arterys, Inc."
+    product_code: QIH
+    year: 2025
+    decision: unresolved
+    evidence: >-
+      "Tempus Pixel" is the imaging platform Tempus built on the Arterys technology it
+      acquired. Tempus is an oncology precision-medicine company, which is suggestive, but
+      the cleared device is a general medical-imaging viewing/analysis platform and the row
+      does not identify a cancer-specific function. Company alone is weak evidence.
+
+  - submission_number: "K252665"
+    device: "brAIn\u0099 Shoulder Positioning"
+    company: "Avatar Medical"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Name states the function: automated shoulder positioning for imaging.
+      Positioning/acquisition is not_oncology per the brief; the anatomy is musculoskeletal.
+
+  - submission_number: "K252670"
+    device: "Alzevita"
+    company: "TOPIA MEDTECH LIMITED"
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      "Alzevita" names Alzheimer's disease. Neurodegenerative.
+
+  - submission_number: "K252856"
+    device: "PeekMed web"
+    company: "Peek Health, S.A."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      Known product: PeekMed is preoperative orthopaedic surgical planning and templating.
+      Orthopaedic.
+
+  - submission_number: "K252922"
+    device: "Neosoma Brain Mets"
+    company: "Neosoma, Inc."
+    product_code: QIH
+    year: 2025
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name states the target: "Neosoma Brain Mets". Brain metastasis tools are oncology per
+      the brief; metastases are by definition neoplastic.
+
+  - submission_number: "K253532"
+    device: "TruSPECT Processing Station"
+    company: "Spectrum Dynamics Medical, Ltd."
+    product_code: QIH
+    year: 2025
+    decision: not_oncology
+    evidence: >-
+      "TruSPECT Processing Station" is Spectrum Dynamics' SPECT reconstruction and
+      processing workstation. Reconstruction/processing is not_oncology per the brief.
+
+  - submission_number: "K252084"
+    device: "AI4CMR v2.0"
+    company: "Ai4medimaging Medical Solutions S.A."
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Name states the modality and organ: "AI4CMR" - cardiac magnetic resonance chamber
+      quantification. Cardiac.
+
+  - submission_number: "K252091"
+    device: "Surgical Reality Viewer"
+    company: "Medicalvr B.V."
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      "Surgical Reality Viewer" is a viewing/visualisation product; a viewer with no
+      cancer-specific stated function is not_oncology per the brief's viewer/workflow rule.
+
+  - submission_number: "K252261"
+    device: "InferCare RECIST"
+    company: "Beijing Infervision Healthcare Medical Technology Co., Ltd."
+    product_code: QIH
+    year: 2026
+    decision: oncology
+    category: radiology_cancer_detection
+    confidence: high
+    evidence: >-
+      Name states the target: "InferCare RECIST". RECIST (Response Evaluation Criteria In
+      Solid Tumors) is by definition solid-tumour treatment-response measurement; a RECIST
+      tool exists only for oncology follow-up imaging.
+
+  - submission_number: "K252496"
+    device: "Neurophet AQUA AD Plus"
+    company: "Neurophet., Inc."
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Known product: Neurophet AQUA segments brain MRI for atrophy and white-matter
+      quantification, and "AQUA AD Plus" names Alzheimer's disease. Neurodegenerative.
+
+  - submission_number: "K252538"
+    device: "CEPHX3D"
+    company: "Orca Dental AI , Ltd."
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Name states the function: cephalometric (orthodontic) landmark analysis on lateral
+      skull radiographs. Dental/orthodontic.
+
+  - submission_number: "K252634"
+    device: "Imagine\u00ae Enterprise Suite"
+    company: "Softlink International Private Limited"
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      "Imagine Enterprise Suite" (Softlink) is an enterprise PACS/RIS product. PACS with no
+      cancer-specific function is not_oncology per the brief.
+
+  - submission_number: "K253057"
+    device: "AI-Rad Companion Brain MR"
+    company: "Siemens Healthcare GmbH"
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Known product: Siemens AI-Rad Companion Brain MR performs automated brain-structure
+      volumetry and white-matter lesion quantification, marketed for neurodegenerative and
+      demyelinating disease. Neurologic.
+
+  - submission_number: "K253535"
+    device: "Ligence Heart"
+    company: "Ligence Uab"
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Name states the organ: "Ligence Heart" automates echocardiographic measurement.
+      Cardiac.
+
+  - submission_number: "K253551"
+    device: "VELYS\u0099 Hip Navigation"
+    company: "Depuy Ireland UC"
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Name states the procedure: VELYS Hip Navigation, intraoperative navigation for total
+      hip arthroplasty. Orthopaedic.
+
+  - submission_number: "K253593"
+    device: "Clarius Ejection Fraction AI"
+    company: "Clarius Mobile Health Corp."
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Name states the measurement: automated ejection fraction from point-of-care
+      ultrasound. Cardiac.
+
+  - submission_number: "K253614"
+    device: "EchoNavigator R5.0"
+    company: "Philips Medical Systems Nederland B.V."
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Known product: Philips EchoNavigator fuses echo and fluoroscopy for structural-heart
+      interventions. Cardiac.
+
+  - submission_number: "K253735"
+    device: "AV Vascular"
+    company: "Philips Medical Systems Nederland B.V."
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Name states the domain: "AV Vascular" - vascular imaging analysis. Vascular.
+
+  - submission_number: "K253775"
+    device: "SwiftMR"
+    company: "Airs Medical, Inc."
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      "SwiftMR" is AIRS Medical's MR image reconstruction/denoising accelerator.
+      Reconstruction and enhancement are not_oncology per the brief even on a cancer-capable
+      scanner.
+
+  - submission_number: "K253944"
+    device: "Data Analysis Facilitation Suite (DAFS)"
+    company: "Voronoi Health Analytics Incorporated"
+    product_code: QIH
+    year: 2026
+    decision: unresolved
+    evidence: >-
+      "Data Analysis Facilitation Suite (DAFS)" from Voronoi Health Analytics. DAFS is
+      associated with automated PET/CT lesion segmentation and total metabolic tumour volume
+      work, principally in lymphoma, which would make it oncologic; but the cleared name is
+      a fully generic analysis suite and my recollection of the product is not strong enough
+      to carry an oncology count. Recorded as unresolved with the oncologic lean noted
+      rather than counted.
+
+  - submission_number: "K254016"
+    device: "MI View&GO"
+    company: "Siemens Medical Solutions USA, Inc."
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Known product: MI View&GO is Siemens' molecular-imaging viewing and reporting
+      application - a general nuclear-medicine viewer, infrastructure rather than a
+      cancer-specific analysis.
+
+  - submission_number: "K254207"
+    device: "AiORTA - Plan v2.0"
+    company: "ViTAA Medical Solutions, Inc."
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Known product: ViTAA Medical's AiORTA analyses aortic wall biomechanics for abdominal
+      aortic aneurysm management. Vascular.
+
+  - submission_number: "K260217"
+    device: "AI Platform 2.2 (AIP002)"
+    company: "Exo Imaging"
+    product_code: QIH
+    year: 2026
+    decision: not_oncology
+    evidence: >-
+      Known product line: Exo's handheld point-of-care ultrasound AI platform performs
+      automated bladder volume, cardiac ejection fraction and lung assessment at the point
+      of care. No cancer-specific function.

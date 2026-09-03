@@ -1,0 +1,15 @@
+# FIXTURE — stand-in table for figure development. NOT the real pipeline output.
+# Totals match the measured FDA snapshot through 2026-03-30 (radiology cancer
+# detection 66, radiation therapy 79, pathology 9). Per-year splits in years the
+# source brief did not quote, radiology device names, companies and exact decision
+# dates are invented. Regenerate from data/processed/ before publishing anything.
+domain,category,pathway,count
+radiology,radiology_cancer_detection,510(k),62
+radiology,radiology_cancer_detection,De Novo,2
+radiology,radiology_cancer_detection,PMA,2
+radiology,radiology_radiation_therapy,510(k),78
+radiology,radiology_radiation_therapy,De Novo,0
+radiology,radiology_radiation_therapy,PMA,1
+pathology,pathology,510(k),3
+pathology,pathology,De Novo,3
+pathology,pathology,PMA,3

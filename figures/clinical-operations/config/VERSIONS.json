@@ -1,0 +1,29 @@
+{
+  "_README": [
+    "Append-only ledger: config file -> version -> the SHA-256 that version froze at.",
+    "A test reads this file and fails when a config's current hash does not match its",
+    "recorded version, or when a version number is reused with a different hash.",
+    "NEVER edit or delete an existing entry. To change a config: bump its `version`,",
+    "then append the new version and hash here in the same commit.",
+    "Hashes are of the raw file bytes: sha256sum config/<file>."
+  ],
+  "_provenance": {
+    "observed": {
+      "source.yaml": "2",
+      "oncology_codes.yaml": "3"
+    },
+    "observed_note": "Both entries were computed from the files on disk on 2026-09-03, at the versions those files declare, and are verifiable now: run `sha256sum config/source.yaml config/oncology_codes.yaml` and compare against `files` below.",
+    "history_note": "source.yaml v1 -> v2 on 2026-09-03: the `expected:` block still recorded the counts from a first pass that classified product code QFM as oncology. Reading the 39 devices under QFM showed them to be pneumothorax, pulmonary-embolism, fracture, aneurysm and trauma triage, so QFM was excluded and the radiology count moved from 184 to 145. v1's block was never updated to match. v2 corrects it and adds the per-category and panel-agreement figures. No pattern or source URL changed, so no run output changes. oncology_codes.yaml has never been changed since it was written. Nothing here is inferred and nothing is omitted. oncology_codes.yaml v1 -> v2 on 2026-09-03: the code-level rule failed an audit in both directions and is demoted from rule to prior; the authoritative decision now lives in config/adjudication/. v2 retracts a false completeness claim, corrects the QFM device count from one to six, marks POK as superseded, and renames two category labels that misdescribed what they had absorbed. v2 -> v3 same day: removed the 'deliberately conservative / ~800 devices' block, which described a rule that no longer governs and cited DrAid for Liver Segmentation as a canonical oncologic example -- a call an adjudicator flagged as its most reversible."
+  },
+  "files": {
+    "source.yaml": {
+      "1": "8319ae05e6d006dc84b9d9885b1a6d72fb15cef3608dee140556b7115d5b7a6a",
+      "2": "f76c33fe1bd59a2802228eedfe0bae34620650b598d773ca1b67d14c4c672d1a"
+    },
+    "oncology_codes.yaml": {
+      "1": "43c4bfd8d7e41797b283701306284519f95e50b945ec17b0f652961b52264ad9",
+      "2": "36a7337d06691101208a3ffd5e9422b25e6f3f66f2f9541e18b3534ce8381aba",
+      "3": "3741b8b2f6975c14d33c3924f335d593182e8ef0bbd48dae83018f9a83429651"
+    }
+  }
+}

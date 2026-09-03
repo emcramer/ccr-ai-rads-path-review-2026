@@ -1,0 +1,16 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ccr-clinops"
+version = "0.1.0"
+description = "Clinical-operations figure for the CCR review: FDA AI device authorizations in radiology and pathology"
+requires-python = ">=3.12"
+dependencies = ["requests", "pandas", "matplotlib", "pyyaml"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

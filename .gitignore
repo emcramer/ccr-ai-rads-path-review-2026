@@ -17,6 +17,23 @@ figures/trends-figure/data/processed/synthetic/paper_labels.csv
 # --- Run noise and scratch ---
 figures/trends-figure/logs/
 figures/trends-figure/figure_mockup.jpg
+figures/clinical-operations/logs/
+
+# --- clinical-operations: raw snapshots ARE tracked ---
+# Unlike trends-figure's ~1 GB of PubMed XML, this project's raw data is about
+# 1.1 MB per snapshot: one FDA CSV and four openFDA batch responses. Keeping
+# them in the repository makes the figure reproducible from a clone with no
+# network access, which matters because FDA republishes its device list in place
+# at a fixed URL and does not version it. Nothing to ignore here on purpose.
+
+# --- Virtual environments ---
+# These belong OUTSIDE the repository: the whole tree is OneDrive-synced and a
+# venv inside it pushes tens of thousands of files into cloud sync. One was
+# created at figures/clinical-operations/.venv on 2026-09-03 and reached 353 MB
+# before it was removed. Use ~/.venvs/<project> instead; reproducibility rests
+# on the pinned requirements files.
+.venv/
+venv/
 
 # --- Caches ---
 __pycache__/

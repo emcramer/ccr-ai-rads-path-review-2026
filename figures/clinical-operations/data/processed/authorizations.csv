@@ -1,0 +1,210 @@
+# file: authorizations.csv
+# generated_utc: 2026-09-03T22:40:26Z
+# snapshot: data/raw/2026-03-30
+# snapshot_date: 2026-03-30  (max Date of Final Decision in the FDA list)
+# devices.csv sha256: 4da0d15a1dcc7b6a
+# source.yaml v2 sha256:f76c33fe1bd59a28
+# oncology_codes.yaml v3 sha256:3741b8b2f6975c14
+# tool: clinops.aggregate 0.1.0
+submission_number,decision_date,year,device,company,panel_lead,product_code,domain,category,category_label,pathway,regulation_number
+P950009,1995-09-29,1995,AUTOPAP(R) 300 QC AUTOMATIC PAP SCREENER/QC SYSTEM,BD DIAGNOSTICS,Pathology,NMN,pathology,pathology,Digital pathology,PMA,
+P940029,1995-11-08,1995,PAPNET Testing System,"Neuromedical Systems, Inc.",Pathology,MNM,pathology,pathology,Digital pathology,PMA,
+P970058,1998-06-26,1998,M1000 IMAGECHECKER,"Hologic, Inc.",Radiology,MYN,radiology,radiology_cancer_detection,Cancer detection and assessment,PMA,
+P000041,2001-07-12,2001,RAPIDSCREEN RS-2000,RIVERAIN MEDICAL GROUP,Radiology,MYN,radiology,radiology_cancer_detection,Cancer detection and assessment,PMA,
+P010034,2002-01-31,2002,SECOND LOOK ™,"ICAD, INC.",Radiology,MYN,radiology,radiology_cancer_detection,Cancer detection and assessment,PMA,
+K123526,2012-12-27,2012,CLEARREAD +CONFIRM,RIVERAIN TECHNOLOGIES,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K133649,2014-04-22,2014,HEPATIC VCAR,GE MEDICAL SYSTEMS SCS,Radiology,JAK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K161201,2016-09-09,2016,ClearRead CT,"RIVERAIN TECHNOLOGIES, LLC",Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2050
+P150043,2016-11-09,2016,QVCAD System,"QView Medical, Inc.",Radiology,MYN,radiology,radiology_cancer_detection,Cancer detection and assessment,PMA,
+K161959,2016-12-28,2016,ClearView cCAD,ClearView Diagnostics Inc.,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+P160009,2017-03-24,2017,PowerLook® Tomo Detection Software,iCAD Inc,Radiology,MYN,radiology,radiology_cancer_detection,Cancer detection and assessment,PMA,
+K163622,2017-05-11,2017,Lung Vision,BODY VISION MEDICAL LTD.,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K170250,2017-06-07,2017,SmartTarget,"SmartTarget, Ltd.",Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+DEN170022,2017-07-19,2017,QuantX,"Quantitative Insights, Inc",Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and assessment,De Novo,892.2060
+K173542,2018-01-25,2018,Arterys Oncology DL,Arterys Inc.,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K181572,2018-07-10,2018,Workflow Box,Mirada Medical Ltd.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K173444,2018-07-23,2018,Quantitative Total Extensible Imaging (QTxI),"AIQ Solutions, Inc.",Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K182616,2018-11-02,2018,"NvisionVLE Imaging System, NvisionVLE Optical Probe, NvisionVLE Inflation System","NinePoint Medical, Inc.",Radiology,NQQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K181704,2018-11-21,2018,Transpara,ScreenPoint Medical BV,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K182373,2018-12-06,2018,PowerLook Tomo Detection V2 Software,iCAD Inc.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K183285,2019-03-08,2019,cmTriage,"CureMetrix, Inc",Radiology,QFM,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K183593,2019-04-18,2019,Lung Vision System,Body Vision Medical Ltd.,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K190387,2019-06-19,2019,RayStation,RaySearch Laboratories AB (publ),Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K190442,2019-07-03,2019,Koios DS for Breast,"Koios Medical, Inc.",Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2060
+K191384,2019-07-08,2019,RayCare 2.3,RaySearch Laboratories AB (publ),Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K183271,2019-07-26,2019,AI-Rad Companion (Pulmonary),"Siemens Medical Solutions USA, Inc.",Radiology,JAK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K191262,2019-08-05,2019,aBSI,EXINI Diagnostics AB,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K192065,2019-09-18,2019,Syngo.Via RT Image Suite,"Siemens Medical Solutions USA, Inc.",Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K191994,2019-10-04,2019,ProFound AI Software V2.1,iCAD Inc.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K191278,2019-11-19,2019,RSI-MRI+,MultiModal Imaging Services Corporation (dba HealthLytix),Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K192287,2019-12-10,2019,Transpara,Screenpoint Medical B.V.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K193109,2020-01-24,2020,MRCAT brain,Philips Medical Systems MR Finland,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K192377,2020-02-10,2020,"Ethos Treatment Management, Ethos Treatment Planning, Ethos Radiotherapy System, Halcyon","Varian Medical Systems, Inc.",Radiology,IYE,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K191928,2020-02-28,2020,AccuContour,Xiamen Manteia Technology LTD.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K193229,2020-03-05,2020,Transpara,ScreenPoint Medical B.V.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K193216,2020-03-09,2020,syngo.CT Lung CAD,"Siemens Medical Solutions, Inc",Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2050
+K193281,2020-03-20,2020,Hepatic VCAR,GE Medical Systems SCS,Radiology,JAK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K192854,2020-03-25,2020,MammoScreen,Therapixel,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K193220,2020-05-05,2020,AVIEW LCS,"Coreline Soft Co., Ltd",Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K192880,2020-07-02,2020,InferRead Lung CT.AI,"Beijing Infervision Technology Co.,Ltd.",Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2050
+K193252,2020-07-02,2020,Contour ProtegeAI,MIM Software Inc.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K200905,2020-07-16,2020,HealthMammo,Zebra Medical Vision Ltd.,Radiology,QFM,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K193283,2020-07-30,2020,AI-Rad Companion Prostate MR,Siemens Medical Solutions USA Inc.,Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K201232,2020-08-13,2020,Limbus Contour,Limbus AI Inc.,Radiology,LLZ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),
+K201444,2020-08-13,2020,Syngo.via RT Image Suite,"Siemens Medical Solutions USA, Inc.",Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K200569,2020-09-24,2020,RayStation,RaySearch Laboratories AB (publ),Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K202501,2020-10-11,2020,Quantib Prostate,Quantib BV,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K201710,2020-10-16,2020,A View LCS,"Coreline Soft Co., Ltd.",Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K200323,2020-10-30,2020,AutoContour,"Radformation, Inc.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K193562,2020-11-06,2020,AI-Rad Companion Organs RT,"Siemens Medical Solutions USA, Inc.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K201019,2020-11-18,2020,Genius AI Detection,"Hologic, Inc.",Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K202229,2020-12-22,2020,AI Metrics,"AI Metrics, LLC",Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+P200003,2021-01-11,2021,Imagio Breast Imaging System,"Seno Medical Instruments, Inc.",Radiology,QNK,radiology,radiology_cancer_detection,Cancer detection and assessment,PMA,
+K202700,2021-01-14,2021,ART-Plan,TheraPanacea,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K203582,2021-02-04,2021,QUIBIM Precision Prostate (qp-Prostate),QUIBIM S.L.,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K203578,2021-02-25,2021,"OTIS 2.1 Optical Coherence Tomography System, THiA Optical Coherence Tomography System","Perimeter Medical Imaging AI, Inc.",Radiology,NQQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K202300,2021-03-05,2021,"Optellum Virtual Nodule Clinic, Optellum software, Optellum platform",Optellum Ltd,Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2060
+K202284,2021-03-12,2021,Oncospace,"Oncospace, Inc.",Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K203822,2021-03-12,2021,ProFound AI Software V3.0,iCAD Inc.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K203235,2021-03-19,2021,VBrain,Vysioneer Inc.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K203258,2021-03-31,2021,syngo.CT Lung CAD,Siemens Healthcare GmbH,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2050
+K202928,2021-04-02,2021,DV. Target,Deepvoxel INC,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K203517,2021-04-16,2021,Saige-Q,"DeepHealth, Inc.",Radiology,QFM,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K203469,2021-04-19,2021,AI Segmentation,"Varian Medical Systems, Inc.",Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K203610,2021-04-20,2021,Automatic Anatomy Recognition (AAR),"Quantitative Radiology Solutions, LLC",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K203502,2021-04-23,2021,MEDO-Thyroid,MEDO DX Pte. Ltd.,Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K210404,2021-06-02,2021,Transpara 1.7.0,ScreenPoint Medical B.V.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K210645,2021-06-29,2021,RayStation 10.1,RaySearch Laboratories AB (publ),Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K211655,2021-07-27,2021,aPROMISE,EXINI Diagnostics AB,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K211379,2021-07-30,2021,syngo.via RT Image Suite,Siemens Medical Solutions USA Inc.,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K211431,2021-08-02,2021,breastscape v1.0,Olea Medical,Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K201560,2021-08-31,2021,Auto Lung Nodule Detection,"Samsung Electronics Co.,Ltd.",Radiology,MYN,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K211881,2021-09-02,2021,AI Segmentation,"Varian Medical Systems, Inc.",Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K203555,2021-09-08,2021,AmCAD-UT,AmCad BioMed Corporation,Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K211867,2021-09-08,2021,RayStation 11.0,RaySearch Laboratories AB (publ),Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+DEN200080,2021-09-21,2021,Paige Prostate,Paige.AI,Pathology,QPN,pathology,pathology,Digital pathology,De Novo,864.3750
+K212116,2021-10-12,2021,VBrain-OAR,Vysioneer Inc.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K210632,2021-10-20,2021,Contour ProtegeAI,MIM Software Inc.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K210807,2021-10-22,2021,FlightPlan for Liver,GE Medical Systems SCS,Radiology,LLZ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),
+K212218,2021-10-25,2021,Advanced Algorithms for Treatment Management Applications (AATMA),Elekta Solutions AB,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K211678,2021-11-17,2021,Lunit INSIGHT MMG,Lunit Inc.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K211541,2021-11-26,2021,MammoScreen 2.0,Therapixel,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K213096,2021-12-06,2021,Al-Rad Companion (Pulmonary),"Siemens Medical Solutions USA, Inc.",Radiology,JAK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K213155,2021-12-15,2021,RT-Mind-AI,"MedMind Technology Co., Ltd.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K212616,2021-12-16,2021,Koios DS,"Koios Medical, Inc.",Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2060
+K213628,2021-12-16,2021,VBrain,Vysioneer Inc.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K210670,2021-12-21,2021,BU-CAD,TaiHao Medical Inc.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K213976,2022-02-03,2022,Contour ProtégéAI,MIM Software Inc.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K214081,2022-04-05,2022,MRCAT Head & Neck,Philips Oy,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K212274,2022-04-08,2022,INT Contour,Carina Medical LLC,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K220141,2022-04-15,2022,RayStation 11B,RaySearch Laboratories AB (publ),Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K220264,2022-04-28,2022,EFAI RTSuite CT HN-Segmentation System,"Ever Fortune.AI Co., Ltd.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K220590,2022-04-29,2022,aPROMISE X,EXINI Diagnostics AB,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K212915,2022-05-03,2022,MVision AI Segmentation,MVision AI,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K220105,2022-05-12,2022,Saige-Dx,"DeepHealth, Inc.",Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K221106,2022-05-13,2022,Quantib Prostate,Quantib BV,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K220813,2022-06-17,2022,ART-PLAN,TheraPanacea,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K212783,2022-07-08,2022,ProstatID,"ScanMed, LLC",Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K221347,2022-08-03,2022,Transpara 1.7.2,ScreenPoint Medical B.V.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K213713,2022-08-11,2022,AI-Rad Companion (Pulmonary),Siemens Healthcare GmBh,Radiology,JAK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K220598,2022-08-24,2022,AutoContour Model RADAC V2,"Radformation, Inc.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K211841,2022-08-25,2022,MRI Planner,Spectronic Medical AB,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K220783,2022-09-07,2022,syngo.via RT Image Suite,Siemens Medical Solutions USA Inc.,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K221738,2022-09-27,2022,NS-HGlio,Neosoma Inc.,Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K220080,2022-09-29,2022,CogNet QmTRIAGE,"MedCognetics, Inc.",Radiology,QFM,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K221449,2022-10-06,2022,Genius AI Detection 2.0,"Hologic, Inc.",Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K221305,2022-10-14,2022,AI-Rad Companion Organs RT,"Siemens Medical Solutions USA, Inc",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K220408,2022-11-10,2022,AVIEW RT ACS,"Coreline Soft Co.,Ltd",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K221624,2022-11-22,2022,Avenda Health AI Prostate Cancer Planning Software,"Avenda Health, Inc.",Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2060
+K222803,2023-02-02,2023,Oncospace,"Oncospace, Inc.",Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K221592,2023-02-24,2023,AVIEW Lung Nodule CAD,"Coreline Soft Co.,Ltd.",Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2050
+K221706,2023-03-09,2023,AccuContour,"Manteia Technologies Co., Ltd.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K222312,2023-03-29,2023,RayStation 12A,RaySearch Laboratories AB (publ),Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K223774,2023-04-06,2023,Contour ProtégéAI,MIM Software Inc.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K230575,2023-04-07,2023,Limbus Contour,Limbus AI Inc.,Radiology,LLZ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),
+K230685,2023-04-14,2023,AutoContour Model RADAC V3,"Radformation, Inc.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K230772,2023-04-17,2023,Quantib Prostate,Quantib BV,Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K230023,2023-04-19,2023,ART-Plan,Therapanacea SAS,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+P210011,2023-04-28,2023,xT CDx,"Tempus Labs, Inc.",Pathology,PQP,pathology,pathology,Digital pathology,PMA,
+K230082,2023-05-04,2023,Auto Segmentation,"GE Medical Systems, LLC",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K222728,2023-05-17,2023,Radiation Planning Assistant (RPA),"University of Texas, MD Anderson Cancer Center",Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K230096,2023-05-23,2023,Genius AI Detection 2.0 with CC-MLO Correlation,"Hologic, Inc.",Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K223724,2023-07-10,2023,MOZI TPS,"Manteia Technologies Co., Ltd.",Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K231157,2023-07-19,2023,syngo.CT Lung CAD (Version VD30),Siemens Healthcare GmbH,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2050
+K223133,2023-08-03,2023,VisiRad XR,Imidex Inc.,Radiology,MYN,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K223639,2023-08-28,2023,VisAble.IO,TechsoMed,Radiology,QTZ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),
+K231928,2023-09-25,2023,EFAI RTSUITE CT HCAP-Segmentation System,"Ever Fortune.AI Co., Ltd.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K231470,2023-11-06,2023,Lunit INSIGHT DBT,Lunit Inc.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K231765,2023-11-08,2023,Contour ProtégéAI,MIM Software Inc.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K231805,2023-12-22,2023,qXR-LN,Qure.ai Technologies,Radiology,MYN,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K232479,2023-12-22,2023,ART-Plan,TheraPanacea,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K231130,2023-12-26,2023,TumorSight Viz,"SimBioSys, Inc.",Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+DEN210035,2024-01-31,2024,Genius Digital Diagnostics System with the Genius Cervical AI algorithm,Hologic Inc.,Pathology,QYV,pathology,pathology,Digital pathology,De Novo,864.3900
+K231855,2024-02-13,2024,QOCA® image Smart RT Contouring System,Quanta Computer Inc.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K233753,2024-03-21,2024,AI-Rad Companion (Pulmonary),Siemens Healthcare GmbH,Radiology,JAK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K232899,2024-04-03,2024,AI-Rad Companion Organs RT,Siemens Medical Solutions U.S.A.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K240773,2024-04-15,2024,VisAble.IO,Techsomed,Radiology,QTZ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),
+K234068,2024-04-22,2024,ART-Plan (v.2.2.0),Therapanacea SAS,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K232799,2024-04-26,2024,syngo.via RT Image Suite,"Siemens Medical Solutions USA, Inc.",Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K232923,2024-04-30,2024,Ethos Treatment Management (3.0); Ethos Treatment Planning (2.0),Varian Medical Systems Inc.,Radiology,IYE,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K232928,2024-05-07,2024,DeepContour (V1.0),"Wisdom Technologies., Inc.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K233108,2024-05-23,2024,VinDr-Mammo,VinBigData Joint Stock Company,Radiology,QFM,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K233196,2024-06-21,2024,Medihub Prostate,JLK Inc.,Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K240301,2024-08-01,2024,MammoScreen® (3),Therapixel,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K240740,2024-08-16,2024,qCT LN Quant,Qure.ai Technologies,Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K233998,2024-09-05,2024,TRAQinform IQ,"AIQ Global, Inc.",Radiology,LLZ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K240697,2024-09-09,2024,"See-Mode Augmented Reporting Tool, Thyroid (SMART-T)",See-Mode Technologies Pte. Ltd.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K240943,2024-10-01,2024,LungVision,BodyVision Medical Ltd.,Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K242652,2024-10-04,2024,Lunit INSIGHT DBT v1.1,Lunit Inc.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K241837,2024-10-09,2024,Limbus Contour,Limbus AI Inc.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K241490,2024-10-18,2024,Contour+ (MVision AI Segmentation),MVision AI Oy,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K243189,2024-10-25,2024,TumorSight Viz,"SimBioSys, Inc.",Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K240417,2024-11-08,2024,ProFound Detection (V4.0),"iCAD, Inc.",Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K242130,2024-11-15,2024,Koios DS,"Koios Medical, Inc.",Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2060
+K241747,2024-11-18,2024,Saige-Dx,"DeepHealth, Inc",Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K241831,2024-11-25,2024,Transpara (2.1.0),ScreenPoint Medical B.V.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K241543,2024-12-06,2024,DrAid for Liver Segmentation,VinBrain Joint Stock Company,Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K242729,2024-12-09,2024,AutoContour (Model RADAC V4),"Radformation, Inc.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K243688,2024-12-19,2024,Saige-Dx (3.1.0),"DeepHealth, Inc.",Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K241232,2025-01-24,2025,Galen Second Read,Ibex Medical Analytics Ltd.,Pathology,QPN,pathology,pathology,Digital pathology,510(k),864.3750
+K250035,2025-02-03,2025,Contour ProtégéAI+,MIM Software Inc.,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K242994,2025-02-24,2025,OncoStudio (OS-01),"OncoSoft. Co., Ltd.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K242822,2025-02-25,2025,ART-Plan+ (v.3.0.0),Therapanacea SAS,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K241770,2025-03-05,2025,Prostate MR AI (VA10A),Siemens Healthcare GmbH,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K242683,2025-03-18,2025,QP-Prostate® CAD,Quibim S.L.,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K243831,2025-03-26,2025,Rayvolve LN,AZmed,Radiology,MYN,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K242745,2025-03-27,2025,AI-Rad Companion Organs RT,Siemens Healthcare GmbH,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K242919,2025-03-27,2025,V5med Lung AI,V5med Inc.,Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2050
+K242925,2025-04-01,2025,MR Contour DL,GE HealthCare,Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K240398,2025-04-04,2025,"RayStation 2023B, RayPlan 2023B, RayStation 2024A, RayPlan 2024A, RayStation 2024A SP3, RayPlan 2024A SP3",RaySearch Laboratories AB (PUBL),Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K242748,2025-04-11,2025,Oncospace,"Oncospace, Inc.",Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K240554,2025-05-16,2025,InferRead Lung CT.AI,"Infervision Medical Technology Co., Ltd.",Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2050
+K250427,2025-05-28,2025,TAIMedImg DeepMets,"Taiwan Medical Imaging Co., Ltd.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+DEN240047,2025-05-30,2025,Allix5,"Clairity, Inc.",Radiology,SEZ,radiology,radiology_cancer_detection,Cancer detection and assessment,De Novo,892.8500
+K243863,2025-05-30,2025,Opulus Lymphoma Precision,"Roche Molecular Systems, Inc.",Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K250440,2025-06-17,2025,"RT Elements  (4.5); (Elements) Multiple Brain Mets SRS; (Elements) Cranial SRS; (Elements) Spine SRS; (Elements) Cranial SRS w/ Cones; (Elements) RT Planning Platform; (Elements) Dose Review; (Elements) Retreatment Review; Elements Segmentation [Cranial , Basal Ganglia, Head & Neck, Pelvic, Spine, Thoracic & Spine, Extracranial] RT; Elements AI Tumor Segmentation RT; Elements SmartBrush [Angio, Spine] RT; Elements Object Management RT",Brainlab AG,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K243679,2025-07-03,2025,MammoScreen® (4),Therapixel,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K251766,2025-07-08,2025,TumorSight Viz,"SimBioSys, Inc.",Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K243919,2025-07-30,2025,Voxel Dosimetry (00859873006226),Hermes Medical Solutions AB,Radiology,QIH,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),
+DEN240068,2025-07-31,2025,ArteraAI Prostate,Artera Inc.,Pathology,SFH,pathology,pathology,Digital pathology,De Novo,864.3755
+K243341,2025-07-31,2025,Genius AI Detection 2.0,"Hologic, Inc.",Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K251873,2025-08-11,2025,Saige-Dx,"DeepHealth, Inc.",Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K250003,2025-08-29,2025,GENESEEQPRIME NGS Tumor Profiling Assay (FFPE) (GS6005),Geneseeq Technology Inc.,Pathology,PZM,pathology,pathology,Digital pathology,510(k),866.6080
+K250064,2025-09-04,2025,Dose+ (1.0),Mvision AI Oy,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K251931,2025-09-08,2025,BioTraceIO Vision  (V1.7),Techsomed Medical Technologies,Radiology,QTZ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),
+K251203,2025-12-03,2025,AVIEW Lung Nodule CAD,"Coreline Soft Co.,Ltd",Radiology,OEB,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2050
+K250780,2025-12-05,2025,ARTAssistant,"Manteia Technologies Co., Ltd.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K252482,2025-12-11,2025,CogNet AI-MT+,"Medcognetics, Inc.",Radiology,QFM,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K252922,2025-12-17,2025,Neosoma Brain Mets,"Neosoma, Inc.",Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K253091,2025-12-23,2025,ART-Plan+ (v3.1.0),Therapanacea Sas,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K252188,2026-01-15,2026,EMLA (Elekta Evo); EMLA (VersaHD); EMLA (Elekta Harmony Pro); EMLA (Elekta Infintiy); EMLA (Elekta Harmony); EMLA (Elekta Synergy),Elekta Solutions AB,Radiology,IYE,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K251351,2026-01-23,2026,AccuContour 4.0,"Manteia Technologies Co., Ltd.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K251306,2026-01-28,2026,Seg Pro V3 (RT-300),"Ever Fortune.Ai, Co., Ltd.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K251769,2026-01-30,2026,RevealAI-Lung,"Precision Medical Ventures, Inc. Dba Revealdx",Radiology,POK,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2060
+K251474,2026-02-06,2026,Median LCS (internal name) / eyonis LCS (trade name) (1.0),Median Technologies,Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K252002,2026-02-19,2026,Monaco RTP System (6.3),Elekta Solutions AB,Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K252261,2026-03-13,2026,InferCare RECIST,"Beijing Infervision Healthcare Medical Technology Co., Ltd.",Radiology,QIH,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),
+K252304,2026-03-18,2026,syngo.via RT Image Suite VC10,"Varian Medical Systems, Inc.",Radiology,MUJ,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.5050
+K260509,2026-03-19,2026,AutoContour (RADAC V5),"Radformation, Inc.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050
+K253796,2026-03-26,2026,Lunit INSIGHT DBT (V1.2),"Lunit, Inc.",Radiology,QDQ,radiology,radiology_cancer_detection,Cancer detection and assessment,510(k),892.2090
+K253270,2026-03-27,2026,Contour ProtégéAI+,"Mim Software, Inc.",Radiology,QKB,radiology,radiology_radiation_therapy,Cancer treatment planning,510(k),892.2050

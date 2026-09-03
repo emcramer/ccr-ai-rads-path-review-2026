@@ -1,0 +1,323 @@
+# Oncology classification — which FDA product codes count as cancer-directed AI.
+#
+# WHY A CODE DICTIONARY AND NOT A TEXT SEARCH
+#
+# The FDA AI-enabled device list publishes no indication-for-use field. The only
+# free-text column is `Device`, and it holds brand names: Transpara, ProFound AI,
+# AIR Recon DL. A deliberately generous cancer-term regex over device names
+# matched 42 of 1,103 radiology and pathology rows (4%) and missed every
+# mammography CAD product whose name does not say "mammo". Device names cannot
+# carry this decision.
+#
+# The `Primary Product Code` can. Each code resolves through openFDA's device
+# classification endpoint to an FDA regulation number and a regulation
+# definition, and that definition states what the device type is for. Where the
+# definition names cancer, tumors, or radiation therapy, the whole code is
+# cancer-directed by construction; where it names fractures or bone density, it
+# is not. That decision is made once per code, in this file, with FDA's own
+# words recorded next to it.
+#
+# THIS FILE IS NO LONGER THE RULE. IT IS A PRIOR.
+#
+# v1 of this file classified whole product codes and was used as the rule. That
+# failed an audit in both directions, and the authoritative decision now lives
+# in config/adjudication/, one entry per device. See clinops.adjudication,
+# docs/classification.md, and the 2026-09-03 entries in docs/DECISIONS.md.
+#
+# It failed by MISSING devices, and by missing them as a function of time. FDA
+# created its cancer-specific product codes only around 2018-2020; before then
+# mammography and lung CAD were authorized under generic codes. MYN holds the
+# 1998 M1000 ImageChecker, the first FDA-approved CAD device. A code-only rule
+# cannot see it, and reported radiology as beginning in 2016 rather than 1998.
+# MYN in fact QUALIFIED under the rule below -- 21 CFR 892.2070 names cancer
+# three times -- and was excluded only because openFDA returns a bare URL in its
+# `definition` field instead of the regulation text. A fetch artifact was
+# presented as a judgment.
+#
+# It also failed by OVER-COUNTING. POK is named "Computer-Assisted Diagnostic
+# Software For Lesions Suspicious For Cancer" and was counted wholesale. Its
+# actual openFDA definition says only "Assist users in characterizing lesions
+# identified on acquired medical images" and never mentions cancer. Of its 21
+# devices, 14 are stroke, cardiac or obstetric.
+#
+# A RETRACTION. v1 of this file stated: "Every code below was checked against
+# the devices actually authorized under it, not against its name alone." That
+# was false. The codes that were *suspected* were checked and the claim was then
+# generalised to all of them; POK was never opened. It is the exact error the
+# QFM note warns about, committed in the file that warns about it. A claim of
+# completeness has to be earned per item or not made.
+#
+# THE CODE NAME IS NOT ENOUGH ON ITS OWN
+#
+# QFM remains the clearest illustration. Its device-type name is "Radiological
+# Computer-Assisted Prioritization Software For Lesions", which reads oncologic.
+# Its 39 devices are mostly pneumothorax and pulmonary-embolism triage (Rayvolve
+# PTX-PE, qXR-PTX-PE), vertebral compression fracture (CINA-VCF), aneurysm and
+# trauma triage: "lesion" here means any acute finding. But the count recorded
+# in v1 was also wrong. SIX are mammography devices -- cmTriage (K183285),
+# HealthMammo (K200905), Saige-Q (K203517), CogNet QmTRIAGE (K220080),
+# VinDr-Mammo (K233108), CogNet AI-MT+ (K252482) -- not one. Those six are now
+# adjudicated individually and counted.
+#
+# Nor is a descriptive-looking DEVICE name enough. Imagen holds two clearances
+# both called `Lung-CAD`; one detects interstitial thickening and the other lung
+# hyperinflation. Neither is nodules and neither is cancer.
+#
+# VERSION RULE: bump `version` on ANY content change, including a corrected
+# number or a reworded note. A run manifest records this file's version and
+# SHA-256; content moving under a fixed version makes that manifest wrong. The
+# rule is enforced by config/VERSIONS.json and tests/test_config.py. If that
+# test fails after you edit here, bump `version` and append the new hash to the
+# ledger. Never edit an existing ledger entry.
+#
+# Definitions quoted below were retrieved from openFDA on 2026-09-03 and are
+# abridged where marked. The full records are captured in the raw snapshot.
+
+version: 3
+
+# Product codes whose openFDA record does not describe the device that was
+# authorized under them. FDA retires and reassigns codes, so a code queried
+# today can describe something unrelated to a device authorized decades ago.
+# An override states the classification and why the lookup cannot be trusted.
+overrides:
+  NMN:
+    domain: pathology
+    tier: oncology
+    reason: >-
+      openFDA's current record for NMN is "Instrument, Clip, Forming/Cutting,
+      Reprocessed" under Neurology, regulation 882.4190. That is not the device
+      authorized as P950009 in 1995, the AUTOPAP 300 QC Automatic Pap Screener,
+      which the FDA AI list itself assigns to the Pathology panel. The code was
+      reassigned after the authorization. Classified from the device identity
+      and FDA's own panel label; the openFDA mismatch is recorded here rather
+      than silently resolved. This is the only code in the set where the
+      lookup and the list disagree.
+
+categories:
+
+  # ----------------------------------------------------------------------
+  # RADIOLOGY — cancer detection, diagnosis, and risk
+  # ----------------------------------------------------------------------
+  radiology_cancer_detection:
+    label: "Cancer detection and assessment"
+    domain: radiology
+    tier: oncology
+    codes:
+      - code: QDQ
+        regulation_number: "892.2090"
+        device_name: "Radiological Computer Assisted Detection/Diagnosis Software For Lesions Suspicious For Cancer"
+        definition: >-
+          "An image processing device intended to aid in the detection,
+          localization, and characterization of lesions suspicious for cancer on
+          acquired medical images (e.g., mammography, MR, CT, ultrasound,
+          radiography)." Cancer is named in the device type itself.
+      # SUPERSEDED. Counted wholesale in v1; 14 of its 21 devices are stroke,
+      # cardiac or obstetric. Adjudicated per device in config/adjudication/.
+      - code: POK
+        regulation_number: "892.2060"
+        device_name: "Computer-Assisted Diagnostic Software For Lesions Suspicious For Cancer"
+        definition: >-
+          "Assist users in characterizing lesions identified on acquired medical
+          images." Cancer is named in the device type itself.
+      - code: OEB
+        regulation_number: "892.2050"
+        device_name: "Lung Computed Tomography System, Computer-Aided Detection"
+        definition: >-
+          "To assist radiologists in the review of multi-slice computed
+          tomography exams of the chest and highlight potential nodules that the
+          radiologist should review." Pulmonary nodule detection is lung-cancer
+          screening; every device under this code is a lung CAD product.
+      - code: SEZ
+        regulation_number: "892.8500"
+        device_name: "Radiological Software Device To Predict Future Breast Cancer Risk"
+        definition: >-
+          "Analyzes radiological images generated by breast imaging modalities
+          ... to provide a prediction of the risk of future (incident) breast
+          cancer." Cancer is named in the device type itself.
+      - code: OTE
+        regulation_number: null
+        device_name: "Digital Breast Tomosynthesis"
+        definition: >-
+          "To generate digital 3D mammographic images that can be used for the
+          screening and diagnosis of breast cancer." No regulation number is
+          returned by openFDA for this code; the definition is unambiguous.
+      - code: QNK
+        regulation_number: null
+        device_name: "Optoacoustic Imaging System"
+        definition: >-
+          "Indicated for imaging the breast using optoacoustic technology for
+          breast cancer diagnosis." No regulation number is returned; the
+          definition names the cancer indication.
+    notes: >-
+      Six codes, 66 devices in the 2026-03-30 snapshot. This is the group most
+      directly comparable to digital pathology's diagnostic algorithms, and the
+      honest like-for-like comparison against pathology's nine.
+
+  # ----------------------------------------------------------------------
+  # RADIOLOGY — radiation therapy
+  # ----------------------------------------------------------------------
+  radiology_radiation_therapy:
+    label: "Cancer treatment planning"
+    domain: radiology
+    tier: oncology
+    codes:
+      - code: QKB
+        regulation_number: "892.2050"
+        device_name: "Radiological Image Processing Software For Radiation Therapy"
+        definition: >-
+          "To provide semi-automatic or fully-automated radiological image
+          processing and analysis tools for radiation therapy. Software
+          implementing artificial intelligence including nonadaptive machine
+          learning algorithms." Almost all are auto-contouring products
+          (Limbus Contour, Contour ProtegeAI, MVision).
+      - code: MUJ
+        regulation_number: "892.5050"
+        device_name: "System, Planning, Radiation Therapy Treatment"
+        definition: >-
+          openFDA returns no definition text. Regulation 892.5050 is the
+          radiation-therapy treatment-planning system. Devices authorized under
+          it are treatment planning systems: RayStation, Monaco, ART-Plan,
+          Oncospace, syngo.via RT Image Suite.
+      - code: IYE
+        regulation_number: "892.5050"
+        device_name: "Accelerator, Linear, Medical"
+        definition: >-
+          openFDA returns no definition text. Medical linear accelerators
+          deliver external-beam radiotherapy. The three AI-list entries are
+          Elekta and Varian Ethos adaptive-radiotherapy platforms.
+    notes: >-
+      Three codes, 79 devices. INCLUDED BY JUDGMENT, and the judgment is
+      arguable, so it is recorded in docs/DECISIONS.md. Radiation therapy is
+      cancer treatment, and the brief asks for AI "as applied to treating
+      cancer", which these serve more directly than any diagnostic tool. But
+      they automate contouring and dose planning rather than interpreting an
+      image for a diagnosis, and pathology has no analogue, so counting them
+      inflates the radiology side of a diagnostic comparison. They are kept as
+      a separate category rather than merged into radiology so that both the
+      145-vs-9 and the 66-vs-9 comparisons can be read off the figure.
+
+  # ----------------------------------------------------------------------
+  # PATHOLOGY
+  # ----------------------------------------------------------------------
+  pathology:
+    label: "Digital pathology"
+    domain: pathology
+    tier: oncology
+    codes:
+      - code: QPN
+        regulation_number: "864.3750"
+        device_name: "Software Algorithm Device To Assist Users In Digital Pathology"
+        definition: >-
+          "An in vitro diagnostic device intended to evaluate acquired scanned
+          pathology whole slide images ... to provide information to the user
+          about presence, location, and characteristics of areas of the image."
+          Both devices are prostate cancer detection: Paige Prostate
+          (DEN200080, 2021) and Galen Second Read (K241232, 2025).
+      - code: SFH
+        regulation_number: "864.3755"
+        device_name: "Pathology Software Algorithm Device Analyzing Digital Images For Cancer Prognosis"
+        definition: >-
+          "Software intended to analyze scanned whole slide images from prostate
+          biopsies ... stained using Hematoxylin & Eosin." ArteraAI Prostate
+          (DEN240068, 2025). Cancer is named in the device type itself.
+      - code: QKQ
+        regulation_number: "864.3700"
+        device_name: "Digital Pathology Image Viewing And Management Software"
+        definition: >-
+          "Software intended for viewing and management of digital images of
+          scanned surgical pathology slides prepared from formalin-fixed
+          paraffin embedded tissue. It is an aid to the pathologist to review
+          and interpret these digital images." INFINITT DPS (K243449, 2025).
+          Surgical pathology whole-slide review is overwhelmingly oncologic;
+          this is infrastructure rather than an algorithm, and is counted
+          because the digitization it enables is the field's rate-limiting step.
+      - code: QYV
+        regulation_number: "864.3900"
+        device_name: "Digital Cervical Cytology Slide Imaging System With Artificial Intelligence Algorithm"
+        definition: >-
+          "An automated digital slide creation, viewing, and management system
+          intended to aid in the review of digital images of slides prepared
+          from Pap tests." Genius Digital Diagnostics (DEN210035, 2024).
+          Cervical cancer screening.
+      - code: PZM
+        regulation_number: "866.6080"
+        device_name: "Next Generation Sequencing Based Tumor Profiling Test"
+        definition: >-
+          "Intended to detect mutations in a broad panel of targeted genes that
+          are somatically altered in malignant neoplasms from tumor specimens."
+          GENESEEQPRIME (K250003, 2025). Tumor is named in the device type.
+      - code: PQP
+        regulation_number: null
+        device_name: "Next Generation Sequencing Oncology Panel, Somatic Or Germline Variant Detection System"
+        definition: >-
+          "For the qualitative detection of germline or somatic variants in one
+          or more cancer-related genes." Tempus xT CDx (P210011, 2023).
+          Oncology is named in the device type.
+      - code: MNM
+        regulation_number: null
+        device_name: "Reader, Cervical Cytology Slide, Automated"
+        definition: >-
+          openFDA returns no definition text. PAPNET Testing System (P940029,
+          1995), a neural-network Pap smear rescreener. Cervical cancer
+          screening.
+      - code: NMN
+        regulation_number: null
+        device_name: "(see overrides)"
+        definition: >-
+          Classified by override. AUTOPAP 300 QC (P950009, 1995), an automated
+          Pap screener. See `overrides` above for why the openFDA lookup does
+          not describe this device.
+    notes: >-
+      Eight codes, nine devices, the entire pathology panel of the FDA AI list.
+      Every pathology AI authorization is oncologic, so no pathology device is
+      lost to the conservative rule. Two are 1990s Pap screeners and the modern
+      era begins with Paige Prostate in 2021.
+
+# ----------------------------------------------------------------------
+# EXCLUSIONS — recorded so the rule can be audited, not just trusted.
+# A reader who disagrees with the figure should be able to find the code they
+# would have counted and read why it was left out.
+# ----------------------------------------------------------------------
+excluded:
+
+  not_oncology:
+    reason: "FDA regulation definition names a non-cancer indication."
+    codes:
+      - {code: QFM, n: 39, why: "\"Prioritization software for lesions\" by name; most of its devices are pneumothorax, pulmonary embolism, vertebral fracture, aneurysm and trauma triage. SIX are mammography devices, not one as v1 recorded (cmTriage, HealthMammo, Saige-Q, CogNet QmTRIAGE, VinDr-Mammo, CogNet AI-MT+); all six are now adjudicated individually and counted. Superseded by config/adjudication/."}
+      - {code: QBS, n: 9,  why: "Detection/diagnosis software for fracture."}
+      - {code: QWO, n: 4,  why: "Referral of findings related to fibrotic lung disease."}
+      - {code: SAO, n: 2,  why: "Opportunistic evaluation of low bone mineral density."}
+      - {code: KGI, n: 2,  why: "Bone densitometer."}
+      - {code: QHA, n: 2,  why: "Coronary vascular simulation from X-ray angiography."}
+      - {code: PCS, n: 2,  why: "Liver iron concentration companion diagnostic for deferasirox."}
+      - {code: QVD, n: 1,  why: "Quantitative imaging with a change control plan; the one device is cardiac ejection fraction."}
+      - {code: SGH, n: 1,  why: "Ultrasound for vascular access for hemodialysis."}
+      - {code: SHE, n: 1,  why: "Obstetric delivery-date prediction."}
+      - {code: NFJ, n: 1,  why: "Ophthalmic image management."}
+
+  indeterminate:
+    reason: >-
+      Generic device type. Some devices under these codes are oncologic and some
+      are not, and the published fields do not say which. Excluded under the
+      conservative rule; this is the group that makes the figure a floor.
+    codes:
+      - {code: QIH, n: 274, why: "Automated radiological image processing software. Holds oncologic tools (DrAid for Liver Segmentation, Neosoma Brain Mets) alongside dental, cardiac and orthopedic ones."}
+      - {code: LLZ, n: 160, why: "Radiological image processing system; no definition returned."}
+      - {code: IYN, n: 116, why: "Pulsed Doppler ultrasound system."}
+      - {code: JAK, n: 101, why: "Computed tomography X-ray system."}
+      - {code: LNH, n: 99,  why: "MRI system; largely reconstruction and acquisition software."}
+      - {code: QAS, n: 83,  why: "Computer-assisted triage and notification; predominantly stroke, hemorrhage and embolism."}
+      - {code: MYN, n: 42,  why: "Medical image analyzer. Predominantly dental caries detection, plus some lung and nodal tools."}
+      - {code: KPS, n: 25,  why: "Emission computed tomography system."}
+      - {code: OWB, n: 14,  why: "Interventional fluoroscopic X-ray system."}
+      - {code: IYO, n: 10,  why: "Pulsed echo ultrasound system."}
+      - {code: QJU, n: 7,   why: "AI-guided image acquisition and optimization."}
+      - {code: KPR, n: 6,   why: "Stationary X-ray system."}
+      - {code: JAA, n: 4,   why: "Fluoroscopic image-intensified X-ray system."}
+      - {code: QTZ, n: 3,   why: "Ablation therapy planning. Ablation is used for tumors and for cardiac arrhythmia; the three devices (VisAble.IO, BioTraceIO Vision) do not resolve the ambiguity from their names. Excluded as indeterminate rather than assumed oncologic."}
+      - {code: MQB, n: 3,   why: "Solid state flat-panel X-ray imager."}
+      - {code: NQQ, n: 3,   why: "Optical coherence tomography system."}
+      - {code: OUO, n: 2,   why: "Combined PET/MR tomographic imager."}
+      - {code: OXO, n: 1,   why: "Mobile image-intensified fluoroscopic X-ray system."}
+      - {code: IZL, n: 1,   why: "Mobile X-ray system."}
+      - {code: LDK, n: 1,   why: "Optical contour sensing device; no definition returned."}

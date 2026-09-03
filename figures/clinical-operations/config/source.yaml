@@ -1,0 +1,126 @@
+# Source definition — where the device records come from and what a run expects.
+#
+# Two public sources, neither requiring a key:
+#
+#   1. FDA's "Artificial Intelligence-Enabled Medical Devices" list. A curated
+#      file, not an API. FDA republishes it in place at a stable media URL, so
+#      the URL is not a version: the same URL returned 1,430 rows through
+#      2025-12-30 and 1,524 rows through 2026-03-30. Every run therefore writes
+#      a dated, append-only snapshot under data/raw/, and the figure is built
+#      from a snapshot rather than from the live URL.
+#
+#   2. openFDA's device-classification endpoint, which maps a product code to
+#      its FDA regulation number, device class, and regulation definition. The
+#      oncology rule in oncology_codes.yaml is built on those definitions.
+#
+# VERSION RULE: bump `version` on ANY content change, including prose in a
+# comment or a corrected number. A run manifest records this file's version and
+# SHA-256; if content moves under a fixed version, that manifest is a lie. The
+# rule is enforced — config/VERSIONS.json is an append-only version -> SHA-256
+# ledger and tests/test_config.py fails when this file's hash does not match its
+# recorded version. If that test fails after you edit here, bump `version` and
+# append the new hash to the ledger. Never edit an existing ledger entry.
+
+version: 2
+
+device_list:
+  name: "FDA Artificial Intelligence-Enabled Medical Devices"
+  # The human-readable page the file is published from. Recorded for citation;
+  # not fetched by the pipeline.
+  landing_page: "https://www.fda.gov/medical-devices/software-medical-device-samd/artificial-intelligence-enabled-medical-devices"
+  csv_url: "https://www.fda.gov/media/178541/download?attachment"
+  # Alternate serialisations of the same list, recorded so a reader knows they
+  # exist. The pipeline reads the CSV.
+  alternate_urls:
+    xlsx: "https://www.fda.gov/media/178540/download?attachment"
+    xml: "https://www.fda.gov/media/178565/download?attachment"
+
+  # FDA's own statement of what the list is, quoted from the landing page on
+  # 2026-09-03. It bounds every claim the figure can make.
+  scope_note: >-
+    Devices were "identified primarily based on the use of AI-related terms in
+    the summary descriptions of their marketing authorization document and/or
+    the device's classification." FDA states the list "is not a comprehensive
+    resource of AI-enabled medical devices" and that authorizations whose
+    decision summaries were not published within a collection period are added
+    in a later update.
+
+  # Columns the parser requires. FDA has already changed this schema once: the
+  # snapshot cached at data/ai-ml-enabled-devices-excel.csv carries a duplicate
+  # `submission` column that the live file does not. The fetcher normalises the
+  # duplicate away and then asserts exactly this set, so a future column rename
+  # fails the run instead of silently producing a wrong figure.
+  required_columns:
+    - "Date of Final Decision"
+    - "Submission Number"
+    - "Device"
+    - "Company"
+    - "Panel (Lead)"
+    - "Primary Product Code"
+  # Present in the repo's 2025-12-30 snapshot, absent from the live file.
+  # Dropped when present; never required.
+  tolerated_columns:
+    - "submission"
+
+classification_lookup:
+  name: "openFDA device classification"
+  endpoint: "https://api.fda.gov/device/classification.json"
+  # No API key. Anonymous limits are 240 requests/minute and 1,000/day, far
+  # above what this pipeline needs: distinct product codes are queried in
+  # batches, so a full refresh costs a handful of requests.
+  batch_size: 50
+  requests_per_second: 2
+  # Fields kept from each record. The rest of the response is discarded.
+  fields:
+    - product_code
+    - device_name
+    - definition
+    - regulation_number
+    - device_class
+    - medical_specialty_description
+    - review_panel
+
+# Marketing pathway is read from the submission number's prefix. FDA does not
+# publish it as a column, but the prefix is unambiguous and stable.
+pathways:
+  - prefix: "DEN"
+    label: "De Novo"
+  - prefix: "K"
+    label: "510(k)"
+  - prefix: "P"
+    label: "PMA"
+
+# What the most recent run measured. These are recorded so a later snapshot's
+# drift is visible rather than silent; they are NOT assertions the pipeline
+# enforces, because the list legitimately grows. tests/ checks the internal
+# consistency of a snapshot, not its size.
+expected:
+  measured_on: "2026-09-03"
+  snapshot_final_decision_max: "2026-03-30"
+  total_devices: 1524
+  panel_counts:
+    Radiology: 1164
+    Pathology: 9
+  # Oncology-certain counts, by the rule in oncology_codes.yaml. These are what
+  # the figure draws and what the manuscript quotes.
+  oncology_certain:
+    Radiology: 145          # 66 cancer detection + 79 radiation therapy
+    Pathology: 9
+  oncology_certain_by_category:
+    radiology_cancer_detection: 66
+    radiology_radiation_therapy: 79
+    pathology: 9
+  pathway_counts:
+    Radiology:
+      "510(k)": 140
+      "De Novo": 2
+      "PMA": 3
+    Pathology:
+      "510(k)": 3
+      "De Novo": 3
+      "PMA": 3
+  # FDA's own Panel (Lead) against the product-code-derived domain. A second
+  # opinion on every counted device, measured on each run rather than asserted.
+  panel_agreement:
+    Radiology: "145/145"
+    Pathology: "9/9"

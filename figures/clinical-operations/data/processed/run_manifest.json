@@ -1,0 +1,165 @@
+{
+  "generated_utc": "2026-09-03T22:40:26Z",
+  "tool": "clinops.aggregate",
+  "clinops": "0.1.0",
+  "python": "3.13.1",
+  "pandas": "3.0.5",
+  "input": {
+    "snapshot": "data/raw/2026-03-30",
+    "snapshot_date": "2026-03-30",
+    "devices_csv": "data/raw/2026-03-30/devices.csv",
+    "sha256": "4da0d15a1dcc7b6a7d45364f243e85aa4407ba3b63b6922a16fdbf96fea0d41d",
+    "n_rows": 1524,
+    "openfda_last_updated": "2026-08-17",
+    "codes_without_openfda_record": []
+  },
+  "config": {
+    "source": {
+      "path": "config/source.yaml",
+      "version": 2,
+      "sha256": "f76c33fe1bd59a2802228eedfe0bae34620650b598d773ca1b67d14c4c672d1a"
+    },
+    "oncology_codes": {
+      "path": "config/oncology_codes.yaml",
+      "version": 3,
+      "sha256": "3741b8b2f6975c14d33c3924f335d593182e8ef0bbd48dae83018f9a83429651",
+      "n_categories": 3,
+      "n_oncology_codes": 17,
+      "n_excluded_codes": 31,
+      "overrides": [
+        "NMN"
+      ]
+    }
+  },
+  "classification": {
+    "tool": "clinops.classify",
+    "generated_utc": "2026-09-03T22:40:25Z"
+  },
+  "counts": {
+    "devices_in": 1524,
+    "devices_counted": 201,
+    "authorizations_written": 201,
+    "exclusions": {
+      "code_not_oncology": 0,
+      "device_not_oncology": 886,
+      "device_unresolved": 86,
+      "code_indeterminate": 0,
+      "code_unlisted_in_panel": 0,
+      "code_unlisted_off_panel": 351,
+      "pathway_unknown": 0,
+      "no_decision_date": 0
+    },
+    "by_category": {
+      "radiology_cancer_detection": 107,
+      "radiology_radiation_therapy": 86,
+      "pathology": 8
+    },
+    "by_domain": {
+      "radiology": 193,
+      "pathology": 8
+    },
+    "by_domain_pathway": {
+      "pathology|510(k)": 2,
+      "pathology|De Novo": 3,
+      "pathology|PMA": 3,
+      "radiology|510(k)": 185,
+      "radiology|De Novo": 2,
+      "radiology|PMA": 6
+    },
+    "year_range": [
+      1995,
+      2026
+    ],
+    "cumulative_final": {
+      "pathology": 8,
+      "radiology_cancer_detection": 107,
+      "radiology_radiation_therapy": 86
+    }
+  },
+  "checks": {
+    "panel_agreement": {
+      "pathology": {
+        "n_devices": 8,
+        "n_panel_matches": 8,
+        "rate": 1.0,
+        "other_panels": {}
+      },
+      "radiology": {
+        "n_devices": 193,
+        "n_panel_matches": 193,
+        "rate": 1.0,
+        "other_panels": {}
+      }
+    },
+    "specialty_disagreements": [
+      {
+        "code": "MNM",
+        "category": "pathology",
+        "config_domain": "pathology",
+        "openfda_specialty": "Unknown",
+        "openfda_device_name": "Reader, Cervical Cytology Slide, Automated",
+        "kind": "unstated",
+        "overridden": false,
+        "override_reason": ""
+      },
+      {
+        "code": "NMN",
+        "category": "pathology",
+        "config_domain": "pathology",
+        "openfda_specialty": "Neurology",
+        "openfda_device_name": "Instrument, Clip, Forming/Cutting, Reprocessed",
+        "kind": "conflict",
+        "overridden": true,
+        "override_reason": "openFDA's current record for NMN is \"Instrument, Clip, Forming/Cutting, Reprocessed\" under Neurology, regulation 882.4190. That is not the device authorized as P950009 in 1995, the AUTOPAP 300 QC Automatic Pap Screener, which the FDA AI list itself assigns to the Pathology panel. The code was reassigned after the authorization. Classified from the device identity and FDA's own panel label; the openFDA mismatch is recorded here rather than silently resolved. This is the only code in the set where the lookup and the list disagree."
+      },
+      {
+        "code": "OTE",
+        "category": "radiology_cancer_detection",
+        "config_domain": "radiology",
+        "openfda_specialty": "Unknown",
+        "openfda_device_name": "Digital Breast Tomosynthesis",
+        "kind": "unstated",
+        "overridden": false,
+        "override_reason": ""
+      },
+      {
+        "code": "PQP",
+        "category": "pathology",
+        "config_domain": "pathology",
+        "openfda_specialty": "Unknown",
+        "openfda_device_name": "Next Generation Sequencing Oncology Panel, Somatic Or Germline Variant Detection System",
+        "kind": "unstated",
+        "overridden": false,
+        "override_reason": ""
+      },
+      {
+        "code": "QNK",
+        "category": "radiology_cancer_detection",
+        "config_domain": "radiology",
+        "openfda_specialty": "Unknown",
+        "openfda_device_name": "Optoacoustic Imaging System",
+        "kind": "unstated",
+        "overridden": false,
+        "override_reason": ""
+      }
+    ],
+    "excluded_code_drift": []
+  },
+  "outputs": {
+    "authorizations": {
+      "path": "data/processed/authorizations.csv",
+      "sha256": "7309150e3ba7ed8b2885b5110c9046ce3ad7724a61ebe266756dc4faa08a1d06",
+      "n_rows": 201
+    },
+    "cumulative_by_year": {
+      "path": "data/processed/cumulative_by_year.csv",
+      "sha256": "8a713426f868feb6dc60600f8281d8902c0c853459eefa4586c2e1bb821a6314",
+      "n_rows": 96
+    },
+    "pathway_by_domain": {
+      "path": "data/processed/pathway_by_domain.csv",
+      "sha256": "5dbc816b9d1e851c50fdaf8826923c7b795e82586f236ca682de825cc05d9ba1",
+      "n_rows": 9
+    }
+  }
+}
