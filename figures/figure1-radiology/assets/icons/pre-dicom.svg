@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
+<title>DICOM parsing / de-identification</title>
+<path d="M6 2.5h7.5L18 7v14.5H6z"/>
+<path d="M13.5 2.5V7H18"/>
+<rect x="8.3" y="10" width="7.4" height="1.8" rx=".6" fill="currentColor" stroke="none"/>
+<rect x="8.3" y="13.4" width="4.6" height="1.8" rx=".6" fill="currentColor" stroke="none"/>
+<path d="M8.3 18.2h4"/>
+</svg>

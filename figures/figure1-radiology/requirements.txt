@@ -1,0 +1,47 @@
+# Pinned to the same versions as ../trends-figure wherever the two overlap, so the
+# figures share one resolved environment and cannot drift apart on a matplotlib
+# change. Only what build.py imports is listed; this figure runs no data pipeline,
+# so pandas, pyarrow, PyYAML and pytest are absent by design.
+#
+# NOT LISTED HERE, but required: an editable install of the trends-figure project.
+# build.py imports the shared style tokens rather than re-declaring them (see
+# ../AGENTS.md), so the build needs:
+#
+#     pip install -r requirements.txt -e ../trends-figure
+#
+# It is a path dependency, not a published package, so it cannot be pinned here.
+# `from trends.plotting import style` fails without it.
+#
+# NEW relative to the sibling projects: cairosvg and its cairocffi/cffi chain.
+# build.py rasterises the 37 hand-authored SVG icons before placing them, which
+# neither sibling figure needs. cairocffi binds to the system Cairo library, so a
+# machine without libcairo installed will fail at import, not at pip install.
+#
+# Regenerating the panels in assets/ is a separate job with its own dependencies
+# (pydicom, nibabel, scipy) that are deliberately not pinned here: it reads
+# multi-GB source volumes that are not in this repository, and it does not run as
+# part of building the figure. See assets/README.md.
+cairocffi==1.7.1
+cairosvg==2.9.0
+certifi==2026.7.22
+cffi==2.1.1
+charset-normalizer==3.5.1
+contourpy==1.3.3
+cssselect2==0.10.1
+cycler==0.12.1
+defusedxml==0.7.1
+fonttools==4.64.0
+idna==3.19
+kiwisolver==1.5.1
+matplotlib==3.11.1
+numpy==2.5.2
+packaging==26.3
+pillow==12.3.0
+pycparser==3.0
+pyparsing==3.3.2
+python-dateutil==2.9.0.post0
+requests==2.34.2
+six==1.17.0
+tinycss2==1.5.1
+urllib3==2.7.0
+webencodings==0.6.1

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
+<title>Shape / morphology</title>
+<rect x="2.8" y="3.4" width="18.4" height="17.2" rx="1.4" stroke-dasharray="2.0 2.2"/>
+<path d="M9 5.2c4.4-1.2 9.4 1.8 9.6 6.4.2 4.6-4 8.4-8.4 7.6-3.8-.7-6.6-4-6-8 .4-3 2.2-5.2 4.8-6z"/>
+<path d="M6.2 16.8 17.6 7.4" stroke-dasharray="1.4 2.0"/>
+<circle cx="6.2" cy="16.8" r="1.1" fill="currentColor" stroke="none"/>
+<circle cx="17.6" cy="7.4" r="1.1" fill="currentColor" stroke="none"/>
+</svg>

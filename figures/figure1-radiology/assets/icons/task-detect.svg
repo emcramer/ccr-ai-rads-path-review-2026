@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
+<title>Detection / localization</title>
+<rect x="2.6" y="2.6" width="18.8" height="18.8" rx="2"/>
+<rect x="7.4" y="7.4" width="9.2" height="9.2" rx="1" stroke-dasharray="1.9 2.0"/>
+<circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" fill-opacity="0.14"/>
+<path d="M12 5.6v2"/><path d="M12 16.4v2"/>
+<path d="M5.6 12h2"/><path d="M16.4 12h2"/>
+</svg>

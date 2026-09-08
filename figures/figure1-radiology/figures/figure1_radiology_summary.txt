@@ -1,0 +1,49 @@
+figure1_radiology — build summary
+figure size      : 7.5 x 4.33 in (aspect 1.73; original PDF page 1.74)
+columns (in)     : 1.280, 2.620, 1.891, 1.082; gap 0.086; box height 3.107
+type ladder (pt) : letter 12.6, title 10.3, subtitle 8.6, block 7.0, card 6.8, task 5.8, icon label 5.8, caption 5.6, card sub 5.6; smallest 5.6
+panel raster     : 600 px per inch of print; icons 600 px, stroke raised 0.5 -> 1.1
+
+Panel slots and sources (every source CC BY 4.0 or CC0):
+  slot       file                                                      treatment      source
+  mod_xray   01_modalities/xray_chest_pa.png                           -              Wikimedia Commons, Mikael Haggstrom (CC0)
+  mod_mammo  01_modalities/mammo_L_medio-lateral-oblique.png           -              CMMD, TCIA doi:10.7937/tcia.eqde-4b16 (CC BY 4.0)
+  mod_us     01_modalities/ultrasound_liver.png                        -              B-mode-and-CEUS-Liver, TCIA doi:10.7937/TCIA.2021.v4z7-tc39 (CC BY 4.0)
+  mod_ct     01_modalities/ct_axial_softtissue.png                     -              FDG-PET-CT-Lesions v2, TCIA doi:10.7937/gkr0-xv29 (CC BY 4.0)
+  mod_mri    01_modalities/mri_axial.png                               -              AMOS22, Zenodo 7262581 (CC BY 4.0)
+  mod_pet    01_modalities/pet_mip_coronal.png                         -              FDG-PET-CT-Lesions v2, TCIA doi:10.7937/gkr0-xv29 (CC BY 4.0)
+  w_full     02_preprocessing/a_window_none_fullrange.png              -              TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  w_lung     02_preprocessing/a_window_lung.png                        -              TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  w_medi     02_preprocessing/a_window_mediastinum.png                 -              TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  mr_raw     02_preprocessing/b_intensity_raw_scan_A.png               -              AMOS22, Zenodo 7262581 (CC BY 4.0)
+  mr_z       02_preprocessing/b_intensity_zscored_scan_A.png           -              AMOS22, Zenodo 7262581 (CC BY 4.0)
+  sp_native  02_preprocessing/c_spacing_native_1.39x3.0mm.png          -              AMOS22, Zenodo 7262581 (CC BY 4.0)
+  sp_iso     02_preprocessing/c_spacing_isotropic_1mm.png              -              AMOS22, Zenodo 7262581 (CC BY 4.0)
+  pl_ax      02_preprocessing/d_plane_axial.png                        -              TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  pl_cor     02_preprocessing/d_plane_coronal.png                      -              TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  pl_sag     02_preprocessing/d_plane_sagittal.png                     -              TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  mip_1      02_preprocessing/e_mip_single_slice.png                   -              TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  mip_60     02_preprocessing/e_mip_slab_60mm.png                      -              TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  reg_before 02_preprocessing/f_registration_checkerboard_BEFORE_ctct.png-              FDG-PET-CT-Lesions v2, TCIA doi:10.7937/gkr0-xv29 (CC BY 4.0)
+  reg_after  02_preprocessing/f_registration_checkerboard_AFTER_ctct.png-              FDG-PET-CT-Lesions v2, TCIA doi:10.7937/gkr0-xv29 (CC BY 4.0)
+  reg_fused  02_preprocessing/f_registration_AFTER_fused.png           pet_orange     FDG-PET-CT-Lesions v2, TCIA doi:10.7937/gkr0-xv29 (CC BY 4.0)
+  seg_in     02_preprocessing/g_seg_input_ct.png                       -              TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  seg_ov     02_preprocessing/g_seg_organs_overlay.png                 overlay_blue   TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  seg_mask   02_preprocessing/g_seg_mask_binary.png                    -              TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  roi        03_features/roi_liver_crop_masked.png                     contour_blue   TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  hist       03_features/histogram_liver_roi.png                       bars_grey      computed from the TotalSegmentator liver VOI (CC BY 4.0)
+  glcm       03_features/glcm_matrix_32bin.png                         greyscale      computed from the TotalSegmentator liver VOI (CC BY 4.0)
+  t_screen   01_modalities/mammo_L_medio-lateral-oblique.png           -              CMMD, TCIA doi:10.7937/tcia.eqde-4b16 (CC BY 4.0)
+  t_detect   02_preprocessing/h_lesion_ct_axial_seg.png                contour_blue   FDG-PET-CT-Lesions v2, TCIA doi:10.7937/gkr0-xv29 (CC BY 4.0)
+  t_seg      02_preprocessing/g_seg_organs_overlay.png                 overlay_blue   TotalSegmentator, Zenodo 10047292 (CC BY 4.0)
+  t_resp     02_preprocessing/h_lesion_pet_mip_seg.png                 lesion_orange  FDG-PET-CT-Lesions v2, TCIA doi:10.7937/gkr0-xv29 (CC BY 4.0)
+
+Colour treatments: contour_blue and overlay_blue snap every saturated hue to radiology
+blue #0072B2; pet_orange and lesion_orange snap PET signal to molecular orange #E69F00;
+bars_grey paints histogram bars in bar ink #3D4147; greyscale drops hue entirely.
+
+Icons: 37 hand-authored icons from assets/icons (ink), plus the
+project's noun_medicinedocument (clinical text deep #006B4E) and noun_DNA (molecular deep #9C6C00).
+
+Structure kept from the original at the author's instruction (2026-09-04): frame, four dashed
+column boxes, header row, both strips, chips, brace captions, dashed link with its note, credits.

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round">
+<title>Radiogenomics / molecular phenotype</title>
+<rect x="1.8" y="6" width="8.4" height="12" rx="1.4"/>
+<circle cx="6" cy="11" r="1.8" fill="currentColor" stroke="none" fill-opacity="0.14"/>
+<path d="M11.2 12h2"/><path d="M13.2 12l-1.2-1.1"/><path d="M13.2 12l-1.2 1.1"/>
+<path d="M16 3.6c4 3 -4 5.4 0 8.4s-4 5.4 0 8.4"/>
+<path d="M21.4 3.6c-4 3 4 5.4 0 8.4s4 5.4 0 8.4"/>
+<path d="M16.7 6.4h4"/><path d="M15.8 12h5.8"/><path d="M16.7 17.6h4"/>
+</svg>
