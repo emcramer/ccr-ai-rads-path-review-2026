@@ -176,12 +176,50 @@ class TailSummary:
         return self.remainder_sets > 0
 
 
+#: A combination must hold at least this many papers to be drawn as its own
+#: column. Below it, the combination joins the remainder.
+#:
+#: Added 2026-09-08, when Panel A became primary-research-only and digital twins
+#: fell to 20 papers across 13 modality sets. At the twelve-column cap, nine of
+#: its twelve columns held exactly one paper, so the block drew as a row of
+#: near-equal bars -- which reads as a distribution when it is a list of
+#: individual papers. One paper is an anecdote; the eye should not be invited to
+#: compare twelve of them. The papers are not lost: they move into the remainder
+#: column, which is drawn, so the bars still sum to the theme total.
+#:
+#: This binds only on small themes. Foundation models' twelfth column holds 19
+#: papers and multimodal integration's holds 97, so neither is affected.
+MIN_PAPERS_PER_COLUMN: Final[int] = 2
+
+
 def _block_frame(combinations: pd.DataFrame, theme: str, top_n: int) -> pd.DataFrame:
-    """Return the rows drawn as their own column, in descending paper count."""
+    """Return the rows drawn as their own column, in descending paper count.
+
+    Applies both the column cap and :data:`MIN_PAPERS_PER_COLUMN`; whatever is
+    excluded by either is carried by the remainder column, never dropped.
+    """
     subset = combinations.loc[combinations["theme"] == theme]
     if subset.empty:
         return subset
-    ordered = subset.sort_values(["rank_in_theme", "n_papers"], ascending=[True, False])
+    # Ties are broken toward the more informative column. Among combinations
+    # holding the same number of papers, a four-modality set says more about a
+    # theme than a one-modality set, and in a small theme every combination holds
+    # one paper, so the tie-break decides the whole block.
+    ordered = subset.sort_values(
+        ["n_papers", "n_modalities", "modality_set"], ascending=[False, False, True]
+    )
+    qualifying = ordered.loc[ordered["n_papers"] >= MIN_PAPERS_PER_COLUMN]
+    # The minimum binds only where combinations compete for the columns. In a
+    # theme too small to fill the block with qualifying combinations, enforcing it
+    # would not remove noise -- it would remove nearly everything, and it removes
+    # the multi-modality combinations first, because those are rarest. Digital
+    # twins is the case: 20 papers, 13 sets, and only three sets holding two or
+    # more papers -- all three single-modality. Applying the minimum drew a
+    # digital-twins block that appeared to contain no multimodal work at all,
+    # while six of its twenty papers use two or more modalities and one uses four.
+    # The author caught that on 2026-09-09.
+    if len(qualifying) >= top_n:
+        ordered = qualifying
     return ordered.head(top_n).reset_index(drop=True)
 
 
@@ -205,6 +243,76 @@ def block_slots(n_columns: int, has_remainder: bool) -> float:
     """Return the column slots one block occupies, remainder and gap included."""
     used = n_columns + (1.0 + _REMAINDER_GAP if has_remainder else 0.0)
     return max(used, float(_MIN_BLOCK_COLUMNS))
+
+
+def block_note_text(summary: "TailSummary") -> str:
+    """Return the caption printed under one block. One definition, two callers."""
+    return (
+        "no papers"
+        if summary.total_papers == 0
+        else f"n = {summary.total_papers:,} papers"
+    )
+
+
+def _caption_width_in(summary: "TailSummary") -> float:
+    """Return the width a block's captions need, in inches.
+
+    A block prints two: the theme total, centred under the block, and the
+    remainder's set count, sitting under the remainder column at the right-hand
+    edge. Sizing the block to the wider of the two is not enough -- they are
+    drawn at different anchors and collide with each other before either
+    overruns the block. The requirement is therefore the sum of both, plus a
+    gap, which is what the first version of this function got wrong: it counted
+    only the theme total, and digital twins still printed "n = 20 papers" across
+    "+10 sets" and into the neighbouring block's "+230 sets".
+    """
+    note = _label_width_em(block_note_text(summary)) * style.FS_NOTE / 72.0
+    sets = (
+        _label_width_em(f"+{summary.remainder_sets} sets") * style.FS_NOTE / 72.0
+        if summary.draws_remainder
+        else 0.0
+    )
+    return max(note, sets) + _CAPTION_GAP_IN
+
+
+#: Clear space beside a block's captions, in inches.
+_CAPTION_GAP_IN: Final[float] = 0.05
+
+#: Vertical drop from the remainder's "+N sets" line to the theme-total line,
+#: in figure fraction. One line of note type plus a little air.
+_CAPTION_LINE_DROP: Final[float] = 0.011
+
+
+def _slots_with_captions(
+    base_slots: list[float],
+    summaries: list["TailSummary"],
+    rect_width: float,
+    figure_width_in: float,
+) -> list[float]:
+    """Widen any block too narrow to hold its own caption.
+
+    A block's width follows its column count, so a theme with few drawn columns
+    draws a narrow block -- and its caption, whose width follows the number of
+    digits in the theme total rather than the block, then overruns into the
+    neighbouring block. That happened on 2026-09-08, when Panel A became
+    primary-research-only and digital twins fell to three drawn columns while
+    still printing "n = 20 papers".
+
+    Column width depends on the total slot count, which this function changes, so
+    it iterates to a fixed point. Three passes are ample: each pass can only
+    widen a block, and widening shrinks every column, so the sequence converges
+    from below. Widths are treated as a floor, never a cap -- a block is never
+    made narrower than its columns need.
+    """
+    slots = list(base_slots)
+    for _ in range(3):
+        column_w = column_width_in(rect_width, figure_width_in, sum(slots))
+        if column_w <= 0:
+            return slots
+        for index, summary in enumerate(summaries):
+            needed = _caption_width_in(summary) / column_w
+            slots[index] = max(slots[index], base_slots[index], needed)
+    return slots
 
 
 def column_width_in(rect_width: float, figure_width_in: float, total_slots: float) -> float:
@@ -328,10 +436,11 @@ def draw(
     # the constant in ``style``.
     blocks = [(theme, _block_frame(combinations, theme, top_n)) for theme in style.PANEL_A_THEMES]
     summaries = [_tail_summary(combinations, theme, top_n) for theme in style.PANEL_A_THEMES]
-    slots = [
+    base_slots = [
         block_slots(len(frame), summary.draws_remainder)
         for (_, frame), summary in zip(blocks, summaries)
     ]
+    slots = _slots_with_captions(base_slots, summaries, width, fig_w)
     gap_w = BLOCK_GAP_IN / fig_w
     column_w = column_width_in(width, fig_w, sum(slots)) / fig_w
 
@@ -679,10 +788,17 @@ def _draw_block_note(
     theme is visible without being narrated. ``top_n`` is kept in the signature
     because the run summary and the legend are written from it.
     """
-    text = "no papers" if summary.total_papers == 0 else f"n = {summary.total_papers:,} papers"
+    text = block_note_text(summary)
+    # A line below the remainder's "+N sets", not beside it. The two are drawn at
+    # different anchors -- this one centred under the block, that one under the
+    # remainder column at the right edge -- so on a narrow block they collide
+    # however wide the block is made. Digital twins fell to three drawn columns on
+    # 2026-09-08 and printed "n = 20 papers" straight through "+10 sets" and into
+    # the neighbouring block. Separating the lines removes the collision by
+    # construction rather than by arithmetic on approximate glyph widths.
     figure.text(
         x_center,
-        y_bottom - 0.012,
+        y_bottom - 0.012 - _CAPTION_LINE_DROP,
         text,
         ha="center",
         va="top",

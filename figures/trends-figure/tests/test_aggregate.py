@@ -26,8 +26,8 @@ FIXTURES = Path(__file__).parent / "fixtures"
 def make_labels(rows: list[dict]) -> pd.DataFrame:
     """Build a labels table from terse row specifications.
 
-    Each row gives ``pmid``, ``year``, a ``themes`` list, and a ``modalities``
-    list. The theme and modality flag columns, and the derived ``domain``, are
+    Each row gives ``pmid``, ``year``, a ``themes`` list, a ``modalities`` list,
+    and optionally ``primary`` (default 1). The theme and modality flag columns, and the derived ``domain``, are
     filled in, so a test reads as the case it is testing.
     """
     built = []
@@ -43,6 +43,7 @@ def make_labels(rows: list[dict]) -> pd.DataFrame:
         for key in aggregate.MODALITY_KEYS:
             record[f"mod_{key}"] = int(key in modalities)
         record["domain"] = classify.derive_domain(modalities)
+        record[aggregate.PRIMARY_RESEARCH] = int(row.get("primary", 1))
         built.append(record)
     return pd.DataFrame(built, columns=list(aggregate.PAPER_LABEL_COLUMNS))
 
@@ -56,7 +57,7 @@ def labels() -> pd.DataFrame:
     modalities = classify.load_term_dictionary(
         FIXTURES / "classify_modalities.yaml",
         kind="modalities",
-        expected_keys=classify.MODALITY_KEYS,
+        expected_keys=classify.MODALITY_KEYS + classify.EXCLUSION_CATEGORIES,
         optional_include={classify.OTHER_MODALITY},
     )
     records = classify.read_records(FIXTURES / "classify_records.csv")
@@ -73,12 +74,25 @@ def labels() -> pd.DataFrame:
 
 
 def test_combination_counts_sum_to_each_theme_total(labels):
-    """The property Panel A rests on. No paper is lost and none is counted twice."""
+    """The property Panel A rests on. No paper is lost and none is counted twice.
+
+    The denominator is the primary-research subset, not the retained corpus:
+    Panel A draws primary research only, per the 2026-09-08 ruling.
+    """
     counts = aggregate.build_combination_counts(labels)
+    primary = aggregate.primary_research(labels)
+    modality_count = primary[
+        [f"mod_{key}" for key in aggregate.modality_keys_of(primary)]
+    ].sum(axis=1)
     for theme in aggregate.THEME_KEYS:
-        expected = int(labels[f"theme_{theme}"].sum())
+        eligible = primary[f"theme_{theme}"].astype("int64") == 1
+        minimum = aggregate.MINIMUM_MODALITIES.get(theme)
+        if minimum:                     # Panel A's second view condition
+            eligible &= modality_count >= minimum
+        expected = int(eligible.sum())
         found = int(counts.loc[counts["theme"] == theme, "n_papers"].sum())
         assert found == expected, theme
+    assert len(primary) < len(labels)   # the fixture really does hold a review
 
 
 def test_combination_counts_sum_holds_on_a_larger_hand_built_case():
@@ -318,7 +332,9 @@ def test_the_reductions_follow_the_table_they_are_given():
     assert aggregate.theme_keys_of(labels)[-1] == "agents"
 
     assert aggregate.add_modality_set(labels).iloc[0] == "ct+spectroscopy"
-    assert list(aggregate.order_labels(labels).columns)[-1] == "domain"
+    assert list(aggregate.order_labels(labels).columns)[-2:] == [
+        "domain", aggregate.PRIMARY_RESEARCH
+    ]
     assert "mod_spectroscopy" in aggregate.order_labels(labels).columns
 
     counts = aggregate.build_combination_counts(labels)

@@ -1,7 +1,25 @@
-# file: combination_counts.csv
-# records: data/interim/records.parquet
-# themes.yaml v12 sha256:5fdcca62e9c2a1bb
-# modalities.yaml v13 sha256:35964adafb39b09c
+# PANEL A COMBINATION TABLE - THE MEASURED SETS
+# file: plot_combination_counts_measured.csv
+#
+# Copied from data/processed/combination_counts.csv, themes v12 / modalities v13,
+# 422 rows. This is Panel A's real input: primary research only, and for a
+# theme defined by combination, only papers carrying two or more modalities.
+#
+# It exists because the Panel A tests were pointed at the MINIMAL fixture while
+# claiming to test the measured data, so every assertion about drawn columns was
+# being made against a toy table. That was found on 2026-09-09, when a drawing
+# rule that hid every multimodal digital-twins column passed the suite.
+#
+# Properties the tests rely on:
+#   * digital twins is small -- 20 papers over 13 sets, only three of which hold
+#     two or more papers, and all three of those are single-modality. It is the
+#     case that distinguishes "the minimum removes noise" from "the minimum
+#     removes the entire multimodal story";
+#   * multimodal integration carries no single-modality set at all, which is the
+#     invariant of 2026-09-09;
+#   * foundation models is large enough that the twelve-column cap binds.
+#
+# Schema matches docs/figure-spec.md.
 theme,modality_set,n_modalities,n_papers,rank_in_theme
 foundation_models,he_histology,1,157,1
 foundation_models,other,1,148,2

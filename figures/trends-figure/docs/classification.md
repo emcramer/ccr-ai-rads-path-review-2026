@@ -26,17 +26,19 @@ Options:
 |---|---|
 | `--report` | Print the diagnostic report as well as writing it. Without it the command prints the manifest's count block. |
 | `--partial-year YYYY` | Override the year flagged partial. Default: the end of the date range in `config/corpus.yaml`. |
+| `--check` | Classify nothing. Compare the config digests recorded in `--output`'s manifest with the files in `--config-dir`. Exit 0 current, 3 stale, 4 nothing to check. See "Is this output current?" below. |
 | `--no-date-window` | Keep records whose year falls outside `date_range` in `corpus.yaml`. Makes the corpus's first year biased; see the fourth filter below. |
 | `--no-hits` | Skip `pattern_hits.csv`. It is the largest output — about 5 rows per record, roughly 50 MB on the full corpus — and skipping it costs the ability to check a label. |
 | `--top-patterns N` | How many patterns the report lists. Default 25. |
 
-Six files are written:
+Seven files are written:
 
 | File | What it is |
 |---|---|
 | `paper_labels.csv` | One row per analysed paper. Schema fixed by `docs/figure-spec.md`. |
 | `combination_counts.csv` | Papers per theme and exact modality combination. Drives Panel A. |
 | `theme_year_counts.csv` | Papers per theme, domain, and year. Drives Panel B. |
+| `exclusions.csv` | One row per excluded record: `pmid`, `reason`, and `applies_to` — `corpus` for a record dropped from both panels, `panel_a` for a secondary publication that is retained for Panel B. A count says how many left; this says which, and from which view. |
 | `pattern_hits.csv` | Provenance: one row per record, category, and pattern that fired, plus one `role = "fallback"` row wherever `other` was assigned because nothing named matched. |
 | `run_manifest.json` | Input file and digest, dictionary versions and digests, counts in and out, exclusions, output digests. |
 | `classification_report.txt` | The human-readable diagnostic. |
@@ -69,6 +71,45 @@ over two minutes.
      the mirror of the partial final year, holding only those early-online papers that
      happened to be issued later. The window is read from the config, never hard-coded, and
      `--no-date-window` turns the filter off.
+   - `secondary_publication_type` — **a flag, not a drop, since 2026-09-08.** A record
+     carrying any PubMed publication type in
+     `SECONDARY_PUBLICATION_TYPES`: `Review`, `Systematic Review`, `Meta-Analysis`,
+     `Editorial`, `Comment`, `Letter`, `News`, `Historical Article`, `Guideline`,
+     `Practice Guideline`, `Consensus Development Conference`, `Published Erratum`,
+     `Retracted Publication`, `Scoping Review` is **retained** and flagged
+     `is_primary_research = 0`. It is excluded from `combination_counts.csv` and counted in
+     `theme_year_counts.csv`. **Preprints are deliberately not in the list** — the author
+     considered them and kept them. In the real corpus this is 7,041 records, 15.8%, of
+     which `Review` alone is 4,952. The diagnostic report breaks it down by type.
+
+     The earlier form of this filter dropped those records outright. The author replaced it
+     on 2026-09-08 with the two-population rule below, which is better than either
+     alternative that was on the table.
+
+     This filter was requested, not self-discovered: the search-strategy agent's first
+     report counted 168 retracted papers, 467 editorials, and 379 comments and flagged
+     them, that finding was never routed to the author, and it sat unaddressed until the
+     author asked for the same thing independently. **Every count published before
+     2026-09-08 included reviews, editorials, comments, and retracted papers.**
+   - `non_specialty_only` — a record that matches the `non_specialty` vocabulary in
+     `modalities.yaml` **and** carries no radiology or pathology modality. The author's
+     ruling of 2026-09-08: "limit to modalities that belong to either radiology or
+     pathology"; endoscopy, colposcopy, dermoscopy, optical coherence tomography,
+     thermography, clinical photography, wearables, ECG and EEG, and radiotherapy
+     dosimetry are modalities of neither.
+
+     The rule is **conjunctive on purpose**. A colonoscopy paper that also reads CT keeps
+     its CT label and stays; only a paper whose sole imaging evidence is outside both
+     specialties leaves. Excluding on the vocabulary match alone would discard genuine
+     multimodal work. Note the asymmetry this produces: a paper labelled only `genomics`
+     stays, while the same paper plus an endoscopy mention leaves. That follows from the
+     ruling as given, and the broader alternative — dropping every paper whose `domain` is
+     `none` — is a much larger decision that has not been taken.
+
+     `non_specialty` is matched but never labelled: it is not a figure row, gets no
+     `mod_` column, and never joins a `modality_set`. It lives in the dictionary rather
+     than being deleted so the exclusion can be audited. Categories of this kind are named
+     in `EXCLUSION_CATEGORIES`.
 3. **Builds the text** each record is matched against: `title + " \n " + abstract`. Both
    dictionaries declare this separator. It matters, because several patterns are anchored
    with `^` and read the title and the abstract as one string.
@@ -183,6 +224,39 @@ A malformed dictionary stops the run and lists every problem at once. The checks
   told from an oversight; putting genomics in a domain list to quiet the check would make
   a genomics paper read as pathology.
 
+## Is this output current?
+
+The version ledger asks whether a config file agrees with its own recorded hash. It cannot
+ask whether **a run consumed a state that no longer exists**, because it compares disk
+against the ledger and never looks at a run's output. That is a different relationship, and
+it is the one that has gone wrong repeatedly on this project: a config is edited after a run,
+the ledger keeps passing, and the published numbers came from bytes nobody can produce again.
+
+```bash
+~/.venvs/ccr-trends/bin/python -m trends.classify \
+    --check --output data/processed --config-dir config
+```
+
+Exit 0 if the digests the run recorded still match the files on disk, **3** if any has moved,
+**4** if there is no manifest to check — absence is reported rather than treated as a pass,
+because an unverifiable number is not a verified one. A stale verdict goes to stderr so a
+pipeline notices.
+
+Two further places the check bites:
+
+- **Every diagnostic report opens with a freshness banner**, before any number, so a reader
+  who stops after the first screen still learns the state and is told the command to re-check.
+- **A run re-reads its own configs when it finishes.** A four-minute run is long enough for a
+  dictionary to be edited underneath it, and that has happened. The run logs a warning, the
+  report's banner says `STALE OUTPUT`, and the manifest records
+  `config_changed_during_run`.
+
+`check_freshness()` and `compare_config_digests()` are public for exactly one reason beyond
+this module: the figure is the artifact that reaches the manuscript, and it is currently
+possible to draw one from superseded labels with no signal at all. Wiring the check into
+`trends.plot` is a one-line call, but `src/trends/plot.py` belongs to the plotting owner, so
+it is theirs to make.
+
 ## Adding a modality
 
 The category keys are written down in four places, and they must agree. Change all four in
@@ -254,16 +328,89 @@ readable.
 
 ---
 
+## The two panels draw on different populations
+
+The author's ruling of 2026-09-08, and the section of the same name in
+`docs/figure-spec.md`:
+
+| | Panel A (`combination_counts.csv`) | Panel B (`theme_year_counts.csv`) |
+|---|---|---|
+| Reviews, editorials, comments, letters, meta-analyses | **excluded** | **included** |
+| Papers below a theme's combination minimum | **excluded from that theme's block** | **included** |
+| `non_specialty`-only papers | excluded | excluded |
+| Books, no PMID, no year, outside the window | excluded | excluded |
+
+**Panel A's view has two conditions, and they belong together.** Primary research is the
+first. The second is `MINIMUM_MODALITIES` in `aggregate.py`, which maps a theme key to the
+number of modality labels that theme requires:
+
+```python
+MINIMUM_MODALITIES = {"multimodal_integration": 2}
+```
+
+A multimodal model has, by definition, at least two modalities in its training, so a paper
+carrying the theme and one modality label is a term match rather than a multimodal study.
+Both conditions are applied by `build_combination_counts`, so a caller cannot get one and
+miss the other.
+
+**Neither condition touches the label.** The predicate is about having *built* something: a
+multimodal model used two modalities while being trained. A review uses none, so enforcing
+the minimum on the label would drop reviews that genuinely discuss multimodal integration
+because their abstract happens to name one modality — a category error for an engagement
+measure, and one that would re-open the conflict the panel split resolved. The paper keeps
+its label, stays in the corpus, and counts in Panel B. Only Panel A's block for that one
+theme excludes it, recorded in `exclusions.csv` as
+`applies_to = "panel_a:<theme>"`.
+
+`other` counts toward the minimum — CT plus a liquid biopsy is a genuine pairing.
+`non_specialty` cannot, because it is never a label at all.
+
+**Two counts are always reported side by side, and neither is meaningful alone.** A theme in
+`MINIMUM_MODALITIES` is no longer decided by its own dictionary: a modality the classifier
+misses can push a genuinely multimodal paper below the minimum. A paper predicting Ki-67
+from CT *is* multimodal and reads as single-modality only because the prediction target was
+not labelled. So:
+
+- `panel_a_held_out` — primary papers kept out of Panel A's block. Mixes theme over-calling
+  with modality under-recall.
+- `corpus_wide` — every retained paper carrying the theme below the minimum. This is the
+  over-call measure on its own, and the number that should fall as the theme's vocabulary is
+  tightened. A count that falls when modality *recall* improves was never about the theme.
+
+Both are in the manifest under `counts.combination_shortfalls` and in the diagnostic
+report's "THEMES DEFINED BY COMBINATION" section.
+
+**How this was found.** The invariant is what the theme's definition always implied, and the
+figure shipped for a week without it. Panel A drew fifteen single-modality columns for
+multimodal integration, five of them visible — MRI alone 344, other 211, ultrasound 202, CT
+182, H&E 170 — and the remainder column carried the other ten, 1,282 papers in all, 32.9% of
+the theme's primary research. They were in every version of the panel. Neither the
+coordinator nor any agent questioned them until the author did on 2026-09-09.
+
+The panels answer different questions. Panel A asks what data primary research actually
+uses, so a review that discusses a modality without using one would corrupt it. Panel B asks
+how attention to a theme moves over time, and a review naming a theme as a future direction
+is exactly that attention — which is what the digital-twins ruling of 2026-09-02 established.
+
+`paper_labels.csv` carries **every retained record** with an `is_primary_research` flag, so
+both views derive from one labelled table rather than from two pipelines that could drift.
+
+**The two denominators differ, and no number from one panel may be quoted against the
+other.** The manifest reports both under `counts.denominators`, and the diagnostic report
+prints them side by side under "TWO POPULATIONS" and again as `retained` and `primary`
+columns in the theme table.
+
 ## The two count tables
 
-**`combination_counts.csv`.** Within a theme, a paper appears in exactly one row: the row
-for its exact modality set. The counts therefore sum to the theme's paper count, and the
+**`combination_counts.csv`.** Built from primary research only. Within a theme, a paper
+appears in exactly one row: the row for its exact modality set. The counts therefore sum to the theme's paper count, and the
 tests hold them to it. Sets are the modality keys sorted alphabetically and joined by `+`;
 `other` alone is a legitimate set. Rows rank by paper count descending, ties breaking on
 set size ascending and then on the set string, so the ranking is reproducible rather than
 whatever order the grouping happened to produce.
 
-**`theme_year_counts.csv`.** Every theme gets the whole domain breakdown — `all`,
+**`theme_year_counts.csv`.** Built from every retained record, reviews included. Every
+theme gets the whole domain breakdown — `all`,
 `radiology`, `pathology`, `both`, `none` — and Panel B chooses which rows to draw. Emitting
 all of it costs a few hundred rows and saves a schema change each time the author wants a
 different split.

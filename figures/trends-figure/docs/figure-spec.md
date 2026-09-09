@@ -11,6 +11,30 @@ full legend. Do not over-polish.
 
 ---
 
+## The two panels draw on different populations
+
+Author's ruling, 2026-09-08: **Panel A shows primary research; Panel B shows engagement.**
+
+| | Panel A | Panel B |
+|---|---|---|
+| Reviews, perspectives, editorials, comments, letters, meta-analyses | **excluded** | **included** |
+| Papers belonging to neither radiology nor pathology | excluded | excluded |
+| Books, no PMID, no parsable year, outside the date window | excluded | excluded |
+
+The reason is that the panels answer different questions. Panel A asks what data primary
+research actually uses, so a review that discusses a modality without using one would corrupt
+it. Panel B asks how attention to each theme moves over time, and a review naming a theme as a
+future direction is evidence of attention — which is what the author's digital-twins ruling of
+2026-09-02 already established.
+
+**Consequences that must be stated wherever numbers appear.** The two panels have different
+denominators, and no number from one may be quoted against the other. Panel A's per-theme `n =`
+is the primary-research count; Panel B's series are the engagement counts and are larger. The
+legend must say so plainly, and `figures/trends_figure_summary.txt` reports both.
+
+The `paper_labels.csv` table carries every retained record with an `is_primary_research` flag,
+so both views derive from one labelled table rather than from two pipelines that could drift.
+
 ## Panel A — which modality combinations each theme uses
 
 An UpSet-style plot, one block per theme, blocks side by side in this order:
@@ -120,6 +144,7 @@ One row per paper in the corpus.
 | `theme_clinical_fda` | 0/1 | |
 | `mod_<key>` | 0/1 | One column per modality, including `mod_other` |
 | `domain` | string | `radiology`, `pathology`, `both`, or `none`, derived from modality labels |
+| `is_primary_research` | 0/1 | 0 for reviews, perspectives, editorials, comments, letters, meta-analyses and the like. Panel A reads only the 1s; Panel B reads every row. |
 
 `domain` derivation: `radiology` if any of MRI, CT, PET, ultrasound, mammography,
 radiography, radiology report;

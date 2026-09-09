@@ -1,5 +1,5 @@
 {
-  "generated_utc": "2026-09-03T16:51:53Z",
+  "generated_utc": "2026-09-09T14:09:07Z",
   "tool": "trends.classify",
   "python": "3.13.1",
   "pandas": "3.0.5",
@@ -11,17 +11,17 @@
   "config": {
     "themes": {
       "path": "config/themes.yaml",
-      "version": 10,
-      "sha256": "756010f21037977e3d1656e4544d60cf0cca5730a57a1e70ddf41d576a4f17a6",
+      "version": 12,
+      "sha256": "5fdcca62e9c2a1bb5ea3ee5d913cd0a065000f3692bbd3ab5acf41d2269ca68d",
       "n_categories": 6,
-      "n_patterns": 59
+      "n_patterns": 68
     },
     "modalities": {
       "path": "config/modalities.yaml",
-      "version": 6,
-      "sha256": "6b3065142bc8e5ea5a846fda6be4ea45f63d3a9ef236a98067ed2eba9b278675",
-      "n_categories": 15,
-      "n_patterns": 150
+      "version": 13,
+      "sha256": "35964adafb39b09c3b29beddfffd7fed2676e03f8b414f14e553677ce74f73af",
+      "n_categories": 16,
+      "n_patterns": 164
     },
     "corpus": {
       "path": "config/corpus.yaml",
@@ -33,24 +33,69 @@
   },
   "counts": {
     "records_in": 44625,
-    "records_analysed": 44533,
+    "records_retained": 43079,
+    "records_analysed": 43079,
+    "records_primary_research": 36321,
+    "denominators": {
+      "panel_b_engagement": 43079,
+      "panel_a_primary_research": 36321,
+      "note": "Different populations by the author's ruling of 2026-09-08. No number from one panel may be quoted against the other."
+    },
     "exclusions": {
       "book_records": 8,
       "missing_pmid": 0,
       "missing_year": 0,
-      "outside_date_range": 84
+      "outside_date_range": 84,
+      "non_specialty_only": 1454
+    },
+    "exclusion_detail": {
+      "secondary_publication_type": {
+        "Review": 4952,
+        "Systematic Review": 879,
+        "Editorial": 467,
+        "Meta-Analysis": 395,
+        "Comment": 379,
+        "Letter": 219,
+        "Retracted Publication": 168,
+        "Published Erratum": 107,
+        "Scoping Review": 77,
+        "Practice Guideline": 17,
+        "Historical Article": 16,
+        "News": 12,
+        "Guideline": 2
+      }
+    },
+    "minimum_modalities": {
+      "multimodal_integration": 2
+    },
+    "combination_shortfalls": {
+      "panel_a_held_out": {
+        "multimodal_integration": 1170
+      },
+      "corpus_wide": {
+        "multimodal_integration": 1601
+      },
+      "note": "Panel A's view excludes these; the label is kept and Panel B counts them. corpus_wide is the over-call measure and should fall as the theme vocabulary is tightened."
     },
     "papers_per_theme": {
-      "foundation_models": 1226,
-      "multimodal_integration": 4654,
-      "digital_twins": 56,
-      "clinical_fda": 93,
+      "foundation_models": 1186,
+      "multimodal_integration": 5036,
+      "digital_twins": 52,
+      "clinical_fda": 91,
       "virtual_staining": 65,
-      "agentic_ai": 35
+      "agentic_ai": 34
+    },
+    "papers_per_theme_primary_research": {
+      "foundation_models": 1021,
+      "multimodal_integration": 3897,
+      "digital_twins": 20,
+      "clinical_fda": 69,
+      "virtual_staining": 63,
+      "agentic_ai": 25
     },
     "papers_per_modality": {
-      "he_histology": 6432,
-      "ihc": 2132,
+      "he_histology": 7046,
+      "ihc": 2966,
       "spatial_proteomics": 325,
       "spatial_transcriptomics": 453,
       "pathology_report": 226,
@@ -61,18 +106,19 @@
       "mammography": 2203,
       "xray": 602,
       "radiology_report": 325,
-      "genomics": 3550,
-      "clinical_data": 6127,
-      "other": 9514
+      "genomics": 4829,
+      "clinical_data": 6078,
+      "other": 6307
     },
     "papers_per_domain": {
-      "radiology": 28417,
-      "none": 7748,
-      "pathology": 7327,
-      "both": 1041
+      "radiology": 27353,
+      "pathology": 7480,
+      "none": 6141,
+      "both": 2105
     },
-    "papers_with_no_theme": 38767
+    "papers_with_no_theme": 37024
   },
+  "config_changed_during_run": [],
   "partial_year": {
     "year": 2026,
     "source": "config/corpus.yaml:date_range.end"
@@ -82,30 +128,34 @@
     "last": 2026
   },
   "other_assignment": {
-    "by_pattern": 4470,
-    "by_fallback": 5044,
-    "total": 9514
+    "by_pattern": 1475,
+    "by_fallback": 4832,
+    "total": 6307
   },
   "outputs": {
     "paper_labels": {
       "path": "data/processed/paper_labels.csv",
-      "sha256": "6c0f89bf4f2e9383c4f7adc6ba4be60fa5a10f48a517fdd668fb02e2b7c8bcd2"
+      "sha256": "aeadf6c7bcda996c44508f2c51badc5fa5c2249b0bf481cb83fdf4d677ecbe9f"
     },
     "combination_counts": {
       "path": "data/processed/combination_counts.csv",
-      "sha256": "f31675b6c1c5e41b65ef2d94d0db5a06301f3c8ad5be736aa915b5b26c40493b"
+      "sha256": "cd79742de16d090f1cad8e94f478b9af6b0c2d135dfa755bba857942f35717fc"
     },
     "theme_year_counts": {
       "path": "data/processed/theme_year_counts.csv",
-      "sha256": "4093f91ca0ff44ced39264dc0315f364c07ebb01bad8614ccb199e3ad3340130"
+      "sha256": "f5b943b1f1f44d66436c2e7f8e76d92ff5131ed2ecaf7a582e987526624a8328"
+    },
+    "exclusions": {
+      "path": "data/processed/exclusions.csv",
+      "sha256": "12eac615d38d34fa5b2d59936051febe684b8262b822a8dbb311c3b3915e3da1"
     },
     "pattern_hits": {
       "path": "data/processed/pattern_hits.csv",
-      "sha256": "8b8586aca7efd0a40dd4764af9c266f716de6cb4548d6534a43917eb5b4bbd20"
+      "sha256": "8f6bae591f87447157f381cde41a216fc75cab9d18f0d7f142ba00687e7194b1"
     },
     "report": {
       "path": "data/processed/classification_report.txt",
-      "sha256": "014e3d34a3e7f58e2904f3b909db6d1623816faae5f55a12f7c52d154cf2053f"
+      "sha256": "9acc80f4050f3a5fb34cd628b5324d4015d79d0e8eac70cb141f69bfd0640bc2"
     }
   }
 }

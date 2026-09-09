@@ -9,11 +9,11 @@
   ],
   "_provenance": {
     "observed": {
-      "themes.yaml": "10",
-      "modalities.yaml": "6",
+      "themes.yaml": "12",
+      "modalities.yaml": "13",
       "corpus.yaml": "1"
     },
-    "observed_note": "Computed from the file on disk at 2026-09-03. Verifiable now.",
+    "observed_note": "Computed from the file on disk at 2026-09-09. Verifiable now.",
     "reconstructed": {
       "themes.yaml": [
         "3",
@@ -44,7 +44,10 @@
     "  and was never consumed by a run. The ledger records the final v8 = 5ff6b0a9.",
     "themes.yaml v9: SHA moved c370bcde -> b7781bf2 when the chain-of-thought,",
     "  tool-use and PathChat notes were added. The ledger records v9 = c370bcde, the",
-    "  state the run consumed; the amended content is v10."
+    "  state the run consumed; the amended content is v10.",
+    "modalities.yaml jumps 6 -> 11 at v11 (2026-09-08), skipping 7-10, to restore the convention that both dictionaries carry the same version number so a manifest pair identifies one dictionary state. themes.yaml had advanced alone through 7-10.",
+    "modalities.yaml v11 was superseded by v12 within the same working round: two fall-out figures in the non_specialty notes were corrected after hyperspectral was ruled back IN, which changed the file. No run consumed v11. The entry is kept because the ledger is append-only; correcting it in place is the defect this file exists to prevent.",
+    "THE ONE-NUMBER CONVENTION IS RETIRED. Keeping both dictionaries on the same version cannot survive a round where only one file changes: bumping the unchanged file would record two versions with one hash. The bump-on-content-change rule wins, because it is the one a test enforces. This ledger already does the job the convention was for \u2014 identifying exactly which content a manifest consumed."
   ],
   "files": {
     "themes.yaml": {
@@ -55,12 +58,17 @@
       "7": "2acc04f74445d91bb8c01941a0e570997bb5e900bff1931e6ece3df5a71ebbe9",
       "8": "5ff6b0a92416626198b2a076c21298b01ba847be680f60aafee2ac7ed6d8c3d4",
       "9": "c370bcde4ae2d4ef4b608cadaa70a3e1ac37b88a7d7f097ccc6412ab6775fde5",
-      "10": "756010f21037977e3d1656e4544d60cf0cca5730a57a1e70ddf41d576a4f17a6"
+      "10": "756010f21037977e3d1656e4544d60cf0cca5730a57a1e70ddf41d576a4f17a6",
+      "11": "ae4ac9d9a1badf02dfb47e694a466f63e94a95d26e2a2acf9dfa2326b74f3336",
+      "12": "5fdcca62e9c2a1bb5ea3ee5d913cd0a065000f3692bbd3ab5acf41d2269ca68d"
     },
     "modalities.yaml": {
       "3": "a5e786b5e5552f871fa3a009abfd8107f60178d760b3cb49572766d5b67c4b40",
       "4": "32c00fa5533940157c8d39c4a0b832eeeeba65692635929e55cf0abe2d5a3334",
-      "6": "6b3065142bc8e5ea5a846fda6be4ea45f63d3a9ef236a98067ed2eba9b278675"
+      "6": "6b3065142bc8e5ea5a846fda6be4ea45f63d3a9ef236a98067ed2eba9b278675",
+      "11": "c2fbb09c6d634144c04a0c3e0c64079f2e235529c25d5a6a9217d515da126949",
+      "12": "deb5567fe350ea0245d4b9fd6f8e0aaec39dc298b8bec4579a51b51909424c66",
+      "13": "35964adafb39b09c3b29beddfffd7fed2676e03f8b414f14e553677ce74f73af"
     },
     "corpus.yaml": {
       "1": "b610cd7a17b415c6dd959480d98b5b3084997b73bf43ccdcb37c2fce7b2d298a"

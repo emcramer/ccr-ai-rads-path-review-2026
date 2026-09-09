@@ -1,7 +1,7 @@
 Clinical operations figure — numbers for the legend
 source directory : data/processed
 tag              : (none)
-layout           : portrait, 7 x 8 in
+layout           : landscape, 12 x 5.5 in
 snapshot through : 2026-03-27 (latest decision date in the table)
 year range       : 1995-2026
 partial year     : 2026
@@ -61,4 +61,4 @@ Panel B — marketing pathway, normalized to each field's own total
     Treatment planning                    86         0         0
     Digital pathology                      2         3         3
 
-Least clearance between any label and the paper edge: 0.084 in
+Least clearance between any label and the paper edge: 0.066 in

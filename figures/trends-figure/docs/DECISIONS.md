@@ -1060,3 +1060,170 @@ by a 55-point luminance difference.
 both deep-pink squares, because both are genuinely pathologic — the scheme working rather than a
 collision. If the author wants those separated too, it needs the same treatment and a reason
 better than taste.
+
+## 2026-09-08 — Panel A shows primary research; Panel B shows engagement
+
+**Decision.** Author's ruling, resolving a conflict between two earlier ones: *"panel B should
+show engagement while panel A shows primary literature."* Reviews, perspectives, editorials,
+comments, letters and meta-analyses are excluded from Panel A and retained in Panel B. The
+specialty and date exclusions apply to both.
+**Why it was needed.** "Primary research only" would otherwise have gutted the digital-twins
+theme — 52 to 20 — precisely because the 2026-09-02 ruling had deliberately counted reviews
+naming the concept as future work. Rather than exempt one theme, the split applies the
+distinction at the panel level, where it is a statement about what each panel measures.
+**Implementation.** One labelled table with an `is_primary_research` flag, two views. Panel A's
+file is built primary-only by the function that owns it, so a caller cannot lose the rule.
+**Consequence.** The panels have different denominators — 36,319 and 43,077 — and no number
+from one may be quoted against the other. The legend says so.
+**The finding it exposes.** Digital twins is **61.5% secondary literature** (32 of 52) against
+3.1% for virtual staining: the widest attention-to-practice gap of any theme, now a measured
+quantity rather than an artifact hidden inside a filter.
+
+## 2026-09-08 — Modalities are limited to radiology and pathology
+
+**Decision.** Endoscopy, dermoscopy, colposcopy, optical coherence tomography, thermography,
+clinical photography, wearables, ECG/EEG, and radiotherapy dosimetry are not modalities of
+either specialty. The author chose to keep the data types a pathology department generates —
+flow cytometry, proteomics, metabolomics, liquid biopsy, microbiome, Raman — alongside imaging
+read by a radiologist or pathologist.
+**Implementation.** The vocabulary was **moved, not deleted**, into a `non_specialty` category,
+so the exclusion is auditable rather than a silent absence. A paper is excluded when it matches
+that vocabulary **and** carries no radiology or pathology modality: a colonoscopy paper that
+also uses CT stays. **1,456 records (3.3%) were excluded.**
+**The asymmetry, stated rather than hidden.** A genomics-only paper stays; the same paper with
+an endoscopy mention leaves. That follows the principle used for the `other` fallback — drop
+what we have positive evidence belongs elsewhere, keep what we merely cannot classify. The
+broader alternative, dropping every paper with no radiology or pathology modality, would have
+removed 7,737 and was not what the author asked for.
+**Dosimetry cost far less than it appeared.** Of 899 dosimetry papers, 791 keep CT or another
+named modality; only 107 fall out entirely, and a read of 26 confirmed them as radiation
+oncology — EBRT and proton planning, auto-contouring, Monte Carlo dose, brachytherapy.
+**Colposcopy was absent from the dictionary entirely.** The ruling would have been accepted in
+name and unenforced in fact.
+
+## 2026-09-08 — A column must hold at least two papers
+
+**Decision.** A modality combination is drawn as its own Panel A column only if it holds two or
+more papers; singletons join the remainder, which is drawn.
+**Reason.** When Panel A became primary-research-only, digital twins fell to 20 papers across
+13 sets, and nine of its twelve columns held exactly one paper. The block drew as a row of
+near-equal bars — a distribution to the eye, a list of individual papers in fact. One paper is
+an anecdote and the eye should not be invited to compare twelve of them. Nothing is lost: the
+papers move into the remainder column and the bars still sum to the theme total.
+**Scope.** It binds only on small themes. Foundation models' twelfth column holds 19 papers and
+multimodal integration's holds 97.
+
+## 2026-09-08 — Blocks are sized for their captions, and the captions are stacked
+
+**Decision.** Panel A widens a block that cannot hold its caption, and the theme total is drawn
+on a line below the remainder's set count rather than beside it.
+**Reason.** Block width follows column count while caption width follows the digits in the
+theme total, so the narrowed digital-twins block printed "n = 20 papers" through "+10 sets" and
+into the neighbouring block's "+230 sets". Widening alone did not fix it — the two captions are
+drawn at different anchors and collide with each other before either overruns the block, and
+the widths available are approximate glyph arithmetic. Separating the lines removes the
+collision by construction.
+**Guarded properly this time.** The test measures rendered text boxes and fails on any overlap,
+rather than asserting the arithmetic that had already proved insufficient.
+
+## 2026-09-08 — A run's output is checked against the configs on disk
+
+**Decision.** `trends.classify --check` compares the config digests a run recorded against the
+files on disk, a freshness banner heads every diagnostic report, a run re-reads its own configs
+when it finishes, and **`trends.plot` refuses to draw from stale tables** unless `--stale-ok`
+is passed.
+**Reason.** The version ledger checks a config against its own recorded hash. It cannot see
+that *a run consumed a state that no longer exists*, which is exactly what happened: a corpus
+run finished, the dictionaries were edited underneath it, and a figure was built and reported
+from labels no configuration on disk could reproduce. The ledger passed throughout. This is the
+fourth form of the same defect, and the first three were each caught by hand.
+**Why the refusal sits in the plotting path too.** A figure is harder to un-publish than a
+number, and drawing from superseded labels was previously silent.
+**Outcome in this instance.** The re-run produced numbers identical to the record — the edits
+were prose and a bump that moved no label — so nothing reported was wrong. That was established
+by re-running rather than by assuming.
+
+## 2026-09-09 — Multimodal integration requires two modalities in Panel A
+
+**The defect.** The author noticed that Panel A drew multimodal-integration columns holding one
+modality — MRI alone, CT alone, H&E alone — which contradicts the definition. **1,282 of 3,897
+primary-research papers (32.9%) carried the theme with a single modality label.** Panel A drew
+five such columns; there were **fifteen**, the remainder column having carried ten of them. The
+figure shipped this way for a week, and no one questioned the columns until the author did.
+
+**Decision.** A theme defined by combination cannot be satisfied by one modality. Enforced as a
+condition on **Panel A's view**, beside the primary-research filter — not on the label.
+**Reason for the view rather than the label.** The predicate is about having built something. A
+review uses no modalities, so applying it to the label would drop reviews that genuinely discuss
+multimodal integration and would quietly reopen the conflict the panel split resolved. Panel A
+counts papers that demonstrably used two or more modalities; Panel B counts engagement.
+
+**The diagnosis was half right, and the wrong half is the more useful finding.**
+
+*Recall.* 226 single-modality papers named a prediction target that is itself a modality row —
+Ki-67 predicted from CT, MSI from histology — which the training-set rule says should be
+labelled. Requiring an actual prediction construction rescued **123**; widening the search
+window recovered only five more, so the remainder is the limit of abstract-level evidence, not a
+tuning problem. The descriptor trap had to be guarded **per occurrence, not per record**: a paper
+predicting HER2 status also says "HER2-positive", so a record-level exclusion would have removed
+the true positives with the cohort mentions. A collision found in the process: "MALDI MSI" is
+mass-spectrometry imaging, not microsatellite instability.
+
+*Precision — my hypothesis, measured and rejected.* I asked for the theme to be tightened against
+five language families that were common among the failures. **Every one is commoner among
+genuinely multimodal papers than among the broken ones**: radiomics-plus-nomogram 11 against 137,
+contrast phases 120 against 359, multi-sequence MRI 145 against 357, multi-centre 188 against 420,
+architecture fusion 185 against 203. Even "multimodal" followed immediately by one modality name
+runs 150 against 141 — a ratio of 0.94, no discriminative power at all.
+
+**The error was mine and it has a name: I read prevalence as discriminative power.** Counting how
+often a pattern appears among failures says nothing without the base rate among successes. The
+agent ran the comparison I should have specified and declined to ship the change.
+
+**A consequence for the record.** The mpMRI exclusion had been rebuilt three times and never bit
+hard enough. It cannot: no language pattern approximates how many modality rows a paper actually
+has. The invariant tests that fact directly, which is why it works where three rounds of
+vocabulary did not.
+
+**Outcome.** 1,170 primary papers held out of Panel A (30.0% of the theme); Panel A draws 2,727.
+Zero single-modality columns remain in that block, asserted by a test parametrised over the
+minimum so a future combination theme is covered the day it is added.
+
+## 2026-09-09 — The two-paper column minimum binds only under competition
+
+**The defect, found by the author.** The digital-twins block appeared to contain no multimodal
+work at all. **Six of its twenty primary papers carry two or more modalities**, one of them four
+— CT with H&E, IHC and spatial transcriptomics. None was drawn.
+
+**Cause: my own rule from the previous day.** The two-paper minimum was introduced to stop a
+20-paper theme drawing twelve columns of one paper each, which reads as a distribution. But in a
+small theme the rule removes the multi-modality combinations *first*, because those are the
+rarest — every one of digital twins' multimodal sets holds exactly one paper, while its three
+sets holding two or more papers are all single-modality. The rule inverted the block's message:
+it turned "a small, mostly single-modality theme with a genuine multimodal tail" into "a theme
+with no multimodal work".
+
+**Decision.** The minimum now binds only where combinations compete for the columns — that is,
+only when the theme has at least `top_n` combinations meeting it. Below that, the block draws by
+rank. And ties are broken toward the **richer** combination: among sets holding equally many
+papers, a four-modality set is drawn before a one-modality set, which decides the whole block in
+a theme where every set holds one paper.
+**Consequence, accepted deliberately.** Small blocks again draw columns of one paper. That is
+the lesser error: hiding a theme's multimodal work is worse than showing that its counts are
+small, and the legend already says small blocks are counts of individual papers.
+
+## 2026-09-09 — The Panel A tests were running against a toy fixture
+
+**Found while fixing the above.** The `measured_dir` fixture paired the *measured* per-year
+counts with the *minimal* combination table. Every Panel A assertion that claimed to test the
+measured data — column counts, the two-paper minimum, remainder shares — was being made against
+a stand-in with a handful of rows.
+
+That is why a rule which hid every multimodal digital-twins column passed the suite: no test
+ever saw the real digital-twins combinations. The fixture is now generated from
+`data/processed/combination_counts.csv` (422 rows) and its header states the three properties
+the tests depend on, so a future regeneration cannot quietly drop them.
+
+**The lesson worth keeping:** a fixture named "measured" that is measured in one half and a toy
+in the other is worse than an obviously fake fixture, because it buys the confidence of real
+data without the evidence.

@@ -1,0 +1,52 @@
+# what the Other modality row contains
+#
+# Other is ADDITIVE and has two routes, which must not be summed into one idea:
+#   pattern  - a data type outside the fifteen named rows was found. A positive
+#              finding. Validation scored this route 21/23 correct (91%).
+#   fallback - no named modality could be identified from title and abstract, so
+#              the modality is NOT DETERMINED. Validation scored it 18/24 (75%);
+#              the six errors were papers whose modality a reader could name.
+#
+# A paper may appear under several data types, so n_papers sums to more than the
+# number of papers carrying Other. n_papers_sole_other_evidence counts papers for
+# which that data type is the only reason Other was assigned.
+#
+# WHAT THE FALLBACK BUCKET ACTUALLY CONTAINS (5,044 papers, characterised by
+# scanning their titles and abstracts):
+#   67% name a generic imaging word -- "imaging", "scan", "images" -- without
+#       naming a specific modality. Reviews, perspectives, ethics papers, and
+#       decision-support studies dominate. Examples: "Ethical Use of Artificial
+#       Intelligence for Processing Medical Images", "The Role of Large Language
+#       Models in Breast Imaging".
+#   20% carry review or survey language.
+#    8% mention omics or biomarkers but no imaging modality.
+#    6% mention clinical records, registries or cohorts.
+#   19% contain none of those signal words at all.
+# So the bucket is mostly papers that discuss imaging in the abstract without
+# saying which kind -- not papers using an exotic modality. That is why the route
+# is labelled NOT DETERMINED rather than Other, and why the two routes must not
+# be summed.
+#
+# Generated from data/processed/pattern_hits.csv, modalities v6, corpus of
+# 44,533 papers retrieved 2026-09-01.
+data_type,route,n_papers,n_papers_sole_other_evidence,patterns,example_titles
+"Endoscopy (incl. colonoscopy, bronchoscopy)",pattern,1344,1266,other:include[5],A computer system to be used with laser-based endoscopy for quantitative diagnosis of earl || Quantitative contrast-enhanced harmonic EUS in differential diagnosis of focal pancreatic 
+Radiotherapy dosimetry,pattern,899,483,other:include[0] | other:include[1] | other:include[2] | other:include[3] | other:include[4],Lung texture in serial thoracic computed tomography scans: correlation of radiomics-based  || Automatic learning-based beam angle selection for thoracic IMRT.
+Dermoscopy,pattern,514,467,other:include[6],A Novel Approach to Segment Skin Lesions in Dermoscopic Images Based on a Deformable Model || Automatic differentiation of melanoma from dysplastic nevi.
+Proteomics (non-spatial),pattern,357,225,other:include[16],Machine learning approaches to analyze histological images of tissues from radical prostat || Elevated urinary urea by high-protein diet could be one of the inducements of bladder diso
+Liquid biopsy / ctDNA,pattern,345,271,other:include[19],Radiomics and circulating tumor cells: personalized care in hepatocellular carcinoma? || Automated Classification of Circulating Tumor Cells and the Impact of Interobsever Variabi
+Optical coherence tomography,pattern,182,126,other:include[7],Intraoperative optical coherence tomography for soft tissue sarcoma differentiation and ma || Pixel classification method in optical coherence tomography for tumor segmentation and its
+Hyperspectral imaging,pattern,171,146,other:include[9],A Minimum Spanning Forest-Based Method for Noninvasive Cancer Detection With Hyperspectral || Detection of Head and Neck Cancer in Surgical Specimens Using Quantitative Hyperspectral I
+SPECT,pattern,171,126,other:include[8],Sentinel node approach in prostate cancer. || Emerging clinical applications of PET based molecular imaging in oncology: the promising f
+Mass spectrometry / MALDI,pattern,167,85,other:include[14],MALDI mass spectrometry imaging analysis of pituitary adenomas for near-real-time tumor de || [Fragments Woven into a Whole: A New Approach to the Diagnosis of Cancer through Mass Spec
+Flow cytometry,pattern,144,122,other:include[17],Quantification of cellular viability by automated microscopy and flow cytometry. || Semi-automated quantification of living cells with internalized nanostructures.
+Metabolomics,pattern,133,49,other:include[15],"Association of Radiomics and Metabolic Tumor Volumes in Radiation Treatment of Glioblastom || Systematic biobanking, novel imaging techniques, and advanced molecular analysis for preci"
+Raman spectroscopy,pattern,110,75,other:include[18],Computer assisted optical screening of human ovarian cancer using Raman spectroscopy. || Neural networks improve brain cancer detection with Raman spectroscopy in the presence of 
+Confocal microscopy,pattern,86,47,other:include[11],A pulse coupled neural network segmentation algorithm for reflectance confocal images of e || 3-D Quantification of Filopodia in Motile Cancer Cells.
+Thermography,pattern,74,73,other:include[10],Comparative analysis of breast cancer detection in mammograms and thermograms. || Thermal Signal Analysis for Breast Cancer Risk Verification.
+Clinical photography,pattern,54,35,other:include[13],The feasibility of using manual segmentation in a multifeature computer-aided diagnosis sy || Evaluation of vermillion border descriptors and relevance vector machines discrimination m
+Wearables / accelerometry,pattern,48,39,other:include[21],Digital Medicine in Thyroidology: A New Era of Managing Thyroid Disease. || An introduction to the Cyrcadia Breast Monitor: A wearable breast health monitoring device
+"Electrophysiology (ECG, EEG)",pattern,41,34,other:include[22],In Vivo Tumour Mapping Using Electrocorticography Alterations During Awake Brain Surgery:  || Bragatston study protocol: a multicentre cohort study on automated quantification of cardi
+Microbiome,pattern,41,25,other:include[20],"Insights into Pathogenic Interactions Among Environment, Host, and Tumor at the Crossroads || Neuroendocrine Neoplasms of the Small Bowel and Pancreas."
+Electron microscopy,pattern,32,26,other:include[12],Helicobacter pylori TlyA Forms Amyloid-like Aggregates with Potent Cytotoxic Activity. || Cell type-dependent ROS and mitophagy response leads to apoptosis or necroptosis in neurob
+NOT DETERMINED (no named modality found),fallback,5044,5044,other:fallback,Feasibility of transoral robotic-assisted high-resolution microendoscopic imaging of oroph || An improved joint optimization of multiple level set functions for the segmentation of ove

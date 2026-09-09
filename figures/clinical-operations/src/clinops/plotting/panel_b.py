@@ -181,8 +181,22 @@ def draw(
     rect: tuple[float, float, float, float],
     *,
     title_x: float = 0.0,
+    vertical: bool = False,
 ) -> PanelB:
     """Draw Panel B into ``rect`` as two normalized stacked bars.
+
+    The bars run horizontally by default and vertically when ``vertical`` is
+    set. This is not a style preference: it follows the shape of the space the
+    caller gives it. Beneath Panel A the panel is wide and short, and rows fit
+    that; beside Panel A it is narrow and tall, and rows leave most of the
+    height empty while squeezing the two thin radiology segments into a few
+    hundredths of an inch. Columns use the height that is there, which makes
+    those segments taller rather than the panel emptier.
+
+    One code path draws both. The stacked direction is called *along* and the
+    categorical direction *across*, and only their mapping onto x and y
+    changes -- so a fix to segment labelling or sliver leaders cannot land in
+    one orientation and miss the other.
 
     Args:
         figure: The figure to draw into.
@@ -195,23 +209,38 @@ def draw(
             put it left of the bars, so it lines up with the panel letter rather
             than with the domain labels. The caller owns the geometry, so the
             caller owns this number.
+        vertical: Draw columns rather than rows. Pick it from the aspect ratio
+            of ``rect``, not from taste.
 
     Returns:
         A :class:`PanelB` recording every segment drawn and every total printed.
     """
     left, bottom, width, height = rect
     ax = figure.add_axes(rect)
-    axes_width_in = width * figure.get_figwidth()
+    # The span a segment's share is measured against: the stacked direction.
+    axes_span_in = (
+        height * figure.get_figheight() if vertical else width * figure.get_figwidth()
+    )
 
     counts = _domain_counts(pathways)
-    # Radiology on top: it is the larger field and the reading order of the
-    # finding is "radiology does this, pathology does that".
-    positions = {domain: index for index, domain in enumerate(reversed(DOMAIN_ORDER))}
+    # Reading order of the finding is "radiology does this, pathology does
+    # that". Rows put radiology on top; columns put it on the left. Both are the
+    # position a reader reaches first in that orientation.
+    order = DOMAIN_ORDER if vertical else tuple(reversed(DOMAIN_ORDER))
+    positions = {domain: index for index, domain in enumerate(order)}
 
-    ax.set_xlim(0.0, 1.0)
-    ax.set_ylim(-_Y_PAD, len(DOMAIN_ORDER) - 1 + _Y_PAD)
+    # The share axis always runs 0 to 1; the categorical axis holds the domains.
+    share_limits = (0.0, 1.0)
+    category_limits = (-_Y_PAD, len(DOMAIN_ORDER) - 1 + _Y_PAD)
+    if vertical:
+        ax.set_xlim(*category_limits)
+        ax.set_ylim(*share_limits)
+    else:
+        ax.set_xlim(*share_limits)
+        ax.set_ylim(*category_limits)
     ax.set_axisbelow(True)
-    ax.xaxis.grid(True, color="#E8E8E8", linewidth=0.5)
+    # Gridlines run across the share axis, so they read as a percentage scale.
+    (ax.yaxis if vertical else ax.xaxis).grid(True, color="#E8E8E8", linewidth=0.5)
 
     segments: list[Segment] = []
     totals: dict[str, int] = {}
@@ -234,34 +263,34 @@ def draw(
                 # tint. Same treatment as the sibling figure's remainder bar:
                 # the segment reads as a different *kind* of fill without a
                 # second hue being invented for it.
-                ax.barh(
-                    y,
-                    share,
-                    left=cursor,
-                    height=BAR_HEIGHT,
+                _stacked_bar(
+                    ax,
+                    across=y,
+                    share=share,
+                    cursor=cursor,
+                    vertical=vertical,
                     facecolor=style.HATCH_GROUND,
                     edgecolor=deep,
                     hatch=hatch,
-                    linewidth=_BORDER_WIDTH,
-                    zorder=2,
                 )
             else:
-                ax.barh(
-                    y,
-                    share,
-                    left=cursor,
-                    height=BAR_HEIGHT,
+                _stacked_bar(
+                    ax,
+                    across=y,
+                    share=share,
+                    cursor=cursor,
+                    vertical=vertical,
                     facecolor=fill,
                     edgecolor=fill,
-                    linewidth=_BORDER_WIDTH,
-                    zorder=2,
+                    hatch=None,
                 )
-            inside = share * axes_width_in >= MIN_INSIDE_LABEL_IN and count > 0
+            inside = share * axes_span_in >= MIN_INSIDE_LABEL_IN and count > 0
             if count:
                 _label_segment(
                     ax,
-                    x=cursor + share / 2,
-                    y=y,
+                    along=cursor + share / 2,
+                    across=y,
+                    vertical=vertical,
                     count=count,
                     inside=inside,
                     ink=_readable_ink(fill) if not hatch else style.INK,
@@ -274,37 +303,56 @@ def draw(
             )
             cursor += share
 
-        ax.annotate(
-            f"n = {total:,}",
-            xy=(1.0, y),
-            xytext=(5.0, 0.0),
-            textcoords="offset points",
-            ha="left",
-            va="center",
-            fontsize=style.FS_SERIES_LABEL,
-            color=style.INK,
-            annotation_clip=False,
-        )
+        # A row's total sits past the end of the bar, where there is nothing
+        # else. A column's would sit above it, on the panel title -- so in that
+        # orientation the total joins the category label under the axis
+        # instead. Same information, and it stays next to the name it counts.
+        if not vertical:
+            ax.annotate(
+                f"n = {total:,}",
+                xy=(1.0, y),
+                xytext=(5.0, 0.0),
+                textcoords="offset points",
+                ha="left",
+                va="center",
+                fontsize=style.FS_SERIES_LABEL,
+                color=style.INK,
+                annotation_clip=False,
+            )
 
-    ax.set_yticks([positions[domain] for domain in DOMAIN_ORDER])
-    ax.set_yticklabels(
-        [domain_label(domain) for domain in DOMAIN_ORDER],
+    category_axis = ax.xaxis if vertical else ax.yaxis
+    share_axis = ax.yaxis if vertical else ax.xaxis
+    category_axis.set_ticks([positions[domain] for domain in DOMAIN_ORDER])
+    category_axis.set_ticklabels(
+        [
+            f"{domain_label(domain)}\nn = {totals.get(domain, 0):,}"
+            if vertical
+            else domain_label(domain)
+            for domain in DOMAIN_ORDER
+        ],
         fontsize=style.FS_TICK,
         color=style.SUBTLE,
     )
-    ax.xaxis.set_major_formatter(PercentFormatter(xmax=1.0, decimals=0))
+    share_axis.set_major_formatter(PercentFormatter(xmax=1.0, decimals=0))
     ax.tick_params(axis="both", labelsize=style.FS_TICK, pad=2.0, colors=style.SUBTLE)
-    ax.tick_params(axis="y", length=0)
-    ax.set_xlabel(
-        "% of a field's authorizations",
-        fontsize=style.FS_AXIS_LABEL,
-        style="italic",
-        color=style.SUBTLE,
-    )
-    for name in ("top", "right", "left"):
+    # No tick marks on the categorical axis: the labels name the bars, and a
+    # tick would imply a scale the axis does not have.
+    ax.tick_params(axis="x" if vertical else "y", length=0)
+    axis_label = "% of a field's authorizations"
+    if vertical:
+        ax.set_ylabel(
+            axis_label, fontsize=style.FS_AXIS_LABEL, style="italic", color=style.SUBTLE
+        )
+    else:
+        ax.set_xlabel(
+            axis_label, fontsize=style.FS_AXIS_LABEL, style="italic", color=style.SUBTLE
+        )
+    # Keep the spine the bars stand on; drop the rest.
+    hidden = ("top", "right", "bottom") if vertical else ("top", "right", "left")
+    for name in hidden:
         ax.spines[name].set_visible(False)
 
-    _draw_key(ax)
+    _draw_key(ax, vertical=vertical)
     ax.set_title(
         "Authorization Pathway",
         fontsize=style.FS_THEME_TITLE,
@@ -318,21 +366,57 @@ def draw(
     return PanelB(ax=ax, segments=segments, totals=totals)
 
 
+def _stacked_bar(
+    ax: Axes,
+    *,
+    across: float,
+    share: float,
+    cursor: float,
+    vertical: bool,
+    facecolor: str,
+    edgecolor: str,
+    hatch: str | None,
+) -> None:
+    """Draw one segment of a stacked bar, in either orientation.
+
+    ``across`` is the bar's position on the categorical axis and ``cursor`` is
+    how much of the bar is already drawn. Keeping this in one place is what
+    stops the two orientations acquiring different fills or border widths.
+    """
+    common = dict(
+        facecolor=facecolor,
+        edgecolor=edgecolor,
+        hatch=hatch,
+        linewidth=_BORDER_WIDTH,
+        zorder=2,
+    )
+    if vertical:
+        ax.bar(across, share, bottom=cursor, width=BAR_HEIGHT, **common)
+    else:
+        ax.barh(across, share, left=cursor, height=BAR_HEIGHT, **common)
+
+
 def _label_segment(
     ax: Axes,
     *,
-    x: float,
-    y: float,
+    along: float,
+    across: float,
+    vertical: bool,
     count: int,
     inside: bool,
     ink: str,
     leader_ink: str,
 ) -> None:
-    """Print one segment's count, inside it if it fits and above it if not."""
+    """Print one segment's count, inside it if it fits and outside it if not.
+
+    A segment too thin to hold its own number gets a hairline leader out of the
+    bar to a number in the margin. The leader leaves along the categorical axis
+    -- upward from a row, sideways from a column -- because leaving along the
+    stacked axis would put the number over the neighbouring segment.
+    """
     if inside:
         ax.text(
-            x,
-            y,
+            *((across, along) if vertical else (along, across)),
             f"{count:,}",
             ha="center",
             va="center",
@@ -341,26 +425,26 @@ def _label_segment(
             zorder=4,
         )
         return
-    ax.plot(
-        [x, x],
-        [y + BAR_HEIGHT / 2, y + _SLIVER_RISE],
-        color=leader_ink,
-        linewidth=_LEADER_WIDTH,
-        zorder=3,
-    )
-    ax.text(
-        x,
-        y + _SLIVER_RISE + 0.02,
-        f"{count:,}",
-        ha="center",
-        va="bottom",
-        fontsize=style.FS_BAR_VALUE,
-        color=style.INK,
-        zorder=4,
-    )
+
+    edge = across + BAR_HEIGHT / 2
+    tip = across + _SLIVER_RISE
+    if vertical:
+        ax.plot([edge, tip], [along, along], color=leader_ink,
+                linewidth=_LEADER_WIDTH, zorder=3)
+        ax.text(
+            tip + 0.02, along, f"{count:,}", ha="left", va="center",
+            fontsize=style.FS_BAR_VALUE, color=style.INK, zorder=4,
+        )
+    else:
+        ax.plot([along, along], [edge, tip], color=leader_ink,
+                linewidth=_LEADER_WIDTH, zorder=3)
+        ax.text(
+            along, tip + 0.02, f"{count:,}", ha="center", va="bottom",
+            fontsize=style.FS_BAR_VALUE, color=style.INK, zorder=4,
+        )
 
 
-def _draw_key(ax: Axes) -> None:
+def _draw_key(ax: Axes, *, vertical: bool = False) -> None:
     """Draw the three-swatch pathway key beneath the panel.
 
     In neutral ink, not in either domain's hue: the key states what a texture
@@ -377,10 +461,13 @@ def _draw_key(ax: Axes) -> None:
         )
         for pathway in PATHWAY_ORDER
     ]
+    # Below the axes in both orientations. A column panel is far taller than a
+    # row panel, and the anchor is in axes fractions, so the same -0.34 would
+    # drop the key several inches. The offsets below are each about 0.4 in.
     legend = ax.legend(
         handles=handles,
         loc="upper left",
-        bbox_to_anchor=(0.0, -0.34),
+        bbox_to_anchor=(0.0, -0.10 if vertical else -0.34),
         ncols=len(PATHWAY_ORDER),
         frameon=False,
         fontsize=style.FS_NOTE,

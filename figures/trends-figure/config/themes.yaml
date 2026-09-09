@@ -21,7 +21,7 @@
 # does not match its recorded version, or if a version is reused with a different
 # hash. If that test fails after you edit here, the fix is to bump `version` and
 # add the new hash to the ledger — never to edit an existing ledger entry.
-version: 10
+version: 12
 
 categories:
 
@@ -125,12 +125,113 @@ categories:
         kind: regex
       - pattern: "(?i)\\bcombin\\w+ (imaging|radiomic\\w*|patholog\\w+) (and|with) (genomic|transcriptomic|molecular|clinical)"
         kind: regex
+      # --- v11: CROSS-MODALITY PREDICTION (author ruling 2026-09-08) ---
+      # A model that predicts one modality from another requires both during
+      # training, so it is multimodal. Families below mirror the figure's
+      # modality ROWS, so 'crossing a family' means crossing a Panel A row.
+      # cross-row prediction, molecular readout predicted from an imaging or stain row
+      - pattern: "(?i)\\b(?:predict\\w*|prediction|infer\\w*|inference|generat\\w*|synthes\\w*|estimat\\w*|impute\\w*|translat\\w*|deriv\\w*|reconstruct\\w*|simulat\\w*)\\b[^.]{0,50}\\b(?:gene expression|transcriptom\\w+|genomic\\w*|gene mutation\\w*|mutation status|mutational burden|methylation|RNA-?seq|molecular subtyp\\w+|molecular feature\\w*|molecular marker\\w*|HER2|Ki-?67|PD-L1|copy[- ]number|MSI\\b|microsatellite instabilit\\w+|homologous recombination deficiency|HRD\\b|gene signature\\w*|omics)[^.]{0,50}\\b(?:from|using|based on|out of|given)\\b[^.]{0,50}\\b(?:(?:H&E|h(?:a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|pathomic\\w*|tissue section\\w*|cytolog\\w+|morpholog\\w+)|(?:IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex(?:ed)?\\s*(?:immuno|protein|stain)\\w*|cytokeratin|p16\\b)|(?:spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression|spatial omics)|(?:spatial proteom\\w+|protein multiplex\\w*|imaging mass cytometry)|(?:CT\\b|computed tomograph\\w+|MRI|MR imaging|magnetic resonance|PET\\b|positron emission|ultrasound|sonograph\\w+|mammogra\\w+|radiograph\\w+|X-?ray|CBCT|SPECT))"
+        kind: regex
+      # cross-row prediction, H&E or histology predicted from another row
+      - pattern: "(?i)\\b(?:predict\\w*|prediction|infer\\w*|inference|generat\\w*|synthes\\w*|estimat\\w*|impute\\w*|translat\\w*|deriv\\w*|reconstruct\\w*|simulat\\w*)\\b[^.]{0,50}\\b(?:H&E|h(?:a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|pathomic\\w*|tissue section\\w*|cytolog\\w+|morpholog\\w+)[^.]{0,50}\\b(?:from|using|based on|out of|given)\\b[^.]{0,50}\\b(?:(?:gene expression|transcriptom\\w+|genomic\\w*|gene mutation\\w*|mutation status|mutational burden|methylation|RNA-?seq|molecular subtyp\\w+|molecular feature\\w*|molecular marker\\w*|HER2|Ki-?67|PD-L1|copy[- ]number|MSI\\b|microsatellite instabilit\\w+|homologous recombination deficiency|HRD\\b|gene signature\\w*|omics)|(?:IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex(?:ed)?\\s*(?:immuno|protein|stain)\\w*|cytokeratin|p16\\b)|(?:spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression|spatial omics)|(?:spatial proteom\\w+|protein multiplex\\w*|imaging mass cytometry)|(?:CT\\b|computed tomograph\\w+|MRI|MR imaging|magnetic resonance|PET\\b|positron emission|ultrasound|sonograph\\w+|mammogra\\w+|radiograph\\w+|X-?ray|CBCT|SPECT))"
+        kind: regex
+      # cross-row prediction, IHC predicted from another row
+      - pattern: "(?i)\\b(?:predict\\w*|prediction|infer\\w*|inference|generat\\w*|synthes\\w*|estimat\\w*|impute\\w*|translat\\w*|deriv\\w*|reconstruct\\w*|simulat\\w*)\\b[^.]{0,50}\\b(?:IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex(?:ed)?\\s*(?:immuno|protein|stain)\\w*|cytokeratin|p16\\b)[^.]{0,50}\\b(?:from|using|based on|out of|given)\\b[^.]{0,50}\\b(?:(?:gene expression|transcriptom\\w+|genomic\\w*|gene mutation\\w*|mutation status|mutational burden|methylation|RNA-?seq|molecular subtyp\\w+|molecular feature\\w*|molecular marker\\w*|HER2|Ki-?67|PD-L1|copy[- ]number|MSI\\b|microsatellite instabilit\\w+|homologous recombination deficiency|HRD\\b|gene signature\\w*|omics)|(?:H&E|h(?:a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|pathomic\\w*|tissue section\\w*|cytolog\\w+|morpholog\\w+)|(?:spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression|spatial omics)|(?:spatial proteom\\w+|protein multiplex\\w*|imaging mass cytometry)|(?:CT\\b|computed tomograph\\w+|MRI|MR imaging|magnetic resonance|PET\\b|positron emission|ultrasound|sonograph\\w+|mammogra\\w+|radiograph\\w+|X-?ray|CBCT|SPECT))"
+        kind: regex
+      # cross-row prediction, spatial transcriptomics predicted from another row
+      - pattern: "(?i)\\b(?:predict\\w*|prediction|infer\\w*|inference|generat\\w*|synthes\\w*|estimat\\w*|impute\\w*|translat\\w*|deriv\\w*|reconstruct\\w*|simulat\\w*)\\b[^.]{0,50}\\b(?:spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression|spatial omics)[^.]{0,50}\\b(?:from|using|based on|out of|given)\\b[^.]{0,50}\\b(?:(?:gene expression|transcriptom\\w+|genomic\\w*|gene mutation\\w*|mutation status|mutational burden|methylation|RNA-?seq|molecular subtyp\\w+|molecular feature\\w*|molecular marker\\w*|HER2|Ki-?67|PD-L1|copy[- ]number|MSI\\b|microsatellite instabilit\\w+|homologous recombination deficiency|HRD\\b|gene signature\\w*|omics)|(?:H&E|h(?:a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|pathomic\\w*|tissue section\\w*|cytolog\\w+|morpholog\\w+)|(?:IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex(?:ed)?\\s*(?:immuno|protein|stain)\\w*|cytokeratin|p16\\b)|(?:spatial proteom\\w+|protein multiplex\\w*|imaging mass cytometry)|(?:CT\\b|computed tomograph\\w+|MRI|MR imaging|magnetic resonance|PET\\b|positron emission|ultrasound|sonograph\\w+|mammogra\\w+|radiograph\\w+|X-?ray|CBCT|SPECT))"
+        kind: regex
+      # cross-row prediction, spatial proteomics predicted from another row
+      - pattern: "(?i)\\b(?:predict\\w*|prediction|infer\\w*|inference|generat\\w*|synthes\\w*|estimat\\w*|impute\\w*|translat\\w*|deriv\\w*|reconstruct\\w*|simulat\\w*)\\b[^.]{0,50}\\b(?:spatial proteom\\w+|protein multiplex\\w*|imaging mass cytometry)[^.]{0,50}\\b(?:from|using|based on|out of|given)\\b[^.]{0,50}\\b(?:(?:gene expression|transcriptom\\w+|genomic\\w*|gene mutation\\w*|mutation status|mutational burden|methylation|RNA-?seq|molecular subtyp\\w+|molecular feature\\w*|molecular marker\\w*|HER2|Ki-?67|PD-L1|copy[- ]number|MSI\\b|microsatellite instabilit\\w+|homologous recombination deficiency|HRD\\b|gene signature\\w*|omics)|(?:H&E|h(?:a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|pathomic\\w*|tissue section\\w*|cytolog\\w+|morpholog\\w+)|(?:IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex(?:ed)?\\s*(?:immuno|protein|stain)\\w*|cytokeratin|p16\\b)|(?:spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression|spatial omics)|(?:CT\\b|computed tomograph\\w+|MRI|MR imaging|magnetic resonance|PET\\b|positron emission|ultrasound|sonograph\\w+|mammogra\\w+|radiograph\\w+|X-?ray|CBCT|SPECT))"
+        kind: regex
+      # cross-row prediction, a radiology row predicted from another row
+      - pattern: "(?i)\\b(?:predict\\w*|prediction|infer\\w*|inference|generat\\w*|synthes\\w*|estimat\\w*|impute\\w*|translat\\w*|deriv\\w*|reconstruct\\w*|simulat\\w*)\\b[^.]{0,50}\\b(?:CT\\b|computed tomograph\\w+|MRI|MR imaging|magnetic resonance|PET\\b|positron emission|ultrasound|sonograph\\w+|mammogra\\w+|radiograph\\w+|X-?ray|CBCT|SPECT)[^.]{0,50}\\b(?:from|using|based on|out of|given)\\b[^.]{0,50}\\b(?:(?:gene expression|transcriptom\\w+|genomic\\w*|gene mutation\\w*|mutation status|mutational burden|methylation|RNA-?seq|molecular subtyp\\w+|molecular feature\\w*|molecular marker\\w*|HER2|Ki-?67|PD-L1|copy[- ]number|MSI\\b|microsatellite instabilit\\w+|homologous recombination deficiency|HRD\\b|gene signature\\w*|omics)|(?:H&E|h(?:a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|pathomic\\w*|tissue section\\w*|cytolog\\w+|morpholog\\w+)|(?:IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex(?:ed)?\\s*(?:immuno|protein|stain)\\w*|cytokeratin|p16\\b)|(?:spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression|spatial omics)|(?:spatial proteom\\w+|protein multiplex\\w*|imaging mass cytometry))"
+        kind: regex
+      # row-to-row translation, e.g. H&E-to-IHC or MRI-to-CT
+      - pattern: "(?i)\\b(?:H&E|h(?:a)?ematoxylin|histolog\\w+|histopatholog\\w+|MRI|magnetic resonance|CT|CBCT)[- ]to[- ](?:IHC|immunohistochem\\w+|immunofluorescen\\w+|multiplex\\w*|H&E|h(?:a)?ematoxylin|histolog\\w+|CT|MRI|PET)\\b"
+        kind: regex
+      # virtual or synthetic staining: needs H&E plus the target stain during training
+      - pattern: "(?i)\\b(?:virtual|synthetic|computational|in[- ]silico|AI[- ]generated|deep[- ]learning[- ]generated)\\w*[\\s-]{0,2}(?:stain\\w*|immunostain\\w*|IHC\\b|immunohistochem\\w+|immunofluorescen\\w+|multiplex\\w*)"
+        kind: regex
+      # stain transfer with a molecular or IHC target
+      - pattern: "(?i)\\bstain (?:transfer|translation|transformation)[^.]{0,60}\\b(?:(?:IHC|immunohistochem\\w+|immunostain\\w+|immunofluorescen\\w+|immunolabel\\w+|multiplex(?:ed)?\\s*(?:immuno|protein|stain)\\w*|cytokeratin|p16\\b)|(?:gene expression|transcriptom\\w+|genomic\\w*|gene mutation\\w*|mutation status|mutational burden|methylation|RNA-?seq|molecular subtyp\\w+|molecular feature\\w*|molecular marker\\w*|HER2|Ki-?67|PD-L1|copy[- ]number|MSI\\b|microsatellite instabilit\\w+|homologous recombination deficiency|HRD\\b|gene signature\\w*|omics))"
+        kind: regex
     exclude:
       - pattern: "(?i)\\bmulti[- ]?modal(ity)? (therap|treatment|analgesi|pain|prehabilitat|rehabilitat|chemotherap|regimen)"
         kind: regex
       - pattern: "(?i)^(?:(?=[\\s\\S]*(\\bmulti[- ]?(modal|parametric)\\w*[^.]{0,60}\\b(MRI|magnetic resonance)\\b|\\b(MRI|magnetic resonance)\\b[^.]{0,60}\\bmulti[- ]?(modal|parametric)))|(?=[\\s\\S]*\\b(T1|T1W|T1WI|T1C|T1CE|T1-weighted|T1 weighted)\\b)(?=[\\s\\S]*\\b(T2|T2W|T2WI|T2-weighted|T2 weighted|FLAIR|DWI|ADC|DCE|DKI|SWI|PWI|MRCP)\\b))(?![\\s\\S]*(cross-?modal|multi-?omic|radiogenomic|pathogenomic|genomic|transcriptom|sequencing|RNA-?seq|clinical (data|feature|variable|factor|parameter|information|characteristic)|(?-i:\\bEHR\\b)|electronic health|patholog|histolog|H&E|h(a)?ematoxylin|whole[- ]slide|(?-i:\\bWSI\\b)|report|\\btext\\b|(?-i:\\bPET\\b)|(?-i:\\bCT\\b)|computed tomograph|ultrasound|sonograph|mammogra|x-?ray|radiograph|liquid biopsy|ctDNA|(?-i:\\bEEG\\b)|(?-i:\\bECG\\b)|dosimetr|dose[- ](volume|distribution)|endoscop|derm(at)?oscop|\\bwearable|mass spectrom|metabolom|proteom|flow cytometr|microbiome|hyperspectral|optical coherence|(?-i:\\bSPECT\\b)|demographic|laborator))"
         kind: regex
     notes: >
+      v12 (2026-09-09) — A PRECISION TIGHTENING WAS ATTEMPTED, MEASURED, AND
+      DELIBERATELY NOT SHIPPED. Recorded here so nobody repeats it.
+      The author found the contradiction: papers carrying this theme with only one
+      modality row. Of 3,886 primary-research multimodal papers, 1,368 (35%) had
+      fewer than two rows. Five language families were proposed as the cause:
+      architecture fusion (multi-scale, multi-view, multi-branch, feature fusion),
+      multi-sequence MRI, contrast phases, the multi-centre/task/label family, and
+      radiomics-plus-nomogram wording.
+      EVERY ONE OF THE FIVE IS COMMONER IN THE GENUINELY MULTIMODAL POPULATION THAN
+      IN THE BROKEN ONE. Papers with <2 rows versus papers with >=2 rows:
+      radiomics+nomogram 11 vs 137 (12.5 genuine lost per spurious removed);
+      contrast phases 120 vs 359 (3.0); multi-sequence MRI 145 vs 357 (2.5);
+      multi-centre family 188 vs 420 (2.2); architecture fusion 185 vs 203 (1.1).
+      Excluding any of them destroys more than it repairs.
+      Even the most targeted form fails: "multimodal" immediately followed by ONE
+      modality name — "multimodal MRI", the intra-modality case this theme has
+      tried to exclude twice — sits at 150 versus 141, a ratio of 0.94. It does not
+      discriminate, because a paper genuinely combining multimodal MRI WITH clinical
+      data says exactly the same words.
+      THE REASON IS STRUCTURAL. The five families are ubiquitous features of
+      radiology papers, not markers of the defect. Prevalence in the broken set was
+      mistaken for discriminative power; the ratio against the genuine set is the
+      measure that matters, and by it none of them discriminates.
+      SO THE INVARIANT IS THE RIGHT MECHANISM, not a pattern. A paper cannot carry
+      this theme with fewer than two modality rows; that test uses the fact no
+      language matching can approximate, namely how many rows the paper actually
+      has. After the v13 recall fix, 1,253 of 3,886 primary papers (32%) still fall
+      below two rows and will lose the theme to the invariant. That loss is
+      measured, not silent.
+      v11 (2026-09-08) — CROSS-MODALITY PREDICTION NOW COUNTS, on the author's
+      ruling: "Multimodal should include any models that predict one modality from
+      another. Basically, if it requires two modalities during training, then it is
+      a multimodal model/application." THIS IS A RULING, NOT A DISCOVERY — the
+      author changed the definition after being shown that `genomics` and `ihc`
+      treated the same paper in opposite ways. The operative test is REQUIRED DURING
+      TRAINING, not consumed as input.
+      DESIGN: nine patterns. Six are one-per-TARGET cross-row prediction rules; the
+      families they cross are the figure's own MODALITY ROWS, so "crossing a family"
+      means crossing a Panel A row. That detail is load-bearing: an earlier draft
+      lumped H&E and IHC into one "pathology" family, which made H&E-to-IHC read as
+      intra-modality and wrongly excluded exactly the papers the ruling is about.
+      The remaining three cover row-to-row translation, virtual or synthetic
+      staining, and stain transfer with a molecular target.
+      MEASURED: multimodal_integration 4,656 -> 5,133, adding 477 papers. A
+      precision read of 20 newly added gave roughly 17 or 18 genuine.
+      THE TWO BOUNDARIES THE AUTHOR NAMED WERE MEASURED, NOT ASSUMED:
+        * A CLINICAL OUTCOME IS NOT A MODALITY. Predicting survival, recurrence or
+          treatment response from CT needs imaging plus an outcome label, not two
+          modalities. The design defends against this by WHITELISTING modality
+          targets rather than blacklisting outcomes, so an outcome simply cannot
+          fill the target slot. Measured: 8.2% of the newly added papers contain
+          outcome-prediction language against a corpus base rate of 11.2% — the
+          additions are LESS outcome-heavy than the corpus, so the prognostic
+          literature was not swept in.
+        * SEGMENTATION AND REGISTRATION TARGETS ARE NOT MODALITIES. Same defence,
+          same result: 0.6% of additions carry segmentation-target language against
+          a 1.3% corpus base rate.
+      CORRECTNESS CHECK, offered by the coordinator and used as one: nearly all
+      virtual-staining papers should become multimodal, since predicting spatial
+      signal from H&E requires both. Measured 12 of 65 before, 61 of 65 after (94%).
+      The first draft of these patterns reached only 37 of 65 and the shortfall is
+      what exposed the family-design bug above.
+      WHAT WAS NOT SHIPPED, on measurement: 15 of the 30 possible cross-row pairs
+      matched ZERO corpus records and are not written out; a `cross-modal
+      predict/translate` pattern matched 29 records but added 0 new, being fully
+      subsumed by the existing bare `cross-modal` include; and an
+      `image-to-image translation` pattern was tightened to require a cross-row pair
+      and then matched nothing, so it was dropped. An earlier untightened version of
+      it admitted "image-to-image translation across three standard MRI contrasts",
+      which is intra-modality.
       v6 (2026-09-02) — the intra-modality exclusion WIDENED, and its context list
       HARDENED. Round three measured the v4/v5 form at 55% precision (34-74%)
       against 67% before, with overlapping intervals - it demonstrated nothing.

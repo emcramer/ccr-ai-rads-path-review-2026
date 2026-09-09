@@ -135,6 +135,41 @@ def build_figure(
     return figure, tails, panel
 
 
+class StaleInputs(RuntimeError):
+    """Raised when the tables were built from configs that have since changed."""
+
+
+def _refuse_if_stale(input_dir: "str | Path", stale_ok: bool) -> None:
+    """Refuse to draw from labels the current configuration would not produce.
+
+    A figure is harder to un-publish than a number. On 2026-09-08 a corpus run
+    finished, the dictionaries were edited underneath it, and a figure was built
+    and reported from labels no configuration on disk could reproduce. Nothing
+    in the output said so.
+
+    The check is skipped for a directory with no run manifest -- the synthetic
+    tables have none -- and a missing manifest is reported by the classifier's
+    own ``--check`` rather than invented here.
+    """
+    from pathlib import Path
+
+    from trends import classify
+
+    directory = Path(input_dir)
+    if not (directory / "run_manifest.json").exists():
+        return
+    freshness = classify.check_freshness(directory, Path("config"))
+    if not freshness.problems or stale_ok:
+        return
+    problems = "\n  - ".join(freshness.problems)
+    raise StaleInputs(
+        f"{directory} was built from a configuration that has since changed:\n"
+        f"  - {problems}\n"
+        "Re-run trends.classify before drawing, or pass stale_ok=True "
+        "(--stale-ok) if you know the drawing is a deliberate look at old labels."
+    )
+
+
 def summary_text(
     data: io.FigureData,
     tails: list[panel_a.TailSummary],
@@ -226,6 +261,7 @@ def build(
     tag: str | None = None,
     top_n: int = panel_a.DEFAULT_TOP_N,
     scale: str = panel_a.DEFAULT_BAR_SCALE,
+    stale_ok: bool = False,
 ) -> BuildResult:
     """Read the tables, draw the figure, and write PDF, PNG, SVG, and summary.
 
@@ -246,6 +282,7 @@ def build(
     """
     if top_n < 1:
         raise ValueError(f"top_n must be at least 1, got {top_n}")
+    _refuse_if_stale(input_dir, stale_ok)
     data = io.load_figure_data(input_dir)
     destination = Path(output_dir)
     destination.mkdir(parents=True, exist_ok=True)
@@ -291,6 +328,11 @@ def main(argv: list[str] | None = None) -> int:
         "--tag", default=None, help="suffix for the output file names, e.g. 'synthetic'"
     )
     parser.add_argument(
+        "--stale-ok",
+        action="store_true",
+        help="draw even if the tables were built from configs that have since changed",
+    )
+    parser.add_argument(
         "--top-n",
         type=int,
         default=panel_a.DEFAULT_TOP_N,
@@ -311,7 +353,12 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
 
     result = build(
-        args.input, args.output, tag=args.tag, top_n=args.top_n, scale=args.panel_a_scale
+        args.input,
+        args.output,
+        tag=args.tag,
+        top_n=args.top_n,
+        scale=args.panel_a_scale,
+        stale_ok=args.stale_ok,
     )
     print(f"wrote {result.pdf}")
     print(f"wrote {result.png}")

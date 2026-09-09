@@ -88,7 +88,7 @@ def measured_dir(tmp_path: Path) -> Path:
     See the fixture's own header. Every series in it is measured.
     """
     shutil.copy(
-        FIXTURES / "plot_combination_counts_minimal.csv", tmp_path / io.COMBINATION_COUNTS
+        FIXTURES / "plot_combination_counts_measured.csv", tmp_path / io.COMBINATION_COUNTS
     )
     shutil.copy(
         FIXTURES / "plot_theme_year_counts_measured.csv", tmp_path / io.THEME_YEAR_COUNTS
@@ -1687,3 +1687,170 @@ def test_only_the_agentic_series_is_cut(measured_dir: Path) -> None:
         drawn = panel_b._series_frame(frame, theme, domain)
         if not drawn.empty:
             assert int(drawn["year"].min()) == 2015, f"{theme}/{domain} was truncated"
+
+
+def test_a_column_needs_at_least_two_papers(measured_dir: Path) -> None:
+    """One paper is an anecdote; twelve of them are not a distribution.
+
+    Panel A became primary-research-only on 2026-09-08, which took digital twins
+    to 20 papers across 13 modality sets. Nine of its twelve drawn columns then
+    held exactly one paper each, and the block read as a distribution. Singletons
+    now join the remainder, which is drawn, so nothing is lost.
+    """
+    data = io.load_figure_data(measured_dir)
+    for theme in style.PANEL_A_THEMES:
+        block = panel_a._block_frame(data.combinations, theme, panel_a.DEFAULT_TOP_N)
+        if not len(block):
+            continue
+        subset = data.combinations.loc[data.combinations["theme"] == theme]
+        qualifying = subset.loc[subset["n_papers"] >= panel_a.MIN_PAPERS_PER_COLUMN]
+        if len(qualifying) >= panel_a.DEFAULT_TOP_N:
+            # Combinations compete for the columns, so singletons stay out.
+            assert block["n_papers"].min() >= panel_a.MIN_PAPERS_PER_COLUMN
+        else:
+            # Too small for the minimum to remove noise: it would remove the
+            # multi-modality combinations first, because those are the rarest.
+            assert len(block) >= len(qualifying)
+
+
+def test_a_small_theme_keeps_its_multimodal_columns(measured_dir: Path) -> None:
+    """The failure the author caught on 2026-09-09.
+
+    Digital twins holds 20 papers over 13 sets, and only three sets hold two or
+    more papers -- all three single-modality. Applying the two-paper minimum drew
+    a block that appeared to contain no multimodal work at all, while six of its
+    twenty papers use two or more modalities and one uses four.
+    """
+    data = io.load_figure_data(measured_dir)
+    block = panel_a._block_frame(data.combinations, "digital_twins", panel_a.DEFAULT_TOP_N)
+    multi = block.loc[block["n_modalities"] >= 2]
+    assert len(multi) >= 4, "a small theme's multi-modality sets must survive the cap"
+    assert int(block["n_modalities"].max()) >= 4, "including its richest combination"
+
+
+def test_ties_are_broken_toward_the_richer_combination(measured_dir: Path) -> None:
+    """Among sets holding equally many papers, draw the more informative one."""
+    data = io.load_figure_data(measured_dir)
+    block = panel_a._block_frame(data.combinations, "digital_twins", panel_a.DEFAULT_TOP_N)
+    for count, group in block.groupby("n_papers"):
+        modalities = group["n_modalities"].tolist()
+        assert modalities == sorted(modalities, reverse=True), (
+            f"sets holding {count} papers must be ordered richest first"
+        )
+
+
+def test_the_bars_still_sum_to_the_theme_after_the_minimum(measured_dir: Path) -> None:
+    """The minimum moves papers into the remainder; it must not drop them."""
+    data = io.load_figure_data(measured_dir)
+    for theme in style.PANEL_A_THEMES:
+        tail = panel_a._tail_summary(data.combinations, theme, panel_a.DEFAULT_TOP_N)
+        subset = data.combinations.loc[data.combinations["theme"] == theme]
+        assert tail.total_papers == int(subset["n_papers"].sum())
+        drawn = panel_a._block_frame(data.combinations, theme, panel_a.DEFAULT_TOP_N)
+        assert int(drawn["n_papers"].sum()) + tail.remainder_papers == tail.total_papers
+
+
+def test_a_block_is_wide_enough_for_its_own_caption(measured_dir: Path) -> None:
+    """A narrow block must not print its caption into its neighbour.
+
+    Panel A's block width follows its column count, while the caption's width
+    follows the digits in the theme total. On 2026-09-08 digital twins fell to
+    three drawn columns and its "n = 20 papers" overran the multimodal block's
+    "+230 sets". Blocks are now widened to hold their captions.
+    """
+    data = io.load_figure_data(measured_dir)
+    summaries = [
+        panel_a._tail_summary(data.combinations, theme, panel_a.DEFAULT_TOP_N)
+        for theme in style.PANEL_A_THEMES
+    ]
+    base = [
+        panel_a.block_slots(
+            len(panel_a._block_frame(data.combinations, theme, panel_a.DEFAULT_TOP_N)),
+            summary.draws_remainder,
+        )
+        for theme, summary in zip(style.PANEL_A_THEMES, summaries)
+    ]
+    rect_width, fig_w = 0.786, 7.5
+    slots = panel_a._slots_with_captions(base, summaries, rect_width, fig_w)
+    column_w = panel_a.column_width_in(rect_width, fig_w, sum(slots))
+    for summary, block_slots_, base_slots_ in zip(summaries, slots, base):
+        assert block_slots_ >= base_slots_, "a block may be widened, never narrowed"
+        assert block_slots_ * column_w >= panel_a._caption_width_in(summary) - 1e-9
+
+
+def test_no_two_block_captions_overlap(measured_dir: Path) -> None:
+    """The real guard: measured text boxes, not approximate glyph arithmetic.
+
+    Widening blocks to fit their captions was not sufficient, because the theme
+    total is centred under the block while the remainder's set count sits at the
+    right-hand edge, so the two collide on a narrow block however wide it is
+    made. They are drawn on separate lines now. This test measures what was
+    actually rendered, which is what the width arithmetic could not do.
+    """
+    import matplotlib.pyplot as plt
+
+    data = io.load_figure_data(measured_dir)
+    with plt.rc_context(style.rc_params()):
+        figure, _, _ = plot.build_figure(data)
+        figure.canvas.draw()
+        renderer = figure.canvas.get_renderer()
+        boxes = [
+            (text.get_text(), text.get_window_extent(renderer))
+            for text in figure.texts
+            if text.get_text().startswith(("n = ", "+")) or text.get_text() == "no papers"
+        ]
+        assert boxes, "the block captions must be on the figure"
+        for i, (label_a, box_a) in enumerate(boxes):
+            for label_b, box_b in boxes[i + 1 :]:
+                overlaps = not (
+                    box_a.x1 <= box_b.x0
+                    or box_b.x1 <= box_a.x0
+                    or box_a.y1 <= box_b.y0
+                    or box_b.y1 <= box_a.y0
+                )
+                assert not overlaps, f"{label_a!r} overlaps {label_b!r}"
+        plt.close(figure)
+
+
+def test_the_caption_has_one_definition(measured_dir: Path) -> None:
+    """The width calculation and the drawn text must not drift apart."""
+    data = io.load_figure_data(measured_dir)
+    summary = panel_a._tail_summary(
+        data.combinations, "digital_twins", panel_a.DEFAULT_TOP_N
+    )
+    assert panel_a.block_note_text(summary) == f"n = {summary.total_papers:,} papers"
+
+
+def test_the_figure_refuses_stale_labels(measured_dir: Path, tmp_path: Path) -> None:
+    """A figure is harder to un-publish than a number.
+
+    On 2026-09-08 a corpus run finished, the dictionaries were edited underneath
+    it, and a figure was built and reported from labels no configuration on disk
+    could reproduce. Nothing in the output said so.
+    """
+    import json
+    import shutil
+
+    staged = tmp_path / "processed"
+    shutil.copytree(measured_dir, staged)
+    manifest = {
+        "config": {
+            "themes": {"path": "config/themes.yaml", "version": 1, "sha256": "0" * 64},
+            "modalities": {
+                "path": "config/modalities.yaml", "version": 1, "sha256": "0" * 64,
+            },
+        }
+    }
+    (staged / "run_manifest.json").write_text(json.dumps(manifest))
+
+    with pytest.raises(plot.StaleInputs):
+        plot.build(staged, tmp_path / "figures", tag="stale")
+
+    result = plot.build(staged, tmp_path / "figures", tag="stale", stale_ok=True)
+    assert result.pdf.exists(), "--stale-ok must still draw, for a deliberate look back"
+
+
+def test_a_directory_without_a_manifest_still_draws(synthetic_dir: Path, tmp_path: Path) -> None:
+    """The synthetic tables have no run manifest and must not be blocked by one."""
+    result = plot.build(synthetic_dir, tmp_path / "figures", tag="synthetic")
+    assert result.pdf.exists()

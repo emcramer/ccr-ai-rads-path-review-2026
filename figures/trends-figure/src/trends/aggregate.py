@@ -13,6 +13,16 @@ Two properties the tests hold it to:
 * Within a theme, the combination counts sum to that theme's paper count. Every
   paper carries at least one modality, because a paper matching none is given
   ``other``, so every paper falls in exactly one column of its theme's block.
+* The two output tables draw on **different populations**, per the author's ruling
+  of 2026-09-08 and the "two panels draw on different populations" section of
+  ``docs/figure-spec.md``. ``combination_counts.csv``, which Panel A reads, is
+  built from primary research only: Panel A asks what data primary research
+  actually uses, and a review discussing a modality without using one would
+  corrupt it. ``theme_year_counts.csv``, which Panel B reads, is built from every
+  retained record including reviews and editorials: Panel B asks how attention to
+  a theme moves over time, and a review naming a theme is evidence of attention.
+  The two therefore have different denominators and **no number from one may be
+  quoted against the other**.
 * ``theme_year_counts.csv`` carries the full domain breakdown of every theme,
   and the four domain rows partition it: ``radiology + pathology + both + none``
   equals ``all``. ``radiology + pathology`` alone does not, because a
@@ -66,6 +76,37 @@ MODALITY_KEYS: Final[tuple[str, ...]] = (
 #: include pattern matched, when no named modality matched, or both.
 OTHER_MODALITY: Final[str] = "other"
 
+#: Minimum modality labels a theme requires **for Panel A's view**, by theme key.
+#:
+#: Some themes are defined by combination: a multimodal model has, by definition,
+#: at least two modalities in its training. A paper carrying the theme and one
+#: modality label is a term match, not a multimodal study.
+#:
+#: This is a condition on Panel A's **view**, not on the label. The predicate is
+#: derived from what a multimodal *model* is — it used two modalities while being
+#: built — and that applies to a study that built something. It does not apply to
+#: a review, which uses no modalities at all. Enforcing it on the label would drop
+#: reviews that genuinely discuss multimodal integration because their abstract
+#: happens to name one modality, which for an engagement measure is a category
+#: error, and would re-open the conflict the panel split resolved. Author's
+#: wording, 2026-09-09: "none of the papers classified as primary research in
+#: multimodal integration should have only one modality."
+#:
+#: ``other`` counts toward the minimum — CT plus a liquid biopsy is a genuine
+#: pairing. ``non_specialty`` cannot, because it is never a label at all.
+#:
+#: The coupling this creates is worth understanding before adding an entry: a
+#: theme here is no longer decided by its own dictionary alone, because a modality
+#: the classifier misses can push a genuinely multimodal paper below the minimum.
+#: That is why two counts are always reported side by side; see
+#: :func:`minimum_modality_shortfalls`.
+MINIMUM_MODALITIES: Final[dict[str, int]] = {"multimodal_integration": 2}
+
+#: Name of the flag that separates the two panels' populations: 1 for a primary
+#: research article, 0 for a review, editorial, comment, letter, meta-analysis or
+#: other secondary publication type. Both are retained; only Panel A filters.
+PRIMARY_RESEARCH: Final[str] = "is_primary_research"
+
 #: The ``domain`` values emitted for every theme, in the order they are written.
 #:
 #: ``all`` is the theme total. The other four are the values of the ``domain``
@@ -104,7 +145,7 @@ def paper_label_columns(
         ("pmid", "year", "year_source")
         + tuple(f"theme_{key}" for key in theme_keys)
         + tuple(f"mod_{key}" for key in modality_keys)
-        + ("domain",)
+        + ("domain", PRIMARY_RESEARCH)
     )
 
 
@@ -133,7 +174,7 @@ PAPER_LABEL_COLUMNS: Final[tuple[str, ...]] = (
     ("pmid", "year", "year_source")
     + tuple(f"theme_{key}" for key in THEME_KEYS)
     + tuple(f"mod_{key}" for key in MODALITY_KEYS)
-    + ("domain",)
+    + ("domain", PRIMARY_RESEARCH)
 )
 
 #: Column order of ``combination_counts.csv``.
@@ -183,23 +224,97 @@ def add_modality_set(labels: pd.DataFrame) -> pd.Series:
     )
 
 
-def build_combination_counts(labels: pd.DataFrame) -> pd.DataFrame:
+def primary_research(labels: pd.DataFrame) -> pd.DataFrame:
+    """Return the primary-research subset of a labels table.
+
+    A table without the flag is returned unchanged, so a hand-built frame in a
+    test still reduces. In production the flag is always present.
+    """
+    if PRIMARY_RESEARCH not in labels.columns:
+        return labels
+    return labels.loc[labels[PRIMARY_RESEARCH].astype("int64") == 1]
+
+
+def minimum_modality_shortfalls(
+    labels: pd.DataFrame,
+) -> tuple[dict[str, int], dict[str, int]]:
+    """Count papers falling below a theme's combination minimum, two ways.
+
+    Both numbers matter and must be read together, because the shortfall measures
+    two different things at once: how far a theme's language over-calls, and how
+    far modality recall falls short. A paper predicting Ki-67 from CT is
+    multimodal and reads as single-modality only because the target was not
+    labelled.
+
+    Returns:
+        ``panel_a`` — primary-research papers excluded from Panel A's block for
+        that theme, the removal that actually happens; and ``corpus_wide`` — every
+        retained paper carrying the theme below the minimum, whatever its
+        publication type. The second is the over-call measure and is the number
+        that should fall as the theme's vocabulary is tightened.
+    """
+    panel_a: dict[str, int] = {}
+    corpus_wide: dict[str, int] = {}
+    if labels.empty:
+        return panel_a, corpus_wide
+    counts = labels[[f"mod_{key}" for key in modality_keys_of(labels)]].sum(axis=1)
+    primary = (
+        labels[PRIMARY_RESEARCH].astype("int64") == 1
+        if PRIMARY_RESEARCH in labels.columns
+        else pd.Series(True, index=labels.index)
+    )
+    for theme, minimum in MINIMUM_MODALITIES.items():
+        column = f"theme_{theme}"
+        if column not in labels.columns:
+            continue
+        short = (labels[column].astype("int64") == 1) & (counts < minimum)
+        corpus_wide[theme] = int(short.sum())
+        panel_a[theme] = int((short & primary).sum())
+    return panel_a, corpus_wide
+
+
+def build_combination_counts(
+    labels: pd.DataFrame, *, primary_only: bool = True
+) -> pd.DataFrame:
     """Count papers per theme and exact modality combination.
 
     A paper appears once in each theme it carries, in the single column for its
     exact modality set. Rows are ranked by paper count descending; ties break on
     set size ascending, then on the set string, so the ranking is reproducible.
 
+    Panel A reads this table, so by default it applies **both** of that panel's
+    view conditions: primary research only, and, for a theme in
+    :data:`MINIMUM_MODALITIES`, only papers carrying at least that many modality
+    labels. The two conditions belong together; a reader who finds one and not the
+    other will misread the table.
+    A review that discusses a modality without using one is evidence of attention,
+    not of data use, and would corrupt a panel whose question is what primary
+    research consumes. ``primary_only=False`` is for diagnostics that want the
+    whole retained corpus; the shipped table never uses it.
+
     Args:
         labels: The per-paper table, in ``paper_labels.csv`` shape.
+        primary_only: Restrict to rows flagged ``is_primary_research``.
 
     Returns:
         ``combination_counts.csv`` as a frame, themes in figure block order.
     """
+    if primary_only:
+        labels = primary_research(labels)
+    if labels.empty:
+        return pd.DataFrame(columns=list(COMBINATION_COLUMNS))
     sets = add_modality_set(labels)
+    modality_count = labels[
+        [f"mod_{key}" for key in modality_keys_of(labels)]
+    ].sum(axis=1)
     rows: list[dict] = []
     for theme in theme_keys_of(labels):
         in_theme = labels[f"theme_{theme}"].to_numpy(dtype=bool)
+        # The second condition on Panel A's view, beside primary research: a
+        # theme defined by combination admits only papers that carry its minimum.
+        minimum = MINIMUM_MODALITIES.get(theme)
+        if primary_only and minimum:
+            in_theme = in_theme & (modality_count >= minimum).to_numpy(dtype=bool)
         counts = sets.loc[in_theme].value_counts()
         block = pd.DataFrame(
             {
@@ -229,6 +344,13 @@ def build_theme_year_counts(
     years: Sequence[int] | None = None,
 ) -> pd.DataFrame:
     """Count papers per theme, domain, and year.
+
+    Panel B reads this table, so it counts **every retained record**, reviews and
+    editorials included. Its question is how attention to a theme moves over
+    time, and a review naming a theme as a future direction is attention. This is
+    the deliberate counterpart to :func:`build_combination_counts`, which counts
+    primary research only; the two denominators differ and must never be quoted
+    against each other.
 
     Every theme gets the full set of :data:`DOMAIN_SERIES`, and the figure
     chooses which rows to draw. Emitting the whole breakdown costs a few hundred

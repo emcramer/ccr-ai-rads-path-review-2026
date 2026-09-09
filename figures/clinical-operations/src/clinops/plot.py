@@ -42,29 +42,80 @@ from .plotting import (  # noqa: E402
     panel_b,
 )
 
-#: Figure size in inches. Portrait, and the width is a single CCR manuscript
-#: page. The width is set by Panel A's right-hand gutter, which carries nine
-#: device names and two series labels: at 5.8 pt the widest of them measures
-#: about 1.35 in, and the plot needs the rest to keep thirty-two years at a
-#: pitch where a marker is not touching its neighbour. The height is what Panel
-#: A needs for a log axis that spans 0.8 to about 140 with eleven gutter labels
-#: stacked beside it, plus Panel B and its key. Nothing is shrunk to hide
-#: crowding.
-FIGURE_SIZE: tuple[float, float] = (7.0, 8.0)
-
-#: Base name of the output files, before the optional tag.
+#: Base name of the output files, before the layout suffix and optional tag.
 OUTPUT_STEM = "clinical_operations"
 
-# Figure-fraction geometry. Read these as the inches they stand for on the
-# 7.0 x 8.0 in canvas:
+
+@dataclass(frozen=True)
+class Layout:
+    """One arrangement of the two panels on a canvas.
+
+    The figure is published portrait, one panel above the other, which is what a
+    single-column CCR page takes. The landscape arrangement exists because a
+    two-panel figure sometimes has to sit across a spread or a slide, and
+    redrawing it by hand for that would mean two figures that could drift apart.
+    Both are built from the same data on every run, so they cannot disagree.
+
+    Every geometry field is a figure fraction, because that is what matplotlib
+    takes, but each is written below as the inches it stands for on its own
+    canvas. Read the inches; the fractions are arithmetic.
+
+    Attributes:
+        name: Human name, used in the summary sheet.
+        suffix: Appended to :data:`OUTPUT_STEM`. Empty for the published
+            portrait, so its filenames do not move and the manuscript keeps
+            working.
+        figure_size: Canvas, in inches.
+        panel_a_rect: Panel A's axes rect, figure fractions.
+        panel_b_rect: Panel B's axes rect, figure fractions.
+        panel_a_title_x: Panel A's title offset, in axes fractions.
+        panel_b_title_x: Panel B's title offset, in axes fractions.
+        letters: ``(letter, x, y)`` in figure fractions, one per panel.
+        panel_b_vertical: Draw Panel B as columns rather than rows. Follows the
+            shape of ``panel_b_rect``, not taste: rows suit a wide short panel,
+            columns a narrow tall one.
+        note: Why this canvas is the size it is.
+    """
+
+    name: str
+    suffix: str
+    figure_size: tuple[float, float]
+    panel_a_rect: tuple[float, float, float, float]
+    panel_b_rect: tuple[float, float, float, float]
+    panel_a_title_x: float
+    panel_b_title_x: float
+    letters: tuple[tuple[str, float, float], ...]
+    note: str
+    panel_b_vertical: bool = False
+
+
+def _rect(
+    left_in: float,
+    bottom_in: float,
+    width_in: float,
+    height_in: float,
+    canvas: tuple[float, float],
+) -> tuple[float, float, float, float]:
+    """Convert a rect in inches to figure fractions.
+
+    The geometry is reasoned about in inches -- gutters hold labels of a known
+    physical width -- and matplotlib wants fractions. Doing the division here
+    rather than by hand keeps the two from drifting apart when a canvas changes.
+    """
+    width, height = canvas
+    return (left_in / width, bottom_in / height, width_in / width, height_in / height)
+
+
+# -- Portrait: the published arrangement -------------------------------------
 #
+#   canvas    7.0 x 8.0 in
 #   Panel A   left 0.62 in, bottom 3.30 in, 4.85 x 4.05 in
 #   Panel B   left 0.95 in, bottom 0.95 in, 5.20 x 1.45 in
 #
 # Panel A's left edge is where the plot begins; the 0.62 in to its left holds
 # the y tick labels and the rotated axis title. It stops 1.53 in short of the
 # right edge, and that gutter is the reason the figure is 7.0 in wide rather
-# than narrower: it holds nine device labels and two series labels, and a longer
+# than narrower: it holds the device labels and two series labels, and a longer
 # device name needs the gutter widened, not the type shrunk.
 #
 # Panel B's left edge leaves 0.95 in for the two domain labels and its right
@@ -72,21 +123,83 @@ OUTPUT_STEM = "clinical_operations"
 # three-swatch pathway key, which is why its bottom is 0.95 in up from the paper
 # edge rather than tight against it.
 #
-# Change history:
-#   2026-09-03  first geometry, at 7.0 x 8.0 in.
-_PANEL_A_RECT = (0.0886, 0.4125, 0.6929, 0.5063)
-_PANEL_B_RECT = (0.1357, 0.1188, 0.7429, 0.1813)
-
 # Both panel titles start 0.36 in from the paper edge, immediately right of
 # their panel letter, rather than at their own plot's left edge -- which would
 # indent Panel A's title by 0.62 in and Panel B's by 0.95 in and leave the two
-# titles on different margins for no reason but their gutters. In axes
-# fractions, that is -(gutter - 0.36) / plot width.
-_PANEL_A_TITLE_X = -(0.62 - 0.36) / 4.85
-_PANEL_B_TITLE_X = -(0.95 - 0.36) / 5.20
+# titles on different margins for no reason but their gutters.
+#
+# Change history:
+#   2026-09-03  first geometry, at 7.0 x 8.0 in.
+_PORTRAIT_CANVAS = (7.0, 8.0)
+PORTRAIT = Layout(
+    name="portrait",
+    suffix="",
+    figure_size=_PORTRAIT_CANVAS,
+    panel_a_rect=_rect(0.62, 3.30, 4.85, 4.05, _PORTRAIT_CANVAS),
+    panel_b_rect=_rect(0.95, 0.95, 5.20, 1.45, _PORTRAIT_CANVAS),
+    panel_a_title_x=-(0.62 - 0.36) / 4.85,
+    panel_b_title_x=-(0.95 - 0.36) / 5.20,
+    letters=(("A", 0.012, 0.988), ("B", 0.012, 0.345)),
+    note=(
+        "Single CCR manuscript column. Width set by Panel A's 1.53 in gutter, "
+        "height by its log axis plus Panel B and its key."
+    ),
+)
 
-#: Figure-fraction position of each panel letter, and of the panel it names.
-_PANEL_LETTERS = (("A", 0.988), ("B", 0.345))
+# -- Landscape: panels side by side ------------------------------------------
+#
+#   canvas    12.0 x 5.5 in
+#   Panel A   left 0.62 in, bottom 0.80 in, 4.85 x 4.05 in
+#   Panel B   left 7.85 in, bottom 1.30 in, 3.30 x 3.55 in, drawn as COLUMNS
+#
+# Panel A keeps its portrait plot width of 4.85 in exactly, and this is not
+# cosmetic. Its gutter labels are placed in DATA coordinates a fixed number of
+# years past the last point, but their text has a fixed physical width, so the
+# gutter only stays 1.53 in wide while the axes stay 4.85 in wide over the same
+# thirty-two years. Narrow the plot and the labels do not shrink -- they run
+# into Panel B. So Panel A occupies 0.62 + 4.85 + 1.53 = 7.00 in, and Panel B's
+# block begins there.
+#
+# Panel B is drawn as columns here rather than as rows. Beside Panel A the space
+# is narrow and tall, which is the wrong shape for horizontal bars twice over:
+# they leave most of the height empty, and they squeeze radiology's two thin
+# segments into the width that is left. At 3.30 in wide, radiology's 1.0 % De
+# Novo segment is 0.03 in across. Turned upright in a 3.55 in column it is
+# 0.13 in tall -- four times the room, in a panel that now fills its space.
+# The bars stay 100 %-normalized, so nothing about the comparison changes.
+#
+# Panel B's top is aligned with Panel A's top rather than centred against it, so
+# both panel letters and both panel titles sit on one line. A reader scans for
+# the letters first, and two letters at different heights makes them hunt.
+#
+# Change history:
+#   2026-09-03  first geometry, at 12.0 x 5.5 in, Panel B as rows.
+#   2026-09-03  Panel B turned upright; its rect went 3.45 x 1.75 -> 3.30 x 3.55.
+_LANDSCAPE_CANVAS = (12.0, 5.5)
+LANDSCAPE = Layout(
+    name="landscape",
+    suffix="_landscape",
+    figure_size=_LANDSCAPE_CANVAS,
+    panel_a_rect=_rect(0.62, 0.80, 4.85, 4.05, _LANDSCAPE_CANVAS),
+    panel_b_rect=_rect(7.85, 1.30, 3.30, 3.55, _LANDSCAPE_CANVAS),
+    panel_a_title_x=-(0.62 - 0.36) / 4.85,
+    # Panel B's block starts at 7.00 in, so its title starts 0.36 in past that,
+    # the same offset from its own letter that Panel A's title has from its own.
+    panel_b_title_x=(7.00 + 0.36 - 7.85) / 3.30,
+    letters=(("A", 0.012, 0.988), ("B", 7.00 / 12.0, 0.988)),
+    panel_b_vertical=True,
+    note=(
+        "Two panels side by side, for a spread or a slide. Panel A keeps its "
+        "portrait plot width so its gutter geometry is unchanged; Panel B is "
+        "drawn as columns to use the height."
+    ),
+)
+
+#: Every layout built on a run. The published portrait is first.
+LAYOUTS: tuple[Layout, ...] = (PORTRAIT, LANDSCAPE)
+
+#: Layouts by name, for the command line.
+LAYOUTS_BY_NAME: dict[str, Layout] = {layout.name: layout for layout in LAYOUTS}
 
 #: A snapshot whose last decision falls before this month leaves the final year
 #: partial. FDA's device list is a snapshot with a cut-off, not a closed year:
@@ -132,6 +245,7 @@ class BuildResult:
     panel_a: panel_a.PanelA
     panel_b: panel_b.PanelB
     margin_in: float
+    layout: Layout = PORTRAIT
 
 
 def partial_year(data: io.FigureData) -> int | None:
@@ -188,34 +302,42 @@ def measure_margin(figure: Figure) -> tuple[float, list[tuple[str, float]]]:
     return margin, overflows
 
 
-def build_figure(data: io.FigureData) -> tuple[Figure, panel_a.PanelA, panel_b.PanelB]:
+def build_figure(
+    data: io.FigureData, layout: Layout = PORTRAIT
+) -> tuple[Figure, panel_a.PanelA, panel_b.PanelB]:
     """Draw both panels onto a new figure.
 
     Args:
         data: Validated input tables.
+        layout: Where the panels go. Both layouts draw the same data with the
+            same code; only the geometry differs.
 
     Returns:
         The figure, what Panel A drew, and what Panel B drew.
     """
-    figure = plt.figure(figsize=FIGURE_SIZE)
+    figure = plt.figure(figsize=layout.figure_size)
     first = panel_a.draw(
         figure,
         data.cumulative,
         data.authorizations,
-        _PANEL_A_RECT,
+        layout.panel_a_rect,
         partial_year=partial_year(data),
-        title_x=_PANEL_A_TITLE_X,
+        title_x=layout.panel_a_title_x,
     )
     second = panel_b.draw(
-        figure, data.pathways, _PANEL_B_RECT, title_x=_PANEL_B_TITLE_X
+        figure,
+        data.pathways,
+        layout.panel_b_rect,
+        title_x=layout.panel_b_title_x,
+        vertical=layout.panel_b_vertical,
     )
 
     # Panel letters: bold serif in ink, and the largest type on the page, per
     # section 2 of ``../../ink_style_guide.md``. They are the only element of
     # the figure that has to be findable before anything is read.
-    for letter, y in _PANEL_LETTERS:
+    for letter, x, y in layout.letters:
         figure.text(
-            0.012,
+            x,
             y,
             letter,
             fontsize=style.FS_PANEL_LETTER,
@@ -234,6 +356,7 @@ def summary_text(
     second: panel_b.PanelB,
     tag: str | None,
     margin_in: float,
+    layout: Layout = PORTRAIT,
 ) -> str:
     """Compose the numbers the figure legend needs, as plain text."""
     years = data.years
@@ -247,15 +370,21 @@ def summary_text(
         "Clinical operations figure — numbers for the legend",
         f"source directory : {data.source}",
         f"tag              : {tag or '(none)'}",
+        f"layout           : {layout.name}, {layout.figure_size[0]:g} x {layout.figure_size[1]:g} in",
         f"snapshot through : {data.snapshot_date} (latest decision date in the table)",
         f"year range       : {years[0]}-{years[-1]}",
         f"partial year     : {first.partial_year if first.partial_year else 'none'}",
         f"authorizations   : {len(data.authorizations):,} oncology-certain rows",
         "",
-        "The counts are a FLOOR, not an estimate. A product code counts only where FDA's",
-        "own regulation definition or device-type name states the cancer indication, so",
-        "devices under generic codes (QIH alone holds 274) are excluded even where some",
-        "of them are certainly oncologic. See config/oncology_codes.yaml.",
+        "The counts are a FLOOR, not an estimate. Every device on the Radiology and",
+        "Pathology panels is classified individually against its authorized indication",
+        "(config/adjudication/), because FDA's product codes do not separate cancer",
+        "reliably in either direction: the cancer-specific codes were created only around",
+        "2018-2020, so earlier computer-aided detection sits under generic ones. Devices",
+        "that could not be resolved from the published fields are excluded and reported as",
+        "a residual band. One row is one AUTHORIZATION, not one cancer-directed",
+        "capability: a clearance covering a platform that bundles a cancer feature among",
+        "others is not counted. See docs/source-strategy.md before quoting any number.",
         "",
         "Panel A — cumulative authorizations, log y axis",
         f"  y axis           : {first.y_limits[0]:g} to {first.y_limits[1]:,.0f}, log scale;"
@@ -347,6 +476,7 @@ def build(
     input_dir: str | Path,
     output_dir: str | Path,
     tag: str | None = None,
+    layout: Layout = PORTRAIT,
 ) -> BuildResult:
     """Read the tables, draw the figure, and write PDF, PNG, SVG, and summary.
 
@@ -367,19 +497,21 @@ def build(
     data = io.load_figure_data(input_dir)
     destination = Path(output_dir)
     destination.mkdir(parents=True, exist_ok=True)
-    stem = OUTPUT_STEM if not tag else f"{OUTPUT_STEM}_{tag}"
+    stem = f"{OUTPUT_STEM}{layout.suffix}"
+    if tag:
+        stem = f"{stem}_{tag}"
 
     with plt.rc_context(style.rc_params()):
-        figure, first, second = build_figure(data)
+        figure, first, second = build_figure(data, layout)
         figure.canvas.draw()
         margin_in, overflows = measure_margin(figure)
         if overflows:
             plt.close(figure)
             worst = "; ".join(f"{text!r} by {-amount:.3f} in" for text, amount in overflows[:5])
             raise LabelOverflow(
-                f"{len(overflows)} label(s) drawn off the canvas: {worst}. Widen the "
-                "gutter or shorten the label; do not shrink the type below the ladder "
-                "in trends.plotting.style."
+                f"{layout.name}: {len(overflows)} label(s) drawn off the canvas: "
+                f"{worst}. Widen the gutter or shorten the label; do not shrink the "
+                "type below the ladder in trends.plotting.style."
             )
         pdf = destination / f"{stem}.pdf"
         png = destination / f"{stem}.png"
@@ -392,7 +524,7 @@ def build(
         plt.close(figure)
 
     summary = destination / f"{stem}_summary.txt"
-    text = summary_text(data, first, second, tag, margin_in)
+    text = summary_text(data, first, second, tag, margin_in, layout)
     summary.write_text(text, encoding="utf-8")
     return BuildResult(
         pdf=pdf,
@@ -403,6 +535,7 @@ def build(
         panel_a=first,
         panel_b=second,
         margin_in=margin_in,
+        layout=layout,
     )
 
 
@@ -423,15 +556,39 @@ def main(argv: list[str] | None = None) -> int:
         default=None,
         help="suffix for the output file names, e.g. 'fixture'",
     )
+    parser.add_argument(
+        "--layout",
+        default="both",
+        choices=("both", *LAYOUTS_BY_NAME),
+        help=(
+            "which arrangement to build. 'portrait' is the published figure and keeps "
+            "the unsuffixed filenames; 'landscape' puts the panels side by side and "
+            "writes *_landscape.*. Default builds both, so they cannot drift apart."
+        ),
+    )
     args = parser.parse_args(argv)
 
-    result = build(args.input, args.output, tag=args.tag)
-    print(f"wrote {result.pdf}")
-    print(f"wrote {result.png}")
-    print(f"wrote {result.svg}")
-    print(f"wrote {result.summary}")
+    if args.layout == "both":
+        chosen = LAYOUTS
+    else:
+        chosen = (LAYOUTS_BY_NAME[args.layout],)
+
+    results = [
+        build(args.input, args.output, tag=args.tag, layout=layout) for layout in chosen
+    ]
+    for result in results:
+        print(f"[{result.layout.name}] {result.layout.note}")
+        for path in (result.pdf, result.png, result.svg, result.summary):
+            print(f"  wrote {path}")
+        print(f"  least clearance to the paper edge: {result.margin_in:.3f} in")
     print()
-    print(summary_text(result.data, result.panel_a, result.panel_b, args.tag, result.margin_in))
+    # One number sheet on stdout. The counts are identical across layouts by
+    # construction -- same data, same drawing code -- so printing them twice
+    # would only invite a reader to look for a difference that cannot exist.
+    first = results[0]
+    print(summary_text(
+        first.data, first.panel_a, first.panel_b, args.tag, first.margin_in, first.layout
+    ))
     return 0
 
 

@@ -1,203 +1,246 @@
+FRESHNESS: current at the time of writing.
+  themes.yaml, modalities.yaml on disk match the digests this run consumed.
+  Re-check before quoting any number from this file:
+      python -m trends.classify --check --output <dir> --config-dir config
+
 CLASSIFICATION DIAGNOSTIC REPORT
 ==============================================================================
-generated_utc   : 2026-09-03T16:51:53Z
+generated_utc   : 2026-09-09T14:09:07Z
 records         : data/interim/records.parquet
-themes.yaml     : v10  756010f21037  6 categories, 59 patterns
-modalities.yaml : v6  6b3065142bc8  15 categories, 150 patterns
+themes.yaml     : v12  5fdcca62e9c2  6 categories, 68 patterns
+modalities.yaml : v13  35964adafb39  16 categories, 164 patterns
 
 records read     :  44,625
-  excluded, book_records  :     8
-  excluded, missing_pmid  :     0
-  excluded, missing_year  :     0
-  excluded, outside_date_range:    84
-records analysed :  44,533
+  excluded, book_records                    8  0.0%
+  excluded, missing_pmid                    0  0.0%
+  excluded, missing_year                    0  0.0%
+  excluded, outside_date_range             84  0.2%
+  excluded, non_specialty_only          1,454  3.3%
+records analysed :  43,079
+
+TWO POPULATIONS. The panels answer different questions and their
+denominators differ; no number from one may be quoted against the other.
+  Panel B, engagement      (all retained records) :  43,079
+  Panel A, primary research (is_primary_research) :  36,321
+  flagged secondary, kept for Panel B only        :   6,758  15.7%
+      Review                                    4,952
+      Systematic Review                           879
+      Editorial                                   467
+      Meta-Analysis                               395
+      Comment                                     379
+      Letter                                      219
+      Retracted Publication                       168
+      Published Erratum                           107
+      Scoping Review                               77
+      Practice Guideline                           17
+      Historical Article                           16
+      News                                         12
+      Guideline                                     2
 year range       : 2015-2026
+
+THEMES DEFINED BY COMBINATION
+------------------------------------------------------------------------------
+A theme defined by combination cannot be satisfied by one modality. This is
+a condition on PANEL A'S VIEW, alongside primary research; the label is kept
+and Panel B still counts the paper. A review uses no modalities, so the
+predicate does not apply to it.
+
+Read the two counts together. The shortfall measures how far the theme's
+language over-calls AND how far modality recall falls short: a paper
+predicting Ki-67 from CT is multimodal and reads as single-modality only
+because the target was not labelled. A count that falls when recall improves
+was never about the theme.
+  multimodal_integration  (minimum 2 modalities)
+    held out of Panel A        1,170 of 3,897 primary (30.0%) -> Panel A draws 2,727
+    corpus-wide shortfall      1,601 of 5,036 retained (31.8%)   <- the over-call measure
 
 THEMES
 ------------------------------------------------------------------------------
-theme                       papers   share  distribution
-foundation_models            1,226    2.8%  #
-multimodal_integration       4,654   10.5%  ###
-digital_twins                   56    0.1%  
-clinical_fda                    93    0.2%  
-virtual_staining                65    0.1%  
-agentic_ai                      35    0.1%  
-(no theme)                  38,767   87.1%  ########################
-(two or more themes)           338    0.8%
+`retained` is Panel B's count; `primary` is Panel A's. They are different
+populations, not an error.
+theme                       retained   primary   share  distribution
+foundation_models              1,186     1,021    2.8%  #
+multimodal_integration         5,036     3,897   11.7%  ###
+digital_twins                     52        20    0.1%  
+clinical_fda                      91        69    0.2%  
+virtual_staining                  65        63    0.2%  
+agentic_ai                        34        25    0.1%  
+(no theme)                  37,024   85.9%  ########################
+(two or more themes)           383    0.9%
 
 MODALITIES
 ------------------------------------------------------------------------------
 modality                    papers   share  distribution
-he_histology                 6,432   14.4%  ####
-ihc                          2,132    4.8%  #
-spatial_proteomics             325    0.7%  
-spatial_transcriptomics        453    1.0%  
+he_histology                 7,046   16.4%  #####
+ihc                          2,966    6.9%  ##
+spatial_proteomics             325    0.8%  
+spatial_transcriptomics        453    1.1%  
 pathology_report               226    0.5%  
-mri                         12,363   27.8%  ########
-ct                          12,566   28.2%  ########
-pet                          3,325    7.5%  ##
-ultrasound                   4,730   10.6%  ###
-mammography                  2,203    4.9%  #
+mri                         12,363   28.7%  ########
+ct                          12,566   29.2%  ########
+pet                          3,325    7.7%  ##
+ultrasound                   4,730   11.0%  ###
+mammography                  2,203    5.1%  #
 xray                           602    1.4%  
-radiology_report               325    0.7%  
-genomics                     3,550    8.0%  ##
-clinical_data                6,127   13.8%  ####
-other                        9,514   21.4%  ######
-(two or more named)         13,847   31.1%
+radiology_report               325    0.8%  
+genomics                     4,829   11.2%  ###
+clinical_data                6,078   14.1%  ####
+other                        6,307   14.6%  ####
+(two or more named)         15,284   35.5%
 
 How `other` was assigned. A pattern match means the paper uses a data type
 outside the named rows; the fallback means no named modality was found at all,
 which is an unknown, not a finding.
-  other by pattern           4,470
-  other by fallback          5,044
+  other by pattern           1,475
+  other by fallback          4,832
 
 Named modalities per paper. The multimodal theme is drawn from this.
-  0 named                    6,730   15.1%  ####
-  1 named                   23,956   53.8%  ###############
-  2 named                   10,815   24.3%  #######
-  3 named                    2,473    5.6%  ##
-  4 named+                     559    1.3%  
+  0 named                    5,165   12.0%  ###
+  1 named                   22,630   52.5%  ###############
+  2 named                   11,343   26.3%  #######
+  3 named                    3,189    7.4%  ##
+  4 named+                     752    1.7%  
 
 DOMAIN
 ------------------------------------------------------------------------------
-radiology                   28,417   63.8%  ##################
-none                         7,748   17.4%  #####
-pathology                    7,327   16.5%  #####
-both                         1,041    2.3%  #
+radiology                   27,353   63.5%  ##################
+pathology                    7,480   17.4%  #####
+none                         6,141   14.3%  ####
+both                         2,105    4.9%  #
 
 MODALITY COMBINATIONS  (the top 12 per theme, as Panel A draws them)
 ------------------------------------------------------------------------------
+PRIMARY RESEARCH ONLY: 36,321 of 43,079 retained records. These
+counts are Panel A's and are smaller than the theme counts above.
 Panel A draws these 12 columns and one further column holding
 every remaining paper in the theme. Nothing is hidden and no paper is dropped:
 each block's bars sum to the theme's paper count. The line under each block
 says what the remainder column carries.
 
-foundation_models  (1,226 papers, 139 distinct combinations)
-     1. other                                             212   17.3%
-     2. he_histology                                      200   16.3%
-     3. mri                                                79    6.4%
-     4. ct                                                 78    6.4%
-     5. ultrasound                                         54    4.4%
-     6. pathology_report                                   51    4.2%
-     7. ct+radiology_report                                35    2.9%
-     8. mri+radiology_report                               31    2.5%
-     9. radiology_report                                   30    2.4%
-    10. clinical_data+he_histology                         25    2.0%
-    11. mammography                                        23    1.9%
-    12. clinical_data                                      20    1.6%
-    remainder column: 127 further combination(s), 388 papers (31.6%)
+foundation_models  (1,021 papers, 108 distinct combinations)
+     1. he_histology                                      157   15.4%
+     2. other                                             148   14.5%
+     3. ct                                                 77    7.5%
+     4. mri                                                67    6.6%
+     5. ultrasound                                         51    5.0%
+     6. pathology_report                                   50    4.9%
+     7. ct+radiology_report                                35    3.4%
+     8. genomics+he_histology                              31    3.0%
+     9. mri+radiology_report                               29    2.8%
+    10. radiology_report                                   27    2.6%
+    11. mammography                                        21    2.1%
+    12. radiology_report+ultrasound                        18    1.8%
+    remainder column: 96 further combination(s), 310 papers (30.4%)
 
-multimodal_integration  (4,654 papers, 317 distinct combinations)
-     1. mri                                               406    8.7%
-     2. other                                             362    7.8%
-     3. clinical_data+mri                                 243    5.2%
-     4. clinical_data+ct                                  213    4.6%
-     5. ultrasound                                        206    4.4%
-     6. genomics                                          203    4.4%
-     7. genomics+mri                                      203    4.4%
-     8. ct                                                173    3.7%
-     9. he_histology                                      165    3.5%
-    10. genomics+he_histology                             138    3.0%
-    11. ct+pet                                            132    2.8%
-    12. ct+genomics                                        94    2.0%
-    remainder column: 305 further combination(s), 2,116 papers (45.5%)
+multimodal_integration  (3,897 papers, 256 distinct combinations)
+     1. clinical_data+mri                                 217    5.6%
+     2. genomics+mri                                      205    5.3%
+     3. clinical_data+ct                                  202    5.2%
+     4. genomics+he_histology                             187    4.8%
+     5. ct+pet                                            116    3.0%
+     6. ct+genomics                                       110    2.8%
+     7. ct+mri                                             89    2.3%
+     8. clinical_data+ultrasound                           82    2.1%
+     9. clinical_data+ct+genomics                          64    1.6%
+    10. genomics+ihc                                       56    1.4%
+    11. clinical_data+genomics+mri                         55    1.4%
+    12. clinical_data+he_histology                         53    1.4%
+    remainder column: 244 further combination(s), 1,291 papers (33.1%)
 
-digital_twins  (56 papers, 31 distinct combinations)
-     1. other                                              14   25.0%
-     2. genomics                                            4    7.1%
-     3. he_histology                                        4    7.1%
-     4. mri                                                 3    5.4%
-     5. ct                                                  2    3.6%
-     6. ultrasound                                          2    3.6%
-     7. clinical_data+genomics+other                        2    3.6%
-     8. ct+genomics+mri+pet                                 2    3.6%
-     9. clinical_data                                       1    1.8%
-    10. pet                                                 1    1.8%
-    11. clinical_data+genomics                              1    1.8%
-    12. clinical_data+other                                 1    1.8%
-    remainder column: 19 further combination(s), 19 papers (33.9%)
+digital_twins  (20 papers, 13 distinct combinations)
+     1. other                                               4   20.0%
+     2. ct                                                  3   15.0%
+     3. mri                                                 3   15.0%
+     4. clinical_data                                       1    5.0%
+     5. he_histology                                        1    5.0%
+     6. pet                                                 1    5.0%
+     7. ultrasound                                          1    5.0%
+     8. clinical_data+pet                                   1    5.0%
+     9. ct+pet                                              1    5.0%
+    10. ct+radiology_report                                 1    5.0%
+    11. ct+xray                                             1    5.0%
+    12. genomics+he_histology+mammography                   1    5.0%
+    remainder column: 1 further combination(s), 1 papers (5.0%)
 
-clinical_fda  (93 papers, 27 distinct combinations)
-     1. mammography                                        17   18.3%
-     2. other                                              16   17.2%
-     3. he_histology                                       10   10.8%
-     4. ct                                                  9    9.7%
-     5. mri                                                 8    8.6%
-     6. ultrasound                                          5    5.4%
-     7. ct+mri+other                                        3    3.2%
-     8. ct+other                                            2    2.2%
-     9. ct+pet                                              2    2.2%
-    10. ct+xray                                             2    2.2%
-    11. genomics+mri                                        2    2.2%
-    12. mammography+ultrasound                              2    2.2%
-    remainder column: 15 further combination(s), 15 papers (16.1%)
+clinical_fda  (69 papers, 22 distinct combinations)
+     1. mammography                                        16   23.2%
+     2. other                                              10   14.5%
+     3. ct                                                  9   13.0%
+     4. mri                                                 8   11.6%
+     5. ultrasound                                          4    5.8%
+     6. he_histology                                        3    4.3%
+     7. ct+mri                                              2    2.9%
+     8. ct+pet                                              2    2.9%
+     9. ct+xray                                             2    2.9%
+    10. pet                                                 1    1.4%
+    11. clinical_data+mammography                           1    1.4%
+    12. genomics+he_histology                               1    1.4%
+    remainder column: 10 further combination(s), 10 papers (14.5%)
 
-virtual_staining  (65 papers, 11 distinct combinations)
-     1. he_histology+spatial_transcriptomics               30   46.2%
-     2. he_histology+ihc                                   18   27.7%
-     3. he_histology                                        3    4.6%
-     4. he_histology+spatial_proteomics                     3    4.6%
-     5. he_histology+ihc+spatial_proteomics                 3    4.6%
-     6. he_histology+other+spatial_proteomics               3    4.6%
-     7. ihc                                                 1    1.5%
-     8. other                                               1    1.5%
-     9. spatial_proteomics                                  1    1.5%
-    10. genomics+he_histology+ihc                           1    1.5%
-    11. he_histology+ihc+other+spatial_proteomics           1    1.5%
+virtual_staining  (63 papers, 11 distinct combinations)
+     1. genomics+he_histology+spatial_transcriptomics      23   36.5%
+     2. he_histology+ihc                                   17   27.0%
+     3. he_histology+spatial_transcriptomics                6    9.5%
+     4. he_histology+ihc+spatial_proteomics                 4    6.3%
+     5. he_histology                                        3    4.8%
+     6. he_histology+other+spatial_proteomics               3    4.8%
+     7. ihc                                                 2    3.2%
+     8. he_histology+spatial_proteomics                     2    3.2%
+     9. spatial_proteomics                                  1    1.6%
+    10. genomics+he_histology+ihc                           1    1.6%
+    11. he_histology+ihc+other+spatial_proteomics           1    1.6%
     remainder column: 0 further combination(s), 0 papers (0.0%)
 
-agentic_ai  (35 papers, 16 distinct combinations)
-     1. he_histology                                       10   28.6%
-     2. ultrasound                                          4   11.4%
-     3. mri                                                 3    8.6%
-     4. other                                               3    8.6%
-     5. clinical_data                                       2    5.7%
-     6. pathology_report                                    2    5.7%
-     7. ct+other                                            2    5.7%
-     8. pet                                                 1    2.9%
-     9. spatial_transcriptomics                             1    2.9%
-    10. clinical_data+he_histology                          1    2.9%
-    11. ct+he_histology                                     1    2.9%
-    12. ct+pet                                              1    2.9%
-    remainder column: 4 further combination(s), 4 papers (11.4%)
+agentic_ai  (25 papers, 12 distinct combinations)
+     1. he_histology                                        5   20.0%
+     2. ultrasound                                          4   16.0%
+     3. mri                                                 3   12.0%
+     4. ct                                                  2    8.0%
+     5. other                                               2    8.0%
+     6. pathology_report                                    2    8.0%
+     7. ct+pet                                              2    8.0%
+     8. pet                                                 1    4.0%
+     9. spatial_transcriptomics                             1    4.0%
+    10. ct+he_histology                                     1    4.0%
+    11. genomics+he_histology                               1    4.0%
+    12. he_histology+pathology_report                       1    4.0%
+    remainder column: 0 further combination(s), 0 papers (0.0%)
 
 MOST FREQUENTLY FIRING PATTERNS  (top 25 by records matched)
 ------------------------------------------------------------------------------
 A pattern matching a large share of the corpus is either the theme's backbone or a runaway term. Check any you did not expect.
 
  records   share  pattern
-  11,046   24.8%  ct:include[0]  \bCTs?\b
-  10,751   24.1%  mri:include[0]  \bMRIs?\b
-   6,892   15.5%  ct:include[1]  (?i)\bcomput(ed|er) tomograph
-   5,557   12.5%  mri:include[1]  (?i)\bmagnetic resonance imag
-   5,044   11.3%  other:fallback  
-   4,580   10.3%  ultrasound:include[0]  (?i)\bultraso(und|nograph|nic|nograp)
-   3,329    7.5%  multimodal_integration:include[0]  (?i)\bmulti[- ]?modal
-   3,089    6.9%  pet:include[0]  \bPET\b
-   2,787    6.3%  mri:include[6]  (?i)\bT[12][- ]weighted\b
-   2,567    5.8%  he_histology:include[5]  (?i)\bwhole[- ]slide
-   2,098    4.7%  mammography:include[0]  (?i)\bmammogra
-   2,056    4.6%  clinical_data:include[5]  (?i)\b(nomogram|model|classifier|signature|score|framework)[
-   2,029    4.6%  ihc:include[0]  (?i)\bimmunohistochem
-   2,008    4.5%  mri:include[4]  \b(DWI|DCE-MRI|mpMRI|bpMRI|MRCP|DTI)\b
-   1,835    4.1%  he_histology:include[2]  (?i)\bhistopatholog\w*[ -](image|imaging|slide|section|speci
-   1,828    4.1%  clinical_data:include[7]  (?i)\b(radiomic|imaging|image|pathomic|deep learning)\w*[^.]
-   1,581    3.6%  he_histology:include[4]  (?i)^(?=[\s\S]*\bhistopatholog)(?=[\s\S]*\b(whole[- ]slide|W
-   1,478    3.3%  pet:include[1]  (?i)\bpositron emission tomograph
-   1,471    3.3%  pet:include[2]  \bFDG\b
-   1,411    3.2%  clinical_data:include[13]  (?i)\bclinical (model|score|signature)\b
-   1,399    3.1%  he_histology:include[6]  \bWSIs?\b
-   1,371    3.1%  he_histology:include[1]  (?i)\bh(a)?ematoxylin
-   1,344    3.0%  other:include[5]  (?i)\b(endoscop|colonoscop|gastroscop|bronchoscop|cystoscop)
-   1,295    2.9%  clinical_data:include[4]  (?i)\bcombin\w+[^.]{0,45}\bclinical\w*\s+(data|variable|feat
-   1,279    2.9%  genomics:include[0]  (?i)\b(?<!10x )genomic(?!\s+instabilit)
+  11,046   25.6%  ct:include[0]  \bCTs?\b
+  10,751   25.0%  mri:include[0]  \bMRIs?\b
+   6,892   16.0%  ct:include[1]  (?i)\bcomput(ed|er) tomograph
+   5,557   12.9%  mri:include[1]  (?i)\bmagnetic resonance imag
+   4,832   11.2%  other:fallback  
+   4,580   10.6%  ultrasound:include[0]  (?i)\bultraso(und|nograph|nic|nograp)
+   3,257    7.6%  multimodal_integration:include[0]  (?i)\bmulti[- ]?modal
+   3,089    7.2%  pet:include[0]  \bPET\b
+   2,787    6.5%  mri:include[6]  (?i)\bT[12][- ]weighted\b
+   2,567    6.0%  he_histology:include[5]  (?i)\bwhole[- ]slide
+   2,098    4.9%  mammography:include[0]  (?i)\bmammogra
+   2,051    4.8%  clinical_data:include[5]  (?i)\b(nomogram|model|classifier|signature|score|framework)[
+   2,029    4.7%  ihc:include[0]  (?i)\bimmunohistochem
+   2,008    4.7%  mri:include[4]  \b(DWI|DCE-MRI|mpMRI|bpMRI|MRCP|DTI)\b
+   1,942    4.5%  genomics:include[20]  (?i)\b(?:predict\w*|prediction|infer\w*|classif\w*|determin\
+   1,835    4.3%  he_histology:include[2]  (?i)\bhistopatholog\w*[ -](image|imaging|slide|section|speci
+   1,819    4.2%  clinical_data:include[7]  (?i)\b(radiomic|imaging|image|pathomic|deep learning)\w*[^.]
+   1,581    3.7%  he_histology:include[4]  (?i)^(?=[\s\S]*\bhistopatholog)(?=[\s\S]*\b(whole[- ]slide|W
+   1,478    3.4%  pet:include[1]  (?i)\bpositron emission tomograph
+   1,471    3.4%  pet:include[2]  \bFDG\b
+   1,407    3.3%  clinical_data:include[13]  (?i)\bclinical (model|score|signature)\b
+   1,399    3.2%  he_histology:include[6]  \bWSIs?\b
+   1,371    3.2%  he_histology:include[1]  (?i)\bh(a)?ematoxylin
+   1,288    3.0%  clinical_data:include[4]  (?i)\bcombin\w+[^.]{0,45}\bclinical\w*\s+(data|variable|feat
+   1,259    2.9%  genomics:include[0]  (?i)\b(?<!10x )genomic(?!\s+instabilit)
 
 EXCLUDE PATTERNS  (labels suppressed)
 ------------------------------------------------------------------------------
-     335  genomics:exclude[1]  (?i)(?:(?:^(?=(?:[^\n]*\b(predict\w*|prediction|infer\w*|inf
-     292  multimodal_integration:exclude[1]  (?i)^(?:(?=[\s\S]*(\bmulti[- ]?(modal|parametric)\w*[^.]{0,6
-     236  genomics:exclude[0]  (?i)^(?=[\s\S]*((predict|infer|determin|classif|estimat|dete
-      61  multimodal_integration:exclude[0]  (?i)\bmulti[- ]?modal(ity)? (therap|treatment|analgesi|pain|
+     307  multimodal_integration:exclude[1]  (?i)^(?:(?=[\s\S]*(\bmulti[- ]?(modal|parametric)\w*[^.]{0,6
+      59  multimodal_integration:exclude[0]  (?i)\bmulti[- ]?modal(ity)? (therap|treatment|analgesi|pain|
        3  clinical_fda:exclude[1]  (?i)\b(\[?1?\d{2,3}\s?[A-Za-z]{1,2}\]?[- ]?(Lu|Ga|F|Tc|Cu|Zr
        3  ihc:exclude[0]  (?i)\bintrahepatic cholangiocarcinoma\s*\(IHC\)
        2  xray:exclude[0]  (?i)\bmammograph\w*[- ]?(is an? )?x-?ray
@@ -207,4 +250,4 @@ EXCLUDE PATTERNS  (labels suppressed)
 PATTERNS THAT NEVER FIRED
 ------------------------------------------------------------------------------
 Dead weight, a typo, or a term the corpus does not use. Not necessarily wrong; worth a look.
-    0 of 209: none
+    2 of 232: spatial_proteomics:include[10], spatial_proteomics:include[11]

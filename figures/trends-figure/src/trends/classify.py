@@ -48,6 +48,15 @@ Command line
         --output data/processed/
 
 Add ``--report`` to print the diagnostic summary as well as writing it.
+
+To ask whether an existing output directory is still current::
+
+    python -m trends.classify --check --output data/processed --config-dir config
+
+That compares the config digests the run recorded against the files on disk and
+exits non-zero if they have moved. It answers a question the config version
+ledger cannot: the ledger checks a config against its own recorded hash, and so
+never notices that a *run* consumed a state which no longer exists.
 """
 
 from __future__ import annotations
@@ -59,7 +68,8 @@ import logging
 import platform
 import re
 import sys
-from dataclasses import dataclass
+from collections import Counter
+from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Final, Iterable
@@ -82,7 +92,12 @@ log = logging.getLogger(__name__)
 # tables; a test holds the two copies equal.
 # --------------------------------------------------------------------------
 
-from .aggregate import MODALITY_KEYS, OTHER_MODALITY, THEME_KEYS  # noqa: E402
+from .aggregate import (  # noqa: E402
+    MINIMUM_MODALITIES,
+    MODALITY_KEYS,
+    OTHER_MODALITY,
+    THEME_KEYS,
+)
 
 #: Modalities that make a paper radiological, per the ``domain`` rule in the spec.
 RADIOLOGY_MODALITIES: Final[frozenset[str]] = frozenset(
@@ -113,6 +128,53 @@ REQUIRED_RECORD_COLUMNS: Final[tuple[str, ...]] = (
 #: Record types excluded from the analysis corpus, per docs/DECISIONS.md.
 EXCLUDED_RECORD_TYPES: Final[frozenset[str]] = frozenset({"PubmedBookArticle"})
 
+#: PubMed publication types that mark a record as secondary literature.
+#:
+#: The author's ruling, 2026-09-08: "don't include review articles or
+#: perspectives, just primary research studies." A record carrying any of these
+#: types leaves the corpus.
+#:
+#: An honest note about how long this took. The exclusion was raised once
+#: before: the search-strategy agent's very first report counted 168 retracted
+#: papers, 467 editorials, and 379 comments in the corpus and flagged them. That
+#: finding was never routed to the author and never decided, so it sat
+#: unaddressed until the author asked for the same thing independently. Every
+#: count published before 2026-09-08 therefore included reviews, editorials,
+#: comments, and retracted papers. The filter exists because it was requested,
+#: not because the pipeline caught its own gap.
+#:
+#: Preprints are NOT here. The author considered them and kept them.
+SECONDARY_PUBLICATION_TYPES: Final[frozenset[str]] = frozenset({
+    "Review",
+    "Systematic Review",
+    "Meta-Analysis",
+    "Editorial",
+    "Comment",
+    "Letter",
+    "News",
+    "Historical Article",
+    "Guideline",
+    "Practice Guideline",
+    "Consensus Development Conference",
+    "Published Erratum",
+    "Retracted Publication",
+    "Scoping Review",
+})
+
+#: Modality-dictionary categories that drive an exclusion instead of a figure row.
+#:
+#: ``non_specialty`` holds the vocabulary of data types belonging to neither
+#: radiology nor pathology — endoscopy, dermoscopy, colposcopy, optical coherence
+#: tomography, thermography, clinical photography, wearables, ECG and EEG,
+#: radiotherapy dosimetry. The author's ruling, 2026-09-08: "limit to modalities
+#: that belong to either radiology or pathology."
+#:
+#: The vocabulary is kept in the dictionary rather than deleted so that the
+#: exclusion is auditable, but it is not a figure row: no ``mod_non_specialty``
+#: column is written and it never joins a ``modality_set``. See
+#: :func:`classify_records` for the rule, which is deliberately conjunctive.
+EXCLUSION_CATEGORIES: Final[tuple[str, ...]] = ("non_specialty",)
+
 #: Separator between title and abstract in the text patterns are matched against.
 #: Declared in the header of both dictionaries; changing it changes what the
 #: anchored ``^(?=...)`` patterns see.
@@ -123,6 +185,7 @@ TEXT_SEPARATOR: Final[str] = " \n "
 EXCERPT_CONTEXT: Final[int] = 40
 
 #: File names written into the output directory.
+EXCLUSIONS = "exclusions.csv"
 PATTERN_HITS = "pattern_hits.csv"
 RUN_MANIFEST = "run_manifest.json"
 REPORT = "classification_report.txt"
@@ -498,6 +561,8 @@ def check_domain_coverage(modality_keys: Iterable[str]) -> None:
     """
     unassigned, doubled = [], []
     for key in modality_keys:
+        if key in EXCLUSION_CATEGORIES:
+            continue  # matched for exclusion, never labelled, so it takes no side
         sides = (
             (key in RADIOLOGY_MODALITIES)
             + (key in PATHOLOGY_MODALITIES)
@@ -544,7 +609,7 @@ def load_dictionaries(config_dir: str | Path) -> tuple[TermDictionary, TermDicti
     modalities = load_term_dictionary(
         config_dir / "modalities.yaml",
         kind="modalities",
-        expected_keys=MODALITY_KEYS,
+        expected_keys=MODALITY_KEYS + EXCLUSION_CATEGORIES,
         optional_include={OTHER_MODALITY},
     )
     check_domain_coverage(modalities.keys)
@@ -566,6 +631,24 @@ def record_text(title: Any, abstract: Any) -> str:
     title = title if isinstance(title, str) else ""
     abstract = abstract if isinstance(abstract, str) else ""
     return f"{title}{TEXT_SEPARATOR}{abstract}"
+
+
+def publication_types_of(value: Any) -> set[str]:
+    """Return one record's PubMed publication types.
+
+    Reads both shapes the record table comes in: the list that parquet keeps, and
+    the ``"; "``-joined string of the CSV twin. A missing value gives an empty
+    set rather than raising, because a record with no publication type is
+    ordinary, not broken.
+    """
+    if value is None:
+        return set()
+    if isinstance(value, str):
+        return {part.strip() for part in value.split(";") if part.strip()}
+    try:
+        return {str(item).strip() for item in value if str(item).strip()}
+    except TypeError:
+        return set()
 
 
 def _hits(patterns: Iterable[Pattern], text: str) -> tuple[PatternHit, ...]:
@@ -651,17 +734,44 @@ class ClassificationResult:
         hits: One row per record, category, and pattern that fired.
         exclusions: Reason to number of records dropped before classification.
         n_records_in: Rows read from the record table.
+        exclusion_detail: Per-reason breakdown where one exists, such as the
+            publication types behind ``secondary_publication_type``.
+        panel_a_shortfalls: Theme key to the number of primary-research papers
+            held out of Panel A's block for carrying fewer modalities than
+            :data:`aggregate.MINIMUM_MODALITIES` requires. The label is kept and
+            the paper stays in the corpus and in Panel B; only Panel A's view
+            excludes it.
+        corpus_wide_shortfalls: The same shortfall counted over every retained
+            record, reviews included. This is the measure of how far a theme's
+            language over-calls, and the number that should fall as the
+            vocabulary is tightened. Reported beside the first, never instead
+            of it: the two together separate theme over-calling from modality
+            under-recall.
+        excluded: One row per excluded record and per retracted label — ``pmid``,
+            ``reason``, and the scope it applies to — so every removal is
+            auditable rather than merely counted.
     """
 
     labels: pd.DataFrame
     hits: pd.DataFrame
     exclusions: dict[str, int]
     n_records_in: int
+    exclusion_detail: dict[str, dict[str, int]] = field(default_factory=dict)
+    panel_a_shortfalls: dict[str, int] = field(default_factory=dict)
+    corpus_wide_shortfalls: dict[str, int] = field(default_factory=dict)
+    excluded: pd.DataFrame = field(default_factory=pd.DataFrame)
 
     @property
     def n_records_out(self) -> int:
-        """Records that reached the analysis corpus."""
+        """Records that reached the retained corpus. Panel B's denominator."""
         return int(len(self.labels))
+
+    @property
+    def n_primary_research(self) -> int:
+        """Records flagged primary research. Panel A's denominator."""
+        if aggregate.PRIMARY_RESEARCH not in self.labels.columns:
+            return self.n_records_out
+        return int(self.labels[aggregate.PRIMARY_RESEARCH].sum())
 
 
 def read_records(path: str | Path) -> pd.DataFrame:
@@ -699,10 +809,14 @@ def read_records(path: str | Path) -> pd.DataFrame:
 
 def _filter_records(
     frame: pd.DataFrame, year_range: tuple[int, int] | None = None
-) -> tuple[pd.DataFrame, dict[str, int]]:
-    """Drop the records that may not enter the analysis corpus, and say why.
+) -> tuple[pd.DataFrame, dict[str, int], list[dict[str, str]]]:
+    """Drop the records that may not enter the corpus at all, and say why.
 
-    Four filters, each explicit and each counted:
+    Four field-based filters, each explicit and each counted. A fifth,
+    ``non_specialty_only``, needs the term dictionaries and so lives in
+    :func:`classify_records`. Secondary publication types are NOT dropped here:
+    since 2026-09-08 they are flagged rather than removed, because Panel B counts
+    them. See :func:`primary_research_flags`.
 
     1. Book records. ``PubmedBookArticle`` rows are reference works, not primary
        literature; ``docs/DECISIONS.md`` requires the filter to be visible here
@@ -710,49 +824,75 @@ def _filter_records(
     2. Records with no PMID. They cannot be identified or de-duplicated.
     3. Records with no publication year. ``paper_labels.csv`` types ``year`` as
        an integer and the figure is a time series, so a yearless record has
-       nowhere to go. It is counted, not silently absorbed.
+       nowhere to go.
     4. Records whose year falls outside the retrieval window. PubMed filtered on
        publication date; our year rule dates a record to its first appearance,
        and the two disagree for a paper posted online before the window and
-       issued inside it. Those records make the first year of the corpus a
-       biased partial year at the low end, the mirror of the partial final year:
-       we would capture only those early-online papers that happened to be issued
-       later. Dropping them keeps Panel A and Panel B counting the same papers.
-       The window comes from ``date_range`` in ``corpus.yaml``; with no window
-       given, nothing is dropped on this rule.
+       issued inside it. Keeping them would make the corpus's first year a biased
+       partial year, the mirror of the partial final year. The window comes from
+       ``date_range`` in ``corpus.yaml``.
 
-    Args:
-        frame: The record table.
-        year_range: Inclusive ``(first_year, last_year)`` of the retrieval
-            window, or ``None`` to apply no window.
+    Returns:
+        The surviving records, the count per reason, and one row per dropped
+        record naming its reason and the view it applies to.
     """
     exclusions: dict[str, int] = {}
+    dropped: list[dict[str, str]] = []
     kept = frame
 
-    is_book = kept["record_type"].astype("string").isin(EXCLUDED_RECORD_TYPES)
-    exclusions["book_records"] = int(is_book.sum())
-    kept = kept.loc[~is_book]
+    def drop(mask: pd.Series, reason: str) -> None:
+        """Record and remove the rows a filter rejects."""
+        nonlocal kept
+        exclusions[reason] = int(mask.sum())
+        for pmid in kept.loc[mask, "pmid"].astype("string").fillna(""):
+            dropped.append({"pmid": str(pmid), "reason": reason, "applies_to": "corpus"})
+        kept = kept.loc[~mask]
+
+    drop(kept["record_type"].astype("string").isin(EXCLUDED_RECORD_TYPES), "book_records")
 
     pmid = kept["pmid"].astype("string").fillna("").str.strip()
-    blank = pmid == ""
-    exclusions["missing_pmid"] = int(blank.sum())
-    kept = kept.loc[~blank]
+    drop(pmid == "", "missing_pmid")
 
     year = pd.to_numeric(kept["year"], errors="coerce")
-    yearless = year.isna()
-    exclusions["missing_year"] = int(yearless.sum())
-    kept = kept.loc[~yearless]
+    drop(year.isna(), "missing_year")
 
     if year_range is not None:
         first, last = year_range
         year = pd.to_numeric(kept["year"], errors="coerce")
-        outside = (year < first) | (year > last)
-        exclusions["outside_date_range"] = int(outside.sum())
-        kept = kept.loc[~outside]
+        drop((year < first) | (year > last), "outside_date_range")
     else:
         exclusions["outside_date_range"] = 0
 
-    return kept.reset_index(drop=True), exclusions
+    return kept.reset_index(drop=True), exclusions, dropped
+
+
+def primary_research_flags(frame: pd.DataFrame) -> tuple[pd.Series, dict[str, int]]:
+    """Say which records are primary research, and count what is not.
+
+    The author's ruling of 2026-09-08: **Panel A shows primary research; Panel B
+    shows engagement.** A record carrying any publication type in
+    :data:`SECONDARY_PUBLICATION_TYPES` is flagged 0 and **kept**. It is excluded
+    from ``combination_counts.csv``, which asks what data primary research
+    actually uses and would be corrupted by a review discussing a modality
+    without using one; it is counted in ``theme_year_counts.csv``, which asks how
+    attention to a theme moves over time, where a review naming a theme as a
+    future direction is exactly that attention.
+
+    Until 2026-09-08 these records were dropped outright, and before that they
+    were counted as primary research; neither is true now.
+
+    Returns:
+        A boolean Series, True for primary research, and the count of records per
+        secondary publication type.
+    """
+    if "publication_types" not in frame.columns:
+        return pd.Series(True, index=frame.index), {}
+    types = frame["publication_types"].map(publication_types_of)
+    secondary = types.map(lambda found: bool(found & SECONDARY_PUBLICATION_TYPES))
+    counter: Counter[str] = Counter()
+    for found in types.loc[secondary]:
+        counter.update(found & SECONDARY_PUBLICATION_TYPES)
+    return ~secondary, dict(counter.most_common())
 
 
 def classify_records(
@@ -793,19 +933,23 @@ def classify_records(
         )
     check_domain_coverage(modalities.keys)
     n_in = int(len(frame))
-    kept, exclusions = _filter_records(frame, year_range)
+    kept, exclusions, dropped = _filter_records(frame, year_range)
+    is_primary, secondary_detail = primary_research_flags(kept)
 
     # The label columns come from the dictionaries that were loaded, not from a
     # constant, so a category added to config/*.yaml gets its column with no
-    # code change here.
+    # code change here. Exclusion categories are the exception: they are matched
+    # but never labelled, so they get no column and never join a modality set.
     theme_keys = aggregate.order_keys(themes.keys, THEME_KEYS)
-    modality_keys = aggregate.order_keys(modalities.keys, MODALITY_KEYS)
+    modality_keys = aggregate.order_keys(
+        [key for key in modalities.keys if key not in EXCLUSION_CATEGORIES], MODALITY_KEYS
+    )
     label_columns = aggregate.paper_label_columns(theme_keys, modality_keys)
     named_set = {key for key in modality_keys if key != OTHER_MODALITY}
     label_rows: list[dict[str, Any]] = []
     hit_rows: list[dict[str, Any]] = []
 
-    for row in kept.itertuples(index=False):
+    for position, row in enumerate(kept.itertuples(index=False)):
         text = record_text(getattr(row, "title", ""), getattr(row, "abstract", ""))
         theme_matches = match_text(themes, text)
         modality_matches = match_text(modalities, text)
@@ -823,6 +967,31 @@ def classify_records(
         if other_by_pattern or other_by_fallback:
             assigned_modalities = assigned_modalities | {OTHER_MODALITY}
 
+        domain = derive_domain(assigned_modalities)
+        # A record whose only imaging evidence is a data type outside both
+        # specialties leaves the corpus, and leaves it for BOTH panels: this is
+        # about the review's scope, not about article type.
+        #
+        # The rule is conjunctive on purpose. A colonoscopy paper that also reads
+        # CT keeps its CT label and stays; excluding on the non-specialty match
+        # alone would throw away genuine multimodal work.
+        #
+        # That produces an asymmetry worth stating plainly rather than leaving a
+        # reader to find it: a paper labelled only `genomics` stays, while the
+        # same paper plus an endoscopy mention leaves. It is deliberate, and it
+        # follows the principle this pipeline already uses for the `other`
+        # fallback — drop what we have positive evidence belongs elsewhere, keep
+        # what we merely cannot classify. The broader alternative, dropping every
+        # paper whose domain is `none`, would remove 7,737 records and is a much
+        # larger decision than the author made. Coordinator's ruling, 2026-09-08.
+        if domain == "none" and matched_modalities & set(EXCLUSION_CATEGORIES):
+            dropped.append({
+                "pmid": str(row.pmid).strip(),
+                "reason": "non_specialty_only",
+                "applies_to": "corpus",
+            })
+            continue
+
         pmid = str(row.pmid).strip()
         label: dict[str, Any] = {
             "pmid": pmid,
@@ -833,7 +1002,8 @@ def classify_records(
             label[f"theme_{key}"] = int(key in assigned_themes)
         for key in modality_keys:
             label[f"mod_{key}"] = int(key in assigned_modalities)
-        label["domain"] = derive_domain(assigned_modalities)
+        label["domain"] = domain
+        label[aggregate.PRIMARY_RESEARCH] = int(bool(is_primary.iloc[position]))
         label_rows.append(label)
 
         for dictionary_kind, matches in (
@@ -882,10 +1052,55 @@ def classify_records(
                 }
             )
 
+    exclusions["non_specialty_only"] = sum(
+        1 for row in dropped if row["reason"] == "non_specialty_only"
+    )
     labels = pd.DataFrame(label_rows, columns=list(label_columns))
+    # Secondary publications are retained; they are excluded from Panel A only,
+    # so the ledger records the view rather than implying they left the corpus.
+    for pmid in labels.loc[labels[aggregate.PRIMARY_RESEARCH] == 0, "pmid"]:
+        dropped.append({
+            "pmid": str(pmid),
+            "reason": "secondary_publication_type",
+            "applies_to": "panel_a",
+        })
+    detail = {"secondary_publication_type": secondary_detail} if secondary_detail else {}
+
+    # A theme defined by combination admits only papers carrying its minimum, and
+    # that is a condition on Panel A's VIEW, not on the label. The predicate comes
+    # from what a multimodal model is — it used two modalities while being built —
+    # so it applies to a study that built something and not to a review, which
+    # uses none. Enforcing it on the label would drop reviews that genuinely
+    # discuss the theme, which is a category error for an engagement measure.
+    # Coordinator's ruling, 2026-09-09. See aggregate.MINIMUM_MODALITIES.
+    panel_a_short, corpus_short = aggregate.minimum_modality_shortfalls(labels)
+    modality_count = labels[
+        [f"mod_{key}" for key in aggregate.modality_keys_of(labels)]
+    ].sum(axis=1)
+    for theme, minimum in MINIMUM_MODALITIES.items():
+        if f"theme_{theme}" not in labels.columns:
+            continue
+        short = (
+            (labels[f"theme_{theme}"] == 1)
+            & (modality_count < minimum)
+            & (labels[aggregate.PRIMARY_RESEARCH] == 1)
+        )
+        for pmid in labels.loc[short, "pmid"]:
+            dropped.append({
+                "pmid": str(pmid),
+                "reason": "below_minimum_modalities",
+                "applies_to": f"panel_a:{theme}",
+            })
     hits = pd.DataFrame(hit_rows, columns=aggregate.PATTERN_HIT_COLUMNS)
     return ClassificationResult(
-        labels=labels, hits=hits, exclusions=exclusions, n_records_in=n_in
+        labels=labels,
+        hits=hits,
+        exclusions=exclusions,
+        n_records_in=n_in,
+        exclusion_detail=detail,
+        panel_a_shortfalls=dict(panel_a_short),
+        corpus_wide_shortfalls=dict(corpus_short),
+        excluded=pd.DataFrame(dropped, columns=["pmid", "reason", "applies_to"]),
     )
 
 
@@ -957,6 +1172,7 @@ def format_report(
     top_patterns: int = 25,
     top_combinations: int | None = None,
     source: str = "",
+    freshness: Freshness | None = None,
 ) -> str:
     """Render the human-readable diagnostic summary.
 
@@ -974,6 +1190,9 @@ def format_report(
         top_combinations: How many combinations to list per theme. ``None``
             takes the figure's own column cap, so the two cannot drift.
         source: The record table the run read, named in the header.
+        freshness: Result of re-checking the configs after classification. Its
+            banner goes at the very top, before any number, because a reader who
+            stops after the first screen must still learn the output is stale.
 
     Returns:
         The report text.
@@ -981,12 +1200,16 @@ def format_report(
     if top_combinations is None:
         top_combinations = figure_column_cap()
     labels = result.labels
+    primary_labels = aggregate.primary_research(labels)
     theme_keys = aggregate.theme_keys_of(labels)
     modality_keys = aggregate.modality_keys_of(labels)
     total = len(labels)
     lines: list[str] = []
     add = lines.append
 
+    if freshness is not None:
+        add(freshness.banner())
+        add("")
     add("CLASSIFICATION DIAGNOSTIC REPORT")
     add("=" * 78)
     add(f"generated_utc   : {datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')}")
@@ -999,8 +1222,23 @@ def format_report(
     add("")
     add(f"records read     : {result.n_records_in:>7,}")
     for reason, count in result.exclusions.items():
-        add(f"  excluded, {reason:<14}: {count:>5,}")
+        share = f"{count / result.n_records_in:>6.1%}" if result.n_records_in else ""
+        add(f"  excluded, {reason:<26}{count:>7,}{share}")
+        for name, n in (result.exclusion_detail.get(reason) or {}).items():
+            add(f"      {name:<32}{n:>7,}")
     add(f"records analysed : {total:>7,}")
+    add("")
+    add("TWO POPULATIONS. The panels answer different questions and their")
+    add("denominators differ; no number from one may be quoted against the other.")
+    primary = result.n_primary_research
+    add(f"  Panel B, engagement      (all retained records) : {total:>7,}")
+    add(f"  Panel A, primary research (is_primary_research) : {primary:>7,}")
+    secondary = total - primary
+    if result.n_records_in:
+        add(f"  flagged secondary, kept for Panel B only        : {secondary:>7,}"
+            f"{secondary / total:>7.1%}" if total else "")
+        for name, n in (result.exclusion_detail.get("secondary_publication_type") or {}).items():
+            add(f"      {name:<40}{n:>7,}")
     if total == 0:
         add("")
         add("No records reached the corpus. Nothing further to report.")
@@ -1009,12 +1247,42 @@ def format_report(
     add(f"year range       : {int(years.min())}-{int(years.max())}")
     add("")
 
+    if result.panel_a_shortfalls:
+        add("THEMES DEFINED BY COMBINATION")
+        add("-" * 78)
+        add("A theme defined by combination cannot be satisfied by one modality. This is")
+        add("a condition on PANEL A'S VIEW, alongside primary research; the label is kept")
+        add("and Panel B still counts the paper. A review uses no modalities, so the")
+        add("predicate does not apply to it.")
+        add("")
+        add("Read the two counts together. The shortfall measures how far the theme's")
+        add("language over-calls AND how far modality recall falls short: a paper")
+        add("predicting Ki-67 from CT is multimodal and reads as single-modality only")
+        add("because the target was not labelled. A count that falls when recall improves")
+        add("was never about the theme.")
+        for theme in sorted(result.panel_a_shortfalls):
+            minimum = MINIMUM_MODALITIES.get(theme, 0)
+            in_theme = int(labels[f"theme_{theme}"].sum())
+            in_primary = int(primary_labels[f"theme_{theme}"].sum())
+            held = result.panel_a_shortfalls[theme]
+            wide = result.corpus_wide_shortfalls.get(theme, 0)
+            add(f"  {theme}  (minimum {minimum} modalities)")
+            add(f"    held out of Panel A      {held:>7,} of {in_primary:,} primary "
+                f"({held / in_primary:.1%}) -> Panel A draws {in_primary - held:,}")
+            add(f"    corpus-wide shortfall    {wide:>7,} of {in_theme:,} retained "
+                f"({wide / in_theme:.1%})   <- the over-call measure")
+        add("")
+
     add("THEMES")
     add("-" * 78)
-    add(f"{'theme':<26}{'papers':>8}{'share':>8}  distribution")
+    add("`retained` is Panel B's count; `primary` is Panel A's. They are different")
+    add("populations, not an error.")
+    add(f"{'theme':<26}{'retained':>10}{'primary':>10}{'share':>8}  distribution")
     for key in theme_keys:
         count = int(labels[f"theme_{key}"].sum())
-        add(f"{key:<26}{count:>8,}{count / total:>8.1%}  {_bar(count, total)}")
+        n_primary = int(primary_labels[f"theme_{key}"].sum())
+        add(f"{key:<26}{count:>10,}{n_primary:>10,}{count / total:>8.1%}  "
+            f"{_bar(count, total)}")
     no_theme = int((labels[[f'theme_{key}' for key in theme_keys]].sum(axis=1) == 0).sum())
     add(f"{'(no theme)':<26}{no_theme:>8,}{no_theme / total:>8.1%}  {_bar(no_theme, total)}")
     multi = int((labels[[f'theme_{key}' for key in theme_keys]].sum(axis=1) > 1).sum())
@@ -1056,6 +1324,9 @@ def format_report(
     add(f"MODALITY COMBINATIONS  (the top {top_combinations} per theme, "
         "as Panel A draws them)")
     add("-" * 78)
+    add(f"PRIMARY RESEARCH ONLY: {result.n_primary_research:,} of {total:,} retained "
+        "records. These")
+    add("counts are Panel A's and are smaller than the theme counts above.")
     add(f"Panel A draws these {top_combinations} columns and one further column holding")
     add("every remaining paper in the theme. Nothing is hidden and no paper is dropped:")
     add("each block's bars sum to the theme's paper count. The line under each block")
@@ -1063,7 +1334,7 @@ def format_report(
     add("")
     for key in theme_keys:
         block = combinations.loc[combinations["theme"] == key].sort_values("rank_in_theme")
-        theme_total = int(labels[f"theme_{key}"].sum())
+        theme_total = int(primary_labels[f"theme_{key}"].sum())
         add(f"{key}  ({theme_total:,} papers, {len(block)} distinct combinations)")
         if block.empty:
             add("    (none)")
@@ -1130,6 +1401,146 @@ def format_report(
 # --------------------------------------------------------------------------
 
 
+#: Config files whose digest the manifest records and this module re-checks.
+CHECKED_CONFIGS: Final[tuple[str, ...]] = ("themes", "modalities", "corpus")
+
+
+@dataclass(frozen=True)
+class Freshness:
+    """Whether a processed directory was built from the configs now on disk.
+
+    The version ledger answers "is this config self-consistent?". It cannot
+    answer "did a run consume a state that no longer exists?", because it compares
+    the file on disk against its own recorded hash and never looks at a run's
+    output. That second question is the one that has bitten this project
+    repeatedly: a config is edited after a run, the ledger still passes, and the
+    published numbers came from bytes nobody can produce again.
+
+    This closes that gap by comparing the digests a run recorded in its manifest
+    against the files on disk right now.
+
+    Attributes:
+        manifest: The manifest that was read, whether or not it existed.
+        problems: One message per config that has moved since the run.
+        checked: Names of the configs actually compared.
+    """
+
+    manifest: Path
+    problems: tuple[str, ...]
+    checked: tuple[str, ...]
+
+    @property
+    def is_stale(self) -> bool:
+        """True when at least one config has changed since the run."""
+        return bool(self.problems)
+
+    def banner(self) -> str:
+        """Return a block for the top of the diagnostic report."""
+        if not self.checked:
+            return (
+                "FRESHNESS: NOT CHECKED\n"
+                f"  No usable manifest at {self.manifest}, so these numbers cannot be "
+                "tied to a config state."
+            )
+        if not self.problems:
+            names = ", ".join(self.checked)
+            return (
+                "FRESHNESS: current at the time of writing.\n"
+                f"  {names} on disk match the digests this run consumed.\n"
+                "  Re-check before quoting any number from this file:\n"
+                "      python -m trends.classify --check --output <dir> --config-dir config"
+            )
+        lines = [
+            "!" * 78,
+            "STALE OUTPUT. The configuration has changed since this run.",
+            "These numbers came from a config state that is no longer on disk, so they",
+            "cannot be reproduced and must not be quoted. Re-run before using them.",
+        ]
+        lines += [f"  - {problem}" for problem in self.problems]
+        lines.append("!" * 78)
+        return "\n".join(lines)
+
+
+def check_freshness(output_dir: str | Path, config_dir: str | Path) -> Freshness:
+    """Compare a run manifest's config digests with the files on disk.
+
+    Args:
+        output_dir: A ``data/processed`` directory holding ``run_manifest.json``.
+        config_dir: The configuration directory to compare against.
+
+    Returns:
+        A :class:`Freshness`. A missing or unreadable manifest is reported as
+        "not checked" rather than as a pass, because an unverifiable number is
+        not a verified one.
+    """
+    manifest_path = Path(output_dir) / RUN_MANIFEST
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return Freshness(manifest_path, (), ())
+
+    recorded_raw = (manifest.get("config") or {}) if isinstance(manifest, dict) else {}
+    recorded = {
+        name: (entry.get("version"), str(entry["sha256"]))
+        for name, entry in recorded_raw.items()
+        if name in CHECKED_CONFIGS and isinstance(entry, dict) and entry.get("sha256")
+    }
+    problems, checked = compare_config_digests(recorded, config_dir)
+    return Freshness(manifest_path, tuple(problems), tuple(checked))
+
+
+def compare_config_digests(
+    recorded: dict[str, tuple[Any, str]], config_dir: str | Path
+) -> tuple[list[str], list[str]]:
+    """Compare recorded ``(version, sha256)`` pairs with the configs on disk.
+
+    Shared by :func:`check_freshness`, which reads the pairs out of a stored
+    manifest, and by :func:`run`, which holds them from the dictionaries it just
+    loaded. One comparison, so a live run and a stored output are judged alike.
+    """
+    problems: list[str] = []
+    checked: list[str] = []
+    for name in CHECKED_CONFIGS:
+        entry = recorded.get(name)
+        if entry is None:
+            continue
+        version, sha = entry
+        path = Path(config_dir) / f"{name}.yaml"
+        checked.append(f"{name}.yaml")
+        if not path.exists():
+            problems.append(f"{path} recorded by the run is missing from disk")
+            continue
+        # The manifest records the term dictionaries' digest over decoded text and
+        # corpus.yaml's over raw bytes. They agree for a file with Unix line
+        # endings; both are accepted so a CRLF checkout is not a false alarm.
+        on_disk = {
+            file_digest(path),
+            hashlib.sha256(path.read_text(encoding="utf-8").encode("utf-8")).hexdigest(),
+        }
+        if sha not in on_disk:
+            was, now = sha[:12], sorted(on_disk)[0][:12]
+            problems.append(
+                f"config/{name}.yaml: the run consumed v{version} at {was}…, "
+                f"but the file on disk now hashes to {now}…. "
+                + (
+                    "The version number did not move, so the state the run used cannot "
+                    "be recovered from the ledger."
+                    if str(version) == str(_config_version(path))
+                    else f"The file on disk is now v{_config_version(path)}."
+                )
+            )
+    return problems, checked
+
+
+def _config_version(path: Path) -> Any:
+    """Return a config file's declared version, or None if it cannot be read."""
+    try:
+        data = yaml.safe_load(path.read_text(encoding="utf-8"))
+    except (OSError, yaml.YAMLError):
+        return None
+    return data.get("version") if isinstance(data, dict) else None
+
+
 def file_digest(path: str | Path) -> str:
     """Return the SHA-256 of a file, or ``""`` if it cannot be read."""
     try:
@@ -1149,6 +1560,7 @@ def build_manifest(
     partial_year_source: str,
     corpus: dict[str, Any] | None,
     year_range: tuple[int, int] | None = None,
+    config_changed: Iterable[str] | None = None,
 ) -> dict[str, Any]:
     """Assemble the run manifest written beside the outputs.
 
@@ -1185,10 +1597,31 @@ def build_manifest(
         },
         "counts": {
             "records_in": result.n_records_in,
+            "records_retained": result.n_records_out,
             "records_analysed": result.n_records_out,
+            "records_primary_research": result.n_primary_research,
+            "denominators": {
+                "panel_b_engagement": result.n_records_out,
+                "panel_a_primary_research": result.n_primary_research,
+                "note": "Different populations by the author's ruling of 2026-09-08. "
+                        "No number from one panel may be quoted against the other.",
+            },
             "exclusions": dict(result.exclusions),
+            "exclusion_detail": dict(result.exclusion_detail),
+            "minimum_modalities": dict(MINIMUM_MODALITIES),
+            "combination_shortfalls": {
+                "panel_a_held_out": dict(result.panel_a_shortfalls),
+                "corpus_wide": dict(result.corpus_wide_shortfalls),
+                "note": "Panel A's view excludes these; the label is kept and Panel B "
+                        "counts them. corpus_wide is the over-call measure and should "
+                        "fall as the theme vocabulary is tightened.",
+            },
             "papers_per_theme": {
                 key: int(result.labels[f"theme_{key}"].sum())
+                for key in aggregate.theme_keys_of(result.labels)
+            },
+            "papers_per_theme_primary_research": {
+                key: int(aggregate.primary_research(result.labels)[f"theme_{key}"].sum())
                 for key in aggregate.theme_keys_of(result.labels)
             },
             "papers_per_modality": {
@@ -1208,6 +1641,7 @@ def build_manifest(
                 ).sum()
             ),
         },
+        "config_changed_during_run": list(config_changed or ()),
         "partial_year": {"year": partial_year, "source": partial_year_source},
         "year_range_applied": (
             None if year_range is None else {"first": year_range[0], "last": year_range[1]}
@@ -1341,11 +1775,34 @@ def run(
         partial_year=partial_year,
         provenance=provenance,
     )
+    output_dir = Path(output_dir)
+    # Every excluded record, by name and reason. A count says how many left; this
+    # says which, which is what makes an exclusion auditable rather than trusted.
+    exclusions_path = output_dir / EXCLUSIONS
+    result.excluded.to_csv(exclusions_path, index=False)
+    outputs["exclusions"] = exclusions_path
     if write_hits:
-        output_dir = Path(output_dir)
         hits_path = output_dir / PATTERN_HITS
         result.hits.to_csv(hits_path, index=False)
         outputs["pattern_hits"] = hits_path
+
+    # Re-read the configs now that classification is done. A four-minute run is
+    # long enough for a dictionary to be edited underneath it, and that has
+    # happened: a run recorded a digest that had already been superseded before
+    # its own report was written.
+    problems, checked = compare_config_digests(
+        {
+            "themes": (themes.version, themes.sha256),
+            "modalities": (modalities.version, modalities.sha256),
+        },
+        config_dir,
+    )
+    freshness = Freshness(
+        Path(output_dir) / RUN_MANIFEST, tuple(problems), tuple(checked)
+    )
+    if freshness.is_stale:
+        for problem in problems:
+            log.warning("Config changed during the run: %s", problem)
 
     combinations = aggregate.build_combination_counts(result.labels)
     report_text = format_report(
@@ -1355,6 +1812,7 @@ def run(
         combinations,
         top_patterns=top_patterns,
         source=str(records_path),
+        freshness=freshness,
     )
     report_path = Path(output_dir) / REPORT
     report_path.write_text(report_text, encoding="utf-8")
@@ -1370,6 +1828,7 @@ def run(
         partial_year_source=year_source,
         corpus=window.meta,
         year_range=year_range,
+        config_changed=problems,
     )
     manifest_path = Path(output_dir) / RUN_MANIFEST
     manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
@@ -1383,8 +1842,9 @@ def main(argv: list[str] | None = None) -> int:
         prog="python -m trends.classify",
         description="Assign themes and modalities to parsed PubMed records.",
     )
-    parser.add_argument("--records", required=True, type=Path,
-                        help="records.parquet (or records.csv) from trends.parse.")
+    parser.add_argument("--records", type=Path,
+                        help="records.parquet (or records.csv) from trends.parse. "
+                             "Required unless --check is given.")
     parser.add_argument("--config-dir", type=Path, default=Path("config"),
                         help="Directory holding themes.yaml and modalities.yaml.")
     parser.add_argument("--output", type=Path, default=Path("data/processed"),
@@ -1401,7 +1861,23 @@ def main(argv: list[str] | None = None) -> int:
                         help="How many patterns the diagnostic report lists.")
     parser.add_argument("--report", action="store_true",
                         help="Print the diagnostic report as well as writing it.")
+    parser.add_argument("--check", action="store_true",
+                        help="Classify nothing. Compare the config digests recorded in "
+                             "--output's run_manifest.json with the files in --config-dir "
+                             "and exit non-zero if the output is stale. Exit 0 current, "
+                             "3 stale, 4 no manifest to check.")
     args = parser.parse_args(argv)
+
+    if args.check:
+        freshness = check_freshness(args.output, args.config_dir)
+        stream = sys.stdout if not freshness.is_stale else sys.stderr
+        print(freshness.banner(), file=stream)
+        if not freshness.checked:
+            return 4
+        return 3 if freshness.is_stale else 0
+
+    if args.records is None:
+        parser.error("--records is required unless --check is given")
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     try:

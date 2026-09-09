@@ -1,24 +1,30 @@
-pmid,title,abstract,year,year_source,record_type
-1001,A foundation model for whole  slide imaging,We evaluate the model on CT scans from one hundred patients.,2023,ArticleDate,PubmedArticle
-1002,Foundation models in oncology,A narrative overview. No data modality is named anywhere in this abstract.,2021,PubDate,PubmedArticle
-1003,Vision-language models for radiology reports,We apply NLP to free-text reports and report accuracy.,2024,ArticleDate,PubmedArticle
-1004,qPCR Ct values and pet ownership in cancer cohorts,The mean Ct value was 30. Our pet dataset covers US populations.,2024,PubDate,PubmedArticle
-1005,PET/CT radiomics of lung nodules,FDG PET/CT was compared with MRI in a retrospective cohort.,2024,ArticleDate,PubmedArticle
-1006,Intrahepatic cholangiocarcinoma (IHC) staging with ultrasound,No staining was performed in this imaging study.,2025,PubDate,PubmedArticle
-1007,Immunohistochemistry and IHC scoring by deep learning,CODEX multiplex panels and spatial transcriptomics were profiled.,2025,ArticleDate,PubmedArticle
-1008,A digital twin of the patient,The words codex and wsi in lower case name no modality here.,2026,PubDate,PubmedArticle
-1009,A 510(k)-cleared triage algorithm,Computed tomography studies were triaged automatically.,2026,ArticleDate,PubmedArticle
-1010,FDA-approved software for pathology reports,We apply natural language processing to pathology reports.,2026,PubDate,PubmedArticle
-1011,Multimodal therapy for sarcoma,Multimodal treatment planning was guided by MRI.,2023,ArticleDate,PubmedArticle
-1012,Multi-modal fusion of MRI and whole slide imaging,Multimodal integration improved prediction.,2025,PubDate,PubmedArticle
-1013,Foundation model chapter,"A reference work mentioning MRI, CT and PET.",2024,Book/PubDate,PubmedBookArticle
-1014,An article with no publication year,It names MRI but has nowhere to sit on a time axis.,,none,PubmedArticle
-1016,Deep learning for mammography screening,Digital mammograms and chest X-rays were reviewed by two readers.,2025,ArticleDate,PubmedArticle
-1017,X-ray diffraction of tumour mineral deposits,Powder X-ray diffraction was used; no clinical imaging was performed.,2024,PubDate,PubmedArticle
-1018,An early-online paper issued inside the window,Posted online in 2014 and assigned to a 2015 issue. It names MRI.,2014,ArticleDate,PubmedArticle
-1019,MRI radiomics with genomic profiling,RNA-seq and electronic health record covariates were modelled jointly.,2025,ArticleDate,PubmedArticle
-1020,Endoscopy and CT staging of gastric cancer,Endoscopic video was combined with computed tomography.,2024,PubDate,PubmedArticle
-1021,Virtual staining predicts spatial transcriptomics from H&E,A model trained on whole slide imaging infers spatial transcriptomics without sequencing.,2026,ArticleDate,PubmedArticle
-1022,An agentic AI system for radiology triage,"The LLM agent plans, calls tools, and acts across several steps on CT studies.",2026,ArticleDate,PubmedArticle
-1023,Gadolinium contrast agent dosing predicted by deep learning,The contrast agent was administered before MRI. No software agent is involved.,2025,PubDate,PubmedArticle
-,An article with no PMID,It names CT but cannot be identified.,2025,PubDate,PubmedArticle
+pmid,title,abstract,year,year_source,record_type,publication_types
+1001,A foundation model for whole  slide imaging,We evaluate the model on CT scans from one hundred patients.,2023,ArticleDate,PubmedArticle,Journal Article
+1002,Foundation models in oncology,A narrative overview. No data modality is named anywhere in this abstract.,2021,PubDate,PubmedArticle,Journal Article
+1003,Vision-language models for radiology reports,We apply NLP to free-text reports and report accuracy.,2024,ArticleDate,PubmedArticle,Journal Article
+1004,qPCR Ct values and pet ownership in cancer cohorts,The mean Ct value was 30. Our pet dataset covers US populations.,2024,PubDate,PubmedArticle,Journal Article
+1005,PET/CT radiomics of lung nodules,FDG PET/CT was compared with MRI in a retrospective cohort.,2024,ArticleDate,PubmedArticle,Journal Article
+1006,Intrahepatic cholangiocarcinoma (IHC) staging with ultrasound,No staining was performed in this imaging study.,2025,PubDate,PubmedArticle,Journal Article
+1007,Immunohistochemistry and IHC scoring by deep learning,CODEX multiplex panels and spatial transcriptomics were profiled.,2025,ArticleDate,PubmedArticle,Journal Article
+1008,A digital twin of the patient,The words codex and wsi in lower case name no modality here.,2026,PubDate,PubmedArticle,Journal Article
+1009,A 510(k)-cleared triage algorithm,Computed tomography studies were triaged automatically.,2026,ArticleDate,PubmedArticle,Journal Article
+1010,FDA-approved software for pathology reports,We apply natural language processing to pathology reports.,2026,PubDate,PubmedArticle,Journal Article
+1011,Multimodal therapy for sarcoma,Multimodal treatment planning was guided by MRI.,2023,ArticleDate,PubmedArticle,Journal Article
+1012,Multi-modal fusion of MRI and whole slide imaging,Multimodal integration improved prediction.,2025,PubDate,PubmedArticle,Journal Article
+1013,Foundation model chapter,"A reference work mentioning MRI, CT and PET.",2024,Book/PubDate,PubmedBookArticle,Journal Article
+1014,An article with no publication year,It names MRI but has nowhere to sit on a time axis.,,none,PubmedArticle,Journal Article
+1016,Deep learning for mammography screening,Digital mammograms and chest X-rays were reviewed by two readers.,2025,ArticleDate,PubmedArticle,Journal Article
+1017,X-ray diffraction of tumour mineral deposits,Powder X-ray diffraction was used; no clinical imaging was performed.,2024,PubDate,PubmedArticle,Journal Article
+1018,An early-online paper issued inside the window,Posted online in 2014 and assigned to a 2015 issue. It names MRI.,2014,ArticleDate,PubmedArticle,Journal Article
+1019,MRI radiomics with genomic profiling,RNA-seq and electronic health record covariates were modelled jointly.,2025,ArticleDate,PubmedArticle,Journal Article
+1020,Endoscopy and CT staging of gastric cancer,Endoscopic video was combined with computed tomography.,2024,PubDate,PubmedArticle,Journal Article
+1021,Virtual staining predicts spatial transcriptomics from H&E,A model trained on whole slide imaging infers spatial transcriptomics without sequencing.,2026,ArticleDate,PubmedArticle,Journal Article
+1022,An agentic AI system for radiology triage,"The LLM agent plans, calls tools, and acts across several steps on CT studies.",2026,ArticleDate,PubmedArticle,Journal Article
+1023,Gadolinium contrast agent dosing predicted by deep learning,The contrast agent was administered before MRI. No software agent is involved.,2025,PubDate,PubmedArticle,Journal Article
+1024,Liquid biopsy and CT for response assessment,Plasma ctDNA was paired with computed tomography.,2025,ArticleDate,PubmedArticle,Journal Article
+1025,Deep learning for colonoscopy polyp detection,Colonoscopic video frames were the only data used.,2025,PubDate,PubmedArticle,Journal Article
+1026,A narrative review of digital twins in oncology imaging,"We survey the literature on the digital twin concept, whole slide imaging and CT.",2025,ArticleDate,PubmedArticle,Journal Article; Review
+1027,Editorial: the promise of MRI radiomics,A comment on the state of MRI radiomics.,2024,PubDate,PubmedArticle,Editorial
+1028,A preprint on foundation model transfer in histology,"Whole slide imaging results, not yet peer reviewed.",2026,ArticleDate,PubmedArticle,Preprint
+1029,Multimodal deep learning for glioma grading,"We fuse multiple MRI sequences, T1-weighted and T2-weighted, in one network.",2025,ArticleDate,PubmedArticle,Journal Article
+,An article with no PMID,It names CT but cannot be identified.,2025,PubDate,PubmedArticle,Journal Article

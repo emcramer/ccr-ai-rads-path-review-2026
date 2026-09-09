@@ -11,8 +11,12 @@ that returns *fewer* means the query broke.
 Files this document explains: `config/corpus.yaml`, `config/themes.yaml`,
 `config/modalities.yaml`.
 
-**Current dictionary state — `themes.yaml` v10, `modalities.yaml` v6, `corpus.yaml` v1**
-(2026-09-03). Authoritative record: `config/VERSIONS.json`.
+**For a plain statement of what each category means**, rather than how it was arrived at,
+see `docs/definitions.md` — one entry per theme and modality, with its definition, its
+load-bearing exclusions, its measured precision, and its characteristic failure mode.
+
+**Current dictionary state — `themes.yaml` v12, `modalities.yaml` v13, `corpus.yaml` v1**
+(2026-09-09). Authoritative record: `config/VERSIONS.json`.
 
 `themes.yaml` history: **v7** added the `virtual_staining` theme; **v8** corrected that
 theme's count and precision and applied a one-token repair to
@@ -422,6 +426,164 @@ AI copilot for human pathology"* (Nature 2024), matches the corpus METHOD and DO
 but **fails the CANCER block**: its abstract contains no cancer term at all, speaking only
 of "pathology" and "diverse tissue origins and disease models". That is a corpus-recall gap,
 not a theme defect — and it matters because the paper is named in the manuscript. See §8.
+
+### Versions 12 and 13 — the single-modality contradiction (2026-09-09)
+
+The author found it: papers carrying `multimodal_integration` with only one modality. **1,368
+of 3,886 primary-research multimodal papers (35%) had fewer than two modality rows.** Two
+defects were proposed — theme over-calling, and modality under-labelling. Measurement put the
+weight on the second and **overturned the first**.
+
+#### Recall (shipped, v13): a prediction target assigns its modality row
+
+Under the training-set rule, predicting Ki-67 from CT requires IHC during training, so `ihc`
+applies. Three rule shapes per row, for `genomics`, `ihc`, `he_histology` and the two spatial
+rows.
+
+**The cohort-descriptor trap is guarded per-occurrence, not per-record.** "HER2-positive breast
+cancer" is an eligibility criterion; "predict HER2 status" is use. A negative lookahead after
+the target token rejects the descriptor sense. A record-level exclude would have been wrong,
+because a paper predicting HER2 status also says "HER2-positive". `MSI` additionally needed a
+lookbehind against **mass-spectrometry imaging** — "MALDI MSI" — found in a precision read.
+
+**Measured: 123 of 1,368 rescued (9%), ~16 of 18 correct on a read.** Corpus-wide, 115.
+
+**A documented recall gap, reported rather than hidden.** A looser probe found 226 such papers
+(18%); requiring a prediction construction reaches 123. The difference is papers naming the
+target with no prediction verb or measurement noun nearby, which at abstract level is
+indistinguishable from the descriptor sense. Widening the window from 60 to 100 characters
+recovers 5 more, so this is not a tuning problem.
+
+#### Precision (measured, deliberately NOT shipped)
+
+Five language families were proposed. **Every one is commoner in the genuinely multimodal
+population than in the broken one:**
+
+| family | in <2 rows | in ≥2 rows | genuine lost per spurious removed |
+|---|---|---|---|
+| radiomics + nomogram | 11 | 137 | **12.5** |
+| contrast phases | 120 | 359 | 3.0 |
+| multi-sequence MRI | 145 | 357 | 2.5 |
+| multi-centre / task / label | 188 | 420 | 2.2 |
+| architecture fusion | 185 | 203 | 1.1 |
+
+Even the most targeted form fails: "multimodal" immediately followed by **one** modality name —
+the intra-modality case this theme has tried to exclude twice — sits at 150 versus 141, ratio
+**0.94**. It does not discriminate, because a paper genuinely combining multimodal MRI *with*
+clinical data uses exactly those words.
+
+**The reason is structural.** These families are ubiquitous features of radiology papers, not
+markers of the defect. Prevalence in the broken set was mistaken for discriminative power; the
+ratio against the genuine set is the measure that matters, and none of them survives it.
+
+**So the invariant is the right mechanism, and no pattern can replace it.** It tests the one
+fact language cannot approximate — how many rows the paper actually has.
+
+#### What survives
+
+| | papers with <2 rows | share of 3,886 |
+|---|---|---|
+| before | 1,368 | 35.2% |
+| after recall fix | **1,253** | **32.2%** |
+| after precision fix | 1,253 | unchanged — nothing shipped |
+
+Those 1,253 lose the theme to the invariant. **That loss is measured, not silent.**
+
+### Versions 11 and 12 — two author rulings (2026-09-08)
+
+Two definitional rulings landed together, and both are **decisions rather than discoveries**.
+
+#### Ruling 1: a modality counts if it was required during training
+
+> "Multimodal should include any models that predict one modality from another. Basically, if
+> it requires two modalities during training, then it is a multimodal model/application."
+
+This **reversed** the input-only rule of v4 rather than extending it. The rule had been
+enforced for `genomics` alone, so a paper predicting HER2 from H&E carried `ihc` but not
+`genomics`. Reporting that inconsistency is what prompted the ruling.
+
+**`genomics`: both prediction-side exclusions removed.** They had suppressed the label on
+**424 papers, 168 carrying H&E**.
+
+| | before | after |
+|---|---|---|
+| `genomics` | 3,551 | **3,975** |
+| `genomics` ∩ `he_histology` | 796 | **964** |
+
+That rise is correct under the new rule. **The TCGA qualifier stays**, and the notes now say
+why the two v6 fixes are different: the prediction-side exclusions answered *"does a predicted
+label count as use?"* — definitional, now answered yes — while the TCGA qualifier answers
+*"does naming an archive establish which data type was used?"* — evidential, still no, because
+TCGA distributes slides alongside molecular data.
+
+**`multimodal_integration`: extended to cross-modality prediction**, 4,656 → **5,115** (+459).
+Nine patterns: six one-per-target cross-row prediction rules, plus row-to-row translation,
+virtual/synthetic staining, and targeted stain transfer.
+
+The families the patterns cross are **the figure's own modality rows**, so "crossing a family"
+means crossing a Panel A row. That detail is load-bearing: a first draft lumped H&E and IHC
+into one "pathology" family, which made H&E-to-IHC read as *intra*-modality and excluded
+exactly the papers the ruling is about. It reached only 37 of 65 virtual-staining papers; the
+shipped version reaches **61 of 65**, which was the correctness check offered and used.
+
+**Both named boundaries were measured, not assumed.** The patterns whitelist modality targets
+rather than blacklisting outcomes, so an outcome cannot fill the target slot:
+
+| Boundary probe | share of the 459 added | corpus base rate |
+|---|---|---|
+| outcome-prediction language | **8.2%** | 11.2% |
+| segmentation-target language | **0.6%** | 1.3% |
+
+Both sit *below* base rate, so neither the prognostic-modelling literature nor segmentation
+work was swept in. A read of 20 additions gave roughly 17–18 genuine.
+
+**Not shipped, on measurement:** 15 of the 30 possible cross-row pairs match zero corpus
+records; a `cross-modal predict` pattern added 0 new, being subsumed by the existing bare
+`cross-modal` include; and `image-to-image translation` matched nothing once required to cross
+a row — untightened it had admitted "image-to-image translation across three standard MRI
+contrasts", which is intra-modality.
+
+#### Ruling 2: modalities are limited to radiology and pathology
+
+> "Endoscopy, dermoscopy, colposcopy, OCT, etc. are not modalities of either specialty."
+
+The line is imaging read by a radiologist or pathologist, plus the data types a pathology
+department generates. The excluded vocabulary was **moved to a new `non_specialty` category,
+not deleted**, so the exclusion is auditable.
+
+**Kept in `other`:** SPECT, confocal and electron microscopy, mass spectrometry/MALDI,
+metabolomics, proteomics, flow cytometry, Raman spectroscopy, liquid biopsy/ctDNA, microbiome.
+**Moved out:** dosimetry, endoscopy family, dermoscopy, OCT, thermography, clinical
+photography, wearables, ECG/EEG, and colposcopy — which was **absent from the dictionary
+entirely** and had to be added for the ruling to be enforced.
+
+**Hyperspectral imaging was kept, and that call was mine.** A 24-record read found ~15 are
+tissue-section, specimen or cytology studies (histopathology nuclei databases, unstained
+sections, FNA cytology, resected specimens) against ~6 intraoperative surgical-field studies.
+The majority are data a pathology department generates, which places it inside the line. The
+intraoperative minority is a real impurity, accepted because dropping the term costs the
+larger tissue group.
+
+**Measured consequence.** 3,163 papers match a `non_specialty` term. **1,339 (3.0% of the
+corpus) would fall out entirely** — no named row and no surviving `other` term.
+
+**The dosimetry case, checked before implementing because it is the largest exclusion at 900
+papers.** It is not a 900-paper loss: **791 keep CT or another named row**, so the true loss is
+**107**. A 26-record read of those 107 found EBRT and proton planning, auto-contouring, Monte
+Carlo dose, dosimetrist workflow surveys and brachytherapy — radiation oncology, not diagnostic
+radiology, which is what the author ruled. The consequence matches the decision.
+
+#### A process note
+
+`modalities.yaml` went v11 → v12 within this round, because two fall-out figures in the
+`non_specialty` notes were written before hyperspectral was ruled back in and had to be
+corrected. No run consumed v11. The entry stays in the ledger: correcting it in place is the
+precise defect `config/VERSIONS.json` exists to prevent.
+
+That also **retires the one-number convention** for the two dictionaries. Keeping them on the
+same version cannot survive a round where only one file changes, because bumping the unchanged
+file would record two versions against one hash. The bump-on-content-change rule wins, since it
+is the one a test enforces, and the ledger already does the job the convention was for.
 
 ### Versions 7 and 8 — the `virtual_staining` theme (2026-09-02)
 

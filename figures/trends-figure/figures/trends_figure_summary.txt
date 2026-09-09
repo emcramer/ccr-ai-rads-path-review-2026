@@ -1,17 +1,17 @@
 Trends figure — numbers for the legend
 source directory : data/processed
 tag              : (none)
-papers in corpus : 44533
+papers in corpus : 43079
 year range       : 2015-2026
 partial year     : 2026
 Panel A columns  : top 12 modality combinations per theme, plus one remainder column holding every other paper in the theme
 Panel A bars     : share (percent of each theme's own papers)
 
 theme                     papers   sets  drawn  in remainder  remainder papers   share
-foundation_models           1226    139     12           127               388  31.6%
-multimodal_integration      4654    317     12           305              2116  45.5%
-digital_twins                 56     31     12            19                19  33.9%
-clinical_fda                  93     27     12            15                15  16.1%
+foundation_models           1021    108     12            96               310  30.4%
+multimodal_integration      2727    256     12           244              1291  47.3%
+digital_twins                 20     13     12             1                 1   5.0%
+clinical_fda                  69     22     12            10                10  14.5%
 
 Nothing is hidden: the remainder column is drawn, so each block's bars sum to
 its theme total.
@@ -20,16 +20,16 @@ Papers are multi-label: the theme totals above sum to more than the corpus size.
 Panel B — two stacked plots, per-year counts, separate linear y axes
   upper plot       : foundation_models/radiology, foundation_models/pathology, foundation_models/both, multimodal_integration/radiology, multimodal_integration/pathology, multimodal_integration/both
   lower plot       : digital_twins/all, virtual_staining/all, agentic_ai/all, clinical_fda/radiology, clinical_fda/pathology
-  lower y scale    : 26x finer than the upper plot (range band drawn on the upper plot)
-  foundation_models/radiology      total     520   peak year    212
-  foundation_models/pathology      total     410   peak year    201
-  foundation_models/both           total      39   peak year     22
-  multimodal_integration/radiology total   2,835   peak year    868
-  multimodal_integration/pathology total     822   peak year    313
-  multimodal_integration/both      total     276   peak year    101
-  digital_twins/all                total      56   peak year     33
+  lower y scale    : 27x finer than the upper plot (range band drawn on the upper plot)
+  foundation_models/radiology      total     511   peak year    204
+  foundation_models/pathology      total     413   peak year    202
+  foundation_models/both           total      48   peak year     30
+  multimodal_integration/radiology total   2,837   peak year    847
+  multimodal_integration/pathology total   1,080   peak year    365
+  multimodal_integration/both      total     484   peak year    156
+  digital_twins/all                total      52   peak year     31
   virtual_staining/all             total      65   peak year     21
-  agentic_ai/all                   total      35   peak year     16
+  agentic_ai/all                   total      34   peak year     15
   clinical_fda/radiology           total      60   peak year     19
   clinical_fda/pathology           total      13   peak year      6
   pathology zero run: 2015-2021 (7 consecutive years at zero)

@@ -14,7 +14,7 @@
 # Case sensitivity is load-bearing here. PET, CT, IHC and WSI are only usable
 # as bare acronyms when matched case-sensitively; see notes and
 # docs/search-strategy.md for the measurements.
-version: 6
+version: 13
 
 categories:
   he_histology:
@@ -55,6 +55,16 @@ categories:
         kind: regex
       - pattern: "(?i)\\bslide[- ]level\\b"
         kind: regex
+      # --- v13: TRAINING-SET RULE (author ruling 2026-09-08) ---
+      # prediction target: a histologic grade or subtype the model predicts. A target the model is trained to predict was required
+      # during training, so this row applies. Guarded against the cohort-
+      # descriptor sense ("HER2-positive breast cancer") per-occurrence.
+      - pattern: "(?i)\\b(?:predict\\w*|prediction|infer\\w*|classif\\w*|determin\\w*|estimat\\w*|assess\\w*|identif\\w*|detect\\w*|evaluat\\w*|stratif\\w*|quantif\\w*)\\b[^.]{0,60}\\b(?:histolog\\w* (?:grade|subtype|type|differentiation)|tumou?r grade|Gleason (?:score|grade|pattern|group)|WHO grade|nuclear grade|ISUP grade|differentiation grade)\\b"
+        kind: regex
+      - pattern: "(?i)\\b(?:histolog\\w* (?:grade|subtype|type|differentiation)|tumou?r grade|Gleason (?:score|grade|pattern|group)|WHO grade|nuclear grade|ISUP grade|differentiation grade)\\b[^.]{0,50}\\b(?:predict\\w*|prediction|infer\\w*|classif\\w*|determin\\w*|estimat\\w*|assess\\w*|identif\\w*|detect\\w*|evaluat\\w*|stratif\\w*|quantif\\w*)\\b"
+        kind: regex
+      - pattern: "(?i)^[^\\n]*\\b(?:histolog\\w* (?:grade|subtype|type|differentiation)|tumou?r grade|Gleason (?:score|grade|pattern|group)|WHO grade|nuclear grade|ISUP grade|differentiation grade)\\b[^\\n]*\\n"
+        kind: regex
     exclude: []
     notes: >
       v3 (2026-09-02): "patch-level" REMOVED on validation evidence. It described a
@@ -88,6 +98,16 @@ categories:
       - pattern: "(?i)\\bimmunostain"
         kind: regex
       - pattern: "(?i)\\bimmunolabel"
+        kind: regex
+      # --- v13: TRAINING-SET RULE (author ruling 2026-09-08) ---
+      # prediction target: an IHC-family biomarker the model predicts or the study measures. A target the model is trained to predict was required
+      # during training, so this row applies. Guarded against the cohort-
+      # descriptor sense ("HER2-positive breast cancer") per-occurrence.
+      - pattern: "(?i)\\b(?:predict\\w*|prediction|infer\\w*|classif\\w*|determin\\w*|estimat\\w*|assess\\w*|identif\\w*|detect\\w*|evaluat\\w*|stratif\\w*|quantif\\w*)\\b[^.]{0,60}\\b(?:Ki-?67|HER2|HER-2|PD-L1|PDL1|o?estrogen receptor|progesterone receptor|androgen receptor|p16|p53|cytokeratin|mismatch repair|MMR|Her2|CD\\d{1,3})\\b(?![- ](?:positive|negative|high|low|mutant|mutated|wild-?type|enriched|amplified|deficient|proficient|altered)\\b)"
+        kind: regex
+      - pattern: "(?i)\\b(?:Ki-?67|HER2|HER-2|PD-L1|PDL1|o?estrogen receptor|progesterone receptor|androgen receptor|p16|p53|cytokeratin|mismatch repair|MMR|Her2|CD\\d{1,3})\\s+(?:status|expression|level|score|positivity|profile|subtype|burden|grade|classification|alteration)\\b[^.]{0,50}\\b(?:predict\\w*|prediction|infer\\w*|classif\\w*|determin\\w*|estimat\\w*|assess\\w*|identif\\w*|detect\\w*|evaluat\\w*|stratif\\w*|quantif\\w*)\\b"
+        kind: regex
+      - pattern: "(?i)^[^\\n]*\\b(?:Ki-?67|HER2|HER-2|PD-L1|PDL1|o?estrogen receptor|progesterone receptor|androgen receptor|p16|p53|cytokeratin|mismatch repair|MMR|Her2|CD\\d{1,3})\\s+(?:status|expression|level|score|positivity|profile|subtype|burden|grade|classification|alteration)\\b[^\\n]*\\n"
         kind: regex
     exclude:
       - pattern: "(?i)\\bintrahepatic cholangiocarcinoma\\s*\\(IHC\\)"
@@ -124,6 +144,16 @@ categories:
       - pattern: "(?i)\\b(GeoMx|PhenoCycler|PhenoImager|Opal multiplex)\\b"
         kind: regex
       - pattern: "(?i)\\bspatial protein (expression|profiling)"
+        kind: regex
+      # --- v13: TRAINING-SET RULE (author ruling 2026-09-08) ---
+      # prediction target: a spatial-proteomic readout the model predicts. A target the model is trained to predict was required
+      # during training, so this row applies. Guarded against the cohort-
+      # descriptor sense ("HER2-positive breast cancer") per-occurrence.
+      - pattern: "(?i)\\b(?:predict\\w*|prediction|infer\\w*|classif\\w*|determin\\w*|estimat\\w*|assess\\w*|identif\\w*|detect\\w*|evaluat\\w*|stratif\\w*|quantif\\w*)\\b[^.]{0,60}\\b(?:spatial proteom\\w+|protein multiplex\\w*|multiplex(?:ed)? immunofluorescen\\w+)\\b(?![- ](?:positive|negative|high|low|mutant|mutated|wild-?type|enriched|amplified|deficient|proficient|altered)\\b)"
+        kind: regex
+      - pattern: "(?i)\\b(?:spatial proteom\\w+|protein multiplex\\w*|multiplex(?:ed)? immunofluorescen\\w+)\\s+(?:status|expression|level|score|positivity|profile|subtype|burden|grade|classification|alteration)\\b[^.]{0,50}\\b(?:predict\\w*|prediction|infer\\w*|classif\\w*|determin\\w*|estimat\\w*|assess\\w*|identif\\w*|detect\\w*|evaluat\\w*|stratif\\w*|quantif\\w*)\\b"
+        kind: regex
+      - pattern: "(?i)^[^\\n]*\\b(?:spatial proteom\\w+|protein multiplex\\w*|multiplex(?:ed)? immunofluorescen\\w+)\\s+(?:status|expression|level|score|positivity|profile|subtype|burden|grade|classification|alteration)\\b[^\\n]*\\n"
         kind: regex
     exclude: []
     notes: >
@@ -173,6 +203,16 @@ categories:
       - pattern: "(?i)\\bin situ (sequencing|transcriptom)"
         kind: regex
       - pattern: "(?i)\\bspatial(ly resolved)? (single[- ]cell )?omics? (data|profil|analys)"
+        kind: regex
+      # --- v13: TRAINING-SET RULE (author ruling 2026-09-08) ---
+      # prediction target: a spatial-transcriptomic readout the model predicts. A target the model is trained to predict was required
+      # during training, so this row applies. Guarded against the cohort-
+      # descriptor sense ("HER2-positive breast cancer") per-occurrence.
+      - pattern: "(?i)\\b(?:predict\\w*|prediction|infer\\w*|classif\\w*|determin\\w*|estimat\\w*|assess\\w*|identif\\w*|detect\\w*|evaluat\\w*|stratif\\w*|quantif\\w*)\\b[^.]{0,60}\\b(?:spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression)\\b(?![- ](?:positive|negative|high|low|mutant|mutated|wild-?type|enriched|amplified|deficient|proficient|altered)\\b)"
+        kind: regex
+      - pattern: "(?i)\\b(?:spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression)\\s+(?:status|expression|level|score|positivity|profile|subtype|burden|grade|classification|alteration)\\b[^.]{0,50}\\b(?:predict\\w*|prediction|infer\\w*|classif\\w*|determin\\w*|estimat\\w*|assess\\w*|identif\\w*|detect\\w*|evaluat\\w*|stratif\\w*|quantif\\w*)\\b"
+        kind: regex
+      - pattern: "(?i)^[^\\n]*\\b(?:spatial transcriptom\\w+|spatial gene expression|spatially resolved gene expression)\\s+(?:status|expression|level|score|positivity|profile|subtype|burden|grade|classification|alteration)\\b[^\\n]*\\n"
         kind: regex
     exclude: []
     notes: >
@@ -476,11 +516,17 @@ categories:
         kind: regex
       - pattern: "(?i)\\b(cBioPortal|Gene Expression Omnibus)"
         kind: regex
-    exclude:
-      - pattern: "(?i)^(?=[\\s\\S]*((predict|infer|determin|classif|estimat|detect|identif|assess)\\w*[^.]{0,70}\\b(mutation|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular subtyp\\w+|gene expression|genomic\\w*|transcriptomic\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB)\\b[^.]{0,70}\\b(from|using|based on|on)\\b[^.]{0,50}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|patholog\\w+|slide|image\\w*|imaging|CT\\b|MRI|radiomic\\w*|radiolog\\w+|ultrasound|mammogra\\w+)|(mutation|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular subtyp\\w+|gene expression|genomic\\w*|transcriptomic\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB)[^.]{0,25}(status )?(prediction|classification|inference)[^.]{0,50}\\b(from|using|based on)\\b[^.]{0,50}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|patholog\\w+|slide|image\\w*|imaging|CT\\b|MRI|radiomic\\w*|radiolog\\w+|ultrasound|mammogra\\w+)|\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|patholog\\w+|slide|image\\w*|imaging|CT\\b|MRI|radiomic\\w*|radiolog\\w+|ultrasound|mammogra\\w+)[- ](based|derived)\\b[^.]{0,60}\\b(predict\\w*|classif\\w*|infer\\w*)[^.]{0,40}\\b(mutation|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular subtyp\\w+|gene expression|genomic\\w*|transcriptomic\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB)))(?![\\s\\S]*((RNA-?seq|sequencing (data|was|were|of)|transcriptomic data|multi-?omic|bulk RNA|single[- ]cell RNA|\\bWES\\b|\\bWGS\\b|\\bNGS\\b|whole[- ](exome|genome) sequencing|genomic data|gene expression data|methylation (data|array|profil)|integrat\\w+ [^.]{0,30}(genomic|transcriptomic|molecular|omic)|(genomic|transcriptomic|molecular|omics) (data|profil|feature|signature)s? (were|was|are|is)|combin\\w+ [^.]{0,30}(genomic|transcriptomic|omics)|copy[- ]number|microarray)))"
+      # --- v13: TRAINING-SET RULE (author ruling 2026-09-08) ---
+      # prediction target: a genomic readout the model predicts or the study measures. A target the model is trained to predict was required
+      # during training, so this row applies. Guarded against the cohort-
+      # descriptor sense ("HER2-positive breast cancer") per-occurrence.
+      - pattern: "(?i)\\b(?:predict\\w*|prediction|infer\\w*|classif\\w*|determin\\w*|estimat\\w*|assess\\w*|identif\\w*|detect\\w*|evaluat\\w*|stratif\\w*|quantif\\w*)\\b[^.]{0,60}\\b(?:(?<!MALDI )(?<!mass spectrometry )MSI|microsatellite instabilit\\w+|mutation\\w*|mutational burden|TMB|molecular subtyp\\w+|gene expression|methylation|homologous recombination deficiency|HRD|EGFR|KRAS|BRAF|IDH1?2?|MGMT|ALK|ROS1|TP53|BRCA1?2?|PIK3CA)\\b(?![- ](?:positive|negative|high|low|mutant|mutated|wild-?type|enriched|amplified|deficient|proficient|altered)\\b)"
         kind: regex
-      - pattern: "(?i)(?:(?:^(?=(?:[^\\n]*\\b(predict\\w*|prediction|infer\\w*|inference|identif\\w*|determin\\w*|classif\\w*|estimat\\w*|assess\\w*|approximat\\w*|detect\\w*|deduc\\w*)\\b[^\\n]{0,90}\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b|[^\\n]*\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b[^\\n]{0,90}\\b(predict\\w*|prediction|infer\\w*|inference|identif\\w*|determin\\w*|classif\\w*|estimat\\w*|assess\\w*|approximat\\w*|detect\\w*|deduc\\w*)\\b)[^\\n]*\\n)(?=[^\\n]*\\b(from|using|based on|via|through|with|on)\\b[^\\n]{0,60}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|patholog\\w+|slide\\w*|image\\w*|imaging|radiomic\\w*|pathomic\\w*|morpholog\\w+)\\b[^\\n]*\\n)(?![^\\n]*(\\b(using|via|integrating|combining|incorporating|fusion of|with)\\b[^\\n]{0,20}\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b|\\b(image\\w*|histolog\\w+|histopatholog\\w+|slide\\w*|WSI|pathomic\\w*|H&E|patholog\\w+|morpholog\\w+)\\b\\s+and\\s+[^\\n]{0,12}\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b|\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b\\s+and\\s+[^\\n]{0,12}\\b(image\\w*|histolog\\w+|histopatholog\\w+|slide\\w*|WSI|pathomic\\w*|H&E|patholog\\w+|morpholog\\w+)\\b)))|(?:\\b(predict\\w*|prediction|infer\\w*|inference|identif\\w*|determin\\w*|classif\\w*|estimat\\w*|approximat\\w*|deduc\\w*)\\b[^.]{0,60}\\b(mutation\\w*|MSI|microsatellite instabilit\\w+|HER2|HER-2|EGFR|KRAS|BRAF|IDH|MGMT|ALK|PD-L1|molecular (subtyp\\w+|profil\\w+|alteration\\w*|marker\\w*)|gene expression|genomic\\w*|genetic alteration\\w*|transcriptom\\w*|methylation|homologous recombination deficiency|HRD|tumou?r mutational burden|TMB|RNA-?seq\\w*|gene signature\\w*|Oncotype|Decipher|MammaPrint|recurrence score)\\b[^.]{0,40}\\b(from|using|based on|via|directly from|on)\\b[^.]{0,40}\\b(H&E|h(a)?ematoxylin|histolog\\w+|histopatholog\\w+|whole[- ]slide|WSI|patholog\\w+|slide\\w*|image\\w*|imaging|radiomic\\w*|pathomic\\w*|morpholog\\w+)\\b))"
+      - pattern: "(?i)\\b(?:(?<!MALDI )(?<!mass spectrometry )MSI|microsatellite instabilit\\w+|mutation\\w*|mutational burden|TMB|molecular subtyp\\w+|gene expression|methylation|homologous recombination deficiency|HRD|EGFR|KRAS|BRAF|IDH1?2?|MGMT|ALK|ROS1|TP53|BRCA1?2?|PIK3CA)\\s+(?:status|expression|level|score|positivity|profile|subtype|burden|grade|classification|alteration)\\b[^.]{0,50}\\b(?:predict\\w*|prediction|infer\\w*|classif\\w*|determin\\w*|estimat\\w*|assess\\w*|identif\\w*|detect\\w*|evaluat\\w*|stratif\\w*|quantif\\w*)\\b"
         kind: regex
+      - pattern: "(?i)^[^\\n]*\\b(?:(?<!MALDI )(?<!mass spectrometry )MSI|microsatellite instabilit\\w+|mutation\\w*|mutational burden|TMB|molecular subtyp\\w+|gene expression|methylation|homologous recombination deficiency|HRD|EGFR|KRAS|BRAF|IDH1?2?|MGMT|ALK|ROS1|TP53|BRCA1?2?|PIK3CA)\\s+(?:status|expression|level|score|positivity|profile|subtype|burden|grade|classification|alteration)\\b[^\\n]*\\n"
+        kind: regex
+    exclude: []
     notes: >
       Bulk and single-cell molecular data. Added 2026-09-01 because `other` was
       not additive and a paper using MRI plus genomics therefore read as "MRI
@@ -497,6 +543,52 @@ categories:
       single-cell or bulk RNA-seq, TCGA or multi-omics data alongside spatial —
       and 2 were wrong. So a spatial paper carries `genomics` only when it names
       non-spatial molecular data, which is the intended line.
+      v13 (2026-09-09) — PREDICTION TARGETS NOW ASSIGN THIS ROW. The v11 ruling
+      said a modality counts if it was required during training; v13 finally makes
+      the classifier act on it. A paper predicting MSI or a mutation from imaging
+      needed the molecular labels to train, so `genomics` applies even though no
+      sequencing was an input. The same three-rule shape is used for `ihc`,
+      `he_histology`, `spatial_transcriptomics` and `spatial_proteomics`.
+      THE TRAP IS THE COHORT DESCRIPTOR, and it is guarded PER-OCCURRENCE rather
+      than per-record: "HER2-positive breast cancer" and "MSI-high tumours were
+      excluded" are eligibility criteria, not use of IHC or genomics. A negative
+      lookahead after the target token rejects the descriptor sense
+      ("-positive|-negative|-high|-low|-mutant|-wild-type|...") while leaving
+      "predict HER2 status" intact. A record-level exclude would have been wrong,
+      because a paper that predicts HER2 status also says "HER2-positive".
+      MSI IS GUARDED AGAINST MASS-SPECTROMETRY IMAGING. A lookbehind rejects
+      "MALDI MSI" and "mass spectrometry MSI", found in a precision read where a
+      lung-subtyping paper using MALDI imaging was wrongly given `genomics`.
+      MEASURED, on the 1,368 primary-research multimodal papers carrying fewer than
+      two modality rows: 123 rescued to two or more, about 9%. Corpus-wide the
+      figure is 115. A precision read of 18 rescued papers found roughly 16 correct.
+      A DOCUMENTED RECALL GAP, stated because the author asked for the number rather
+      than a silent precision loss. A looser probe run by the coordinator identified
+      226 such papers (18%); requiring a prediction construction reaches 123. The
+      difference is papers where the target appears without any prediction verb or
+      measurement noun near it, which at abstract level cannot be told apart from
+      the cohort-descriptor sense. Widening the search window from 60 to 100
+      characters recovers only 5 more, so the gap is not a tuning problem.
+      v11 (2026-09-08) — BOTH PREDICTION-SIDE EXCLUSIONS REMOVED, on an author
+      ruling that REVERSES the input-only rule rather than extending it: "Multimodal
+      should include any models that predict one modality from another. Basically,
+      if it requires two modalities during training, then it is a multimodal
+      model/application." The operative test is now REQUIRED DURING TRAINING, not
+      CONSUMED AS INPUT. A model predicting MSI or HER2 from H&E needs both the
+      slides and the molecular labels to train, so the genomic data is genuinely
+      used and the label belongs.
+      MEASURED: the two exclusions were suppressing 424 papers, 168 of them carrying
+      he_histology. genomics goes 3,551 -> 3,975, and genomics n he_histology goes
+      796 -> 964. THAT RISE IS CORRECT UNDER THE NEW RULE and is stated here so it
+      is not rediscovered as a defect later.
+      THE TCGA QUALIFIER STAYS, AND IT IS A DIFFERENT FIX. The two shipped together
+      in v6 and will otherwise be remembered as one. The prediction-side exclusions
+      answered "does a predicted label count as use of the data" — a definitional
+      question, now answered yes. The TCGA qualifier answers "does naming an archive
+      evidence which data type was used" — an evidential question, and the answer is
+      still no, because TCGA distributes whole-slide images alongside molecular data,
+      so the archive name alone never established either. It holds under any
+      definition of use.
       v6 (2026-09-02) — SECOND PREDICTION-TARGET EXCLUDE, added after round-three
       validation measured this cell at 45% precision (95% CI 26-66%) in the
       genomics n he_histology stratum, with 8 of 11 false positives being the
@@ -686,34 +778,14 @@ categories:
     type: "All other"
     include:
       # Radiotherapy dose and planning data.
-      - pattern: "(?i)\\bradiotherapy dose"
-        kind: regex
-      - pattern: "(?i)\\bdose[- ](volume|distribution|map|prediction)"
-        kind: regex
-      - pattern: "(?i)\\bdose (prediction|calculation|engine)"
-        kind: regex
-      - pattern: "(?i)\\bdosimetr"
-        kind: regex
-      - pattern: "\\bDVH\\b"
-        kind: regex
       # Other imaging that has no row of its own.
-      - pattern: "(?i)\\b(endoscop|colonoscop|gastroscop|bronchoscop|cystoscop)"
-        kind: regex
-      - pattern: "(?i)\\bderm(at)?oscop"
-        kind: regex
-      - pattern: "(?i)\\boptical coherence tomograph"
-        kind: regex
       - pattern: "\\bSPECT\\b"
         kind: regex
       - pattern: "(?i)\\bhyperspectral"
         kind: regex
-      - pattern: "(?i)\\bthermograph"
-        kind: regex
       - pattern: "(?i)\\bconfocal microscop"
         kind: regex
       - pattern: "(?i)\\belectron microscop"
-        kind: regex
-      - pattern: "(?i)\\b(clinical|total[- ]body|digital) photograph"
         kind: regex
       # Molecular and laboratory data types outside `genomics`.
       - pattern: "(?i)\\b(mass spectrometr|MALDI)"
@@ -731,12 +803,28 @@ categories:
       - pattern: "(?i)\\bmicrobiome"
         kind: regex
       # Signals and sensors.
-      - pattern: "(?i)\\b(wearable|accelerometer)"
-        kind: regex
-      - pattern: "\\b(ECG|EKG|EEG)\\b"
-        kind: regex
     exclude: []
     notes: >
+      v11 (2026-09-08) — SCOPE NARROWED TO THE TWO SPECIALTIES. The author ruled
+      that modalities are limited to those belonging to radiology or pathology:
+      "Endoscopy, dermoscopy, colposcopy, OCT, etc. are not modalities of either
+      specialty." The operative line is imaging read by a radiologist or
+      pathologist, plus the data types a pathology department generates.
+      KEPT here: SPECT (nuclear medicine, read by radiologists), confocal and
+      electron microscopy, mass spectrometry and MALDI, metabolomics, proteomics,
+      flow cytometry, Raman spectroscopy, liquid biopsy and ctDNA, microbiome.
+      MOVED OUT to `non_specialty`: radiotherapy dosimetry, the endoscopy family,
+      dermoscopy, optical coherence tomography, thermography, clinical photography,
+      wearables, ECG/EEG, and colposcopy.
+      HYPERSPECTRAL IMAGING STAYS, and this one was mine to decide rather than the
+      author's. A 24-record read found roughly 15 are tissue-section, specimen or
+      cytology studies — histopathology nuclei databases, unstained tissue sections,
+      FNA cytology, resected specimens, tumour-margin assessment on surgical
+      specimens — against about 6 that are intraoperative surgical-field imaging.
+      The majority are data a pathology department generates or examines, which
+      places the term inside the author's line. The intraoperative minority is a
+      real impurity, accepted because dropping the term would cost the larger
+      tissue-imaging group.
       ADDITIVE as of 2026-09-01, per config/README.md: `other` now takes include
       patterns and may appear alongside named modalities. It means "uses a data
       type outside the named rows". The classifier ALSO assigns it as a fallback
@@ -759,3 +847,60 @@ categories:
       to be worth a pattern. Those papers still reach `other` by the fallback route
       if they match no named row, and are simply not marked additive if they also
       match one.
+
+  non_specialty:
+    label: "Non-specialty (excluded)"
+    type: null
+    include:
+      - pattern: "(?i)\\bradiotherapy dose"
+        kind: regex
+      - pattern: "(?i)\\bdose[- ](volume|distribution|map|prediction)"
+        kind: regex
+      - pattern: "(?i)\\bdose (prediction|calculation|engine)"
+        kind: regex
+      - pattern: "(?i)\\bdosimetr"
+        kind: regex
+      - pattern: "\\bDVH\\b"
+        kind: regex
+      - pattern: "(?i)\\b(endoscop|colonoscop|gastroscop|bronchoscop|cystoscop)"
+        kind: regex
+      - pattern: "(?i)\\bderm(at)?oscop"
+        kind: regex
+      - pattern: "(?i)\\boptical coherence tomograph"
+        kind: regex
+      - pattern: "(?i)\\bthermograph"
+        kind: regex
+      - pattern: "(?i)\\b(clinical|total[- ]body|digital) photograph"
+        kind: regex
+      - pattern: "(?i)\\b(wearable|accelerometer)"
+        kind: regex
+      - pattern: "\\b(ECG|EKG|EEG)\\b"
+        kind: regex
+      - pattern: "(?i)\\bcolposcop"
+        kind: regex
+    exclude: []
+    notes: >
+      NOT A FIGURE ROW. These are the data types the author ruled outside radiology
+      and pathology on 2026-09-08. The classifier uses them to EXCLUDE papers, not
+      to label them.
+      THE VOCABULARY IS RETAINED DELIBERATELY, not deleted. Keeping it here makes
+      the exclusion auditable: a reader can see exactly what was removed, count it,
+      and re-measure the decision, which a silent absence would prevent. If the
+      author revisits the boundary, the terms are already here and already measured.
+      MEASURED CONSEQUENCE, on the 44,625-paper corpus, using the shipped
+      vocabulary. Papers matching any term here: 3,163. Papers that would fall out
+      of the analysis entirely — no named modality row AND no surviving `other`
+      term — 1,339, or 3.0% of the corpus.
+      Per group, hits and true fall-out: endoscopy 1,349/601; dosimetry 900/107;
+      dermoscopy 516/441; OCT 183/100; thermography 74/32; colposcopy 64/46;
+      photography 54/41; wearables 48/8; ECG-EEG 41/7.
+      THE DOSIMETRY DROP WAS THE ONE WORTH CHECKING, because dose maps are computed
+      on CT and it is the largest single exclusion at 900 papers. It is not a
+      900-paper loss: 791 of those papers carry CT or another named row and keep it,
+      so the true fall-out is 107. A 26-record read of those 107 found them to be
+      radiation-oncology and medical-physics work — EBRT and proton planning,
+      auto-contouring for treatment planning, Monte Carlo dose distributions,
+      dosimetrists' workflow surveys, brachytherapy. That is radiation oncology
+      rather than diagnostic radiology, which is what the author ruled, so the
+      consequence matches the decision. Colposcopy was absent from the dictionary
+      entirely before v11 and is added here so the ruling is actually enforced.

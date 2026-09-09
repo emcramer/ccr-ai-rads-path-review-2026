@@ -48,7 +48,7 @@ def modalities() -> classify.TermDictionary:
     return classify.load_term_dictionary(
         MODALITIES_FIXTURE,
         kind="modalities",
-        expected_keys=classify.MODALITY_KEYS,
+        expected_keys=classify.MODALITY_KEYS + classify.EXCLUSION_CATEGORIES,
         optional_include={classify.OTHER_MODALITY},
     )
 
@@ -96,7 +96,7 @@ def test_fixture_dictionaries_load(themes, modalities):
     # figure's order, and the loader must not care.
     assert set(themes.keys) == set(classify.THEME_KEYS)
     assert modalities.version == 4
-    assert set(modalities.keys) == set(classify.MODALITY_KEYS)
+    assert set(modalities.keys) == set(classify.MODALITY_KEYS) | set(classify.EXCLUSION_CATEGORIES)
     assert len(themes.sha256) == 64
     assert themes.n_patterns == 12  # ten includes and two excludes
     assert len(modalities.categories["other"].include) == 2  # additive: it has patterns
@@ -105,7 +105,7 @@ def test_fixture_dictionaries_load(themes, modalities):
 def test_category_order_in_the_file_does_not_matter(modalities):
     """The fixture declares its categories out of figure order; that is allowed."""
     assert modalities.keys != classify.MODALITY_KEYS
-    assert set(modalities.keys) == set(classify.MODALITY_KEYS)
+    assert set(modalities.keys) == set(classify.MODALITY_KEYS) | set(classify.EXCLUSION_CATEGORIES)
 
 
 def test_missing_file_names_the_path(tmp_path):
@@ -211,7 +211,7 @@ def test_real_dictionaries_compile():
     themes, modalities = classify.load_dictionaries(config)
     assert themes.version >= 1 and modalities.version >= 1
     assert themes.keys == classify.THEME_KEYS
-    assert set(modalities.keys) == set(classify.MODALITY_KEYS)
+    assert set(modalities.keys) == set(classify.MODALITY_KEYS) | set(classify.EXCLUSION_CATEGORIES)
     # `other` is additive; the shipped file gives it patterns of its own.
     assert len(modalities.categories["other"].include) >= 1
     classify.check_domain_coverage(modalities.keys)
@@ -327,11 +327,17 @@ def test_conjunctive_pattern_reads_title_and_abstract_as_one_string(modalities):
 
 def test_record_filters_are_counted(result):
     """Book records, blank PMIDs, and yearless records are dropped and reported."""
-    assert result.n_records_in == 23
+    assert result.n_records_in == 29
+    # Secondary publication types are NOT here: since 2026-09-08 they are flagged
+    # and retained, not dropped.
     assert result.exclusions == {
-        "book_records": 1, "missing_pmid": 1, "missing_year": 1, "outside_date_range": 0,
+        "book_records": 1,
+        "missing_pmid": 1,
+        "missing_year": 1,
+        "outside_date_range": 0,
+        "non_specialty_only": 1,
     }
-    assert result.n_records_out == 20
+    assert result.n_records_out == 25
     assert "1013" not in set(result.labels["pmid"])  # the book record
 
 
@@ -489,9 +495,12 @@ def test_canonical_keys_agree_everywhere():
     if not (config / "modalities.yaml").exists():  # pragma: no cover - config is present
         pytest.skip("config/ is not present")
     drift: list[str] = []
+    # `non_specialty` and any future exclusion category are legitimate members of
+    # modalities.yaml but are not figure rows, so they are canonical here and
+    # absent from MODALITY_KEYS on purpose.
     for filename, keys in (
         ("themes.yaml", aggregate.THEME_KEYS),
-        ("modalities.yaml", aggregate.MODALITY_KEYS),
+        ("modalities.yaml", aggregate.MODALITY_KEYS + classify.EXCLUSION_CATEGORIES),
     ):
         declared = set(yaml.safe_load((config / filename).read_text())["categories"])
         if missing := sorted(set(keys) - declared):
@@ -516,15 +525,27 @@ def test_the_fixture_dictionaries_cover_every_canonical_category(themes, modalit
     category is assigned to at least one fixture record, so a new modality
     cannot arrive as a row that no test ever touches.
     """
-    assert set(modalities.keys) == set(aggregate.MODALITY_KEYS)
+    assert set(modalities.keys) == set(aggregate.MODALITY_KEYS) | set(
+        classify.EXCLUSION_CATEGORIES
+    )
     assert set(themes.keys) == set(aggregate.THEME_KEYS)
 
     assigned = set(result.hits.loc[result.hits["category_matched"] == 1, "category"])
-    named = {key for key in modalities.keys if key != classify.OTHER_MODALITY}
+    named = {
+        key for key in modalities.keys
+        if key != classify.OTHER_MODALITY and key not in classify.EXCLUSION_CATEGORIES
+    }
     assert named - assigned == set(), (
         "no fixture record carries these modalities; add one to "
         "tests/fixtures/classify_records.csv"
     )
+    # An exclusion category is never assigned, but it must still fire on
+    # something, or the exclusion it drives is untested.
+    for key in classify.EXCLUSION_CATEGORIES:
+        if key in modalities.keys:
+            assert key in set(result.excluded["reason"].str.replace("_only", "", regex=False)) or (
+                key in set(result.hits["category"])
+            ), f"no fixture record exercises {key}"
     assert set(themes.keys) - assigned == set()
 
 
@@ -571,7 +592,7 @@ def test_report_names_the_counts_a_reader_needs(result, themes, modalities):
     text = classify.format_report(
         result, themes, modalities, aggregate.build_combination_counts(result.labels)
     )
-    assert "records analysed :      20" in text
+    assert "records analysed :      25" in text
     assert "book_records" in text
     assert "MOST FREQUENTLY FIRING PATTERNS" in text
     assert "PATTERNS THAT NEVER FIRED" in text
@@ -626,14 +647,15 @@ def test_cli_writes_every_output(tmp_path, capsys):
     assert "CLASSIFICATION DIAGNOSTIC REPORT" in capsys.readouterr().out
 
     for name in ("paper_labels.csv", "combination_counts.csv", "theme_year_counts.csv",
-                 "pattern_hits.csv", "run_manifest.json", "classification_report.txt"):
+                 "pattern_hits.csv", "exclusions.csv", "run_manifest.json",
+                 "classification_report.txt"):
         assert (output / name).exists(), name
 
     data = io.load_figure_data(output)
-    assert data.n_papers_total == 20
+    assert data.n_papers_total == 25
 
     manifest = json.loads((output / "run_manifest.json").read_text())
-    assert manifest["counts"]["records_in"] == 23
+    assert manifest["counts"]["records_in"] == 29
     assert manifest["counts"]["exclusions"]["book_records"] == 1
     assert manifest["config"]["themes"]["version"] == 7
     assert len(manifest["config"]["themes"]["sha256"]) == 64
@@ -662,7 +684,7 @@ def test_cli_takes_the_partial_year_from_the_corpus_config(tmp_path):
     assert not (output / "pattern_hits.csv").exists()
     # The same date range bounds the corpus: 2014 below, 2026 above.
     assert manifest["year_range_applied"] == {"first": 2015, "last": 2025}
-    assert manifest["counts"]["exclusions"]["outside_date_range"] == 6
+    assert manifest["counts"]["exclusions"]["outside_date_range"] == 7
 
     flagged = pd.read_csv(output / "theme_year_counts.csv", comment="#")
     assert set(flagged.loc[flagged["partial_year"] == 1, "year"]) == {2025}
@@ -715,15 +737,17 @@ def test_other_sits_alongside_a_named_modality(labels, result):
     carries both. Before, ``other`` was reachable only when nothing named
     matched, and that paper read as CT alone.
     """
-    row = labels.loc["1020"]
+    row = labels.loc["1024"]
     assert row["mod_ct"] == 1 and row["mod_other"] == 1
     assert row["domain"] == "radiology"
     hits = result.hits
     assigned = hits.loc[
-        (hits["pmid"] == "1020") & (hits["category"] == "other") & (hits["role"] == "include")
+        (hits["pmid"] == "1024") & (hits["category"] == "other") & (hits["role"] == "include")
     ]
-    assert len(assigned) == 1
-    assert "endoscop" in assigned.iloc[0]["pattern"]
+    assert len(assigned) >= 1
+    assert all(
+        "ctDNA" in row or "liquid biopsy" in row for row in assigned["pattern"]
+    )
 
 
 def test_the_two_routes_to_other_are_distinguishable(result):
@@ -734,7 +758,7 @@ def test_the_two_routes_to_other_are_distinguishable(result):
     assert set(fallback["pattern_id"]) == {"other:fallback"}
     # 1002 matched nothing at all; 1020 matched an `other` pattern.
     assert "1002" in set(fallback["pmid"])
-    assert "1020" not in set(fallback["pmid"])
+    assert "1024" not in set(fallback["pmid"])
 
     routes = classify.other_route_counts(result)
     assert routes["by_pattern"] + routes["by_fallback"] == routes["total"]
@@ -779,7 +803,7 @@ def test_records_outside_the_date_window_are_dropped(records, themes, modalities
     )
     assert windowed.exclusions["outside_date_range"] == 1
     assert 2014 not in set(windowed.labels["year"])
-    assert windowed.n_records_out == 19
+    assert windowed.n_records_out == 24
 
 
 def test_no_window_keeps_every_year(result):
@@ -1083,3 +1107,379 @@ def test_the_ledger_guard_accepts_a_marked_reconstructed_entry(tmp_path):
     )
     entries, _ = _parse_ledger(config / LEDGER_NAME)
     assert _hash_mismatches(config, entries) == []
+
+
+# --------------------------------------------------------------------------
+# Primary research only, and both specialties only
+# --------------------------------------------------------------------------
+
+
+def test_secondary_publications_are_flagged_not_dropped(result, labels):
+    """The author's ruling of 2026-09-08: Panel A is primary research, Panel B is
+    engagement.
+
+    A review is retained and carries every label; it is simply not primary
+    research. Dropping it would erase the attention Panel B exists to measure.
+    """
+    assert "secondary_publication_type" not in result.exclusions
+    for pmid in ("1026", "1027"):            # a review and an editorial
+        assert pmid in labels.index
+        assert labels.loc[pmid][aggregate.PRIMARY_RESEARCH] == 0
+    assert result.exclusion_detail["secondary_publication_type"] == {"Review": 1, "Editorial": 1}
+    assert result.n_records_out == 25 and result.n_primary_research == 23
+
+
+def test_the_two_populations_have_different_denominators(result):
+    """Stated as a property, because the two must never be quoted against each other."""
+    assert result.n_primary_research < result.n_records_out
+    primary = aggregate.primary_research(result.labels)
+    assert len(primary) == result.n_primary_research
+    assert set(primary[aggregate.PRIMARY_RESEARCH]) == {1}
+
+
+def test_panel_a_counts_primary_research_only(result):
+    """``combination_counts.csv`` must not see the review that names a modality."""
+    counts = aggregate.build_combination_counts(result.labels)
+    everything = aggregate.build_combination_counts(result.labels, primary_only=False)
+    per_theme = counts.groupby("theme").n_papers.sum()
+    primary = aggregate.primary_research(result.labels)
+    for theme in aggregate.THEME_KEYS:
+        expected = int(primary[f"theme_{theme}"].sum()) - result.panel_a_shortfalls.get(
+            theme, 0
+        )
+        assert int(per_theme.get(theme, 0)) == expected, theme
+    assert int(everything.n_papers.sum()) > int(counts.n_papers.sum())
+
+
+def test_panel_b_counts_every_retained_record(result):
+    """``theme_year_counts.csv`` keeps the reviews: they are the engagement."""
+    years = aggregate.build_theme_year_counts(result.labels)
+    totals = years[years.domain == "all"].groupby("theme").n_papers.sum()
+    for theme in aggregate.THEME_KEYS:
+        assert int(totals.get(theme, 0)) == int(result.labels[f"theme_{theme}"].sum()), theme
+
+
+def test_preprints_are_kept(labels):
+    """The author considered preprints and kept them, so the filter must not take one."""
+    assert "Preprint" not in classify.SECONDARY_PUBLICATION_TYPES
+    assert "1028" in labels.index
+    assert labels.loc["1028"]["mod_he_histology"] == 1
+    assert labels.loc["1028"][aggregate.PRIMARY_RESEARCH] == 1
+
+
+def test_publication_types_are_read_from_either_table_shape():
+    """Parquet keeps a list; the CSV twin joins on "; ". Both must parse."""
+    assert classify.publication_types_of(["Journal Article", "Review"]) == {
+        "Journal Article", "Review"
+    }
+    assert classify.publication_types_of("Journal Article; Review") == {
+        "Journal Article", "Review"
+    }
+    assert classify.publication_types_of(None) == set()
+    assert classify.publication_types_of(float("nan")) == set()
+
+
+def test_a_record_with_no_specialty_modality_is_excluded(result):
+    """A colonoscopy-only paper belongs to neither specialty, so it leaves."""
+    assert result.exclusions["non_specialty_only"] == 1
+    assert "1025" not in set(result.labels["pmid"])
+    reasons = dict(zip(result.excluded["pmid"], result.excluded["reason"]))
+    assert reasons["1025"] == "non_specialty_only"
+
+
+def test_a_non_specialty_record_that_also_uses_a_specialty_modality_stays(labels):
+    """The conjunctive half of the rule, and the reason it is conjunctive.
+
+    Excluding on the non-specialty match alone would throw away genuine
+    multimodal work. This record reads endoscopy *and* CT; it keeps its CT label.
+    """
+    row = labels.loc["1020"]
+    assert row["mod_ct"] == 1
+    assert row["domain"] == "radiology"
+
+
+def test_the_exclusion_vocabulary_is_never_a_label(result, labels):
+    """``non_specialty`` drives an exclusion; it is not a figure row.
+
+    No ``mod_`` column, and it never joins a modality set, so it cannot appear in
+    Panel A or be mistaken for a modality a paper uses.
+    """
+    for key in classify.EXCLUSION_CATEGORIES:
+        assert f"mod_{key}" not in labels.columns
+        assert not any(key in value for value in aggregate.add_modality_set(result.labels))
+    assert set(aggregate.modality_keys_of(result.labels)) == set(aggregate.MODALITY_KEYS)
+
+
+def test_every_excluded_record_is_named_counted_and_scoped(result):
+    """A count says how many left; the ledger says which, and from which view.
+
+    Without the scope column the file would read as though the reviews left the
+    corpus, which is exactly what the 2026-09-08 ruling stopped happening.
+    """
+    ledger = result.excluded
+    assert list(ledger.columns) == ["pmid", "reason", "applies_to"]
+    assert set(ledger["applies_to"]) == {
+        "corpus", "panel_a", "panel_a:multimodal_integration"
+    }
+
+    corpus = ledger.loc[ledger["applies_to"] == "corpus"]
+    per_reason = corpus["reason"].value_counts().to_dict()
+    for reason, count in result.exclusions.items():
+        assert per_reason.get(reason, 0) == count, reason
+    assert len(corpus) == result.n_records_in - result.n_records_out
+    assert set(corpus["pmid"]) & set(result.labels["pmid"]) == set()
+
+    # Panel A exclusions are still in the corpus, and are exactly the non-primary rows.
+    panel_a = ledger.loc[ledger["applies_to"] == "panel_a"]
+    assert set(panel_a["reason"]) == {"secondary_publication_type"}
+    assert set(panel_a["pmid"]) == set(
+        result.labels.loc[result.labels[aggregate.PRIMARY_RESEARCH] == 0, "pmid"]
+    )
+
+    # A combination shortfall is a third kind of removal: from one Panel A block
+    # only. The paper stays in the corpus, keeps its label, and counts in Panel B.
+    held = ledger.loc[ledger["applies_to"].str.startswith("panel_a:")]
+    assert set(held["reason"]) == {"below_minimum_modalities"}
+    assert set(held["pmid"]) <= set(result.labels["pmid"])
+    for theme, count in result.panel_a_shortfalls.items():
+        assert int((held["applies_to"] == f"panel_a:{theme}").sum()) == count
+
+
+# --------------------------------------------------------------------------
+# Is this output current?
+#
+# The version ledger asks whether a config agrees with its own recorded hash. It
+# cannot ask whether a *run* consumed a state that no longer exists, because it
+# never looks at a run's output. That is the gap these cover: a config edited
+# after a run leaves the ledger passing and the published numbers irreproducible.
+# --------------------------------------------------------------------------
+
+
+def _tiny_config(tmp_path: Path) -> Path:
+    """A config directory the fixture dictionaries can be classified against."""
+    config = tmp_path / "config"
+    config.mkdir(exist_ok=True)
+    (config / "themes.yaml").write_text(THEMES_FIXTURE.read_text(), encoding="utf-8")
+    (config / "modalities.yaml").write_text(MODALITIES_FIXTURE.read_text(), encoding="utf-8")
+    (config / "corpus.yaml").write_text(
+        'version: 1\ndate_range:\n  start: "2015/01/01"\n  end: "2026/09/01"\n',
+        encoding="utf-8",
+    )
+    return config
+
+
+def _run_once(tmp_path: Path) -> tuple[Path, Path]:
+    """Classify the fixture records into a fresh output directory."""
+    config = _tiny_config(tmp_path)
+    output = tmp_path / "processed"
+    assert classify.main(
+        ["--records", str(RECORDS_FIXTURE), "--config-dir", str(config),
+         "--output", str(output), "--no-hits"]
+    ) == 0
+    return config, output
+
+
+def test_a_fresh_run_checks_out_as_current(tmp_path):
+    """Nothing edited, so the digests the run recorded still match the files."""
+    config, output = _run_once(tmp_path)
+    freshness = classify.check_freshness(output, config)
+    assert not freshness.is_stale
+    assert set(freshness.checked) == {"themes.yaml", "modalities.yaml", "corpus.yaml"}
+    assert "FRESHNESS: current" in freshness.banner()
+
+
+def test_a_config_edited_after_the_run_makes_the_output_stale(tmp_path):
+    """The failure that recurred four times, now a test.
+
+    The edit does not move the version, which is exactly why the ledger stays
+    quiet about it, and the message says so.
+    """
+    config, output = _run_once(tmp_path)
+    path = config / "themes.yaml"
+    path.write_text(path.read_text() + "\n# a note added after the run\n", encoding="utf-8")
+
+    freshness = classify.check_freshness(output, config)
+    assert freshness.is_stale
+    assert len(freshness.problems) == 1
+    message = freshness.problems[0]
+    assert "config/themes.yaml" in message
+    assert "the run consumed v7" in message
+    assert "version number did not move" in message
+    banner = freshness.banner()
+    assert "STALE OUTPUT" in banner
+    assert "must not be quoted" in banner
+
+
+def test_a_version_bump_after_the_run_is_also_stale(tmp_path):
+    """A bumped version is recoverable from the ledger, but the output is still old."""
+    config, output = _run_once(tmp_path)
+    path = config / "modalities.yaml"
+    path.write_text(path.read_text().replace("version: 4", "version: 5"), encoding="utf-8")
+
+    freshness = classify.check_freshness(output, config)
+    assert freshness.is_stale
+    assert "now v5" in freshness.problems[0]
+
+
+def test_a_missing_config_is_reported_rather_than_ignored(tmp_path):
+    """A config the run recorded and that has since vanished is a problem, not a pass."""
+    config, output = _run_once(tmp_path)
+    (config / "corpus.yaml").unlink()
+    freshness = classify.check_freshness(output, config)
+    assert freshness.is_stale
+    assert any("missing from disk" in problem for problem in freshness.problems)
+
+
+def test_no_manifest_is_reported_as_not_checked(tmp_path):
+    """An unverifiable number is not a verified one, so absence is not a pass."""
+    freshness = classify.check_freshness(tmp_path, _tiny_config(tmp_path))
+    assert freshness.checked == ()
+    assert not freshness.is_stale          # nothing was compared
+    assert "NOT CHECKED" in freshness.banner()
+
+
+def test_the_check_flag_exits_non_zero_when_stale(tmp_path, capsys):
+    """A machine has to be able to fail on this, not only a reader."""
+    config, output = _run_once(tmp_path)
+    argv = ["--check", "--output", str(output), "--config-dir", str(config)]
+
+    assert classify.main(argv) == 0
+    assert "current" in capsys.readouterr().out
+
+    path = config / "themes.yaml"
+    path.write_text(path.read_text() + "\n# edited\n", encoding="utf-8")
+    assert classify.main(argv) == 3
+    assert "STALE OUTPUT" in capsys.readouterr().err   # stale goes to stderr
+
+    assert classify.main(["--check", "--output", str(tmp_path / "absent"),
+                          "--config-dir", str(config)]) == 4
+
+
+def test_check_needs_no_record_table(tmp_path):
+    """``--check`` classifies nothing, so it must not demand a corpus."""
+    config, output = _run_once(tmp_path)
+    assert classify.main(
+        ["--check", "--output", str(output), "--config-dir", str(config)]
+    ) == 0
+
+
+def test_records_is_still_required_for_a_real_run(tmp_path, capsys):
+    """Making --records optional must not make it optional for classifying."""
+    with pytest.raises(SystemExit):
+        classify.main(["--config-dir", str(_tiny_config(tmp_path))])
+    assert "--records is required" in capsys.readouterr().err
+
+
+def test_the_report_opens_with_a_freshness_banner(tmp_path):
+    """A reader who stops after the first screen must still learn the state."""
+    _, output = _run_once(tmp_path)
+    text = (output / classify.REPORT).read_text(encoding="utf-8")
+    assert text.startswith("FRESHNESS: current")
+    assert "--check" in text.split("CLASSIFICATION DIAGNOSTIC REPORT")[0]
+
+
+def test_a_config_edited_during_a_run_is_caught_and_recorded(tmp_path):
+    """A four-minute run is long enough for a dictionary to move underneath it.
+
+    The comparison is driven by the digests the run actually loaded, so the run
+    detects the change itself rather than waiting for someone to check later.
+    """
+    config = _tiny_config(tmp_path)
+    themes, modalities = classify.load_dictionaries(config)
+    path = config / "themes.yaml"
+    path.write_text(path.read_text() + "\n# edited mid-run\n", encoding="utf-8")
+
+    problems, checked = classify.compare_config_digests(
+        {"themes": (themes.version, themes.sha256),
+         "modalities": (modalities.version, modalities.sha256)},
+        config,
+    )
+    assert checked == ["themes.yaml", "modalities.yaml"]
+    assert len(problems) == 1 and "themes.yaml" in problems[0]
+
+    stale = classify.Freshness(output := tmp_path / "m.json", tuple(problems), tuple(checked))
+    assert stale.is_stale and output.name == "m.json"
+    assert "STALE OUTPUT" in stale.banner()
+
+
+# --------------------------------------------------------------------------
+# Themes defined by combination
+# --------------------------------------------------------------------------
+
+
+def test_a_combination_theme_keeps_its_label_and_loses_only_panel_a(labels, result):
+    """A multimodal model has at least two modalities in its training, by definition.
+
+    But that predicate is about having *built* something, so it conditions Panel
+    A's view rather than the label. The record here is a multi-sequence MRI paper,
+    the exact shape of the real failure, and it keeps the theme label: Panel B
+    counts engagement, and a review engages with the theme while using no
+    modalities at all.
+    """
+    assert classify.MINIMUM_MODALITIES["multimodal_integration"] == 2
+
+    short = labels.loc["1029"]
+    assert short["theme_multimodal_integration"] == 1     # the label is KEPT
+    assert short["mod_mri"] == 1
+    assert result.panel_a_shortfalls == {"multimodal_integration": 1}
+
+
+def test_a_shortfall_removes_the_paper_from_one_panel_a_block_only(result):
+    """Not from the corpus, not from Panel B, and not from its other themes."""
+    corpus_drops = set(
+        result.excluded.loc[result.excluded["applies_to"] == "corpus", "pmid"]
+    )
+    assert "1029" not in corpus_drops
+    row = result.excluded.loc[result.excluded["pmid"] == "1029"].iloc[0]
+    assert row["reason"] == "below_minimum_modalities"
+    assert row["applies_to"] == "panel_a:multimodal_integration"
+
+    years = aggregate.build_theme_year_counts(result.labels)
+    panel_b = int(
+        years[(years.theme == "multimodal_integration") & (years.domain == "all")]
+        ["n_papers"].sum()
+    )
+    assert panel_b == int(result.labels["theme_multimodal_integration"].sum())
+
+
+@pytest.mark.parametrize("theme", sorted(classify.MINIMUM_MODALITIES))
+def test_panel_a_draws_no_column_below_the_minimum(result, theme):
+    """The check that would have caught a week of single-modality columns.
+
+    Expressed over every theme in MINIMUM_MODALITIES, so a future combination
+    theme is covered the day it is added rather than the day someone notices.
+    """
+    minimum = classify.MINIMUM_MODALITIES[theme]
+    block = aggregate.build_combination_counts(result.labels)
+    block = block.loc[block["theme"] == theme]
+    if len(block):
+        assert int(block["n_modalities"].min()) >= minimum, (
+            f"Panel A would draw a column of fewer than {minimum} modalities for {theme}"
+        )
+
+
+def test_both_shortfall_counts_are_reported(result, themes, modalities):
+    """The two numbers must stay side by side, or the fix cannot be judged.
+
+    Panel A's held-out count mixes theme over-calling with modality under-recall.
+    The corpus-wide count is the over-call measure on its own, and is the one that
+    should fall when the vocabulary is tightened.
+    """
+    assert set(result.panel_a_shortfalls) == set(result.corpus_wide_shortfalls)
+    for theme in result.panel_a_shortfalls:
+        assert result.corpus_wide_shortfalls[theme] >= result.panel_a_shortfalls[theme]
+
+    text = classify.format_report(
+        result, themes, modalities, aggregate.build_combination_counts(result.labels)
+    )
+    assert "held out of Panel A" in text
+    assert "corpus-wide shortfall" in text
+    assert "over-call measure" in text
+
+
+def test_other_counts_toward_the_minimum_but_non_specialty_cannot(labels):
+    """CT plus a liquid biopsy is a real pairing; endoscopy is not a label at all."""
+    row = labels.loc["1024"]
+    assert row["mod_other"] == 1 and row["mod_ct"] == 1
+    for key in classify.EXCLUSION_CATEGORIES:
+        assert f"mod_{key}" not in labels.columns

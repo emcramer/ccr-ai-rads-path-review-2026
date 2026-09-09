@@ -165,13 +165,32 @@ categories:
     label: "Other"
     type: "All other"
     include:
-      - pattern: "(?i)\\bdermoscop"
+      - pattern: "(?i)\\bliquid biopsy\\b"
         kind: regex
-      - pattern: "(?i)\\bendoscop"
+      - pattern: "(?i)\\bctDNA\\b"
         kind: regex
     exclude: []
     notes: >
       Additive, and it does take include patterns: it names a data type outside
-      the fourteen named rows. The classifier also assigns it as a fallback to a
+      the fourteen named rows. Endoscopy and dermoscopy moved out of here into
+      non_specialty on 2026-09-08; what stays is a data type a radiology or
+      pathology paper legitimately adds, such as a liquid biopsy. The classifier also assigns it as a fallback to a
       record that matched no named modality, and the two routes are told apart in
       pattern_hits.csv by the `role` column.
+
+  non_specialty:
+    label: "Not radiology or pathology"
+    type: null
+    include:
+      - pattern: "(?i)\\b(endoscop|colonoscop|gastroscop|bronchoscop)"
+        kind: regex
+      - pattern: "(?i)\\bdermoscop"
+        kind: regex
+      - pattern: "(?i)\\boptical coherence tomograph"
+        kind: regex
+    exclude: []
+    notes: >
+      Not a figure row and never a label: matched only to exclude a record that
+      has no radiology or pathology modality at all. The rule is conjunctive, so
+      a colonoscopy paper that also reads CT keeps its CT label and stays. Kept in
+      the dictionary rather than deleted so the exclusion can be audited.
