@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ccr-combined"
+version = "0.1.0"
+description = "Combined four-panel figure for the CCR review: literature trends and FDA authorizations on one float"
+requires-python = ">=3.12"
+# ccr-trends and ccr-clinops are path dependencies, not published packages, so
+# they cannot be declared here. They are installed with `-e ../trends-figure -e
+# ../clinical-operations`; see requirements.txt. This project holds no drawing
+# code of its own -- every mark on the canvas is drawn by one of their panel
+# functions -- so without them there is nothing to build.
+dependencies = ["pandas", "matplotlib", "pyyaml"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

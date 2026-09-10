@@ -1,0 +1,42 @@
+# Pinned to the same versions as ../trends-figure and ../clinical-operations, so
+# all three projects share one resolved environment and the figures cannot drift
+# apart on a matplotlib change.
+#
+# NOT LISTED HERE, but required: editable installs of BOTH sibling projects.
+# This project contains no drawing code. It composes their panel functions onto
+# one canvas, and it imports the shared style tokens rather than re-declaring
+# them (see ../AGENTS.md), so the build needs:
+#
+#     pip install -r requirements.txt -e . -e ../trends-figure -e ../clinical-operations
+#
+# They are path dependencies, not published packages, so they cannot be pinned
+# here. `from trends.plotting import style` and `from clinops.plotting import
+# panel_a` both fail without them.
+#
+# The trends install must be EDITABLE, or at least must keep `assets/fonts`
+# above the installed `style.py`: importing style registers the vendored IBM
+# Plex faces at import time and raises FontsUnavailable if it cannot find them.
+certifi==2026.7.22
+charset-normalizer==3.5.1
+contourpy==1.3.3
+cycler==0.12.1
+fonttools==4.64.0
+idna==3.19
+iniconfig==2.3.0
+kiwisolver==1.5.1
+lxml==6.1.2
+matplotlib==3.11.1
+numpy==2.5.2
+packaging==26.3
+pandas==3.0.5
+pillow==12.3.0
+pluggy==1.6.0
+pyarrow==25.0.1
+Pygments==2.21.0
+pyparsing==3.3.2
+pytest==9.1.1
+python-dateutil==2.9.0.post0
+PyYAML==6.0.3
+requests==2.34.2
+six==1.17.0
+urllib3==2.7.0

@@ -1,0 +1,144 @@
+Combined figure — numbers for the legend
+tag              : (none)
+layout           : wide, 14.6 x 10 in
+
+PANEL LETTERS. Two of these panels changed letter when the figures were
+merged. The source projects still build their own two-panel figures and
+their docs still say Panel A and Panel B, so read this map before quoting
+anything out of them:
+
+  here  source project          called there
+  A     trends-figure           Panel A — modality combinations by theme
+  B     trends-figure           Panel B — theme volume over time
+  C     clinical-operations     Panel A — cumulative oncology AI authorizations
+  D     clinical-operations     Panel B — authorization pathway
+
+  A, B drawn from : /Users/cramere/OneDrive - Oregon Health & Science University/graduate/knowledgebase/00-projects/ai-oncology-review/CCR/figures/trends-figure/data/processed
+  C, D drawn from : /Users/cramere/OneDrive - Oregon Health & Science University/graduate/knowledgebase/00-projects/ai-oncology-review/CCR/figures/clinical-operations/data/processed
+
+THE FOUR PANELS CARRY THREE DIFFERENT POPULATIONS, and no number from one
+may be quoted against another:
+
+  A     primary research only, papers
+  B     all article types including reviews and perspectives, papers
+  C, D  FDA authorizations — devices, not papers, and a floor, not an estimate
+
+Each source project already warned about the two denominators inside it.
+Merging makes that warning load-bearing: A and B differ in population, and
+C and D are not papers at all.
+
+Least clearance between any label and the paper edge : 0.050 in
+Least clearance between a left-column label and the
+right column's left edge                             : 0.355 in
+
+==========================================================================
+PANELS A AND B — from ../trends-figure, verbatim from trends.plot.summary_text
+Its 'Panel A' is this figure's A; its 'Panel B' is this figure's B.
+==========================================================================
+
+Trends figure — numbers for the legend
+source directory : /Users/cramere/OneDrive - Oregon Health & Science University/graduate/knowledgebase/00-projects/ai-oncology-review/CCR/figures/trends-figure/data/processed
+tag              : (none)
+papers in corpus : 43079
+year range       : 2015-2026
+partial year     : 2026
+Panel A columns  : top 12 modality combinations per theme, plus one remainder column holding every other paper in the theme
+Panel A bars     : share (percent of each theme's own papers)
+
+theme                     papers   sets  drawn  in remainder  remainder papers   share
+foundation_models           1021    108     12            96               310  30.4%
+multimodal_integration      2727    256     12           244              1291  47.3%
+digital_twins                 20     13     12             1                 1   5.0%
+clinical_fda                  69     22     12            10                10  14.5%
+
+Nothing is hidden: the remainder column is drawn, so each block's bars sum to
+its theme total.
+Papers are multi-label: the theme totals above sum to more than the corpus size.
+
+Panel B — two stacked plots, per-year counts, separate linear y axes
+  upper plot       : foundation_models/radiology, foundation_models/pathology, foundation_models/both, multimodal_integration/radiology, multimodal_integration/pathology, multimodal_integration/both
+  lower plot       : digital_twins/all, virtual_staining/all, agentic_ai/all, clinical_fda/radiology, clinical_fda/pathology
+  lower y scale    : 27x finer than the upper plot (range band drawn on the upper plot)
+  foundation_models/radiology      total     511   peak year    204
+  foundation_models/pathology      total     413   peak year    202
+  foundation_models/both           total      48   peak year     30
+  multimodal_integration/radiology total   2,837   peak year    847
+  multimodal_integration/pathology total   1,080   peak year    365
+  multimodal_integration/both      total     484   peak year    156
+  digital_twins/all                total      52   peak year     31
+  virtual_staining/all             total      65   peak year     21
+  agentic_ai/all                   total      34   peak year     15
+  clinical_fda/radiology           total      60   peak year     19
+  clinical_fda/pathology           total      13   peak year      6
+  pathology zero run: 2015-2021 (7 consecutive years at zero)
+
+==========================================================================
+PANELS C AND D — from ../clinical-operations, verbatim from
+clinops.plot.summary_text. Its 'Panel A' is this figure's C; its 'Panel B'
+is this figure's D. Its clearance line is measured on THIS canvas.
+==========================================================================
+
+Clinical operations figure — numbers for the legend
+source directory : /Users/cramere/OneDrive - Oregon Health & Science University/graduate/knowledgebase/00-projects/ai-oncology-review/CCR/figures/clinical-operations/data/processed
+tag              : (none)
+layout           : wide, 14.6 x 10 in
+snapshot through : 2026-03-27 (latest decision date in the table)
+year range       : 1995-2026
+partial year     : 2026
+authorizations   : 201 oncology-certain rows
+
+The counts are a FLOOR, not an estimate. Every device on the Radiology and
+Pathology panels is classified individually against its authorized indication
+(config/adjudication/), because FDA's product codes do not separate cancer
+reliably in either direction: the cancer-specific codes were created only around
+2018-2020, so earlier computer-aided detection sits under generic ones. Devices
+that could not be resolved from the published fields are excluded and reported as
+a residual band. One row is one AUTHORIZATION, not one cancer-directed
+capability: a clearance covering a platform that bundles a cancer feature among
+others is not counted. See docs/source-strategy.md before quoting any number.
+
+Panel A — cumulative authorizations, log y axis
+  y axis           : 0.8 to 187, log scale; ticks 1, 2, 5, 10, 20, 50, 100
+  x axis           : 1995-2026, continuous, no break in either axis
+
+  category                        total  first year    zero years not drawn
+  Detection and assessment          107        1998     1995-1997 (3 years)
+  Treatment planning                 86        2018    1995-2017 (23 years)
+  Digital pathology                   8        1995                    none
+
+  Each line is drawn only from the first year its cumulative count reaches one.
+  A log axis cannot draw a zero, so the years above are drawn as no line at all
+  rather than as a line along the axis floor. The legend must say so.
+
+  radiology total  : 193 (107 cancer detection + 86 radiation therapy)
+  pathology total  : 8
+  gap              : 24.1x radiology over pathology; 13.4x on cancer detection alone
+
+  pathology devices, in decision order (Panel A labels each one):
+     1. 1995-09-29  P950009   PMA      AUTOPAP(R) 300 QC AUTOMATIC PAP SCREENER/QC SYSTEM
+     2. 1995-11-08  P940029   PMA      PAPNET Testing System
+     3. 2021-09-21  DEN200080 De Novo  Paige Prostate
+     4. 2023-04-28  P210011   PMA      xT CDx
+     5. 2024-01-31  DEN210035 De Novo  Genius Digital Diagnostics System with the Genius Cervical AI algorithm
+     6. 2025-01-24  K241232   510(k)   Galen Second Read
+     7. 2025-07-31  DEN240068 De Novo  ArteraAI Prostate
+     8. 2025-08-29  K250003   510(k)   GENESEEQPRIME NGS Tumor Profiling Assay (FFPE) (GS6005)
+
+Panel B — marketing pathway, normalized to each field's own total
+  domain      pathway     count    share  count printed       
+  Radiology   510(k)        185   95.9%  inside the segment  
+  Radiology   De Novo         2    1.0%  above, on a leader  
+  Radiology   PMA             6    3.1%  above, on a leader  
+  Pathology   510(k)          2   25.0%  inside the segment  
+  Pathology   De Novo         3   37.5%  inside the segment  
+  Pathology   PMA             3   37.5%  inside the segment  
+
+  totals           : Radiology n = 193, Pathology n = 8
+
+  by category, which Panel B aggregates into its two bars:
+    category                          510(k)   De Novo       PMA
+    Detection and assessment              99         2         6
+    Treatment planning                    86         0         0
+    Digital pathology                      2         3         3
+
+Least clearance between any label and the paper edge: 0.050 in
