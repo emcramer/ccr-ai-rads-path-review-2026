@@ -10,13 +10,22 @@ re-renderable.
 
 ## The short version
 
-FDA's AI-enabled device list has no indication-for-use field, so "applied to cancer" is derived
-from each device's FDA product code via the openFDA classification database. A code counts when
-its FDA regulation definition names cancer, tumors, or radiation therapy. Codes with generic
-definitions are excluded, which makes the published counts **a floor rather than an estimate**.
+FDA's AI-enabled device list has no indication-for-use field, so "applied to cancer" has to be
+derived. Each in-scope device is judged **individually** against its authorized indication and
+recorded with written evidence in `config/adjudication/`. Product codes are a prior, not the
+rule: they do not separate cancer reliably in either direction, because the cancer-specific
+codes were created only around 2018-2020 and earlier computer-aided detection sits under generic
+ones. Devices that cannot be resolved from the published fields are excluded rather than
+guessed, which makes the published counts **a floor rather than an estimate**.
 
-On the snapshot through 2026-03-30: **145 radiology** against **9 pathology** cancer-directed
-authorizations; 66 against 9 restricting to detection and diagnosis alone.
+On the snapshot through 2026-03-30: **193 radiology** against **8 pathology** cancer-directed
+authorizations — 107 for cancer detection and assessment and 86 for radiation therapy planning,
+a 24-fold gap overall and 13-fold restricted to detection. Of 1,524 devices read, 886 were
+judged not cancer-directed, 86 could not be resolved, and 351 sit under codes outside the two
+panels.
+
+Numbers here are refilled from `figures/clinical_operations_summary.txt`. If they disagree with
+it, it is right and this file is stale.
 
 ## Setup
 
@@ -39,7 +48,7 @@ from `trends.plotting.style` rather than re-declaring them. See `../AGENTS.md`.
 ~/.venvs/ccr-clinops/bin/python -m clinops.fetch    --config config/source.yaml
 ~/.venvs/ccr-clinops/bin/python -m clinops.classify --config-dir config --report
 ~/.venvs/ccr-clinops/bin/python -m clinops.aggregate
-~/.venvs/ccr-clinops/bin/python -m clinops.plot     --input data/processed --output figures/
+~/.venvs/ccr-clinops/bin/python -m clinops.plot     --input data/processed --output figures/ --layout both
 ```
 
 `fetch` downloads the live FDA list, so a run made later will produce a larger snapshot than the
@@ -51,12 +60,12 @@ committed snapshot in `data/raw/`.
 | Path | What it holds |
 |---|---|
 | `task-spec.md` | The assignment, in the author's terms |
-| `config/` | `source.yaml`, `oncology_codes.yaml`, and the `VERSIONS.json` hash ledger |
+| `config/` | `source.yaml`, `oncology_codes.yaml` (a prior, not the rule), `adjudication/*.yaml` (**the authoritative per-device rule**), and the `VERSIONS.json` hash ledger |
 | `src/clinops/` | One CLI per stage: fetch, enrich, classify, aggregate, plot |
 | `data/raw/<date>/` | Append-only snapshots. **Tracked in git** — small enough, and FDA republishes in place |
 | `data/processed/` | The tables the figure is drawn from, plus the run manifest |
 | `docs/` | Source strategy, classification rules, figure spec, decision log, legend |
-| `figures/` | `clinical_operations.{pdf,png,svg}` and the summary number sheet |
+| `figures/` | `clinical_operations{,_landscape}.{pdf,png,svg}` and a summary number sheet per layout. The manuscript uses the landscape variant |
 | `tests/` | pytest; includes the config ledger guard and an offline-only fixture |
 
 `CODEBOOK.md` describes every file individually. If a row there disagrees with the file, the
