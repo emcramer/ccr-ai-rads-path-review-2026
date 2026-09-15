@@ -26,6 +26,20 @@ figures/clinical-operations/logs/
 # network access, which matters because FDA republishes its device list in place
 # at a fixed URL and does not version it. Nothing to ignore here on purpose.
 
+# --- Large derived exports: keep the source, rebuild the export ---
+# Each is regenerable from the SVG source tracked beside it, and together they
+# come to 91 MB - the multimodal grid PDF alone is 52 MB, over GitHub's 50 MB
+# per-file warning. Nothing is lost by excluding them:
+#   figure1-combo.pdf  ->  cd figures/figure1-combo && python3 build_pdf.py
+#                          (read its header first; a plain rsvg-convert or
+#                           ImageMagick call silently drops the pathology
+#                           rasters and shifts the type ladder)
+#   multimodal grid    ->  export the tracked .svg from your SVG tool
+figures/figure1-combo/figure1-combo.pdf
+figures/figure1-combo/figure1-combo.png
+figures/multimodal_integration_figure_inkstyle_grid.pdf
+figures/multimodal_integration_figure_inkstyle_grid.png
+
 # --- Virtual environments ---
 # These belong OUTSIDE the repository: the whole tree is OneDrive-synced and a
 # venv inside it pushes tens of thousands of files into cloud sync. One was
