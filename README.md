@@ -1,27 +1,48 @@
 # CCR review — AI in radiology and pathology (2026)
 
-Supporting materials for the *Clinical Cancer Research* review on artificial
-intelligence in radiology and pathology.
+Supporting materials for the *Clinical Cancer Research* review on artificial intelligence in radiology and pathology.
 
 ## What is here
 
-Current purpose of the repository is to track figures. The `figures/trends-figure/` directory contains the pipeline that produces the two-panel literature-trends figure — which data modalities each research
-theme uses (Panel A), and how theme volume moves over time (Panel B).
+Current purpose of the repository is to track figures. Each figure lives in its own
+directory under `figures/`, with its own README explaining how to run it:
+
+| Directory | What it builds |
+|---|---|
+| `figures/trends-figure/` | Literature-trends figure: which data modalities each research theme uses (Panel A), and how theme volume moves over time (Panel B) |
+| `figures/clinical-operations/` | FDA authorization-trends figure: cumulative oncology AI device authorizations and authorization pathway, radiology vs. pathology |
+| `figures/trends-clinops-combo/` | Combines the two pipelines above into one four-panel manuscript figure (no drawing code or data of its own — reads each sibling's `data/processed/`) |
+| `figures/figure1-radiology/` | Radiology row of manuscript Figure 1: acquisition → preprocessing → models → clinical task pipeline schematic |
+| `figures/figure1-combo/` | Assembles the full two-row Figure 1 (radiology + pathology panels) into a single SVG/PDF/PNG |
+
+Data-pipeline figures (`trends-figure`, `clinical-operations`) follow the same layout:
 
 ```
-figures/trends-figure/
-├── config/          search strategy and term dictionaries (YAML; code reads these)
-├── src/trends/      the pipeline package — fetch, parse, classify, aggregate, plot
-├── docs/            search strategy, decision log, validation report, figure spec
+figures/<pipeline>/
+├── config/          search strategy / adjudication inputs (YAML; code reads these)
+├── src/             the pipeline package — fetch, parse, classify, aggregate, plot
+├── docs/            decision log, validation report, figure spec
 ├── tests/           unit tests and self-contained fixtures
 ├── figures/         rendered figure output (PDF and PNG)
 └── data/processed/  the aggregated tables the figure is drawn from
 ```
 
-Start with `figures/trends-figure/README.md` for how to run it, and
-`figures/trends-figure/CODEBOOK.md` for what every file holds.
-`figures/trends-figure/docs/DECISIONS.md` is the running log of what has been settled
-and why.
+`figures/trends-clinops-combo/` and `figures/figure1-combo/` instead just assemble
+outputs from the pipelines/rows above (`src/`, `docs/`, `figures/`, no `data/` or `config/`).
+`figures/figure1-radiology/` holds hand-authored panels and icons under `assets/`
+rather than a fetch/parse pipeline.
+
+Standalone figures not built by a pipeline:
+
+```
+figures/
+├── ai_pathology_workflow.svg                       pathology workflow schematic
+├── multimodal_integration_figure_inkstyle_grid.svg  multimodal integration figure (grid layout)
+├── multimodal_integration_figure_inkstyle_horiz.svg multimodal integration figure (horizontal layout)
+└── icons/                                           shared icon assets used across figures
+```
+
+Start with each pipeline's own `README.md` for how to run it, and `CODEBOOK.md` (where present) for what every file holds.
 
 The manuscript itself is not tracked here yet.
 
