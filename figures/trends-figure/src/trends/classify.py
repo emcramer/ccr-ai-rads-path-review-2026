@@ -1004,6 +1004,7 @@ def classify_records(
             label[f"mod_{key}"] = int(key in assigned_modalities)
         label["domain"] = domain
         label[aggregate.PRIMARY_RESEARCH] = int(bool(is_primary.iloc[position]))
+        label[aggregate.MODALITY_DETERMINED] = int(not (other_by_fallback and not other_by_pattern))
         label_rows.append(label)
 
         for dictionary_kind, matches in (
@@ -1065,6 +1066,19 @@ def classify_records(
             "applies_to": "panel_a",
         })
     detail = {"secondary_publication_type": secondary_detail} if secondary_detail else {}
+    # A fallback-only `other` means the modality was not determined, not that it
+    # was an unusual one, so Panel A leaves the paper out rather than drawing it
+    # as "Other". It stays in the corpus and in Panel B. Author's ruling,
+    # 2026-09-29. See aggregate.MODALITY_DETERMINED.
+    undetermined = (labels[aggregate.MODALITY_DETERMINED] == 0) & (
+        labels[aggregate.PRIMARY_RESEARCH] == 1
+    )
+    for pmid in labels.loc[undetermined, "pmid"]:
+        dropped.append({
+            "pmid": str(pmid),
+            "reason": "modality_not_determined",
+            "applies_to": "panel_a",
+        })
 
     # A theme defined by combination admits only papers carrying its minimum, and
     # that is a condition on Panel A's VIEW, not on the label. The predicate comes
@@ -1084,6 +1098,7 @@ def classify_records(
             (labels[f"theme_{theme}"] == 1)
             & (modality_count < minimum)
             & (labels[aggregate.PRIMARY_RESEARCH] == 1)
+            & (labels[aggregate.MODALITY_DETERMINED] == 1)
         )
         for pmid in labels.loc[short, "pmid"]:
             dropped.append({

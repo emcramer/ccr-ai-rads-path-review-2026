@@ -10,9 +10,11 @@ declared in one place. It classifies nothing and reads no configuration.
 
 Two properties the tests hold it to:
 
-* Within a theme, the combination counts sum to that theme's paper count. Every
-  paper carries at least one modality, because a paper matching none is given
-  ``other``, so every paper falls in exactly one column of its theme's block.
+* Within a theme, the combination counts sum to that theme's paper count in
+  Panel A's view. Every paper carries at least one modality, because a paper
+  matching none is given ``other``, so every paper falls in exactly one column of
+  its theme's block. Panel A then leaves out the papers whose ``other`` came from
+  that fallback alone; see :data:`MODALITY_DETERMINED`.
 * The two output tables draw on **different populations**, per the author's ruling
   of 2026-09-08 and the "two panels draw on different populations" section of
   ``docs/figure-spec.md``. ``combination_counts.csv``, which Panel A reads, is
@@ -107,6 +109,14 @@ MINIMUM_MODALITIES: Final[dict[str, int]] = {"multimodal_integration": 2}
 #: other secondary publication type. Both are retained; only Panel A filters.
 PRIMARY_RESEARCH: Final[str] = "is_primary_research"
 
+#: Name of the flag that marks whether a paper's modality could be determined: 0
+#: when ``other`` was assigned only by the fallback, meaning no named modality and
+#: no ``other`` pattern matched, and 1 otherwise. Panel A excludes the 0s; Panel B
+#: reads every row. Those papers are mostly reviews and decision-support studies
+#: that say "imaging" without naming a kind, so drawing them as "Other" read as an
+#: exotic modality they do not have. Author's ruling, 2026-09-29.
+MODALITY_DETERMINED: Final[str] = "modality_determined"
+
 #: The ``domain`` values emitted for every theme, in the order they are written.
 #:
 #: ``all`` is the theme total. The other four are the values of the ``domain``
@@ -145,7 +155,7 @@ def paper_label_columns(
         ("pmid", "year", "year_source")
         + tuple(f"theme_{key}" for key in theme_keys)
         + tuple(f"mod_{key}" for key in modality_keys)
-        + ("domain", PRIMARY_RESEARCH)
+        + ("domain", PRIMARY_RESEARCH, MODALITY_DETERMINED)
     )
 
 
@@ -174,7 +184,7 @@ PAPER_LABEL_COLUMNS: Final[tuple[str, ...]] = (
     ("pmid", "year", "year_source")
     + tuple(f"theme_{key}" for key in THEME_KEYS)
     + tuple(f"mod_{key}" for key in MODALITY_KEYS)
-    + ("domain", PRIMARY_RESEARCH)
+    + ("domain", PRIMARY_RESEARCH, MODALITY_DETERMINED)
 )
 
 #: Column order of ``combination_counts.csv``.
@@ -235,6 +245,17 @@ def primary_research(labels: pd.DataFrame) -> pd.DataFrame:
     return labels.loc[labels[PRIMARY_RESEARCH].astype("int64") == 1]
 
 
+def modality_determined(labels: pd.DataFrame) -> pd.DataFrame:
+    """Return the papers whose modality could be determined.
+
+    Drops the rows where ``other`` came from the fallback alone. A table without
+    the flag is returned unchanged, as :func:`primary_research` does.
+    """
+    if MODALITY_DETERMINED not in labels.columns:
+        return labels
+    return labels.loc[labels[MODALITY_DETERMINED].astype("int64") == 1]
+
+
 def minimum_modality_shortfalls(
     labels: pd.DataFrame,
 ) -> tuple[dict[str, int], dict[str, int]]:
@@ -248,7 +269,8 @@ def minimum_modality_shortfalls(
 
     Returns:
         ``panel_a`` — primary-research papers excluded from Panel A's block for
-        that theme, the removal that actually happens; and ``corpus_wide`` — every
+        that theme, the removal that actually happens (papers already excluded
+        as modality-not-determined are not counted again); and ``corpus_wide`` — every
         retained paper carrying the theme below the minimum, whatever its
         publication type. The second is the over-call measure and is the number
         that should fall as the theme's vocabulary is tightened.
@@ -263,6 +285,10 @@ def minimum_modality_shortfalls(
         if PRIMARY_RESEARCH in labels.columns
         else pd.Series(True, index=labels.index)
     )
+    # A paper whose modality was not determined is already out of Panel A, and
+    # is reported under that reason; counting it here too would remove it twice.
+    if MODALITY_DETERMINED in labels.columns:
+        primary = primary & (labels[MODALITY_DETERMINED].astype("int64") == 1)
     for theme, minimum in MINIMUM_MODALITIES.items():
         column = f"theme_{theme}"
         if column not in labels.columns:
@@ -282,11 +308,12 @@ def build_combination_counts(
     exact modality set. Rows are ranked by paper count descending; ties break on
     set size ascending, then on the set string, so the ranking is reproducible.
 
-    Panel A reads this table, so by default it applies **both** of that panel's
-    view conditions: primary research only, and, for a theme in
+    Panel A reads this table, so by default it applies **all three** of that
+    panel's view conditions: primary research only; a determined modality only
+    (see :data:`MODALITY_DETERMINED`); and, for a theme in
     :data:`MINIMUM_MODALITIES`, only papers carrying at least that many modality
-    labels. The two conditions belong together; a reader who finds one and not the
-    other will misread the table.
+    labels. The conditions belong together; a reader who finds one and not the
+    others will misread the table.
     A review that discusses a modality without using one is evidence of attention,
     not of data use, and would corrupt a panel whose question is what primary
     research consumes. ``primary_only=False`` is for diagnostics that want the
@@ -294,13 +321,14 @@ def build_combination_counts(
 
     Args:
         labels: The per-paper table, in ``paper_labels.csv`` shape.
-        primary_only: Restrict to rows flagged ``is_primary_research``.
+        primary_only: Restrict to Panel A's view: rows flagged
+            ``is_primary_research`` and ``modality_determined``.
 
     Returns:
         ``combination_counts.csv`` as a frame, themes in figure block order.
     """
     if primary_only:
-        labels = primary_research(labels)
+        labels = modality_determined(primary_research(labels))
     if labels.empty:
         return pd.DataFrame(columns=list(COMBINATION_COLUMNS))
     sets = add_modality_set(labels)

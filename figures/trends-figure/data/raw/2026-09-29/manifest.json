@@ -1,0 +1,3185 @@
+{
+  "package": "trends",
+  "package_version": "0.1.0",
+  "retrieval_timestamp_utc": "2026-09-29T17:16:03.952379+00:00",
+  "retrieval_finished_utc": "2026-09-29T17:24:46.350194+00:00",
+  "retrieval_date": "2026-09-29",
+  "elapsed_seconds": 522.4,
+  "config": {
+    "path": "config/corpus.yaml",
+    "version": 1,
+    "sha256": "b610cd7a17b415c6dd959480d98b5b3084997b73bf43ccdcb37c2fce7b2d298a"
+  },
+  "query": "(\"Artificial Intelligence\"[mh] OR \"Radiomics\"[mh] OR \"artificial intelligence\"[tiab] OR \"machine learning\"[tiab] OR \"deep learning\"[tiab] OR \"neural network*\"[tiab] OR \"convolutional\"[tiab] OR \"transformer*\"[tiab] OR \"foundation model*\"[tiab] OR \"large language model*\"[tiab] OR \"radiomic*\"[tiab] OR \"pathomic*\"[tiab] OR \"computational pathology\"[tiab] OR \"computer-aided detection\"[tiab] OR \"computer-aided diagnosis\"[tiab] OR \"computer aided diagnosis\"[tiab] OR \"self-supervised\"[tiab] OR \"vision transformer*\"[tiab]) AND (\"Diagnostic Imaging\"[mh] OR \"Radiology\"[mh] OR \"Image Processing, Computer-Assisted\"[mh] OR \"Pathology\"[mh] OR \"radiolog*\"[tiab] OR \"radiograph*\"[tiab] OR \"medical imaging\"[tiab] OR \"MRI\"[tiab] OR \"magnetic resonance imaging\"[tiab] OR \"computed tomography\"[tiab] OR \"ultrasound\"[tiab] OR \"ultrasonograph*\"[tiab] OR \"sonograph*\"[tiab] OR \"mammograph*\"[tiab] OR \"positron emission tomography\"[tiab] OR \"PET/CT\"[tiab] OR \"PET-CT\"[tiab] OR \"histopatholog*\"[tiab] OR \"histological image*\"[tiab] OR \"histologic image*\"[tiab] OR \"histology image*\"[tiab] OR \"histological slide*\"[tiab] OR \"histologic slide*\"[tiab] OR \"histology slide*\"[tiab] OR \"histological section*\"[tiab] OR \"histologic section*\"[tiab] OR \"histological staining\"[tiab] OR \"whole slide\"[tiab] OR \"whole-slide\"[tiab] OR \"digital pathology\"[tiab] OR \"computational pathology\"[tiab] OR \"immunohistochem*\"[tiab] OR \"cytopatholog*\"[tiab] OR \"hematoxylin\"[tiab] OR \"haematoxylin\"[tiab] OR \"pathologist*\"[tiab] OR \"pathology report*\"[tiab] OR \"tissue microarray*\"[tiab] OR \"spatial transcriptomic*\"[ti] OR \"spatial proteomic*\"[ti] OR \"spatially resolved transcriptomic*\"[ti] OR \"spatial omics\"[ti] OR \"imaging mass cytometry\"[tiab] OR \"multiplex immunofluorescence\"[tiab] OR \"imaging mass spectrometry\"[tiab]) AND (\"Neoplasms\"[mh] OR \"cancer*\"[tiab] OR \"tumor*\"[tiab] OR \"tumour*\"[tiab] OR \"oncolog*\"[tiab] OR \"carcinoma*\"[tiab] OR \"neoplas*\"[tiab] OR \"malignan*\"[tiab] OR \"sarcoma*\"[tiab] OR \"lymphoma*\"[tiab] OR \"leukemia*\"[tiab] OR \"leukaemia*\"[tiab] OR \"melanoma*\"[tiab] OR \"glioma*\"[tiab] OR \"glioblastoma*\"[tiab] OR \"myeloma*\"[tiab] OR \"metastas*\"[tiab] OR \"metastat*\"[tiab])",
+  "query_source": "config",
+  "query_translation": "(\"Artificial Intelligence\"[MeSH Terms] OR \"Radiomics\"[MeSH Terms] OR \"Artificial Intelligence\"[Title/Abstract] OR \"machine learning\"[Title/Abstract] OR \"deep learning\"[Title/Abstract] OR \"neural network*\"[Title/Abstract] OR \"convolutional\"[Title/Abstract] OR \"transformer*\"[Title/Abstract] OR \"foundation model*\"[Title/Abstract] OR \"large language model*\"[Title/Abstract] OR \"radiomic*\"[Title/Abstract] OR \"pathomic*\"[Title/Abstract] OR \"computational pathology\"[Title/Abstract] OR \"computer-aided detection\"[Title/Abstract] OR \"computer-aided diagnosis\"[Title/Abstract] OR \"computer-aided diagnosis\"[Title/Abstract] OR \"self-supervised\"[Title/Abstract] OR \"vision transformer*\"[Title/Abstract]) AND (\"Diagnostic Imaging\"[MeSH Terms] OR \"Radiology\"[MeSH Terms] OR \"image processing, computer assisted\"[MeSH Terms] OR \"Pathology\"[MeSH Terms] OR \"radiolog*\"[Title/Abstract] OR \"radiograph*\"[Title/Abstract] OR \"medical imaging\"[Title/Abstract] OR \"MRI\"[Title/Abstract] OR \"magnetic resonance imaging\"[Title/Abstract] OR \"computed tomography\"[Title/Abstract] OR \"ultrasound\"[Title/Abstract] OR \"ultrasonograph*\"[Title/Abstract] OR \"sonograph*\"[Title/Abstract] OR \"mammograph*\"[Title/Abstract] OR \"positron emission tomography\"[Title/Abstract] OR \"pet ct\"[Title/Abstract] OR \"pet ct\"[Title/Abstract] OR \"histopatholog*\"[Title/Abstract] OR \"histological image*\"[Title/Abstract] OR \"histologic image*\"[Title/Abstract] OR \"histology image*\"[Title/Abstract] OR \"histological slide*\"[Title/Abstract] OR \"histologic slide*\"[Title/Abstract] OR \"histology slide*\"[Title/Abstract] OR \"histological section*\"[Title/Abstract] OR \"histologic section*\"[Title/Abstract] OR \"histological staining\"[Title/Abstract] OR \"whole-slide\"[Title/Abstract] OR \"whole-slide\"[Title/Abstract] OR \"digital pathology\"[Title/Abstract] OR \"computational pathology\"[Title/Abstract] OR \"immunohistochem*\"[Title/Abstract] OR \"cytopatholog*\"[Title/Abstract] OR \"hematoxylin\"[Title/Abstract] OR \"haematoxylin\"[Title/Abstract] OR \"pathologist*\"[Title/Abstract] OR \"pathology report*\"[Title/Abstract] OR \"tissue microarray*\"[Title/Abstract] OR \"spatial transcriptomic*\"[Title] OR \"spatial proteomic*\"[Title] OR \"spatially resolved transcriptomic*\"[Title] OR \"spatial omics\"[Title] OR \"imaging mass cytometry\"[Title/Abstract] OR \"multiplex immunofluorescence\"[Title/Abstract] OR \"imaging mass spectrometry\"[Title/Abstract]) AND (\"Neoplasms\"[MeSH Terms] OR \"cancer*\"[Title/Abstract] OR \"tumor*\"[Title/Abstract] OR \"tumour*\"[Title/Abstract] OR \"oncolog*\"[Title/Abstract] OR \"carcinoma*\"[Title/Abstract] OR \"neoplas*\"[Title/Abstract] OR \"malignan*\"[Title/Abstract] OR \"sarcoma*\"[Title/Abstract] OR \"lymphoma*\"[Title/Abstract] OR \"leukemia*\"[Title/Abstract] OR \"leukaemia*\"[Title/Abstract] OR \"melanoma*\"[Title/Abstract] OR \"glioma*\"[Title/Abstract] OR \"glioblastoma*\"[Title/Abstract] OR \"myeloma*\"[Title/Abstract] OR \"metastas*\"[Title/Abstract] OR \"metastat*\"[Title/Abstract]) AND 2015/01/01:2026/09/01[Date - Publication]",
+  "date_range": {
+    "start": "2015/01/01",
+    "end": "2026/09/01",
+    "datetype": "pdat"
+  },
+  "slicing": {
+    "reason": "PubMed refuses retstart above 9998 even with usehistory=y, so a corpus larger than that is pulled as date slices and deduplicated.",
+    "threshold": 9000,
+    "retstart_ceiling": 9998,
+    "n_slices": 23,
+    "granularities": [
+      "month",
+      "year"
+    ],
+    "stopped_early": false
+  },
+  "resilience": {
+    "batches_split": 0,
+    "min_split_size": 50,
+    "attempts_before_split": 2,
+    "resumed": false,
+    "slices_resumed": 0,
+    "note": "A batch that timed out twice was refetched in halves; files carrying split_from_retmax came from one that was. NCBI reports some server-side timeouts with status 400, so retryability is decided by the response body, not the status alone."
+  },
+  "eutils": {
+    "base_url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils",
+    "db": "pubmed",
+    "tool": "ccr-trends-figure",
+    "email": "ericscrum@gmail.com",
+    "api_key_used": false,
+    "requests_per_second": 3,
+    "batch_size": 200,
+    "retmode": "xml",
+    "usehistory": "y"
+  },
+  "counts": {
+    "whole_range_esearch": 45004,
+    "sum_of_slice_counts": 53957,
+    "requested": 53957,
+    "fetched_records": 53957,
+    "unique_pmids": 45004,
+    "duplicate_pmids": 8953,
+    "shortfall": 0,
+    "reconciles_with_whole_range": true,
+    "max_records": null,
+    "allow_shortfall": false
+  },
+  "slices": [
+    {
+      "label": "20150101-20151231",
+      "start": "2015/01/01",
+      "end": "2015/12/31",
+      "granularity": "year",
+      "esearch_count": 484,
+      "webenv": "MCID_6abbf255344cefc195057107",
+      "query_key": "1",
+      "requested": 484,
+      "fetched": 484,
+      "files": [
+        "efetch_20150101-20151231_0000_0000000.xml",
+        "efetch_20150101-20151231_0001_0000200.xml",
+        "efetch_20150101-20151231_0002_0000400.xml"
+      ]
+    },
+    {
+      "label": "20160101-20161231",
+      "start": "2016/01/01",
+      "end": "2016/12/31",
+      "granularity": "year",
+      "esearch_count": 546,
+      "webenv": "MCID_6abbf25acc11e38db408a17d",
+      "query_key": "1",
+      "requested": 546,
+      "fetched": 546,
+      "files": [
+        "efetch_20160101-20161231_0000_0000000.xml",
+        "efetch_20160101-20161231_0001_0000200.xml",
+        "efetch_20160101-20161231_0002_0000400.xml"
+      ]
+    },
+    {
+      "label": "20170101-20171231",
+      "start": "2017/01/01",
+      "end": "2017/12/31",
+      "granularity": "year",
+      "esearch_count": 835,
+      "webenv": "MCID_6abbf25faf60c6475c0dcdd3",
+      "query_key": "1",
+      "requested": 835,
+      "fetched": 835,
+      "files": [
+        "efetch_20170101-20171231_0000_0000000.xml",
+        "efetch_20170101-20171231_0001_0000200.xml",
+        "efetch_20170101-20171231_0002_0000400.xml",
+        "efetch_20170101-20171231_0003_0000600.xml",
+        "efetch_20170101-20171231_0004_0000800.xml"
+      ]
+    },
+    {
+      "label": "20180101-20181231",
+      "start": "2018/01/01",
+      "end": "2018/12/31",
+      "granularity": "year",
+      "esearch_count": 1366,
+      "webenv": "MCID_6abbf267d5069468f502ff0d",
+      "query_key": "1",
+      "requested": 1366,
+      "fetched": 1366,
+      "files": [
+        "efetch_20180101-20181231_0000_0000000.xml",
+        "efetch_20180101-20181231_0001_0000200.xml",
+        "efetch_20180101-20181231_0002_0000400.xml",
+        "efetch_20180101-20181231_0003_0000600.xml",
+        "efetch_20180101-20181231_0004_0000800.xml",
+        "efetch_20180101-20181231_0005_0001000.xml",
+        "efetch_20180101-20181231_0006_0001200.xml"
+      ]
+    },
+    {
+      "label": "20190101-20191231",
+      "start": "2019/01/01",
+      "end": "2019/12/31",
+      "granularity": "year",
+      "esearch_count": 2313,
+      "webenv": "MCID_6abbf273074b3f919e039cca",
+      "query_key": "1",
+      "requested": 2313,
+      "fetched": 2313,
+      "files": [
+        "efetch_20190101-20191231_0000_0000000.xml",
+        "efetch_20190101-20191231_0001_0000200.xml",
+        "efetch_20190101-20191231_0002_0000400.xml",
+        "efetch_20190101-20191231_0003_0000600.xml",
+        "efetch_20190101-20191231_0004_0000800.xml",
+        "efetch_20190101-20191231_0005_0001000.xml",
+        "efetch_20190101-20191231_0006_0001200.xml",
+        "efetch_20190101-20191231_0007_0001400.xml",
+        "efetch_20190101-20191231_0008_0001600.xml",
+        "efetch_20190101-20191231_0009_0001800.xml",
+        "efetch_20190101-20191231_0010_0002000.xml",
+        "efetch_20190101-20191231_0011_0002200.xml"
+      ]
+    },
+    {
+      "label": "20200101-20201231",
+      "start": "2020/01/01",
+      "end": "2020/12/31",
+      "granularity": "year",
+      "esearch_count": 3367,
+      "webenv": "MCID_6abbf287de9774ddc606e3fc",
+      "query_key": "1",
+      "requested": 3367,
+      "fetched": 3367,
+      "files": [
+        "efetch_20200101-20201231_0000_0000000.xml",
+        "efetch_20200101-20201231_0001_0000200.xml",
+        "efetch_20200101-20201231_0002_0000400.xml",
+        "efetch_20200101-20201231_0003_0000600.xml",
+        "efetch_20200101-20201231_0004_0000800.xml",
+        "efetch_20200101-20201231_0005_0001000.xml",
+        "efetch_20200101-20201231_0006_0001200.xml",
+        "efetch_20200101-20201231_0007_0001400.xml",
+        "efetch_20200101-20201231_0008_0001600.xml",
+        "efetch_20200101-20201231_0009_0001800.xml",
+        "efetch_20200101-20201231_0010_0002000.xml",
+        "efetch_20200101-20201231_0011_0002200.xml",
+        "efetch_20200101-20201231_0012_0002400.xml",
+        "efetch_20200101-20201231_0013_0002600.xml",
+        "efetch_20200101-20201231_0014_0002800.xml",
+        "efetch_20200101-20201231_0015_0003000.xml",
+        "efetch_20200101-20201231_0016_0003200.xml"
+      ]
+    },
+    {
+      "label": "20210101-20211231",
+      "start": "2021/01/01",
+      "end": "2021/12/31",
+      "granularity": "year",
+      "esearch_count": 4544,
+      "webenv": "MCID_6abbf2a6902f2383d40786c7",
+      "query_key": "1",
+      "requested": 4544,
+      "fetched": 4544,
+      "files": [
+        "efetch_20210101-20211231_0000_0000000.xml",
+        "efetch_20210101-20211231_0001_0000200.xml",
+        "efetch_20210101-20211231_0002_0000400.xml",
+        "efetch_20210101-20211231_0003_0000600.xml",
+        "efetch_20210101-20211231_0004_0000800.xml",
+        "efetch_20210101-20211231_0005_0001000.xml",
+        "efetch_20210101-20211231_0006_0001200.xml",
+        "efetch_20210101-20211231_0007_0001400.xml",
+        "efetch_20210101-20211231_0008_0001600.xml",
+        "efetch_20210101-20211231_0009_0001800.xml",
+        "efetch_20210101-20211231_0010_0002000.xml",
+        "efetch_20210101-20211231_0011_0002200.xml",
+        "efetch_20210101-20211231_0012_0002400.xml",
+        "efetch_20210101-20211231_0013_0002600.xml",
+        "efetch_20210101-20211231_0014_0002800.xml",
+        "efetch_20210101-20211231_0015_0003000.xml",
+        "efetch_20210101-20211231_0016_0003200.xml",
+        "efetch_20210101-20211231_0017_0003400.xml",
+        "efetch_20210101-20211231_0018_0003600.xml",
+        "efetch_20210101-20211231_0019_0003800.xml",
+        "efetch_20210101-20211231_0020_0004000.xml",
+        "efetch_20210101-20211231_0021_0004200.xml",
+        "efetch_20210101-20211231_0022_0004400.xml"
+      ]
+    },
+    {
+      "label": "20220101-20221231",
+      "start": "2022/01/01",
+      "end": "2022/12/31",
+      "granularity": "year",
+      "esearch_count": 5593,
+      "webenv": "MCID_6abbf2d31c6efc3348095985",
+      "query_key": "1",
+      "requested": 5593,
+      "fetched": 5593,
+      "files": [
+        "efetch_20220101-20221231_0000_0000000.xml",
+        "efetch_20220101-20221231_0001_0000200.xml",
+        "efetch_20220101-20221231_0002_0000400.xml",
+        "efetch_20220101-20221231_0003_0000600.xml",
+        "efetch_20220101-20221231_0004_0000800.xml",
+        "efetch_20220101-20221231_0005_0001000.xml",
+        "efetch_20220101-20221231_0006_0001200.xml",
+        "efetch_20220101-20221231_0007_0001400.xml",
+        "efetch_20220101-20221231_0008_0001600.xml",
+        "efetch_20220101-20221231_0009_0001800.xml",
+        "efetch_20220101-20221231_0010_0002000.xml",
+        "efetch_20220101-20221231_0011_0002200.xml",
+        "efetch_20220101-20221231_0012_0002400.xml",
+        "efetch_20220101-20221231_0013_0002600.xml",
+        "efetch_20220101-20221231_0014_0002800.xml",
+        "efetch_20220101-20221231_0015_0003000.xml",
+        "efetch_20220101-20221231_0016_0003200.xml",
+        "efetch_20220101-20221231_0017_0003400.xml",
+        "efetch_20220101-20221231_0018_0003600.xml",
+        "efetch_20220101-20221231_0019_0003800.xml",
+        "efetch_20220101-20221231_0020_0004000.xml",
+        "efetch_20220101-20221231_0021_0004200.xml",
+        "efetch_20220101-20221231_0022_0004400.xml",
+        "efetch_20220101-20221231_0023_0004600.xml",
+        "efetch_20220101-20221231_0024_0004800.xml",
+        "efetch_20220101-20221231_0025_0005000.xml",
+        "efetch_20220101-20221231_0026_0005200.xml",
+        "efetch_20220101-20221231_0027_0005400.xml"
+      ]
+    },
+    {
+      "label": "20230101-20231231",
+      "start": "2023/01/01",
+      "end": "2023/12/31",
+      "granularity": "year",
+      "esearch_count": 6310,
+      "webenv": "MCID_6abbf3077e14be7161039533",
+      "query_key": "1",
+      "requested": 6310,
+      "fetched": 6310,
+      "files": [
+        "efetch_20230101-20231231_0000_0000000.xml",
+        "efetch_20230101-20231231_0001_0000200.xml",
+        "efetch_20230101-20231231_0002_0000400.xml",
+        "efetch_20230101-20231231_0003_0000600.xml",
+        "efetch_20230101-20231231_0004_0000800.xml",
+        "efetch_20230101-20231231_0005_0001000.xml",
+        "efetch_20230101-20231231_0006_0001200.xml",
+        "efetch_20230101-20231231_0007_0001400.xml",
+        "efetch_20230101-20231231_0008_0001600.xml",
+        "efetch_20230101-20231231_0009_0001800.xml",
+        "efetch_20230101-20231231_0010_0002000.xml",
+        "efetch_20230101-20231231_0011_0002200.xml",
+        "efetch_20230101-20231231_0012_0002400.xml",
+        "efetch_20230101-20231231_0013_0002600.xml",
+        "efetch_20230101-20231231_0014_0002800.xml",
+        "efetch_20230101-20231231_0015_0003000.xml",
+        "efetch_20230101-20231231_0016_0003200.xml",
+        "efetch_20230101-20231231_0017_0003400.xml",
+        "efetch_20230101-20231231_0018_0003600.xml",
+        "efetch_20230101-20231231_0019_0003800.xml",
+        "efetch_20230101-20231231_0020_0004000.xml",
+        "efetch_20230101-20231231_0021_0004200.xml",
+        "efetch_20230101-20231231_0022_0004400.xml",
+        "efetch_20230101-20231231_0023_0004600.xml",
+        "efetch_20230101-20231231_0024_0004800.xml",
+        "efetch_20230101-20231231_0025_0005000.xml",
+        "efetch_20230101-20231231_0026_0005200.xml",
+        "efetch_20230101-20231231_0027_0005400.xml",
+        "efetch_20230101-20231231_0028_0005600.xml",
+        "efetch_20230101-20231231_0029_0005800.xml",
+        "efetch_20230101-20231231_0030_0006000.xml",
+        "efetch_20230101-20231231_0031_0006200.xml"
+      ]
+    },
+    {
+      "label": "20240101-20241231",
+      "start": "2024/01/01",
+      "end": "2024/12/31",
+      "granularity": "year",
+      "esearch_count": 7683,
+      "webenv": "MCID_6abbf346be1ea9c23e0f6174",
+      "query_key": "1",
+      "requested": 7683,
+      "fetched": 7683,
+      "files": [
+        "efetch_20240101-20241231_0000_0000000.xml",
+        "efetch_20240101-20241231_0001_0000200.xml",
+        "efetch_20240101-20241231_0002_0000400.xml",
+        "efetch_20240101-20241231_0003_0000600.xml",
+        "efetch_20240101-20241231_0004_0000800.xml",
+        "efetch_20240101-20241231_0005_0001000.xml",
+        "efetch_20240101-20241231_0006_0001200.xml",
+        "efetch_20240101-20241231_0007_0001400.xml",
+        "efetch_20240101-20241231_0008_0001600.xml",
+        "efetch_20240101-20241231_0009_0001800.xml",
+        "efetch_20240101-20241231_0010_0002000.xml",
+        "efetch_20240101-20241231_0011_0002200.xml",
+        "efetch_20240101-20241231_0012_0002400.xml",
+        "efetch_20240101-20241231_0013_0002600.xml",
+        "efetch_20240101-20241231_0014_0002800.xml",
+        "efetch_20240101-20241231_0015_0003000.xml",
+        "efetch_20240101-20241231_0016_0003200.xml",
+        "efetch_20240101-20241231_0017_0003400.xml",
+        "efetch_20240101-20241231_0018_0003600.xml",
+        "efetch_20240101-20241231_0019_0003800.xml",
+        "efetch_20240101-20241231_0020_0004000.xml",
+        "efetch_20240101-20241231_0021_0004200.xml",
+        "efetch_20240101-20241231_0022_0004400.xml",
+        "efetch_20240101-20241231_0023_0004600.xml",
+        "efetch_20240101-20241231_0024_0004800.xml",
+        "efetch_20240101-20241231_0025_0005000.xml",
+        "efetch_20240101-20241231_0026_0005200.xml",
+        "efetch_20240101-20241231_0027_0005400.xml",
+        "efetch_20240101-20241231_0028_0005600.xml",
+        "efetch_20240101-20241231_0029_0005800.xml",
+        "efetch_20240101-20241231_0030_0006000.xml",
+        "efetch_20240101-20241231_0031_0006200.xml",
+        "efetch_20240101-20241231_0032_0006400.xml",
+        "efetch_20240101-20241231_0033_0006600.xml",
+        "efetch_20240101-20241231_0034_0006800.xml",
+        "efetch_20240101-20241231_0035_0007000.xml",
+        "efetch_20240101-20241231_0036_0007200.xml",
+        "efetch_20240101-20241231_0037_0007400.xml",
+        "efetch_20240101-20241231_0038_0007600.xml"
+      ]
+    },
+    {
+      "label": "20250101-20250131",
+      "start": "2025/01/01",
+      "end": "2025/01/31",
+      "granularity": "month",
+      "esearch_count": 2009,
+      "webenv": "MCID_6abbf38ebbfd81709b0418ba",
+      "query_key": "1",
+      "requested": 2009,
+      "fetched": 2009,
+      "files": [
+        "efetch_20250101-20250131_0000_0000000.xml",
+        "efetch_20250101-20250131_0001_0000200.xml",
+        "efetch_20250101-20250131_0002_0000400.xml",
+        "efetch_20250101-20250131_0003_0000600.xml",
+        "efetch_20250101-20250131_0004_0000800.xml",
+        "efetch_20250101-20250131_0005_0001000.xml",
+        "efetch_20250101-20250131_0006_0001200.xml",
+        "efetch_20250101-20250131_0007_0001400.xml",
+        "efetch_20250101-20250131_0008_0001600.xml",
+        "efetch_20250101-20250131_0009_0001800.xml",
+        "efetch_20250101-20250131_0010_0002000.xml"
+      ]
+    },
+    {
+      "label": "20250201-20250228",
+      "start": "2025/02/01",
+      "end": "2025/02/28",
+      "granularity": "month",
+      "esearch_count": 855,
+      "webenv": "MCID_6abbf3a28bce4355dc05db00",
+      "query_key": "1",
+      "requested": 855,
+      "fetched": 855,
+      "files": [
+        "efetch_20250201-20250228_0000_0000000.xml",
+        "efetch_20250201-20250228_0001_0000200.xml",
+        "efetch_20250201-20250228_0002_0000400.xml",
+        "efetch_20250201-20250228_0003_0000600.xml",
+        "efetch_20250201-20250228_0004_0000800.xml"
+      ]
+    },
+    {
+      "label": "20250301-20250331",
+      "start": "2025/03/01",
+      "end": "2025/03/31",
+      "granularity": "month",
+      "esearch_count": 919,
+      "webenv": "MCID_6abbf3aafdf884e76605bdf8",
+      "query_key": "1",
+      "requested": 919,
+      "fetched": 919,
+      "files": [
+        "efetch_20250301-20250331_0000_0000000.xml",
+        "efetch_20250301-20250331_0001_0000200.xml",
+        "efetch_20250301-20250331_0002_0000400.xml",
+        "efetch_20250301-20250331_0003_0000600.xml",
+        "efetch_20250301-20250331_0004_0000800.xml"
+      ]
+    },
+    {
+      "label": "20250401-20250430",
+      "start": "2025/04/01",
+      "end": "2025/04/30",
+      "granularity": "month",
+      "esearch_count": 932,
+      "webenv": "MCID_6abbf3b5d5b25b2d41020988",
+      "query_key": "1",
+      "requested": 932,
+      "fetched": 932,
+      "files": [
+        "efetch_20250401-20250430_0000_0000000.xml",
+        "efetch_20250401-20250430_0001_0000200.xml",
+        "efetch_20250401-20250430_0002_0000400.xml",
+        "efetch_20250401-20250430_0003_0000600.xml",
+        "efetch_20250401-20250430_0004_0000800.xml"
+      ]
+    },
+    {
+      "label": "20250501-20250531",
+      "start": "2025/05/01",
+      "end": "2025/05/31",
+      "granularity": "month",
+      "esearch_count": 1025,
+      "webenv": "MCID_6abbf3be4c98915e4d0efcb2",
+      "query_key": "1",
+      "requested": 1025,
+      "fetched": 1025,
+      "files": [
+        "efetch_20250501-20250531_0000_0000000.xml",
+        "efetch_20250501-20250531_0001_0000200.xml",
+        "efetch_20250501-20250531_0002_0000400.xml",
+        "efetch_20250501-20250531_0003_0000600.xml",
+        "efetch_20250501-20250531_0004_0000800.xml",
+        "efetch_20250501-20250531_0005_0001000.xml"
+      ]
+    },
+    {
+      "label": "20250601-20250630",
+      "start": "2025/06/01",
+      "end": "2025/06/30",
+      "granularity": "month",
+      "esearch_count": 913,
+      "webenv": "MCID_6abbf3c936e66b7efb093f3a",
+      "query_key": "1",
+      "requested": 913,
+      "fetched": 913,
+      "files": [
+        "efetch_20250601-20250630_0000_0000000.xml",
+        "efetch_20250601-20250630_0001_0000200.xml",
+        "efetch_20250601-20250630_0002_0000400.xml",
+        "efetch_20250601-20250630_0003_0000600.xml",
+        "efetch_20250601-20250630_0004_0000800.xml"
+      ]
+    },
+    {
+      "label": "20250701-20250731",
+      "start": "2025/07/01",
+      "end": "2025/07/31",
+      "granularity": "month",
+      "esearch_count": 1223,
+      "webenv": "MCID_6abbf3d2ed05a9718f045394",
+      "query_key": "1",
+      "requested": 1223,
+      "fetched": 1223,
+      "files": [
+        "efetch_20250701-20250731_0000_0000000.xml",
+        "efetch_20250701-20250731_0001_0000200.xml",
+        "efetch_20250701-20250731_0002_0000400.xml",
+        "efetch_20250701-20250731_0003_0000600.xml",
+        "efetch_20250701-20250731_0004_0000800.xml",
+        "efetch_20250701-20250731_0005_0001000.xml",
+        "efetch_20250701-20250731_0006_0001200.xml"
+      ]
+    },
+    {
+      "label": "20250801-20250831",
+      "start": "2025/08/01",
+      "end": "2025/08/31",
+      "granularity": "month",
+      "esearch_count": 998,
+      "webenv": "MCID_6abbf3dfdeea55f75c073bb4",
+      "query_key": "1",
+      "requested": 998,
+      "fetched": 998,
+      "files": [
+        "efetch_20250801-20250831_0000_0000000.xml",
+        "efetch_20250801-20250831_0001_0000200.xml",
+        "efetch_20250801-20250831_0002_0000400.xml",
+        "efetch_20250801-20250831_0003_0000600.xml",
+        "efetch_20250801-20250831_0004_0000800.xml"
+      ]
+    },
+    {
+      "label": "20250901-20250930",
+      "start": "2025/09/01",
+      "end": "2025/09/30",
+      "granularity": "month",
+      "esearch_count": 1029,
+      "webenv": "MCID_6abbf3e8d753a922420da0dc",
+      "query_key": "1",
+      "requested": 1029,
+      "fetched": 1029,
+      "files": [
+        "efetch_20250901-20250930_0000_0000000.xml",
+        "efetch_20250901-20250930_0001_0000200.xml",
+        "efetch_20250901-20250930_0002_0000400.xml",
+        "efetch_20250901-20250930_0003_0000600.xml",
+        "efetch_20250901-20250930_0004_0000800.xml",
+        "efetch_20250901-20250930_0005_0001000.xml"
+      ]
+    },
+    {
+      "label": "20251001-20251031",
+      "start": "2025/10/01",
+      "end": "2025/10/31",
+      "granularity": "month",
+      "esearch_count": 1103,
+      "webenv": "MCID_6abbf3f221271f2fc40c30ef",
+      "query_key": "1",
+      "requested": 1103,
+      "fetched": 1103,
+      "files": [
+        "efetch_20251001-20251031_0000_0000000.xml",
+        "efetch_20251001-20251031_0001_0000200.xml",
+        "efetch_20251001-20251031_0002_0000400.xml",
+        "efetch_20251001-20251031_0003_0000600.xml",
+        "efetch_20251001-20251031_0004_0000800.xml",
+        "efetch_20251001-20251031_0005_0001000.xml"
+      ]
+    },
+    {
+      "label": "20251101-20251130",
+      "start": "2025/11/01",
+      "end": "2025/11/30",
+      "granularity": "month",
+      "esearch_count": 1100,
+      "webenv": "MCID_6abbf3fddb0f168bcc069976",
+      "query_key": "1",
+      "requested": 1100,
+      "fetched": 1100,
+      "files": [
+        "efetch_20251101-20251130_0000_0000000.xml",
+        "efetch_20251101-20251130_0001_0000200.xml",
+        "efetch_20251101-20251130_0002_0000400.xml",
+        "efetch_20251101-20251130_0003_0000600.xml",
+        "efetch_20251101-20251130_0004_0000800.xml",
+        "efetch_20251101-20251130_0005_0001000.xml"
+      ]
+    },
+    {
+      "label": "20251201-20251231",
+      "start": "2025/12/01",
+      "end": "2025/12/31",
+      "granularity": "month",
+      "esearch_count": 1124,
+      "webenv": "MCID_6abbf4085ab18510880fe80a",
+      "query_key": "1",
+      "requested": 1124,
+      "fetched": 1124,
+      "files": [
+        "efetch_20251201-20251231_0000_0000000.xml",
+        "efetch_20251201-20251231_0001_0000200.xml",
+        "efetch_20251201-20251231_0002_0000400.xml",
+        "efetch_20251201-20251231_0003_0000600.xml",
+        "efetch_20251201-20251231_0004_0000800.xml",
+        "efetch_20251201-20251231_0005_0001000.xml"
+      ]
+    },
+    {
+      "label": "20260101-20260901",
+      "start": "2026/01/01",
+      "end": "2026/09/01",
+      "granularity": "year",
+      "esearch_count": 7686,
+      "webenv": "MCID_6abbf41482b7c1ce6d0ee6d8",
+      "query_key": "1",
+      "requested": 7686,
+      "fetched": 7686,
+      "files": [
+        "efetch_20260101-20260901_0000_0000000.xml",
+        "efetch_20260101-20260901_0001_0000200.xml",
+        "efetch_20260101-20260901_0002_0000400.xml",
+        "efetch_20260101-20260901_0003_0000600.xml",
+        "efetch_20260101-20260901_0004_0000800.xml",
+        "efetch_20260101-20260901_0005_0001000.xml",
+        "efetch_20260101-20260901_0006_0001200.xml",
+        "efetch_20260101-20260901_0007_0001400.xml",
+        "efetch_20260101-20260901_0008_0001600.xml",
+        "efetch_20260101-20260901_0009_0001800.xml",
+        "efetch_20260101-20260901_0010_0002000.xml",
+        "efetch_20260101-20260901_0011_0002200.xml",
+        "efetch_20260101-20260901_0012_0002400.xml",
+        "efetch_20260101-20260901_0013_0002600.xml",
+        "efetch_20260101-20260901_0014_0002800.xml",
+        "efetch_20260101-20260901_0015_0003000.xml",
+        "efetch_20260101-20260901_0016_0003200.xml",
+        "efetch_20260101-20260901_0017_0003400.xml",
+        "efetch_20260101-20260901_0018_0003600.xml",
+        "efetch_20260101-20260901_0019_0003800.xml",
+        "efetch_20260101-20260901_0020_0004000.xml",
+        "efetch_20260101-20260901_0021_0004200.xml",
+        "efetch_20260101-20260901_0022_0004400.xml",
+        "efetch_20260101-20260901_0023_0004600.xml",
+        "efetch_20260101-20260901_0024_0004800.xml",
+        "efetch_20260101-20260901_0025_0005000.xml",
+        "efetch_20260101-20260901_0026_0005200.xml",
+        "efetch_20260101-20260901_0027_0005400.xml",
+        "efetch_20260101-20260901_0028_0005600.xml",
+        "efetch_20260101-20260901_0029_0005800.xml",
+        "efetch_20260101-20260901_0030_0006000.xml",
+        "efetch_20260101-20260901_0031_0006200.xml",
+        "efetch_20260101-20260901_0032_0006400.xml",
+        "efetch_20260101-20260901_0033_0006600.xml",
+        "efetch_20260101-20260901_0034_0006800.xml",
+        "efetch_20260101-20260901_0035_0007000.xml",
+        "efetch_20260101-20260901_0036_0007200.xml",
+        "efetch_20260101-20260901_0037_0007400.xml",
+        "efetch_20260101-20260901_0038_0007600.xml"
+      ]
+    }
+  ],
+  "files": [
+    {
+      "file": "efetch_20150101-20151231_0000_0000000.xml",
+      "slice": "20150101-20151231",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 2540930,
+      "sha256": "52e8051ecd1d4a3c1fc1cf9c0b4f5677ef2824f46ac156750b360115b01548ea"
+    },
+    {
+      "file": "efetch_20150101-20151231_0001_0000200.xml",
+      "slice": "20150101-20151231",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 2793476,
+      "sha256": "e492f248012ad1a0465a80a96793229fddeedee1369d40551d8655534d9dbaa0"
+    },
+    {
+      "file": "efetch_20150101-20151231_0002_0000400.xml",
+      "slice": "20150101-20151231",
+      "retstart": 400,
+      "retmax": 84,
+      "records": 84,
+      "bytes": 888420,
+      "sha256": "48cbbf4910aca7443eea3c34b0e1cde8578f3af133fd03a0c3325fcf0aa8a93b"
+    },
+    {
+      "file": "efetch_20160101-20161231_0000_0000000.xml",
+      "slice": "20160101-20161231",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3684919,
+      "sha256": "137c478a2253cd68f4bb510e6cfee7d1157e849cfcfc288d108903bf64819cbb"
+    },
+    {
+      "file": "efetch_20160101-20161231_0001_0000200.xml",
+      "slice": "20160101-20161231",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3336595,
+      "sha256": "c84c102036b607b9b7f118214df44ab189674d2aa53594a3bee03b9866a1b953"
+    },
+    {
+      "file": "efetch_20160101-20161231_0002_0000400.xml",
+      "slice": "20160101-20161231",
+      "retstart": 400,
+      "retmax": 146,
+      "records": 146,
+      "bytes": 1876315,
+      "sha256": "d75a27b06a37a7e72d672fff3c236db19ac500a53d235d165858c1fa66f81a6a"
+    },
+    {
+      "file": "efetch_20170101-20171231_0000_0000000.xml",
+      "slice": "20170101-20171231",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3129100,
+      "sha256": "7f7dcf7f6d047b98cb3a2ca4e3225b36d8c08114c6a213900712a6a212087f3c"
+    },
+    {
+      "file": "efetch_20170101-20171231_0001_0000200.xml",
+      "slice": "20170101-20171231",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3097955,
+      "sha256": "8133a73f412b544912f30359ec8ba7b41e428479236ce7e63481d3e04cae5b3d"
+    },
+    {
+      "file": "efetch_20170101-20171231_0002_0000400.xml",
+      "slice": "20170101-20171231",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 2908787,
+      "sha256": "4c9130f082e5e41c401b6cd875fc305bc28d447a4087d0c386bf021c7921c430"
+    },
+    {
+      "file": "efetch_20170101-20171231_0003_0000600.xml",
+      "slice": "20170101-20171231",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 2863591,
+      "sha256": "4d2c3afebdbebced13f7b06fe4a9decd3e381002e003a39e1653261eedad7db0"
+    },
+    {
+      "file": "efetch_20170101-20171231_0004_0000800.xml",
+      "slice": "20170101-20171231",
+      "retstart": 800,
+      "retmax": 35,
+      "records": 35,
+      "bytes": 500585,
+      "sha256": "c13ce1766fc9edae18b3b3be4c3b630a6f224f49a6a70cb4c40b29eebc3ac0c0"
+    },
+    {
+      "file": "efetch_20180101-20181231_0000_0000000.xml",
+      "slice": "20180101-20181231",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3410072,
+      "sha256": "1d7cbafc2b12a763fc84728b9255c8049cf62bb93ec2618914e7aec58c4be7f8"
+    },
+    {
+      "file": "efetch_20180101-20181231_0001_0000200.xml",
+      "slice": "20180101-20181231",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 2902902,
+      "sha256": "6bb90f720b86fb205d53b621c2bb9570b8cfab16d23886fb828c0303944129ba"
+    },
+    {
+      "file": "efetch_20180101-20181231_0002_0000400.xml",
+      "slice": "20180101-20181231",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3203639,
+      "sha256": "099bfc40a178bd3d51b4ad669957c7c47c857e2493e83027829e094c80e8ec34"
+    },
+    {
+      "file": "efetch_20180101-20181231_0003_0000600.xml",
+      "slice": "20180101-20181231",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3373393,
+      "sha256": "cea8d302fb56d0feba9b0b83151e7679d96be6450dcf58f189cf21d71be7dba9"
+    },
+    {
+      "file": "efetch_20180101-20181231_0004_0000800.xml",
+      "slice": "20180101-20181231",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3265501,
+      "sha256": "ceee754e8dd3c0d4d1b8b17e9af100e5527955b8aa2d8e8d5307858289bb939a"
+    },
+    {
+      "file": "efetch_20180101-20181231_0005_0001000.xml",
+      "slice": "20180101-20181231",
+      "retstart": 1000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3337046,
+      "sha256": "65bc026cb78840af44f82926029c2ca237c39bd10461ff5da06451351418533a"
+    },
+    {
+      "file": "efetch_20180101-20181231_0006_0001200.xml",
+      "slice": "20180101-20181231",
+      "retstart": 1200,
+      "retmax": 166,
+      "records": 166,
+      "bytes": 2519201,
+      "sha256": "eb3da26fc284a079920c525e9d6fb20d79008a7db2f2b4ed38c84558cd6cd625"
+    },
+    {
+      "file": "efetch_20190101-20191231_0000_0000000.xml",
+      "slice": "20190101-20191231",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 2981008,
+      "sha256": "de0527e7a8b1858215286712334ed63b0cbe926a8f86df3bf1a16000ff8bfd15"
+    },
+    {
+      "file": "efetch_20190101-20191231_0001_0000200.xml",
+      "slice": "20190101-20191231",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3662522,
+      "sha256": "e0a69418d9714a296a46aac46c287891e57e8b1a32a9f12e515760ae9c59c3d4"
+    },
+    {
+      "file": "efetch_20190101-20191231_0002_0000400.xml",
+      "slice": "20190101-20191231",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3270166,
+      "sha256": "37bba7b5eb75361684f5b88e441f9ed515fae3a123d99874a652a9602597100b"
+    },
+    {
+      "file": "efetch_20190101-20191231_0003_0000600.xml",
+      "slice": "20190101-20191231",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3492843,
+      "sha256": "392095f4b35bcdc23f0143e95f2941328af7dce71f4b6a23df7ac1bff42eb308"
+    },
+    {
+      "file": "efetch_20190101-20191231_0004_0000800.xml",
+      "slice": "20190101-20191231",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3741208,
+      "sha256": "31bca6ca4ddfa73317a624586508a193219a2825012a4d7f2749907dbb807040"
+    },
+    {
+      "file": "efetch_20190101-20191231_0005_0001000.xml",
+      "slice": "20190101-20191231",
+      "retstart": 1000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3468133,
+      "sha256": "f3ceed39833b4577c4c54593a87504d9841fd304c319c0bc6197d9b1b34f2c9e"
+    },
+    {
+      "file": "efetch_20190101-20191231_0006_0001200.xml",
+      "slice": "20190101-20191231",
+      "retstart": 1200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3427792,
+      "sha256": "2177f0f4b61ced17980a126361ccedd09dcf940265cdbbb6afdc0400575637f2"
+    },
+    {
+      "file": "efetch_20190101-20191231_0007_0001400.xml",
+      "slice": "20190101-20191231",
+      "retstart": 1400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3074298,
+      "sha256": "fcf3f754e17c8f132c2233772e6f19ac58adad34cebe9f7ebe367aea6ba2b064"
+    },
+    {
+      "file": "efetch_20190101-20191231_0008_0001600.xml",
+      "slice": "20190101-20191231",
+      "retstart": 1600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3329327,
+      "sha256": "a5e9c1d66426e92eb2aead64da6d1cb9594bd4e001218967edbe7b2f8ed01ae1"
+    },
+    {
+      "file": "efetch_20190101-20191231_0009_0001800.xml",
+      "slice": "20190101-20191231",
+      "retstart": 1800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3513405,
+      "sha256": "5f3319f97bbebb963846e7ecf7ab99acf0765fc98a5474f1330ac6c08a56a480"
+    },
+    {
+      "file": "efetch_20190101-20191231_0010_0002000.xml",
+      "slice": "20190101-20191231",
+      "retstart": 2000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 2865399,
+      "sha256": "409d4a5c192943abcc1d1452e6375d5a1817f357ed0fe04897934d3e3bd5b346"
+    },
+    {
+      "file": "efetch_20190101-20191231_0011_0002200.xml",
+      "slice": "20190101-20191231",
+      "retstart": 2200,
+      "retmax": 113,
+      "records": 113,
+      "bytes": 1652380,
+      "sha256": "27fa634ac060b414d0a628293fb895264ffdb167fd8efc8bcece75f9fa9fe58c"
+    },
+    {
+      "file": "efetch_20200101-20201231_0000_0000000.xml",
+      "slice": "20200101-20201231",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4604040,
+      "sha256": "5b97b4c27d434782aceaff888b40ce168fbd2f5a2f06deac17ad3acca607410a"
+    },
+    {
+      "file": "efetch_20200101-20201231_0001_0000200.xml",
+      "slice": "20200101-20201231",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3944125,
+      "sha256": "c1a1ffb0b63a5f081991fc98c85a9f00d236b3c8c1254e0cc8b0d0247d0ace77"
+    },
+    {
+      "file": "efetch_20200101-20201231_0002_0000400.xml",
+      "slice": "20200101-20201231",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3875139,
+      "sha256": "4e2a5eeb28a20aca479d6582a53ee15af4f7c4d777b127307f744681ee0d92ec"
+    },
+    {
+      "file": "efetch_20200101-20201231_0003_0000600.xml",
+      "slice": "20200101-20201231",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3860564,
+      "sha256": "213be130284e7491357fda81a8982f8a43c67289a2046bfb766ad6c2586eb31c"
+    },
+    {
+      "file": "efetch_20200101-20201231_0004_0000800.xml",
+      "slice": "20200101-20201231",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3384687,
+      "sha256": "3b99de5621ca925124d9ff30ff4d8872d136044b4b0279d6e3f96c85b6fad2f5"
+    },
+    {
+      "file": "efetch_20200101-20201231_0005_0001000.xml",
+      "slice": "20200101-20201231",
+      "retstart": 1000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4036305,
+      "sha256": "6b3a64d3921a2f4fe965a1e04cf6ec2932202ea130b0eb82a854b8a4caf37d99"
+    },
+    {
+      "file": "efetch_20200101-20201231_0006_0001200.xml",
+      "slice": "20200101-20201231",
+      "retstart": 1200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3725054,
+      "sha256": "99868b38f4b8df25d851a55bd08596b195c6105438f38aee0182702dba69f9df"
+    },
+    {
+      "file": "efetch_20200101-20201231_0007_0001400.xml",
+      "slice": "20200101-20201231",
+      "retstart": 1400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3894267,
+      "sha256": "2df44d6fbbad892db3ed7ffdda1dffa9ba082373803c9bcc4712167774cde7b5"
+    },
+    {
+      "file": "efetch_20200101-20201231_0008_0001600.xml",
+      "slice": "20200101-20201231",
+      "retstart": 1600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3600455,
+      "sha256": "2864bba8e425fd3d2cbf5cc0f6e66d2fde46d66f3aeadce060947bc2ef2d0eeb"
+    },
+    {
+      "file": "efetch_20200101-20201231_0009_0001800.xml",
+      "slice": "20200101-20201231",
+      "retstart": 1800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3827193,
+      "sha256": "fcd89b8d510fa3f9d5a44a16e323c52fd0f0a2ef0266cc34071bdac895db70d2"
+    },
+    {
+      "file": "efetch_20200101-20201231_0010_0002000.xml",
+      "slice": "20200101-20201231",
+      "retstart": 2000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3588013,
+      "sha256": "cca755bf45683160220dd99b90a2eab8b640c9384cf40f4303052bd539e88c54"
+    },
+    {
+      "file": "efetch_20200101-20201231_0011_0002200.xml",
+      "slice": "20200101-20201231",
+      "retstart": 2200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3820833,
+      "sha256": "cfa948f66c569ebaa8d56b8a23fef0942fda872dd636f71edda068fafdf5d33a"
+    },
+    {
+      "file": "efetch_20200101-20201231_0012_0002400.xml",
+      "slice": "20200101-20201231",
+      "retstart": 2400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4360441,
+      "sha256": "a1e5156c6b022b81b07487daad96fcab78f068144f2bb9348b987d8cdc5e55ac"
+    },
+    {
+      "file": "efetch_20200101-20201231_0013_0002600.xml",
+      "slice": "20200101-20201231",
+      "retstart": 2600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3857391,
+      "sha256": "266d050e26629f1dde4a6b0e4ab1e9b34b33a865cef9f3d8fca99945364464d5"
+    },
+    {
+      "file": "efetch_20200101-20201231_0014_0002800.xml",
+      "slice": "20200101-20201231",
+      "retstart": 2800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3298876,
+      "sha256": "7f0fbe0231466b88b3ff0cb8ce493de2bd08f73ec6769c372a55cb2f41fc3551"
+    },
+    {
+      "file": "efetch_20200101-20201231_0015_0003000.xml",
+      "slice": "20200101-20201231",
+      "retstart": 3000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3108409,
+      "sha256": "bed48db7c0ea0e21247ae0d9ad3d0d9fd6085abb621227a3a2e70aab00b07f8d"
+    },
+    {
+      "file": "efetch_20200101-20201231_0016_0003200.xml",
+      "slice": "20200101-20201231",
+      "retstart": 3200,
+      "retmax": 167,
+      "records": 167,
+      "bytes": 2646464,
+      "sha256": "37afd5179a3aad9e5e329d25713157ac656ee7b425e1f3cc7a5625b04e8e2bc2"
+    },
+    {
+      "file": "efetch_20210101-20211231_0000_0000000.xml",
+      "slice": "20210101-20211231",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4372608,
+      "sha256": "dd86682c2c01557b159c855465af53d9f92c3fb81fd6dff8b28f9b2c26ad7bb5"
+    },
+    {
+      "file": "efetch_20210101-20211231_0001_0000200.xml",
+      "slice": "20210101-20211231",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3453634,
+      "sha256": "9d2b30ecf49949af71dc86ce2b6eecd158ae7d83e0bf4f2f40465023ae2518e9"
+    },
+    {
+      "file": "efetch_20210101-20211231_0002_0000400.xml",
+      "slice": "20210101-20211231",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4488295,
+      "sha256": "07a421fcbca9ca495ba56b00d413e434671330bd80aabfc3840b2bb0cff0bdf4"
+    },
+    {
+      "file": "efetch_20210101-20211231_0003_0000600.xml",
+      "slice": "20210101-20211231",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4369001,
+      "sha256": "01cb239fe5eac4cc4f2de1e74b26882aedda017954a059894f5f91fe4c311784"
+    },
+    {
+      "file": "efetch_20210101-20211231_0004_0000800.xml",
+      "slice": "20210101-20211231",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4379257,
+      "sha256": "7fb7dd3776249b844cdc0d138245609f85c3bf5c640524a2126c5d3bbfed6b4d"
+    },
+    {
+      "file": "efetch_20210101-20211231_0005_0001000.xml",
+      "slice": "20210101-20211231",
+      "retstart": 1000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4614744,
+      "sha256": "63fddba2c2267b13e0e335c620101b327cad02760b5d2ee4e89368e6c0cdfbae"
+    },
+    {
+      "file": "efetch_20210101-20211231_0006_0001200.xml",
+      "slice": "20210101-20211231",
+      "retstart": 1200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4723773,
+      "sha256": "b53140bcdaccb8a6b0f0ef453c59c587f7579b5e1f01d31add51c6fad7442d74"
+    },
+    {
+      "file": "efetch_20210101-20211231_0007_0001400.xml",
+      "slice": "20210101-20211231",
+      "retstart": 1400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4452129,
+      "sha256": "25c0f26c57a4e2d490c9f71e51fff917e577d671e3c1443945ee7ceb0ee80609"
+    },
+    {
+      "file": "efetch_20210101-20211231_0008_0001600.xml",
+      "slice": "20210101-20211231",
+      "retstart": 1600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4202020,
+      "sha256": "cd4ccc25793f56b45302c40846f1bb7eaf1dfb9ab156cdf18422fee332ab1c1f"
+    },
+    {
+      "file": "efetch_20210101-20211231_0009_0001800.xml",
+      "slice": "20210101-20211231",
+      "retstart": 1800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4942555,
+      "sha256": "23495a9f0f1a40af272ecea8aa6623ec3eaae55292114c6fbe215cd324cd25c8"
+    },
+    {
+      "file": "efetch_20210101-20211231_0010_0002000.xml",
+      "slice": "20210101-20211231",
+      "retstart": 2000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4600267,
+      "sha256": "b9076c0b0984028fa7c83cca55247d2f81844689a5057806ce7ca0cf140f283c"
+    },
+    {
+      "file": "efetch_20210101-20211231_0011_0002200.xml",
+      "slice": "20210101-20211231",
+      "retstart": 2200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4004936,
+      "sha256": "0982ef8f9899b475eae9c77736dbedb373570b836c65f1da13b121f5c4f0f37a"
+    },
+    {
+      "file": "efetch_20210101-20211231_0012_0002400.xml",
+      "slice": "20210101-20211231",
+      "retstart": 2400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4145022,
+      "sha256": "b1975211feacdfd23608322f8dd1035ab1a41da635454d683df49bb03a32b99f"
+    },
+    {
+      "file": "efetch_20210101-20211231_0013_0002600.xml",
+      "slice": "20210101-20211231",
+      "retstart": 2600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4282763,
+      "sha256": "8ed3209e5dccc23071669c4d38123b4a01906a65b28278227988eccce74c36e4"
+    },
+    {
+      "file": "efetch_20210101-20211231_0014_0002800.xml",
+      "slice": "20210101-20211231",
+      "retstart": 2800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4382891,
+      "sha256": "5786dfb5fbeca0675623b8bf5ed5ebf459c2cba9b7539692e2d49359dd04927a"
+    },
+    {
+      "file": "efetch_20210101-20211231_0015_0003000.xml",
+      "slice": "20210101-20211231",
+      "retstart": 3000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4089432,
+      "sha256": "d0d4ccfeeeea1764a3e7551ce57411302c182149bcf1d500257eebe55eeea021"
+    },
+    {
+      "file": "efetch_20210101-20211231_0016_0003200.xml",
+      "slice": "20210101-20211231",
+      "retstart": 3200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4314445,
+      "sha256": "e60f5f63aece15f037cc859a0d250b58d2f36fd3faf391399d247ae5e471fe1b"
+    },
+    {
+      "file": "efetch_20210101-20211231_0017_0003400.xml",
+      "slice": "20210101-20211231",
+      "retstart": 3400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4188274,
+      "sha256": "28156a2eb25ccf767c02bc473d6f2b5b98e6d822e8163b7bec1e92b30acff27f"
+    },
+    {
+      "file": "efetch_20210101-20211231_0018_0003600.xml",
+      "slice": "20210101-20211231",
+      "retstart": 3600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4264714,
+      "sha256": "e1638acae04c69ceba20eaef7a821b9738073d5433213ae755a5c2ca33cd50cf"
+    },
+    {
+      "file": "efetch_20210101-20211231_0019_0003800.xml",
+      "slice": "20210101-20211231",
+      "retstart": 3800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3792239,
+      "sha256": "7e575e5c174d2e4b02ea3e6991e0c6d850ccefb3e17a2e5868b34581fec026cf"
+    },
+    {
+      "file": "efetch_20210101-20211231_0020_0004000.xml",
+      "slice": "20210101-20211231",
+      "retstart": 4000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3109513,
+      "sha256": "e4cea098bea56d85928de762546737a5f586f577fe23dfa6256191e0af12f42b"
+    },
+    {
+      "file": "efetch_20210101-20211231_0021_0004200.xml",
+      "slice": "20210101-20211231",
+      "retstart": 4200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3453801,
+      "sha256": "611955918eb96e5ec5614c019130b24cfb42e95b5385e139550a40a432f31103"
+    },
+    {
+      "file": "efetch_20210101-20211231_0022_0004400.xml",
+      "slice": "20210101-20211231",
+      "retstart": 4400,
+      "retmax": 144,
+      "records": 144,
+      "bytes": 2058117,
+      "sha256": "18c2eb5ad915e569e176aee600acbe712c517bf6cbd82c4b0ff0050691c4f408"
+    },
+    {
+      "file": "efetch_20220101-20221231_0000_0000000.xml",
+      "slice": "20220101-20221231",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4749656,
+      "sha256": "8bbdcfc044941ea3aaed7b1a4d3d6ef91e73001d7e4ddb46f3b77ac7e9a8437d"
+    },
+    {
+      "file": "efetch_20220101-20221231_0001_0000200.xml",
+      "slice": "20220101-20221231",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 5134360,
+      "sha256": "3525532edc867e49375a409df12e587ba1debd4039ea2bf7cbb8496b01b13e5b"
+    },
+    {
+      "file": "efetch_20220101-20221231_0002_0000400.xml",
+      "slice": "20220101-20221231",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4403164,
+      "sha256": "091a0ecf8a821dc0b591680c7c5669fc252a794c0d75c6cf27ec83763d8b1406"
+    },
+    {
+      "file": "efetch_20220101-20221231_0003_0000600.xml",
+      "slice": "20220101-20221231",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4529212,
+      "sha256": "b69398cd1c53f9493de79ea163d1d340a735976de412d072e44bdf5005172fe8"
+    },
+    {
+      "file": "efetch_20220101-20221231_0004_0000800.xml",
+      "slice": "20220101-20221231",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4590383,
+      "sha256": "19e04c859790c272352c428668c6f05e7ef681dc60d4a39c0109c1a3c63591fd"
+    },
+    {
+      "file": "efetch_20220101-20221231_0005_0001000.xml",
+      "slice": "20220101-20221231",
+      "retstart": 1000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4470177,
+      "sha256": "bbc16246fa982c98e5f7fcab811f076271a65f460b368629b0fb859c5d388036"
+    },
+    {
+      "file": "efetch_20220101-20221231_0006_0001200.xml",
+      "slice": "20220101-20221231",
+      "retstart": 1200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3898895,
+      "sha256": "f893a381fdc468fcb05cfcfd42f0ebdf63402978fe31280e1766b87151985208"
+    },
+    {
+      "file": "efetch_20220101-20221231_0007_0001400.xml",
+      "slice": "20220101-20221231",
+      "retstart": 1400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4338766,
+      "sha256": "72a436040d645f80f0845d4f814d2fe81b1c1fb1c51ab2a5ea15e8ef3a4b9b31"
+    },
+    {
+      "file": "efetch_20220101-20221231_0008_0001600.xml",
+      "slice": "20220101-20221231",
+      "retstart": 1600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3616202,
+      "sha256": "ae1f431a5438c720e02871d062993c575437126c527d623d77ac1593820abfa6"
+    },
+    {
+      "file": "efetch_20220101-20221231_0009_0001800.xml",
+      "slice": "20220101-20221231",
+      "retstart": 1800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4484941,
+      "sha256": "0b56d3256fd3a936af1069383b2e8cac80181bfc8fd46dcf5dca3d8e0028bb2f"
+    },
+    {
+      "file": "efetch_20220101-20221231_0010_0002000.xml",
+      "slice": "20220101-20221231",
+      "retstart": 2000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4729382,
+      "sha256": "ffa9ae5ef96c35c3c5452a1450a4d4ade1f68296910d86f1195ba82e8db9649d"
+    },
+    {
+      "file": "efetch_20220101-20221231_0011_0002200.xml",
+      "slice": "20220101-20221231",
+      "retstart": 2200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4888996,
+      "sha256": "623c4912df3d0c827ab2e16de5cc7915156f0438ed14465957bdfdb91bdfdbe2"
+    },
+    {
+      "file": "efetch_20220101-20221231_0012_0002400.xml",
+      "slice": "20220101-20221231",
+      "retstart": 2400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4362032,
+      "sha256": "d8c68921c8af68dfe0844f6e3c2035049dc079961d7e2f948855093ca1aa13a9"
+    },
+    {
+      "file": "efetch_20220101-20221231_0013_0002600.xml",
+      "slice": "20220101-20221231",
+      "retstart": 2600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4339320,
+      "sha256": "e117f0fdf6a2305dd5efc90bf3a2d3d26e6d0483666bfaa47b5dfd68dfb40766"
+    },
+    {
+      "file": "efetch_20220101-20221231_0014_0002800.xml",
+      "slice": "20220101-20221231",
+      "retstart": 2800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4368624,
+      "sha256": "6110298b4eba1ce60dc2dfa83ed8587382b3fb2e793fd2833dba740854240357"
+    },
+    {
+      "file": "efetch_20220101-20221231_0015_0003000.xml",
+      "slice": "20220101-20221231",
+      "retstart": 3000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4220647,
+      "sha256": "5a698224a2bb5eab812d6c616111734d095ec945c60a732a64ecff669b7f7be7"
+    },
+    {
+      "file": "efetch_20220101-20221231_0016_0003200.xml",
+      "slice": "20220101-20221231",
+      "retstart": 3200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3985475,
+      "sha256": "586e05963422d9aeab77d0c8a67cb2f17baf79b53342e4e63e6d454d175f2739"
+    },
+    {
+      "file": "efetch_20220101-20221231_0017_0003400.xml",
+      "slice": "20220101-20221231",
+      "retstart": 3400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4664903,
+      "sha256": "b884d7ee93a95769b92b6698800ff614653290c36933ffba99fc7235c3e54a96"
+    },
+    {
+      "file": "efetch_20220101-20221231_0018_0003600.xml",
+      "slice": "20220101-20221231",
+      "retstart": 3600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4264497,
+      "sha256": "f1e9d6a53db29885df0ff140a7afd590db1751686ac1c8cec33e090949d07c56"
+    },
+    {
+      "file": "efetch_20220101-20221231_0019_0003800.xml",
+      "slice": "20220101-20221231",
+      "retstart": 3800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4940730,
+      "sha256": "d7cfe64a9c9347d9d375df0e174b9603194d0d934b13115f01c5b4b8f9ec2693"
+    },
+    {
+      "file": "efetch_20220101-20221231_0020_0004000.xml",
+      "slice": "20220101-20221231",
+      "retstart": 4000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4520722,
+      "sha256": "e3ebc0eea8eaeb03dffa21d2cd26a09051bc39f02bf432ef331cee7e411eb83e"
+    },
+    {
+      "file": "efetch_20220101-20221231_0021_0004200.xml",
+      "slice": "20220101-20221231",
+      "retstart": 4200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4791840,
+      "sha256": "be4ae3aa7200c70f0e14ccbba9ad8fe40588ccd13cccb2744470320975c72c8a"
+    },
+    {
+      "file": "efetch_20220101-20221231_0022_0004400.xml",
+      "slice": "20220101-20221231",
+      "retstart": 4400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4292903,
+      "sha256": "fdc4bb65f05475b31c830a86dec710d4762c661eeca81affc516139bbad01efe"
+    },
+    {
+      "file": "efetch_20220101-20221231_0023_0004600.xml",
+      "slice": "20220101-20221231",
+      "retstart": 4600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4273780,
+      "sha256": "6bc0b381fb6e8419ff410fc9b6b3c56508a10471c70c6f8119dec031d6356945"
+    },
+    {
+      "file": "efetch_20220101-20221231_0024_0004800.xml",
+      "slice": "20220101-20221231",
+      "retstart": 4800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3664942,
+      "sha256": "2c7e5bd356923911601590bb3e8aa86b12663a1b0de47547c17a2e52d8316801"
+    },
+    {
+      "file": "efetch_20220101-20221231_0025_0005000.xml",
+      "slice": "20220101-20221231",
+      "retstart": 5000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3350788,
+      "sha256": "b370aa7a4703b712e8f9e147f0cb18a77c4082dc68d0c961776932f1dda345bd"
+    },
+    {
+      "file": "efetch_20220101-20221231_0026_0005200.xml",
+      "slice": "20220101-20221231",
+      "retstart": 5200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3895811,
+      "sha256": "8d77c8c56b3229826006231358dae21f276dadb34c5ceac7c349ec648742fa0d"
+    },
+    {
+      "file": "efetch_20220101-20221231_0027_0005400.xml",
+      "slice": "20220101-20221231",
+      "retstart": 5400,
+      "retmax": 193,
+      "records": 193,
+      "bytes": 3091361,
+      "sha256": "b47e0b8e8f1e17360ef46a44abb067c8b947a16b64c4bce4d274ab4edfa5dbf1"
+    },
+    {
+      "file": "efetch_20230101-20231231_0000_0000000.xml",
+      "slice": "20230101-20231231",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4639056,
+      "sha256": "ef398a3188ebf58b3238ce5f5c5eb80343dafb6cb9aa8e378bcf30719d7c104d"
+    },
+    {
+      "file": "efetch_20230101-20231231_0001_0000200.xml",
+      "slice": "20230101-20231231",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4279804,
+      "sha256": "74d216d4118e3446b1e4d4f48244f2fa087faffc06c62788663cddc3b3c1d5c5"
+    },
+    {
+      "file": "efetch_20230101-20231231_0002_0000400.xml",
+      "slice": "20230101-20231231",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3319213,
+      "sha256": "c3d1a8535a0a3dd79e8b770bd11c756f456beb26e62eae748714b7a523f0d5e2"
+    },
+    {
+      "file": "efetch_20230101-20231231_0003_0000600.xml",
+      "slice": "20230101-20231231",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4291910,
+      "sha256": "9190d88f5ae875c5e9e9aff728f5ff1965c99073b7161e8ac601daba98c6dea6"
+    },
+    {
+      "file": "efetch_20230101-20231231_0004_0000800.xml",
+      "slice": "20230101-20231231",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4287383,
+      "sha256": "ef5b1ffa48bc7795e7b445fe5feaa77284c553333212685e18b41eecbfd58d45"
+    },
+    {
+      "file": "efetch_20230101-20231231_0005_0001000.xml",
+      "slice": "20230101-20231231",
+      "retstart": 1000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4156161,
+      "sha256": "6240fa985418a130a155f55bdd4642e85352cfe9d6fcd22571bba7bb5617f8c1"
+    },
+    {
+      "file": "efetch_20230101-20231231_0006_0001200.xml",
+      "slice": "20230101-20231231",
+      "retstart": 1200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4057205,
+      "sha256": "ccb80ed59c7bacddc105757d552e8b3b4adc1f4531fd25070d498f82fb85bd43"
+    },
+    {
+      "file": "efetch_20230101-20231231_0007_0001400.xml",
+      "slice": "20230101-20231231",
+      "retstart": 1400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4144949,
+      "sha256": "d294aad3859d437cda5d73c0f915a5dd86d807252407d88dd63b02a08ce7f2ae"
+    },
+    {
+      "file": "efetch_20230101-20231231_0008_0001600.xml",
+      "slice": "20230101-20231231",
+      "retstart": 1600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4453049,
+      "sha256": "aa331f5fee32de029733f707045101b1be524789c09feb0e2106e85393b78423"
+    },
+    {
+      "file": "efetch_20230101-20231231_0009_0001800.xml",
+      "slice": "20230101-20231231",
+      "retstart": 1800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4517412,
+      "sha256": "9d6277b3bbaae79a6f7eef0bd4628b1fcc63cb29d74862f863744bf642f18333"
+    },
+    {
+      "file": "efetch_20230101-20231231_0010_0002000.xml",
+      "slice": "20230101-20231231",
+      "retstart": 2000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4224531,
+      "sha256": "bc53778e959ca10f7b0684e588f7d3d6fe10f418aa8c4655d4ba840828a9a36f"
+    },
+    {
+      "file": "efetch_20230101-20231231_0011_0002200.xml",
+      "slice": "20230101-20231231",
+      "retstart": 2200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4287299,
+      "sha256": "ffa8edcb94baec7938b95c1d37226f189d81a28932d34e73c1789229635589bc"
+    },
+    {
+      "file": "efetch_20230101-20231231_0012_0002400.xml",
+      "slice": "20230101-20231231",
+      "retstart": 2400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4688770,
+      "sha256": "99c83ecbe79a03a8c4d1ce1464f1c59f14f7a4726213098181e1f967f52b178e"
+    },
+    {
+      "file": "efetch_20230101-20231231_0013_0002600.xml",
+      "slice": "20230101-20231231",
+      "retstart": 2600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4257105,
+      "sha256": "13e89c1a7230b01459c0439f351078f2371fc67024302335f48150faa49a95b8"
+    },
+    {
+      "file": "efetch_20230101-20231231_0014_0002800.xml",
+      "slice": "20230101-20231231",
+      "retstart": 2800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4029608,
+      "sha256": "30df392c7fd0102fcec79d0005798c44435e01eb25ab0cad7ed800536b5e55fe"
+    },
+    {
+      "file": "efetch_20230101-20231231_0015_0003000.xml",
+      "slice": "20230101-20231231",
+      "retstart": 3000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4478959,
+      "sha256": "8662cd3781c4cdb94d6c4532e5e92f1a12b4869626e95cf9e38867aaf48b7e0b"
+    },
+    {
+      "file": "efetch_20230101-20231231_0016_0003200.xml",
+      "slice": "20230101-20231231",
+      "retstart": 3200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4214234,
+      "sha256": "47af99e1b93a6f75402c30db2547555424002b92f8c7f2698b282ba909e5c05f"
+    },
+    {
+      "file": "efetch_20230101-20231231_0017_0003400.xml",
+      "slice": "20230101-20231231",
+      "retstart": 3400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4560474,
+      "sha256": "e1d5794e898e034c230b11efd1fd1afbb60d8e44a2e35919f4bcb20253db0cb4"
+    },
+    {
+      "file": "efetch_20230101-20231231_0018_0003600.xml",
+      "slice": "20230101-20231231",
+      "retstart": 3600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4702191,
+      "sha256": "4807c1ce32d654b7e7d1229262093da900a711522462dfa8ce987fa84a531135"
+    },
+    {
+      "file": "efetch_20230101-20231231_0019_0003800.xml",
+      "slice": "20230101-20231231",
+      "retstart": 3800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3837185,
+      "sha256": "862c99a8eae884e0e09fa84bac60c6b54718dfc909aa416359abadf393ce2775"
+    },
+    {
+      "file": "efetch_20230101-20231231_0020_0004000.xml",
+      "slice": "20230101-20231231",
+      "retstart": 4000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4432700,
+      "sha256": "8f417110d58833b20894b5995c65aef359a9784e261d737ba9630cd9af5d9284"
+    },
+    {
+      "file": "efetch_20230101-20231231_0021_0004200.xml",
+      "slice": "20230101-20231231",
+      "retstart": 4200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3886160,
+      "sha256": "fc10403b1a2ba1b11db4595cb8a0154095800a4a15cc8c11c9a5bf02bd44016b"
+    },
+    {
+      "file": "efetch_20230101-20231231_0022_0004400.xml",
+      "slice": "20230101-20231231",
+      "retstart": 4400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4582771,
+      "sha256": "b07e0ac1f777ad5d3308ce8aa0032ba31506cb616e9282ca35c84daeda174a4c"
+    },
+    {
+      "file": "efetch_20230101-20231231_0023_0004600.xml",
+      "slice": "20230101-20231231",
+      "retstart": 4600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4644700,
+      "sha256": "afa20691cb3d9be77e6686b1b99e9e33efceab473a7cd2f82d3b550d7573841f"
+    },
+    {
+      "file": "efetch_20230101-20231231_0024_0004800.xml",
+      "slice": "20230101-20231231",
+      "retstart": 4800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4709813,
+      "sha256": "bbd7d9d132f24e5589926a8f7c06119ca140690ccb226d21d71debe937158686"
+    },
+    {
+      "file": "efetch_20230101-20231231_0025_0005000.xml",
+      "slice": "20230101-20231231",
+      "retstart": 5000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4344823,
+      "sha256": "94dfcb6bf2a386d73ad392eb1e49cc87269e03d51851b942e191fe6dc9fdb4b4"
+    },
+    {
+      "file": "efetch_20230101-20231231_0026_0005200.xml",
+      "slice": "20230101-20231231",
+      "retstart": 5200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4813904,
+      "sha256": "41899925e7446db350eb5a623470fc899486a4909a391f395fb5298e34bf370d"
+    },
+    {
+      "file": "efetch_20230101-20231231_0027_0005400.xml",
+      "slice": "20230101-20231231",
+      "retstart": 5400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3791212,
+      "sha256": "e9233d5736f59c5d5ca28f9f5659d5b9a6cb04db8545624e16f920446d76f271"
+    },
+    {
+      "file": "efetch_20230101-20231231_0028_0005600.xml",
+      "slice": "20230101-20231231",
+      "retstart": 5600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3420962,
+      "sha256": "81b160a63179b9fe53b98c0c4297a4215a60042b0f7d351bb4dd74dd608c70b8"
+    },
+    {
+      "file": "efetch_20230101-20231231_0029_0005800.xml",
+      "slice": "20230101-20231231",
+      "retstart": 5800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3568268,
+      "sha256": "9ddac0b95eb5ec4b6631a035faa57527fa49c5cf7b68a0e33e72dec5a806ca2e"
+    },
+    {
+      "file": "efetch_20230101-20231231_0030_0006000.xml",
+      "slice": "20230101-20231231",
+      "retstart": 6000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3549690,
+      "sha256": "8a21a9d84022dee9cbe6d068008e04a659c32d041430ca72d9b267a817ea401c"
+    },
+    {
+      "file": "efetch_20230101-20231231_0031_0006200.xml",
+      "slice": "20230101-20231231",
+      "retstart": 6200,
+      "retmax": 110,
+      "records": 110,
+      "bytes": 1659425,
+      "sha256": "d26035be61969971a3daa75df35d80862d381e00cf9a182e7125a73fc30d29ba"
+    },
+    {
+      "file": "efetch_20240101-20241231_0000_0000000.xml",
+      "slice": "20240101-20241231",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4125444,
+      "sha256": "d0484c42bfd6c026a5329dde2b0fdea4560ac3dc8c5554baf5bc8d1f2d60b617"
+    },
+    {
+      "file": "efetch_20240101-20241231_0001_0000200.xml",
+      "slice": "20240101-20241231",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4611143,
+      "sha256": "47215c6cdb4e1b85ee95bfa7e43f731ddb9a365ccf6dc4bfce991ada5a220e18"
+    },
+    {
+      "file": "efetch_20240101-20241231_0002_0000400.xml",
+      "slice": "20240101-20241231",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4724474,
+      "sha256": "e3e494c85ccc78127ba5f8bdeb9a61cdf2e50e3e29e8488eba37821acd5b2bd5"
+    },
+    {
+      "file": "efetch_20240101-20241231_0003_0000600.xml",
+      "slice": "20240101-20241231",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3967059,
+      "sha256": "52c1718715afb0e00af15d501a295e7c6f62853c4bfd540ea717a77be12ce912"
+    },
+    {
+      "file": "efetch_20240101-20241231_0004_0000800.xml",
+      "slice": "20240101-20241231",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4332272,
+      "sha256": "6f62e2dd659c8ca9a2fd45a3c3dbf81f801ab3fae270eee8f141d8200594cafb"
+    },
+    {
+      "file": "efetch_20240101-20241231_0005_0001000.xml",
+      "slice": "20240101-20241231",
+      "retstart": 1000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4506893,
+      "sha256": "475548ee51999bedc597cef64cc5f08a4c1d5deda8ac0635ac47d72230104d51"
+    },
+    {
+      "file": "efetch_20240101-20241231_0006_0001200.xml",
+      "slice": "20240101-20241231",
+      "retstart": 1200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4401959,
+      "sha256": "4f012069d1545b036768ccd87fe691fcbe8d090b5e4229e615045b9526998c30"
+    },
+    {
+      "file": "efetch_20240101-20241231_0007_0001400.xml",
+      "slice": "20240101-20241231",
+      "retstart": 1400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4591192,
+      "sha256": "1f9aca0b89c37b88610e74a76fe816b3376231b36cafd4d044c4c35729dfad0d"
+    },
+    {
+      "file": "efetch_20240101-20241231_0008_0001600.xml",
+      "slice": "20240101-20241231",
+      "retstart": 1600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4436949,
+      "sha256": "6932b81718108e69bcee1d06cb570f2d6ef8b08f32e7230cdd5f8f44da94d27e"
+    },
+    {
+      "file": "efetch_20240101-20241231_0009_0001800.xml",
+      "slice": "20240101-20241231",
+      "retstart": 1800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4674260,
+      "sha256": "942fb15386ebadcc4be7ecc42f3ff76cba4fc9957d1a831cfe63f9321397491b"
+    },
+    {
+      "file": "efetch_20240101-20241231_0010_0002000.xml",
+      "slice": "20240101-20241231",
+      "retstart": 2000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4540744,
+      "sha256": "c20a27f3136c3171782c6b6c8251b916d750bee084078ccaea863c663d2f10f7"
+    },
+    {
+      "file": "efetch_20240101-20241231_0011_0002200.xml",
+      "slice": "20240101-20241231",
+      "retstart": 2200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4237862,
+      "sha256": "27408a795d23288aa233f8d9c75e190f3a43b1280c6963b508dd58c0abfb200b"
+    },
+    {
+      "file": "efetch_20240101-20241231_0012_0002400.xml",
+      "slice": "20240101-20241231",
+      "retstart": 2400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4146795,
+      "sha256": "f0cbea989d87f0e75a2966c46545d4492ce22452326dc7825478a86a626d6b89"
+    },
+    {
+      "file": "efetch_20240101-20241231_0013_0002600.xml",
+      "slice": "20240101-20241231",
+      "retstart": 2600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4199353,
+      "sha256": "04dbb55dea58a5ba956fd52e483834bf16475dff6df25a031c14bc4ed8d9f4b6"
+    },
+    {
+      "file": "efetch_20240101-20241231_0014_0002800.xml",
+      "slice": "20240101-20241231",
+      "retstart": 2800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4351355,
+      "sha256": "0dce27d617e35ca010471c09265b50d0fc9589f5f2275aba69473581256fd005"
+    },
+    {
+      "file": "efetch_20240101-20241231_0015_0003000.xml",
+      "slice": "20240101-20241231",
+      "retstart": 3000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4369340,
+      "sha256": "288542c10ae5512a4e3fa2222282d3a222a383d2c751f8bf6512003737a72970"
+    },
+    {
+      "file": "efetch_20240101-20241231_0016_0003200.xml",
+      "slice": "20240101-20241231",
+      "retstart": 3200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4488571,
+      "sha256": "35d788239496ebbd9869e765d2c39b8bf801aafcb08b5b60e8eed87049943e4b"
+    },
+    {
+      "file": "efetch_20240101-20241231_0017_0003400.xml",
+      "slice": "20240101-20241231",
+      "retstart": 3400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4381716,
+      "sha256": "ca5c609e3169abebac9d7ba68c6f81371db5ccf75b2c8f18af6bf77e4bbce000"
+    },
+    {
+      "file": "efetch_20240101-20241231_0018_0003600.xml",
+      "slice": "20240101-20241231",
+      "retstart": 3600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4336246,
+      "sha256": "212e383b932359dad27caf98793b076f73f9707fec04cfcf0d5d539e75312eb4"
+    },
+    {
+      "file": "efetch_20240101-20241231_0019_0003800.xml",
+      "slice": "20240101-20241231",
+      "retstart": 3800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4268345,
+      "sha256": "7bcd54a017dab451bc31ae1acbea8b6dfe44fb3d07072ff517e42d5d4e7e5076"
+    },
+    {
+      "file": "efetch_20240101-20241231_0020_0004000.xml",
+      "slice": "20240101-20241231",
+      "retstart": 4000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3831821,
+      "sha256": "6ab8ec808d8b7e783df67518076066d272e7006a90b74164b3d544f1a8c7557b"
+    },
+    {
+      "file": "efetch_20240101-20241231_0021_0004200.xml",
+      "slice": "20240101-20241231",
+      "retstart": 4200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4412804,
+      "sha256": "ac2fb657b1180a734d5c7287acd7f540b2b3b8bbaa3f738272f356cc20213dbc"
+    },
+    {
+      "file": "efetch_20240101-20241231_0022_0004400.xml",
+      "slice": "20240101-20241231",
+      "retstart": 4400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4124525,
+      "sha256": "0355c8c6d883a9819554b36e97766bdc11ae8eaa7da9c85f331f1b54dba0571a"
+    },
+    {
+      "file": "efetch_20240101-20241231_0023_0004600.xml",
+      "slice": "20240101-20241231",
+      "retstart": 4600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4122865,
+      "sha256": "f536632e4db119e9cbf759bacfdead305997193a089b2a3cd427f58f9ffce72e"
+    },
+    {
+      "file": "efetch_20240101-20241231_0024_0004800.xml",
+      "slice": "20240101-20241231",
+      "retstart": 4800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3843178,
+      "sha256": "ecbda228360d6f2b361ef2ce301058d5d5e291df8de690a09ed3b9a245b985f3"
+    },
+    {
+      "file": "efetch_20240101-20241231_0025_0005000.xml",
+      "slice": "20240101-20241231",
+      "retstart": 5000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4375748,
+      "sha256": "c3fa729687049eba62c806c132370e0e4cce7df42c97ec8d20d44a806433b807"
+    },
+    {
+      "file": "efetch_20240101-20241231_0026_0005200.xml",
+      "slice": "20240101-20241231",
+      "retstart": 5200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4241527,
+      "sha256": "4cbdd57cf28effadb32a96efa3ac806ae483acdfce0c8248ca99470f6e0dbaef"
+    },
+    {
+      "file": "efetch_20240101-20241231_0027_0005400.xml",
+      "slice": "20240101-20241231",
+      "retstart": 5400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4317039,
+      "sha256": "7aa1266d9ffbae8c00c49461341104832ebe95daa689a8eae61d8ee24262cafd"
+    },
+    {
+      "file": "efetch_20240101-20241231_0028_0005600.xml",
+      "slice": "20240101-20241231",
+      "retstart": 5600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4322683,
+      "sha256": "533b35fc1a05dcf54dde716f0c81ff8721c3ccbf56890053ae44d06c49226574"
+    },
+    {
+      "file": "efetch_20240101-20241231_0029_0005800.xml",
+      "slice": "20240101-20241231",
+      "retstart": 5800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4339954,
+      "sha256": "37f49c4de2c713ea53ad6ce980511c36f86017652c95b9aca026f48cfb6dfde5"
+    },
+    {
+      "file": "efetch_20240101-20241231_0030_0006000.xml",
+      "slice": "20240101-20241231",
+      "retstart": 6000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4107507,
+      "sha256": "e4ac2cae7baafd7a2be83e5fb95a2e56b6489bda22b33843d710287d13186fe3"
+    },
+    {
+      "file": "efetch_20240101-20241231_0031_0006200.xml",
+      "slice": "20240101-20241231",
+      "retstart": 6200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4328348,
+      "sha256": "65ffdc3762751c6ac003f10da1959c940540cf71702150e097a38a8b72bb58a7"
+    },
+    {
+      "file": "efetch_20240101-20241231_0032_0006400.xml",
+      "slice": "20240101-20241231",
+      "retstart": 6400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4367855,
+      "sha256": "93841208a4f443b4b9df6f52023839eff5227f4b811cc163a3658855993dc961"
+    },
+    {
+      "file": "efetch_20240101-20241231_0033_0006600.xml",
+      "slice": "20240101-20241231",
+      "retstart": 6600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4124835,
+      "sha256": "51ebf92cf4bb6b3d43c2a24a7150b14ab63c0ff9f6f38d7de464f18d3360a241"
+    },
+    {
+      "file": "efetch_20240101-20241231_0034_0006800.xml",
+      "slice": "20240101-20241231",
+      "retstart": 6800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3401372,
+      "sha256": "dbd2c7bc66b31a113d9e887a1efc2fc66c5b73d13919300a6e4b9fe38838bd6f"
+    },
+    {
+      "file": "efetch_20240101-20241231_0035_0007000.xml",
+      "slice": "20240101-20241231",
+      "retstart": 7000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3304162,
+      "sha256": "dd2c842ed59a4193f2b667d19c18e80e9dc32e20a06945a2338047a8d429d780"
+    },
+    {
+      "file": "efetch_20240101-20241231_0036_0007200.xml",
+      "slice": "20240101-20241231",
+      "retstart": 7200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3514419,
+      "sha256": "eb4d84ae2d1c30d7b04a47aa46162aeed8346090d7cc00f3b875649e779bbf67"
+    },
+    {
+      "file": "efetch_20240101-20241231_0037_0007400.xml",
+      "slice": "20240101-20241231",
+      "retstart": 7400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3744204,
+      "sha256": "4a11574b7f2a7c9709a70f8b14a56d0098283806df4b38d350ceed666e834879"
+    },
+    {
+      "file": "efetch_20240101-20241231_0038_0007600.xml",
+      "slice": "20240101-20241231",
+      "retstart": 7600,
+      "retmax": 83,
+      "records": 83,
+      "bytes": 998050,
+      "sha256": "83e10d4aec55db2ef8577efa796866e5020c8321201d2c48222c1f1f9c07c57f"
+    },
+    {
+      "file": "efetch_20250101-20250131_0000_0000000.xml",
+      "slice": "20250101-20250131",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 5613018,
+      "sha256": "022516bafc96712e4ea8953a1776c2e185684c6b1e1ae501a38462a0fa42cc3c"
+    },
+    {
+      "file": "efetch_20250101-20250131_0001_0000200.xml",
+      "slice": "20250101-20250131",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 5706053,
+      "sha256": "94d84c9b1b107e826e84786db7a663f2f3aaf668e2c1286cd227efe6eac31d4e"
+    },
+    {
+      "file": "efetch_20250101-20250131_0002_0000400.xml",
+      "slice": "20250101-20250131",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 5355202,
+      "sha256": "5e520480421c55e182b08a871344e903446b4fffc991cc1ef71f56efa9b9c6f4"
+    },
+    {
+      "file": "efetch_20250101-20250131_0003_0000600.xml",
+      "slice": "20250101-20250131",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 5029629,
+      "sha256": "5a90f353777a0b8d1928a349a2ac43361a2ff527472deaf4b886d41cc61d6386"
+    },
+    {
+      "file": "efetch_20250101-20250131_0004_0000800.xml",
+      "slice": "20250101-20250131",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 5281929,
+      "sha256": "6dc6f3cfc25a28d99d9882e7a23afbf436586b3df0ff64c56d6caea9dca1d360"
+    },
+    {
+      "file": "efetch_20250101-20250131_0005_0001000.xml",
+      "slice": "20250101-20250131",
+      "retstart": 1000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4717592,
+      "sha256": "c283d6419e086f006eb5522e8ef994c414ccbee2b66372904f966bdd82b7918c"
+    },
+    {
+      "file": "efetch_20250101-20250131_0006_0001200.xml",
+      "slice": "20250101-20250131",
+      "retstart": 1200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4869973,
+      "sha256": "2c60811fa8425df298a95285c2101b005cbf31d2c4bedf862af5d8a7487d5cbb"
+    },
+    {
+      "file": "efetch_20250101-20250131_0007_0001400.xml",
+      "slice": "20250101-20250131",
+      "retstart": 1400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4290075,
+      "sha256": "f70d59c2b8e77787e73de2b8365522dd3ad7f5de31c4f31e50afe72dfa58df49"
+    },
+    {
+      "file": "efetch_20250101-20250131_0008_0001600.xml",
+      "slice": "20250101-20250131",
+      "retstart": 1600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4259764,
+      "sha256": "b658c08ce8abf6f053bf892ad4686106ecc77dd112ade080534ef9a1a272ebea"
+    },
+    {
+      "file": "efetch_20250101-20250131_0009_0001800.xml",
+      "slice": "20250101-20250131",
+      "retstart": 1800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3402854,
+      "sha256": "f894ece67da9282e791d3181fea1e4053cabbf0bf26494751d6c0c5afe26be37"
+    },
+    {
+      "file": "efetch_20250101-20250131_0010_0002000.xml",
+      "slice": "20250101-20250131",
+      "retstart": 2000,
+      "retmax": 9,
+      "records": 9,
+      "bytes": 168014,
+      "sha256": "2b37ade15fc4dccf5f51acf1145d36c44d123ff966553de23be70615c10735fc"
+    },
+    {
+      "file": "efetch_20250201-20250228_0000_0000000.xml",
+      "slice": "20250201-20250228",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4321439,
+      "sha256": "9da820158beb2933fcd55d1edba872dd74bb8be88fa38f6d834fcca7516b3ad6"
+    },
+    {
+      "file": "efetch_20250201-20250228_0001_0000200.xml",
+      "slice": "20250201-20250228",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4728658,
+      "sha256": "d11960f9409d13459a98d0388a4e6752fac4b39c92430608fcf8dea3118aa7f0"
+    },
+    {
+      "file": "efetch_20250201-20250228_0002_0000400.xml",
+      "slice": "20250201-20250228",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4254569,
+      "sha256": "811a607ee641462f520d339a958268698e602a0a2ee8a111605552857b582c9b"
+    },
+    {
+      "file": "efetch_20250201-20250228_0003_0000600.xml",
+      "slice": "20250201-20250228",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3230406,
+      "sha256": "6d0e59077544eb2b715bc1711c5b94305231a39d994aa929d0713def17829553"
+    },
+    {
+      "file": "efetch_20250201-20250228_0004_0000800.xml",
+      "slice": "20250201-20250228",
+      "retstart": 800,
+      "retmax": 55,
+      "records": 55,
+      "bytes": 1151187,
+      "sha256": "61945b0a0ce9443e1701e5d70dca9e816e980d4f34ab39aeeb5a136faa7e02cd"
+    },
+    {
+      "file": "efetch_20250301-20250331_0000_0000000.xml",
+      "slice": "20250301-20250331",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4516725,
+      "sha256": "39a307abf0fcc55cf6482a2c1f330708fae335a04565138cefbb2cfb7d287fa2"
+    },
+    {
+      "file": "efetch_20250301-20250331_0001_0000200.xml",
+      "slice": "20250301-20250331",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4533484,
+      "sha256": "9844147cc0bd4e686bf8de6892bc08ab1bf6e1e558f3978d10bd65c197f89642"
+    },
+    {
+      "file": "efetch_20250301-20250331_0002_0000400.xml",
+      "slice": "20250301-20250331",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4669145,
+      "sha256": "65f85f9021d8365c8fab279f73d1f909f5695b3579e182f1f3c9c18311654577"
+    },
+    {
+      "file": "efetch_20250301-20250331_0003_0000600.xml",
+      "slice": "20250301-20250331",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3405188,
+      "sha256": "e7038c2b0cae4e5bd48b447395dc17679652f5566734190e507d481101fa282b"
+    },
+    {
+      "file": "efetch_20250301-20250331_0004_0000800.xml",
+      "slice": "20250301-20250331",
+      "retstart": 800,
+      "retmax": 119,
+      "records": 119,
+      "bytes": 2275920,
+      "sha256": "3e75ca129f68b9ea4524249d2197992c0d6d5d281257548d1217bb51ca17cf44"
+    },
+    {
+      "file": "efetch_20250401-20250430_0000_0000000.xml",
+      "slice": "20250401-20250430",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4582268,
+      "sha256": "5c35d2de603bb7a9da0605053792f0a2862ddd73aea6abe77d473d747a3f5bad"
+    },
+    {
+      "file": "efetch_20250401-20250430_0001_0000200.xml",
+      "slice": "20250401-20250430",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4577272,
+      "sha256": "0f2e0e237329b44ab47aa794aca571cbde2c1bbbc57afcd03de0cdae63a6442e"
+    },
+    {
+      "file": "efetch_20250401-20250430_0002_0000400.xml",
+      "slice": "20250401-20250430",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4438167,
+      "sha256": "0a827b28ccacecaaeee86b417cc8743cfea1c6f8ce37a0dc9bf484400f61b9af"
+    },
+    {
+      "file": "efetch_20250401-20250430_0003_0000600.xml",
+      "slice": "20250401-20250430",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3634629,
+      "sha256": "945ee31704b7cd6a5aad4c116f9415ce6b130c8dc5d7e1c6762a26a0cf7da7da"
+    },
+    {
+      "file": "efetch_20250401-20250430_0004_0000800.xml",
+      "slice": "20250401-20250430",
+      "retstart": 800,
+      "retmax": 132,
+      "records": 132,
+      "bytes": 2352010,
+      "sha256": "7120930b04fc5ea03577534e75827c92c22b16b3cd9dba4fdabcf8fb0991b0b0"
+    },
+    {
+      "file": "efetch_20250501-20250531_0000_0000000.xml",
+      "slice": "20250501-20250531",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4385376,
+      "sha256": "6b9a6ed47270f9d8432d4f88f6bb6202bba9a82b9438a84e0afeaa8fe820effb"
+    },
+    {
+      "file": "efetch_20250501-20250531_0001_0000200.xml",
+      "slice": "20250501-20250531",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4774312,
+      "sha256": "8fbc5400090e7d59b588018798708f7f17078b5fb9c6c7d672b1445a2afc3f44"
+    },
+    {
+      "file": "efetch_20250501-20250531_0002_0000400.xml",
+      "slice": "20250501-20250531",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4161700,
+      "sha256": "ec69cc85c4928e61106175c26a716a2332d91274bf5325b576b5b80fb3bc992b"
+    },
+    {
+      "file": "efetch_20250501-20250531_0003_0000600.xml",
+      "slice": "20250501-20250531",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4242420,
+      "sha256": "858191400b40f9ff80f659a49c53476c73678ac0ffd06173cdc36f96777285d0"
+    },
+    {
+      "file": "efetch_20250501-20250531_0004_0000800.xml",
+      "slice": "20250501-20250531",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3383733,
+      "sha256": "d0f080c5a03f5de21c2c37d46291c16b1845d9d772d7581ada710aee31320e5e"
+    },
+    {
+      "file": "efetch_20250501-20250531_0005_0001000.xml",
+      "slice": "20250501-20250531",
+      "retstart": 1000,
+      "retmax": 25,
+      "records": 25,
+      "bytes": 409137,
+      "sha256": "441d11b4e2ef6dcb61b54a244cf1490c3c13da700672950ad165dee199f74e40"
+    },
+    {
+      "file": "efetch_20250601-20250630_0000_0000000.xml",
+      "slice": "20250601-20250630",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4281711,
+      "sha256": "075e0282ba97f79ac1664b3b64c11c8cb0dd0e24f9b0028b4b11d6ecf6527fbe"
+    },
+    {
+      "file": "efetch_20250601-20250630_0001_0000200.xml",
+      "slice": "20250601-20250630",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4469208,
+      "sha256": "09e89ad2f8e4e81022e9c4f3a8a62b9d609dbce17a9987edf0219e4af64a5dbd"
+    },
+    {
+      "file": "efetch_20250601-20250630_0002_0000400.xml",
+      "slice": "20250601-20250630",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4327161,
+      "sha256": "ada1bf276adf8167ac213e1f33af285d988d8118c50d43be01d5f942d076fadf"
+    },
+    {
+      "file": "efetch_20250601-20250630_0003_0000600.xml",
+      "slice": "20250601-20250630",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3294005,
+      "sha256": "1258f2fb7067d36b2ed73293d3a7805dd025a6286d51317c8c8bf83fd297a9c3"
+    },
+    {
+      "file": "efetch_20250601-20250630_0004_0000800.xml",
+      "slice": "20250601-20250630",
+      "retstart": 800,
+      "retmax": 113,
+      "records": 113,
+      "bytes": 2229696,
+      "sha256": "a1417ec64fbfd1fef71d82909fc2f27ea967b0d26cca74b7e7c02ffd0eb04398"
+    },
+    {
+      "file": "efetch_20250701-20250731_0000_0000000.xml",
+      "slice": "20250701-20250731",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3186065,
+      "sha256": "91058c7a87d9f1aa462736c4bfec5eb7b51f37fc533b40f4684a6c00577e40f0"
+    },
+    {
+      "file": "efetch_20250701-20250731_0001_0000200.xml",
+      "slice": "20250701-20250731",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4718272,
+      "sha256": "b026d56b240a82ffc4d3180f3997598403ef4b0c6003f5346e903dd7aef97762"
+    },
+    {
+      "file": "efetch_20250701-20250731_0002_0000400.xml",
+      "slice": "20250701-20250731",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4302472,
+      "sha256": "13e947c8200c7629069a5c7ca41b53819ac59d35d25366e44df86b68e11f2a6e"
+    },
+    {
+      "file": "efetch_20250701-20250731_0003_0000600.xml",
+      "slice": "20250701-20250731",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4413629,
+      "sha256": "28b2dc4342eac61f55f37ddb176a3877fe47e568638c3825f9879acfb7e7552c"
+    },
+    {
+      "file": "efetch_20250701-20250731_0004_0000800.xml",
+      "slice": "20250701-20250731",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4199615,
+      "sha256": "d0ca7ad08c1961c1904ceb07eb4d11f0a87c7803bf080422a8c72941807b5e27"
+    },
+    {
+      "file": "efetch_20250701-20250731_0005_0001000.xml",
+      "slice": "20250701-20250731",
+      "retstart": 1000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3280924,
+      "sha256": "4f9c554c1f977e57c8ba95f5d216775795df903b4d3a699140fefc0dc90180a8"
+    },
+    {
+      "file": "efetch_20250701-20250731_0006_0001200.xml",
+      "slice": "20250701-20250731",
+      "retstart": 1200,
+      "retmax": 23,
+      "records": 23,
+      "bytes": 486300,
+      "sha256": "c2bd4cf3b1832fd9901b796d6e1584a13f717fd2dbb50e28924d902cd2b3bee3"
+    },
+    {
+      "file": "efetch_20250801-20250831_0000_0000000.xml",
+      "slice": "20250801-20250831",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4668926,
+      "sha256": "2f67bd19cf629ae10b8ba7f2798c6d7b5e3ed0b3179d03cf0732a9c8d8ff3469"
+    },
+    {
+      "file": "efetch_20250801-20250831_0001_0000200.xml",
+      "slice": "20250801-20250831",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4620987,
+      "sha256": "e81b10f87f796f15e44992dd2095dd3634ebdba7ec61bce483e4f774b125c4d8"
+    },
+    {
+      "file": "efetch_20250801-20250831_0002_0000400.xml",
+      "slice": "20250801-20250831",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4349445,
+      "sha256": "8f76ec865159e1a8b3c37c69be0c02530164bd6d8ab3635ef34dc4031eb5e8c6"
+    },
+    {
+      "file": "efetch_20250801-20250831_0003_0000600.xml",
+      "slice": "20250801-20250831",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4173358,
+      "sha256": "f14b7755c8086168e9d83b66c0ce821d9269ffa154897390036b559849a4bb3d"
+    },
+    {
+      "file": "efetch_20250801-20250831_0004_0000800.xml",
+      "slice": "20250801-20250831",
+      "retstart": 800,
+      "retmax": 198,
+      "records": 198,
+      "bytes": 3472884,
+      "sha256": "aeaae5b912d892ab2f0b1801c93d95275a45c8c4bd306d3910a1bbe8f2809667"
+    },
+    {
+      "file": "efetch_20250901-20250930_0000_0000000.xml",
+      "slice": "20250901-20250930",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4623447,
+      "sha256": "9db1f47a828a0d7d07cfa63704398017429ab58b8670d78fe7be0a6a93bab1b7"
+    },
+    {
+      "file": "efetch_20250901-20250930_0001_0000200.xml",
+      "slice": "20250901-20250930",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4767688,
+      "sha256": "1a339950704d5940eb17171d26a43a549a4668416c91c308546c0498093c67d0"
+    },
+    {
+      "file": "efetch_20250901-20250930_0002_0000400.xml",
+      "slice": "20250901-20250930",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4717417,
+      "sha256": "a02a75390f6886a8970719e2cf471d5707375815d24821fcf9b96392f2b6b5f5"
+    },
+    {
+      "file": "efetch_20250901-20250930_0003_0000600.xml",
+      "slice": "20250901-20250930",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3807321,
+      "sha256": "1f0e060277c380178efd456161e5fe45e1ab11340ea6f3093326ae301e0f59f9"
+    },
+    {
+      "file": "efetch_20250901-20250930_0004_0000800.xml",
+      "slice": "20250901-20250930",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3005926,
+      "sha256": "91874b13388827c335b9be811fabc7f343c663bbc09c5e875ddd77c546c1ea0e"
+    },
+    {
+      "file": "efetch_20250901-20250930_0005_0001000.xml",
+      "slice": "20250901-20250930",
+      "retstart": 1000,
+      "retmax": 29,
+      "records": 29,
+      "bytes": 633898,
+      "sha256": "d38f1500b035357f8265ae762c848ab980b95dc1ddcc7c10684783b322342057"
+    },
+    {
+      "file": "efetch_20251001-20251031_0000_0000000.xml",
+      "slice": "20251001-20251031",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4827075,
+      "sha256": "0e76c53d698d3f1bb5f13f6e3e7234e8546e29e1bea2ad81167efefac2db18ea"
+    },
+    {
+      "file": "efetch_20251001-20251031_0001_0000200.xml",
+      "slice": "20251001-20251031",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 5229907,
+      "sha256": "9f298ca9485f9af1f4b8efd48e9f75e6d99ed2ab118ca020d70c5a3c8abd5cc2"
+    },
+    {
+      "file": "efetch_20251001-20251031_0002_0000400.xml",
+      "slice": "20251001-20251031",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4618025,
+      "sha256": "4323afe4f464dae45079193b02f5e4fad908fb9f6e6601a5d2e59392bc3f7471"
+    },
+    {
+      "file": "efetch_20251001-20251031_0003_0000600.xml",
+      "slice": "20251001-20251031",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4220678,
+      "sha256": "31a1b6b33c6e35ec1125d24e1b61097dd8fd89899c301ee39ccfe66a3062eb81"
+    },
+    {
+      "file": "efetch_20251001-20251031_0004_0000800.xml",
+      "slice": "20251001-20251031",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3392355,
+      "sha256": "07a58526e021efb7fc451061132e77bac2849d3c3c9ce022c2e58283c1ee2d28"
+    },
+    {
+      "file": "efetch_20251001-20251031_0005_0001000.xml",
+      "slice": "20251001-20251031",
+      "retstart": 1000,
+      "retmax": 103,
+      "records": 103,
+      "bytes": 2040695,
+      "sha256": "68cfab9d4de5aab98bbd7cb86fe0a16e30ba9a90d1f1e6d94dd52408f5c8ccb1"
+    },
+    {
+      "file": "efetch_20251101-20251130_0000_0000000.xml",
+      "slice": "20251101-20251130",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4765371,
+      "sha256": "b430be6e91d101b8512690b799a2d446c2a28cc57a0509d1562b077149c905d9"
+    },
+    {
+      "file": "efetch_20251101-20251130_0001_0000200.xml",
+      "slice": "20251101-20251130",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 5000593,
+      "sha256": "a48f7d25182389c775118258627e6c83518aa30409a33bed8e58f6dc1d89fcb8"
+    },
+    {
+      "file": "efetch_20251101-20251130_0002_0000400.xml",
+      "slice": "20251101-20251130",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4444817,
+      "sha256": "b72336477351cfc87adf9af08f7f3bc36da4c5fcfd75541d9a51a48631d39387"
+    },
+    {
+      "file": "efetch_20251101-20251130_0003_0000600.xml",
+      "slice": "20251101-20251130",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4258592,
+      "sha256": "a9b53eca683360b6d4f085503eb78280c6b94b297d492732d8652826382183d6"
+    },
+    {
+      "file": "efetch_20251101-20251130_0004_0000800.xml",
+      "slice": "20251101-20251130",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3369181,
+      "sha256": "3632fcb18df69d7b48d9cd6407a259ff49bff4a6e710ba2ef17cffeb70fbb8be"
+    },
+    {
+      "file": "efetch_20251101-20251130_0005_0001000.xml",
+      "slice": "20251101-20251130",
+      "retstart": 1000,
+      "retmax": 100,
+      "records": 100,
+      "bytes": 1956323,
+      "sha256": "41b189d2519a70a7d9f7d00bdb63941c984937d1ef35daffaf71784822cfe21a"
+    },
+    {
+      "file": "efetch_20251201-20251231_0000_0000000.xml",
+      "slice": "20251201-20251231",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 5268814,
+      "sha256": "517d20392e9529231c9dad0da135222381ad915e86b2233ed391d92622a94a9b"
+    },
+    {
+      "file": "efetch_20251201-20251231_0001_0000200.xml",
+      "slice": "20251201-20251231",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4871877,
+      "sha256": "2efd89d8ef5f22445fd0626644acb0158473a4c6b8481368ecc8948921614cb2"
+    },
+    {
+      "file": "efetch_20251201-20251231_0002_0000400.xml",
+      "slice": "20251201-20251231",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4476598,
+      "sha256": "3dd56f568792732221da112ed1d5c0305e1af9a322ae2ab68e74c42bf046023c"
+    },
+    {
+      "file": "efetch_20251201-20251231_0003_0000600.xml",
+      "slice": "20251201-20251231",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4047705,
+      "sha256": "5ccbe91c8048774a1624c2e7391c024bf2eccaad1f37feae65a56561202d60e8"
+    },
+    {
+      "file": "efetch_20251201-20251231_0004_0000800.xml",
+      "slice": "20251201-20251231",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3538967,
+      "sha256": "30419fec996de9c3039d0e826e9db9ba1096ed744b2906500a295e52727921cb"
+    },
+    {
+      "file": "efetch_20251201-20251231_0005_0001000.xml",
+      "slice": "20251201-20251231",
+      "retstart": 1000,
+      "retmax": 124,
+      "records": 124,
+      "bytes": 2730975,
+      "sha256": "1a75c5ba525c8a9b9d0cd256d16da221cbd8ed04517c5c5a937385f403d6d546"
+    },
+    {
+      "file": "efetch_20260101-20260901_0000_0000000.xml",
+      "slice": "20260101-20260901",
+      "retstart": 0,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4919728,
+      "sha256": "6fec630c48070b9d09bea38ea7e6d4b31f9d9389d4eff8f2e91e561a7a811c3b"
+    },
+    {
+      "file": "efetch_20260101-20260901_0001_0000200.xml",
+      "slice": "20260101-20260901",
+      "retstart": 200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4668839,
+      "sha256": "8d4b7d7af2f1acadb7ccce413dbd6ab730c0d9af7ff6afabb9815142cfb4db51"
+    },
+    {
+      "file": "efetch_20260101-20260901_0002_0000400.xml",
+      "slice": "20260101-20260901",
+      "retstart": 400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4516963,
+      "sha256": "6d0692cb33552ea289d62f0dc03b2fd77bb00627c79f47f0b4319874c5025075"
+    },
+    {
+      "file": "efetch_20260101-20260901_0003_0000600.xml",
+      "slice": "20260101-20260901",
+      "retstart": 600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4217657,
+      "sha256": "4675fdedb3fba000168bb8993aee4de0613d0c35305c5ee9275d3ae0f7b72921"
+    },
+    {
+      "file": "efetch_20260101-20260901_0004_0000800.xml",
+      "slice": "20260101-20260901",
+      "retstart": 800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4126167,
+      "sha256": "d5112ad70303b9fdf92b80c3d0f8e8cc19a342266f70023421e11e3aaf0fbac2"
+    },
+    {
+      "file": "efetch_20260101-20260901_0005_0001000.xml",
+      "slice": "20260101-20260901",
+      "retstart": 1000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4858584,
+      "sha256": "8626a75ef84615022bc0ddc42a3a79bb44b743c694f7af9b3de8be0664479c44"
+    },
+    {
+      "file": "efetch_20260101-20260901_0006_0001200.xml",
+      "slice": "20260101-20260901",
+      "retstart": 1200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4205487,
+      "sha256": "b5122b358fdbe12578368391d42228f3e8ff157ddb80dcb7ba5c3e90bc3fcb7a"
+    },
+    {
+      "file": "efetch_20260101-20260901_0007_0001400.xml",
+      "slice": "20260101-20260901",
+      "retstart": 1400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4455291,
+      "sha256": "bb2fefbf2ed0e10f05cc2bd9983c894e50b2504650051424697975ede04a8d85"
+    },
+    {
+      "file": "efetch_20260101-20260901_0008_0001600.xml",
+      "slice": "20260101-20260901",
+      "retstart": 1600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4220971,
+      "sha256": "c4c254dd242057c5bc593717e283d64d04c642a573fef5804ba4b1e69698a15f"
+    },
+    {
+      "file": "efetch_20260101-20260901_0009_0001800.xml",
+      "slice": "20260101-20260901",
+      "retstart": 1800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4997718,
+      "sha256": "a62701a6ac12ef7ff483a9944e640eb17e92f333c8fe9e97e60ffe21179f8483"
+    },
+    {
+      "file": "efetch_20260101-20260901_0010_0002000.xml",
+      "slice": "20260101-20260901",
+      "retstart": 2000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4541597,
+      "sha256": "1224dddfe04213b070255d4961bdfe5a12187d42cc3a442cc24278c9f1e370e4"
+    },
+    {
+      "file": "efetch_20260101-20260901_0011_0002200.xml",
+      "slice": "20260101-20260901",
+      "retstart": 2200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4943548,
+      "sha256": "7d125ffea576491d93c6716f999e6194aa6bb6e0be6d27ab8348673a2ce662c9"
+    },
+    {
+      "file": "efetch_20260101-20260901_0012_0002400.xml",
+      "slice": "20260101-20260901",
+      "retstart": 2400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4374162,
+      "sha256": "3eca14a1fd5e4e5241362389ea66996aed70049979ac13b268327ad5e8dfcde7"
+    },
+    {
+      "file": "efetch_20260101-20260901_0013_0002600.xml",
+      "slice": "20260101-20260901",
+      "retstart": 2600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4776425,
+      "sha256": "953b17037e03b74488c30d9abaeb54d56af724fe576be40c7d7e675fafdcd8f7"
+    },
+    {
+      "file": "efetch_20260101-20260901_0014_0002800.xml",
+      "slice": "20260101-20260901",
+      "retstart": 2800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4471194,
+      "sha256": "d484de05e2d655a8f6f883c262630429c7b061105acf9ed82dc7c6a8f635d45a"
+    },
+    {
+      "file": "efetch_20260101-20260901_0015_0003000.xml",
+      "slice": "20260101-20260901",
+      "retstart": 3000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4842175,
+      "sha256": "b109dbf2202a9c40c21478cb6ca5dffe97a77584b4737d58f5ae05d0d27cf314"
+    },
+    {
+      "file": "efetch_20260101-20260901_0016_0003200.xml",
+      "slice": "20260101-20260901",
+      "retstart": 3200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4541399,
+      "sha256": "f8e8b4e7ab0e6801f17d82b63b5912afd5ff83695952a623f9b78ec4f17659ab"
+    },
+    {
+      "file": "efetch_20260101-20260901_0017_0003400.xml",
+      "slice": "20260101-20260901",
+      "retstart": 3400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4990389,
+      "sha256": "39eb252cd8a6921d08ca4420e5b9e99e36cbd9db2f76249f18fa693b4bc3536a"
+    },
+    {
+      "file": "efetch_20260101-20260901_0018_0003600.xml",
+      "slice": "20260101-20260901",
+      "retstart": 3600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4369481,
+      "sha256": "226be32ca904327bb24b183834e03fafb10b38bb7e6916911f6dfa682113c8ee"
+    },
+    {
+      "file": "efetch_20260101-20260901_0019_0003800.xml",
+      "slice": "20260101-20260901",
+      "retstart": 3800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4745401,
+      "sha256": "97ba79b070115b25705c7b356ac6c9b6cc23807ceaf1a486215518678bb6f85c"
+    },
+    {
+      "file": "efetch_20260101-20260901_0020_0004000.xml",
+      "slice": "20260101-20260901",
+      "retstart": 4000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4671694,
+      "sha256": "104e0c15f2d64ba9f2061e525bb5eebe1adea0be16ffbee4ebc50ac721df2025"
+    },
+    {
+      "file": "efetch_20260101-20260901_0021_0004200.xml",
+      "slice": "20260101-20260901",
+      "retstart": 4200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4258129,
+      "sha256": "338c4de55d076b89ef99e0135ba5ede467b4ccc02efd19df39c571b9fe03172b"
+    },
+    {
+      "file": "efetch_20260101-20260901_0022_0004400.xml",
+      "slice": "20260101-20260901",
+      "retstart": 4400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 5366857,
+      "sha256": "54cd1eb1e9ba69df98f4b5c7b36b1b5345636f7fc3a979c7f32c6f44eeaf5c84"
+    },
+    {
+      "file": "efetch_20260101-20260901_0023_0004600.xml",
+      "slice": "20260101-20260901",
+      "retstart": 4600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4694121,
+      "sha256": "a34379ee09fab495e98456af10a75a9afc73162c8b2e07b6584a70650fccd769"
+    },
+    {
+      "file": "efetch_20260101-20260901_0024_0004800.xml",
+      "slice": "20260101-20260901",
+      "retstart": 4800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4674018,
+      "sha256": "c1be5a75a0ad899aa2d013affdb6eb3c971330c15e8bc1cbb23ebc0dd92878b6"
+    },
+    {
+      "file": "efetch_20260101-20260901_0025_0005000.xml",
+      "slice": "20260101-20260901",
+      "retstart": 5000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 5235166,
+      "sha256": "5c4efe5c77f6a9d5c42c11db75512a1ad73d48e58cc8ea4447e97835c9364cc0"
+    },
+    {
+      "file": "efetch_20260101-20260901_0026_0005200.xml",
+      "slice": "20260101-20260901",
+      "retstart": 5200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4583096,
+      "sha256": "55232feea4ff3045abd499497869a754937fc73ecf18c37a0d16a780386a5709"
+    },
+    {
+      "file": "efetch_20260101-20260901_0027_0005400.xml",
+      "slice": "20260101-20260901",
+      "retstart": 5400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4649279,
+      "sha256": "05caee8bc1aebad54011f630a1f091fa482e5f1e04bc3349dba48352203171dc"
+    },
+    {
+      "file": "efetch_20260101-20260901_0028_0005600.xml",
+      "slice": "20260101-20260901",
+      "retstart": 5600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4672425,
+      "sha256": "01eefbcfbb3913ea96fdf51be596388571aea691a2ae0310e72db353496b2202"
+    },
+    {
+      "file": "efetch_20260101-20260901_0029_0005800.xml",
+      "slice": "20260101-20260901",
+      "retstart": 5800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4953543,
+      "sha256": "e13fb1b721163d929fa718b3faf6237a101bfeadc603193a272ca83bf3fc1a97"
+    },
+    {
+      "file": "efetch_20260101-20260901_0030_0006000.xml",
+      "slice": "20260101-20260901",
+      "retstart": 6000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4767462,
+      "sha256": "95153bc2cfd9f292c75b24f90cca6ab6bd7e8cdb69554f30192411004493c615"
+    },
+    {
+      "file": "efetch_20260101-20260901_0031_0006200.xml",
+      "slice": "20260101-20260901",
+      "retstart": 6200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4554523,
+      "sha256": "873f58898831df94351e25363f72415bdedc04617d1ab0a48adbdd7be445672c"
+    },
+    {
+      "file": "efetch_20260101-20260901_0032_0006400.xml",
+      "slice": "20260101-20260901",
+      "retstart": 6400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4567761,
+      "sha256": "cc87f036f8f8134a9caf64f6d0b7c121efc7cfa8720528f5d47073573261245a"
+    },
+    {
+      "file": "efetch_20260101-20260901_0033_0006600.xml",
+      "slice": "20260101-20260901",
+      "retstart": 6600,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3698274,
+      "sha256": "9bc3fde69b739de269986721e18620eb2f601a1867aeecc1f9f2499e9f2afd1c"
+    },
+    {
+      "file": "efetch_20260101-20260901_0034_0006800.xml",
+      "slice": "20260101-20260901",
+      "retstart": 6800,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3489208,
+      "sha256": "c843e32aea0e6a61385739cbb91f75958c8f4672e61a78fd422e25c574037bc3"
+    },
+    {
+      "file": "efetch_20260101-20260901_0035_0007000.xml",
+      "slice": "20260101-20260901",
+      "retstart": 7000,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3893756,
+      "sha256": "93fe8982db6a21bc85f28b6cda643e89a468c24c6f359e3cef060735af9e3790"
+    },
+    {
+      "file": "efetch_20260101-20260901_0036_0007200.xml",
+      "slice": "20260101-20260901",
+      "retstart": 7200,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 3710036,
+      "sha256": "549f15033ca4ed7adda932e41b632991c74037a774e9005be762857e9ec0f268"
+    },
+    {
+      "file": "efetch_20260101-20260901_0037_0007400.xml",
+      "slice": "20260101-20260901",
+      "retstart": 7400,
+      "retmax": 200,
+      "records": 200,
+      "bytes": 4117397,
+      "sha256": "c958580cc649f8a2a3d159f5a2c814b752659198f60beda4cc4a0ee554b86664"
+    },
+    {
+      "file": "efetch_20260101-20260901_0038_0007600.xml",
+      "slice": "20260101-20260901",
+      "retstart": 7600,
+      "retmax": 86,
+      "records": 86,
+      "bytes": 1601732,
+      "sha256": "c6e9effad226b2676c75c6ab046fa6afedbbdb2b4c9b3a28533bdb33884ddc4e"
+    }
+  ],
+  "environment": {
+    "python": "3.13.2",
+    "platform": "macOS-26.3-arm64-arm-64bit-Mach-O",
+    "hostname": "Marijas-MacBook-Air.local"
+  },
+  "cli_args": [
+    "--config",
+    "config/corpus.yaml"
+  ]
+}

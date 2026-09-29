@@ -14,7 +14,7 @@ foundation_models,all,2022,3,0
 foundation_models,all,2023,42,0
 foundation_models,all,2024,162,0
 foundation_models,all,2025,452,0
-foundation_models,all,2026,515,1
+foundation_models,all,2026,554,1
 foundation_models,radiology,2015,0,0
 foundation_models,radiology,2016,1,0
 foundation_models,radiology,2017,1,0
@@ -26,7 +26,7 @@ foundation_models,radiology,2022,1,0
 foundation_models,radiology,2023,21,0
 foundation_models,radiology,2024,75,0
 foundation_models,radiology,2025,201,0
-foundation_models,radiology,2026,204,1
+foundation_models,radiology,2026,219,1
 foundation_models,pathology,2015,0,0
 foundation_models,pathology,2016,0,0
 foundation_models,pathology,2017,0,0
@@ -38,7 +38,7 @@ foundation_models,pathology,2022,1,0
 foundation_models,pathology,2023,6,0
 foundation_models,pathology,2024,42,0
 foundation_models,pathology,2025,161,0
-foundation_models,pathology,2026,202,1
+foundation_models,pathology,2026,215,1
 foundation_models,both,2015,0,0
 foundation_models,both,2016,0,0
 foundation_models,both,2017,0,0
@@ -50,7 +50,7 @@ foundation_models,both,2022,0,0
 foundation_models,both,2023,1,0
 foundation_models,both,2024,4,0
 foundation_models,both,2025,13,0
-foundation_models,both,2026,30,1
+foundation_models,both,2026,32,1
 foundation_models,none,2015,0,0
 foundation_models,none,2016,0,0
 foundation_models,none,2017,0,0
@@ -62,7 +62,7 @@ foundation_models,none,2022,1,0
 foundation_models,none,2023,14,0
 foundation_models,none,2024,41,0
 foundation_models,none,2025,77,0
-foundation_models,none,2026,79,1
+foundation_models,none,2026,88,1
 multimodal_integration,all,2015,9,0
 multimodal_integration,all,2016,22,0
 multimodal_integration,all,2017,34,0
@@ -74,7 +74,7 @@ multimodal_integration,all,2022,346,0
 multimodal_integration,all,2023,431,0
 multimodal_integration,all,2024,702,0
 multimodal_integration,all,2025,1511,0
-multimodal_integration,all,2026,1382,1
+multimodal_integration,all,2026,1454,1
 multimodal_integration,radiology,2015,6,0
 multimodal_integration,radiology,2016,15,0
 multimodal_integration,radiology,2017,21,0
@@ -86,7 +86,7 @@ multimodal_integration,radiology,2022,201,0
 multimodal_integration,radiology,2023,257,0
 multimodal_integration,radiology,2024,405,0
 multimodal_integration,radiology,2025,847,0
-multimodal_integration,radiology,2026,704,1
+multimodal_integration,radiology,2026,737,1
 multimodal_integration,pathology,2015,0,0
 multimodal_integration,pathology,2016,1,0
 multimodal_integration,pathology,2017,2,0
@@ -98,7 +98,7 @@ multimodal_integration,pathology,2022,74,0
 multimodal_integration,pathology,2023,84,0
 multimodal_integration,pathology,2024,147,0
 multimodal_integration,pathology,2025,337,0
-multimodal_integration,pathology,2026,365,1
+multimodal_integration,pathology,2026,384,1
 multimodal_integration,both,2015,0,0
 multimodal_integration,both,2016,3,0
 multimodal_integration,both,2017,2,0
@@ -110,7 +110,7 @@ multimodal_integration,both,2022,20,0
 multimodal_integration,both,2023,40,0
 multimodal_integration,both,2024,67,0
 multimodal_integration,both,2025,156,0
-multimodal_integration,both,2026,149,1
+multimodal_integration,both,2026,161,1
 multimodal_integration,none,2015,3,0
 multimodal_integration,none,2016,3,0
 multimodal_integration,none,2017,9,0
@@ -122,7 +122,7 @@ multimodal_integration,none,2022,51,0
 multimodal_integration,none,2023,50,0
 multimodal_integration,none,2024,83,0
 multimodal_integration,none,2025,171,0
-multimodal_integration,none,2026,164,1
+multimodal_integration,none,2026,172,1
 digital_twins,all,2015,0,0
 digital_twins,all,2016,0,0
 digital_twins,all,2017,0,0
@@ -134,7 +134,7 @@ digital_twins,all,2022,3,0
 digital_twins,all,2023,0,0
 digital_twins,all,2024,4,0
 digital_twins,all,2025,12,0
-digital_twins,all,2026,31,1
+digital_twins,all,2026,33,1
 digital_twins,radiology,2015,0,0
 digital_twins,radiology,2016,0,0
 digital_twins,radiology,2017,0,0
@@ -158,7 +158,7 @@ digital_twins,pathology,2022,0,0
 digital_twins,pathology,2023,0,0
 digital_twins,pathology,2024,2,0
 digital_twins,pathology,2025,0,0
-digital_twins,pathology,2026,5,1
+digital_twins,pathology,2026,7,1
 digital_twins,both,2015,0,0
 digital_twins,both,2016,0,0
 digital_twins,both,2017,0,0
@@ -206,7 +206,7 @@ clinical_fda,radiology,2022,6,0
 clinical_fda,radiology,2023,5,0
 clinical_fda,radiology,2024,13,0
 clinical_fda,radiology,2025,8,0
-clinical_fda,radiology,2026,19,1
+clinical_fda,radiology,2026,20,1
 clinical_fda,pathology,2015,0,0
 clinical_fda,pathology,2016,0,0
 clinical_fda,pathology,2017,0,0
@@ -218,7 +218,7 @@ clinical_fda,pathology,2022,1,0
 clinical_fda,pathology,2023,1,0
 clinical_fda,pathology,2024,1,0
 clinical_fda,pathology,2025,4,0
-clinical_fda,pathology,2026,6,1
+clinical_fda,pathology,2026,5,1
 clinical_fda,both,2015,0,0
 clinical_fda,both,2016,0,0
 clinical_fda,both,2017,0,0
@@ -314,7 +314,7 @@ agentic_ai,all,2022,2,0
 agentic_ai,all,2023,3,0
 agentic_ai,all,2024,1,0
 agentic_ai,all,2025,11,0
-agentic_ai,all,2026,15,1
+agentic_ai,all,2026,18,1
 agentic_ai,radiology,2015,0,0
 agentic_ai,radiology,2016,0,0
 agentic_ai,radiology,2017,0,0
@@ -338,7 +338,7 @@ agentic_ai,pathology,2022,0,0
 agentic_ai,pathology,2023,1,0
 agentic_ai,pathology,2024,0,0
 agentic_ai,pathology,2025,7,0
-agentic_ai,pathology,2026,8,1
+agentic_ai,pathology,2026,9,1
 agentic_ai,both,2015,0,0
 agentic_ai,both,2016,0,0
 agentic_ai,both,2017,0,0
@@ -362,4 +362,4 @@ agentic_ai,none,2022,1,0
 agentic_ai,none,2023,0,0
 agentic_ai,none,2024,0,0
 agentic_ai,none,2025,1,0
-agentic_ai,none,2026,3,1
+agentic_ai,none,2026,5,1

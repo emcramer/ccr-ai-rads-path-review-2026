@@ -220,7 +220,7 @@ MODALITY_ORDER: Final[tuple[str, ...]] = (
 
 #: Display label for each modality key, used on the shared row axis.
 MODALITY_LABELS: Final[dict[str, str]] = {
-    "he_histology": "H&E / Histology",
+    "he_histology": "H&E Histology",
     "ihc": "IHC",
     "spatial_proteomics": "Spatial Proteomics",
     "spatial_transcriptomics": "Spatial Transcriptomics",
@@ -336,6 +336,17 @@ MODALITY_COLORS: Final[dict[str, str]] = {
     "clinical_data": CLINICAL_TEXT,
     "other": STRUCTURAL,
 }
+
+#: Legend entries for Panel A's dot colours, in matrix row order: one per hue in
+#: :data:`MODALITY_COLORS`, named as in the style guide's modality table. Report
+#: rows are green because they are clinical text, which is why "Clinical text /
+#: EHR" covers Pathology Report and Radiology Report as well as Clinical / EHR Data.
+MODALITY_GROUPS: Final[tuple[tuple[str, str], ...]] = (
+    ("Digital pathology", DIGITAL_PATHOLOGY),
+    ("Radiology imaging", RADIOLOGY_IMAGING),
+    ("Clinical text / EHR", CLINICAL_TEXT),
+    ("Molecular / omics", MOLECULAR),
+)
 
 #: Colour per clinical domain. This is the whole of Panel B's colour scheme:
 #: colour marks the **domain** a theme's papers were pursued in, which is

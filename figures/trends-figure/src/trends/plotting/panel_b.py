@@ -83,10 +83,13 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 
+import matplotlib
 import numpy as np
 import pandas as pd
 from matplotlib.axes import Axes
 from matplotlib.figure import Figure
+from matplotlib.patches import FancyArrowPatch
+from matplotlib.path import Path
 
 from . import style
 
@@ -172,10 +175,29 @@ SHOW_GAP_NOTES: bool = False
 #: no longer what the warning is about. Unused while SHOW_GAP_NOTES is False.
 NOISE_NOTE_MAX_PEAK: float = 50.0
 
-#: Tint of the band on the upper plot that marks the lower plot's whole range.
-#: Deliberately not the neutral grey of the partial-year band, which it overlaps.
-RANGE_BAND: str = "#E7EEF4"
-RANGE_RULE: str = "#7B8B99"
+#: Tint of the band on the upper plot that marks the lower plot's whole range,
+#: and the colour of its dashed rules and of the bracket arrow joining the plots.
+#:
+#: A DELIBERATE EXCEPTION to the style guide's rule that hue is only for data
+#: types. Green is the project's "Clinical text / EHR" hue, and a structural
+#: element in it could be read as clinical-text data. The author chose it anyway
+#: on 2026-09-29: the earlier slate blue (#E7EEF4 band, #7B8B99 rule, #4F6F8F
+#: arrow) had too little contrast against the grey partial-year band and the
+#: grey series, and Panel B draws no clinical-text series for it to be confused
+#: with. The band is the author's pale mint; the rules and arrow are a deeper
+#: green, because the mint vanishes as a thin stroke on white. Do not "correct"
+#: this back without reading the 2026-09-29 entry in docs/DECISIONS.md.
+RANGE_BAND: str = "#9FFCDF"
+RANGE_RULE: str = "#47624F"
+RANGE_ARROW: str = "#47624F"
+
+#: How far left of the plots' y axis the bracket's upright runs, in points.
+#: Measured: the widest tick label in the bracket's height ("0" on the upper
+#: plot) starts 8.5 pt left of the axis, so 15 pt clears it by about 6 pt.
+_BRACKET_OFFSET_PT: float = 15.0
+
+#: How far inside the lower plot's y axis the arrowhead's tip lands, in points.
+_BRACKET_HEAD_INSET_PT: float = 6.0
 
 #: Colour of the small grey notes ("2026 partial", and the gap notes when they
 #: are switched back on). The style guide's subtle neutral.
@@ -520,6 +542,69 @@ def _mark_lower_range(ax: Axes, lower_top: float) -> None:
     ax.axhline(lower_top, color=RANGE_RULE, linewidth=0.7, linestyle=(0, (2.6, 1.6)), zorder=1)
 
 
+def _point_band_to_lower_plot(
+    figure: Figure, upper_ax: Axes, lower_ax: Axes, lower_top: float
+) -> None:
+    """Draw a ``[``-shaped arrow in the left margin, from the band to the lower plot.
+
+    The band and the lower plot are the same range of papers at two scales, and
+    the reader has to see that. Author's request, 2026-09-29, after a straight
+    arrow down the middle and a tint carried into the lower plot were both tried.
+
+    Both arms sit at the same value, ``lower_top``: the top arm leaves the upper
+    plot where the band's dashed rule meets the axis, and the bottom arm points
+    into the top of the lower plot, its head just inside the axis. So the bracket says "this line is that line".
+    The arms cannot sit at mid-height: the upper plot's "0" tick label covers the
+    band's middle, and the lower plot's axis title covers its middle.
+
+    The arrow is in the band's own slate blue, not the radiology hue, so it
+    reads as belonging to the band rather than to a series. Logged in
+    ``docs/DECISIONS.md``.
+    """
+    # The same dashed rule the band carries, at the same value, where the arrow
+    # lands: the two rules are one line drawn at two scales. It sits on the axes'
+    # top edge, so it is not clipped there, or half its width would vanish.
+    lower_ax.axhline(
+        lower_top, color=RANGE_RULE, linewidth=0.7, linestyle=(0, (2.6, 1.6)),
+        zorder=1, clip_on=False,
+    )
+    to_figure = figure.transFigure.inverted()
+    x_spine = upper_ax.get_xlim()[0]
+    top = to_figure.transform(upper_ax.transData.transform((x_spine, lower_top)))
+    bottom = to_figure.transform(lower_ax.transData.transform((x_spine, lower_top)))
+    points = 1.0 / 72.0 / figure.get_figwidth()
+    x_bracket = top[0] - _BRACKET_OFFSET_PT * points
+    # The head sits just inside the lower plot, not on its axis: on the axis its
+    # lower edge would touch the top tick label. The plot's top-left corner is
+    # empty on this data, since every lower series starts near zero.
+    x_head = bottom[0] + _BRACKET_HEAD_INSET_PT * points
+    path = Path(
+        [
+            (top[0], top[1]),
+            (x_bracket, top[1]),
+            (x_bracket, bottom[1]),
+            (x_head, bottom[1]),
+        ]
+    )
+    figure.add_artist(
+        FancyArrowPatch(
+            path=path,
+            transform=figure.transFigure,
+            arrowstyle="-|>,head_length=0.5,head_width=0.25",
+            mutation_scale=10,
+            color=RANGE_ARROW,
+            # The axis-line weight, so the bracket reads as structure, like the
+            # spines, rather than as one more series. Author's request, 2026-09-29.
+            linewidth=matplotlib.rcParams["axes.linewidth"],
+            joinstyle="miter",
+            capstyle="butt",
+            shrinkA=0,
+            shrinkB=0,
+            zorder=6,
+        )
+    )
+
+
 # The pathology zero run used to be named on the figure, with a curved leader
 # dropped onto the zero line: "Pathology: 0 papers in every year from 2015 to
 # 2021". It was removed on 2026-09-02. It is an explanation, not a label of an
@@ -650,6 +735,7 @@ def draw(
         ratio = (upper_top - upper_bottom) / (lower_top - lower_bottom)
         if ratio >= MIN_RATIO_FOR_BAND:
             _mark_lower_range(upper_ax, lower_top)
+            _point_band_to_lower_plot(figure, upper_ax, lower_ax, lower_top)
         _draw_gap_notes(figure, left, bottom + lower_h + 0.055 * gap, ratio, lower_peak)
         annotate_on = upper_ax
     else:
