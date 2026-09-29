@@ -121,6 +121,9 @@ REMAINDER_LABEL: Final[str] = "all other combinations"
 #: widths. The remainder is not a combination and must not read as one more.
 _REMAINDER_GAP: Final[float] = 0.6
 
+#: Depth of the strip :func:`draw` reserves for the dot-colour key, in inches.
+_KEY_STRIP_IN: Final[float] = 0.20
+
 #: Horizontal space between theme blocks, in inches.
 BLOCK_GAP_IN: Final[float] = 0.16
 
@@ -176,6 +179,22 @@ class TailSummary:
         return self.remainder_sets > 0
 
 
+#: Modality rows Panel A's matrix draws, in figure order: every modality except
+#: ``other``. Author's ruling, 2026-09-29. Once papers with no determined modality
+#: left Panel A, no drawn column used the Other row, and an empty row read as a
+#: finding. A combination containing ``other`` is never drawn as its own column;
+#: it joins the remainder column, so its papers are still counted in the bars.
+#: See the 2026-09-29 entries in ``docs/DECISIONS.md``.
+MATRIX_ROWS: Final[tuple[str, ...]] = tuple(
+    key for key in style.MODALITY_ORDER if key != "other"
+)
+
+
+def _drawable(modality_set: str) -> bool:
+    """Whether every modality in a combination has a row in the matrix."""
+    return all(key in MATRIX_ROWS for key in modality_set.split("+"))
+
+
 #: A combination must hold at least this many papers to be drawn as its own
 #: column. Below it, the combination joins the remainder.
 #:
@@ -208,6 +227,9 @@ def _block_frame(combinations: pd.DataFrame, theme: str, top_n: int) -> pd.DataF
     ordered = subset.sort_values(
         ["n_papers", "n_modalities", "modality_set"], ascending=[False, False, True]
     )
+    # A combination with a modality the matrix has no row for would draw as a
+    # different, smaller combination; it goes to the remainder instead.
+    ordered = ordered.loc[ordered["modality_set"].astype(str).map(_drawable)]
     qualifying = ordered.loc[ordered["n_papers"] >= MIN_PAPERS_PER_COLUMN]
     # The minimum binds only where combinations compete for the columns. In a
     # theme too small to fill the block with qualifying combinations, enforcing it
@@ -386,6 +408,7 @@ def draw(
     rect: tuple[float, float, float, float],
     top_n: int = DEFAULT_TOP_N,
     scale: str = DEFAULT_BAR_SCALE,
+    modality_key: bool = False,
 ) -> list[TailSummary]:
     """Draw Panel A into ``rect`` and return how each block divides.
 
@@ -399,6 +422,9 @@ def draw(
         scale: ``"count"`` to draw papers on one shared axis, or ``"share"`` to
             draw each combination as a percentage of its own theme. See the
             module docstring.
+        modality_key: Draw a one-line key to the dot colours across the top of
+            ``rect``, above the theme titles. The strip it takes comes out of the
+            matrix and bars, so the rest of the panel keeps its place.
 
     Returns:
         One :class:`TailSummary` per theme, in figure block order.
@@ -410,6 +436,12 @@ def draw(
         raise ValueError(f"scale must be one of {BAR_SCALES}, got {scale!r}")
     left, bottom, width, height = rect
     fig_w, fig_h = figure.get_figwidth(), figure.get_figheight()
+    # The key strip is a fixed depth in inches, not a share of the panel, so it
+    # reads the same whatever the panel's height. Added 2026-09-29 at the
+    # author's request; it is paid for by the Other row the matrix no longer
+    # draws, and the row pitch stays above what it was at fifteen rows.
+    key_h = (_KEY_STRIP_IN / fig_h) if modality_key else 0.0
+    height = height - key_h
 
     # Vertical budget inside the panel, as fractions of the panel's own height.
     # The matrix takes the larger share, and the title reserve is only as deep as
@@ -444,7 +476,7 @@ def draw(
     gap_w = BLOCK_GAP_IN / fig_w
     column_w = column_width_in(width, fig_w, sum(slots)) / fig_w
 
-    n_rows = len(style.MODALITY_ORDER)
+    n_rows = len(MATRIX_ROWS)
     row_h_in = (matrix_h * fig_h) / n_rows
     column_w_in = column_w * fig_w
     dot_area = _dot_size(column_w_in, row_h_in)
@@ -501,6 +533,9 @@ def draw(
     y_top = peak / (1.0 - headroom) if peak else 1.0
     if scale == "share":
         y_top = min(1.0, y_top)
+
+    if modality_key:
+        _draw_modality_key(figure, left, bottom + height, width, key_h, dot_area)
 
     x_cursor = left
     for index, (theme, frame) in enumerate(blocks):
@@ -577,6 +612,44 @@ def draw(
     return summaries
 
 
+def _draw_modality_key(
+    figure: Figure,
+    left: float,
+    strip_bottom: float,
+    width: float,
+    strip_h: float,
+    dot_area: float,
+) -> None:
+    """Draw the dot-colour key in one horizontal line, centred over the blocks.
+
+    The dots are the matrix's own dots, at the matrix's own size, so the key
+    reads as a sample of the grid rather than as a separate legend style. No
+    frame: the guide keeps boxes for things that are containers.
+    """
+    handles = [
+        Line2D(
+            [], [], linestyle="none", marker="o", markersize=dot_area ** 0.5,
+            markerfacecolor=color, markeredgewidth=0, label=label,
+        )
+        for label, color in style.MODALITY_GROUPS
+    ]
+    figure.legend(
+        handles=handles,
+        loc="center",
+        bbox_to_anchor=(left + width / 2, strip_bottom + strip_h / 2),
+        bbox_transform=figure.transFigure,
+        ncol=len(handles),
+        frameon=False,
+        fontsize=style.FS_TICK,
+        labelcolor=style.SUBTLE,
+        handletextpad=0.3,
+        columnspacing=1.6,
+        borderaxespad=0.0,
+        borderpad=0.0,
+        handlelength=0.8,
+    )
+
+
 def _draw_matrix(
     ax,
     frame: pd.DataFrame,
@@ -593,8 +666,8 @@ def _draw_matrix(
     label down the space where the dots would be. A dot there would say the
     remainder is one more combination, which is exactly what it is not.
     """
-    n_rows = len(style.MODALITY_ORDER)
-    row_of = {key: index for index, key in enumerate(style.MODALITY_ORDER)}
+    n_rows = len(MATRIX_ROWS)
+    row_of = {key: index for index, key in enumerate(MATRIX_ROWS)}
 
     ax.set_xlim(-0.5, slots - 0.5)
     ax.set_ylim(n_rows - 0.5, -0.5)
@@ -625,7 +698,7 @@ def _draw_matrix(
             [x] * len(rows),
             rows,
             s=dot_area,
-            color=[style.modality_color(style.MODALITY_ORDER[row]) for row in rows],
+            color=[style.modality_color(MATRIX_ROWS[row]) for row in rows],
             linewidths=0,
             zorder=3,
         )
@@ -662,7 +735,7 @@ def _draw_matrix(
     if show_row_labels:
         ax.set_yticks(range(n_rows))
         ax.set_yticklabels(
-            [style.modality_label(key) for key in style.MODALITY_ORDER],
+            [style.modality_label(key) for key in MATRIX_ROWS],
             fontsize=style.FS_TICK,
             color=style.SUBTLE,
         )

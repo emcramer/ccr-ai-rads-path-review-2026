@@ -1142,7 +1142,7 @@ def test_panel_a_counts_primary_research_only(result):
     counts = aggregate.build_combination_counts(result.labels)
     everything = aggregate.build_combination_counts(result.labels, primary_only=False)
     per_theme = counts.groupby("theme").n_papers.sum()
-    primary = aggregate.primary_research(result.labels)
+    primary = aggregate.modality_determined(aggregate.primary_research(result.labels))
     for theme in aggregate.THEME_KEYS:
         expected = int(primary[f"theme_{theme}"].sum()) - result.panel_a_shortfalls.get(
             theme, 0
@@ -1231,10 +1231,23 @@ def test_every_excluded_record_is_named_counted_and_scoped(result):
 
     # Panel A exclusions are still in the corpus, and are exactly the non-primary rows.
     panel_a = ledger.loc[ledger["applies_to"] == "panel_a"]
-    assert set(panel_a["reason"]) == {"secondary_publication_type"}
-    assert set(panel_a["pmid"]) == set(
+    secondary = panel_a.loc[panel_a["reason"] == "secondary_publication_type"]
+    assert set(secondary["pmid"]) == set(
         result.labels.loc[result.labels[aggregate.PRIMARY_RESEARCH] == 0, "pmid"]
     )
+
+    # Primary research whose `other` came from the fallback alone leaves Panel A
+    # too, under its own reason.
+    undetermined = panel_a.loc[panel_a["reason"] == "modality_not_determined"]
+    labels = result.labels
+    assert set(undetermined["pmid"]) == set(
+        labels.loc[
+            (labels[aggregate.MODALITY_DETERMINED] == 0)
+            & (labels[aggregate.PRIMARY_RESEARCH] == 1),
+            "pmid",
+        ]
+    )
+    assert set(panel_a["reason"]) == {"secondary_publication_type", "modality_not_determined"}
 
     # A combination shortfall is a third kind of removal: from one Panel A block
     # only. The paper stays in the corpus, keeps its label, and counts in Panel B.

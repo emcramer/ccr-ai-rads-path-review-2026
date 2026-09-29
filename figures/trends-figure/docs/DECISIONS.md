@@ -1227,3 +1227,108 @@ the tests depend on, so a future regeneration cannot quietly drop them.
 **The lesson worth keeping:** a fixture named "measured" that is measured in one half and a toy
 in the other is worse than an obviously fake fixture, because it buys the confidence of real
 data without the evidence.
+
+## 2026-09-29 — Papers with no determined modality leave Panel A
+
+**The problem, raised by the author.** "Other" was one of the tallest columns in several Panel
+A blocks: 148 of Foundation Models' 1,021 papers (14%), 4 of Digital Twins' 20, 10 of Clinical
+Applications' 69. Most of `other` corpus-wide is not an unusual data type but the fallback —
+5,044 papers where no named modality and no `other` pattern matched. A scan of that group found
+67% say "imaging", "scan" or "images" without naming a kind. Drawing them as "Other" told the
+reader these papers used some exotic modality, which they do not.
+
+**Decision (author, 2026-09-29).** Drop them from Panel A. `paper_labels.csv` gains a
+`modality_determined` flag, 0 when `other` came from the fallback alone, and
+`combination_counts.csv` builds from the rows where it is 1. This is a third Panel A view
+condition beside primary research and the combination minimum, applied in the same place
+(`aggregate.build_combination_counts`). The labels are unchanged: the papers keep `mod_other`,
+stay in the corpus, and still count in Panel B. They carry domain `none`, so no divided Panel
+B line moves. Each is recorded in `exclusions.csv` as `modality_not_determined`, `panel_a`.
+
+A fallback-only paper has one modality, so in Multimodal Integration it also falls below the
+two-modality minimum. It is counted under `modality_not_determined` only, so the two Panel A
+reasons do not overlap.
+
+**What stays.** `other` papers found by a pattern (SPECT, proteomics, liquid biopsy and the
+like) are still drawn as "Other"; that route validated at 91%.
+
+## 2026-09-29 — Other is no longer a row of Panel A
+
+**Decision (author).** With the undetermined papers gone, no drawn column in any of the four
+blocks used the Other row, and an empty row suggested a finding that is not there. The matrix
+now draws fourteen rows (`panel_a.MATRIX_ROWS`).
+
+**The guard that makes this safe.** Removing the row alone would draw a set like
+`ct+other` as a CT-only column, identical to the real CT-only column beside it. So a
+combination containing `other` is never drawn as its own column; `_block_frame` sends it to the
+remainder column, where its papers still count toward the bars and the theme total. At the time
+of the change this moved nothing: 14 Foundation Models, 179 Multimodal Integration and 1
+Clinical Applications papers carry `other`, all already in the remainder. Labels and
+`combination_counts.csv` are unchanged; this is a drawing decision only.
+
+## 2026-09-29 — A one-line key to Panel A's dot colours
+
+**Decision (author).** Panel A gains a key to its four dot hues, in one horizontal line across
+the top of the panel, level with the panel letter and above the theme titles. The names are the
+style guide's own: Digital pathology, Radiology imaging, Clinical text / EHR, Molecular / omics.
+The key's dots are the matrix's own, same size and hue (`style.MODALITY_GROUPS`,
+`panel_a._draw_modality_key`).
+
+**Cost.** A fixed 0.20 in strip, taken from the matrix and bars. The Other row's removal paid
+for it: the row pitch is 13.6 pt at fourteen rows with the key, against 13.2 pt at fifteen
+without. `panel_a.draw` takes it as `modality_key=True`; the default is off, so the combined
+figure in `../trends-clinops-combo` is unchanged until it asks for the key.
+
+**Greyscale.** The four hues are not distinguishable from each other in greyscale, in the key
+or the matrix. That is acceptable only because colour is not the sole cue: every row is named.
+
+## 2026-09-29 — Panel B: an arrow from the band to the lower plot
+
+**Problem (author).** It was not clear that the lower plot is an enlargement of the shaded band
+at the foot of the upper plot.
+
+**Decision.** A `[`-shaped arrow in the left margin (`panel_b._point_band_to_lower_plot`).
+Its top arm leaves the upper plot where the band's dashed rule meets the y axis; it drops just
+left of the tick labels; its bottom arm points into the top of the lower plot, head 6 pt inside
+the axis. Both arms sit at the same value, the top of the lower plot's range, so the bracket
+says "this line is that line". The ground stays white.
+
+**Why the arms are not at mid-height.** Measured: the upper plot's "0" tick label covers the
+band's middle, and the lower plot's axis title covers the lower plot's middle. At the top edges
+both arms clear every label, and a test checks each segment against every drawn label. The
+head is inset because on the axis its lower edge came within 1 pt of the "35" label.
+
+**Tried first:** a straight arrow down the middle of the plots, from the band's middle to the
+lower plot's middle. It worked but the author preferred the bracket on the left.
+
+**Tried first and rejected by the author:** carrying the band's tint through the gap and behind
+the whole lower plot. It read as one region, but it changed the plot background, which the
+author did not want and the style guide does not allow.
+
+**Why not zoom connectors.** The two plots share their x range exactly, so connectors would run
+straight down the axis edges and disappear into the spines.
+
+**Colour.** The author asked for a blue arrow. It is `RANGE_ARROW` `#4F6F8F`, a deeper shade of
+the band's own slate blue, not the radiology hue `#0072B2`: in this figure that blue means
+radiology, and an arrow in it would claim a domain. A test keeps the arrow out of the modality
+palette.
+
+## 2026-09-29 — Panel B's band, rules and bracket turn green, by deliberate exception
+
+**Problem (author).** The slate-blue band (`#E7EEF4`), rule and arrow had too little contrast
+against the grey partial-year band and the grey series.
+
+**Decision (author, choosing between rendered options).** Band `#9FFCDF` (the author's pale
+mint); dashed rules and bracket arrow `#00805D`, a deeper green, because the mint vanishes as a
+thin stroke on white. The band's dashed rule is now also drawn along the top of the lower plot,
+where the arrow lands, at the same value: one line at two scales.
+
+**This breaks the style guide's colour rule, knowingly.** Hue is reserved for data types, and
+green is Clinical text / EHR, which Panel A's key now names on the same page. The author
+accepted that on seeing it beside a neutral option (ink arrow and rules, stronger blue-grey
+band), which stayed within the rules but improved contrast only modestly. What limits the
+damage: Panel B draws no clinical-text series, and `#00805D` is not the modality hue exactly
+(`#009E73`), which a test checks. If the figure set later needs this rule kept strictly, the
+neutral option is the fallback.
+
+**Revised the same day (author).** Rules and arrow `#00805D` → `#47624F`, a muted grey-green.

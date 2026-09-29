@@ -44,6 +44,7 @@ def make_labels(rows: list[dict]) -> pd.DataFrame:
             record[f"mod_{key}"] = int(key in modalities)
         record["domain"] = classify.derive_domain(modalities)
         record[aggregate.PRIMARY_RESEARCH] = int(row.get("primary", 1))
+        record[aggregate.MODALITY_DETERMINED] = int(row.get("determined", 1))
         built.append(record)
     return pd.DataFrame(built, columns=list(aggregate.PAPER_LABEL_COLUMNS))
 
@@ -80,7 +81,7 @@ def test_combination_counts_sum_to_each_theme_total(labels):
     Panel A draws primary research only, per the 2026-09-08 ruling.
     """
     counts = aggregate.build_combination_counts(labels)
-    primary = aggregate.primary_research(labels)
+    primary = aggregate.modality_determined(aggregate.primary_research(labels))
     modality_count = primary[
         [f"mod_{key}" for key in aggregate.modality_keys_of(primary)]
     ].sum(axis=1)
@@ -332,8 +333,8 @@ def test_the_reductions_follow_the_table_they_are_given():
     assert aggregate.theme_keys_of(labels)[-1] == "agents"
 
     assert aggregate.add_modality_set(labels).iloc[0] == "ct+spectroscopy"
-    assert list(aggregate.order_labels(labels).columns)[-2:] == [
-        "domain", aggregate.PRIMARY_RESEARCH
+    assert list(aggregate.order_labels(labels).columns)[-3:] == [
+        "domain", aggregate.PRIMARY_RESEARCH, aggregate.MODALITY_DETERMINED
     ]
     assert "mod_spectroscopy" in aggregate.order_labels(labels).columns
 
@@ -346,3 +347,27 @@ def test_the_reductions_follow_the_table_they_are_given():
     assert set(years["theme"]) == set(aggregate.theme_keys_of(labels))
     totals = years[(years["theme"] == "agents") & (years["domain"] == "all")]
     assert int(totals["n_papers"].sum()) == 1
+
+
+def test_panel_a_leaves_out_papers_whose_modality_was_not_determined():
+    """A fallback-only ``other`` is not drawn in Panel A, but still counts in Panel B."""
+    labels = make_labels(
+        [
+            {"pmid": 1, "year": 2024, "themes": ("foundation_models",), "modalities": ["other"]},
+            {"pmid": 2, "year": 2024, "themes": ("foundation_models",), "modalities": ["other"],
+             "determined": 0},
+            {"pmid": 3, "year": 2024, "themes": ("foundation_models",), "modalities": ["ct"]},
+        ]
+    )
+    counts = aggregate.build_combination_counts(labels)
+    block = counts.loc[counts["theme"] == "foundation_models"].set_index("modality_set")
+    assert block["n_papers"].to_dict() == {"ct": 1, "other": 1}
+
+    everything = aggregate.build_combination_counts(labels, primary_only=False)
+    assert int(everything.loc[everything["modality_set"] == "other", "n_papers"].sum()) == 2
+
+    years = aggregate.build_theme_year_counts(labels)
+    total = years.loc[
+        (years["theme"] == "foundation_models") & (years["domain"] == "all"), "n_papers"
+    ].sum()
+    assert int(total) == 3

@@ -290,12 +290,29 @@ def test_every_theme_empty_still_lays_out(minimal_dir: Path, tmp_path: Path) -> 
 def test_cap_larger_than_the_data_draws_no_remainder_column(
     minimal_dir: Path, tmp_path: Path
 ) -> None:
-    """A cap above the number of combinations leaves nothing for the remainder."""
+    """A cap above the number of combinations leaves only undrawable sets for the remainder.
+
+    A set containing ``other`` has no row in the matrix, so it always joins the
+    remainder; nothing else does once the cap exceeds the combination count.
+    """
     result = plot.build(minimal_dir, tmp_path / "figures", top_n=50)
+    combinations = pd.read_csv(minimal_dir / "combination_counts.csv", comment="#")
     for tail in result.tails:
-        assert tail.remainder_sets == 0
-        assert tail.remainder_papers == 0
-        assert tail.draws_remainder is False
+        block = combinations.loc[combinations["theme"] == tail.theme]
+        undrawable = block.loc[block["modality_set"].str.split("+").map(lambda k: "other" in k)]
+        assert tail.remainder_sets == len(undrawable)
+        assert tail.remainder_papers == int(undrawable["n_papers"].sum())
+        assert tail.draws_remainder is (len(undrawable) > 0)
+
+
+def test_the_matrix_has_no_other_row_and_never_draws_an_other_set(measured_dir: Path) -> None:
+    """Author's ruling, 2026-09-29: Other is not a row of Panel A."""
+    assert "other" not in panel_a.MATRIX_ROWS
+    assert len(panel_a.MATRIX_ROWS) == len(style.MODALITY_ORDER) - 1
+    combinations = pd.read_csv(measured_dir / "combination_counts.csv", comment="#")
+    for theme in style.PANEL_A_THEMES:
+        drawn = panel_a._block_frame(combinations, theme, panel_a.DEFAULT_TOP_N)
+        assert not drawn["modality_set"].astype(str).str.contains("other").any(), theme
 
 
 def test_default_cap_matches_the_specification() -> None:
@@ -854,12 +871,13 @@ def test_the_row_label_gutter_fits_the_longest_modality_label() -> None:
 
 def test_the_matrix_row_pitch_stays_legible() -> None:
     """Seven-point labels need room. The pitch is what a new row spends."""
-    panel_height = plot._PANEL_A_RECT[3] * plot.FIGURE_SIZE[1]
+    # The shipped figure draws the dot-colour key, whose strip comes out of the panel.
+    panel_height = plot._PANEL_A_RECT[3] * plot.FIGURE_SIZE[1] - panel_a._KEY_STRIP_IN
     body = panel_height * (1 - 0.090 - 0.075)
-    pitch_pt = 0.670 * body / len(plot.style.MODALITY_ORDER) * 72
+    pitch_pt = 0.670 * body / len(panel_a.MATRIX_ROWS) * 72
     assert pitch_pt >= 12.0, (
         f"row pitch is {pitch_pt:.1f} pt for "
-        f"{len(plot.style.MODALITY_ORDER)} rows; rebalance Panel A or grow the "
+        f"{len(panel_a.MATRIX_ROWS)} rows; rebalance Panel A or grow the "
         "figure, but do not shrink the type"
     )
     assert pitch_pt >= 1.7 * plot.style.FS_TICK
@@ -1854,3 +1872,92 @@ def test_a_directory_without_a_manifest_still_draws(synthetic_dir: Path, tmp_pat
     """The synthetic tables have no run manifest and must not be blocked by one."""
     result = plot.build(synthetic_dir, tmp_path / "figures", tag="synthetic")
     assert result.pdf.exists()
+
+
+def test_panel_a_draws_a_one_line_key_to_its_dot_colours(measured_dir: Path, tmp_path: Path) -> None:
+    """Author's request, 2026-09-29: the four modality hues, named, in one row on top."""
+    import matplotlib.pyplot as plt
+
+    result = plot.build(measured_dir, tmp_path / "figures")
+    figure, _, _ = plot.build_figure(result.data)
+    legends = figure.legends
+    assert len(legends) == 1
+    key = legends[0]
+    assert [t.get_text() for t in key.get_texts()] == [label for label, _ in style.MODALITY_GROUPS]
+    assert key._ncols == len(style.MODALITY_GROUPS)
+    # Every hue a present dot can take is named in the key, and nothing else is.
+    used = {style.modality_color(k) for k in panel_a.MATRIX_ROWS}
+    assert used == {color for _, color in style.MODALITY_GROUPS}
+    # It sits above every theme title.
+    figure.canvas.draw()
+    renderer = figure.canvas.get_renderer()
+    key_bottom = key.get_window_extent(renderer).y0
+    for ax in figure.axes:
+        title = ax.title
+        if title.get_text():
+            assert title.get_window_extent(renderer).y1 < key_bottom, title.get_text()
+    plt.close(figure)
+
+
+def test_a_bracket_arrow_joins_the_range_band_to_the_lower_plot(
+    measured_dir: Path, tmp_path: Path
+) -> None:
+    """Author's request, 2026-09-29: white ground, a [-shaped arrow in the left margin."""
+    import matplotlib.colors as mc
+    import matplotlib.pyplot as plt
+    from matplotlib.patches import FancyArrowPatch
+
+    result = plot.build(measured_dir, tmp_path / "figures")
+    figure, _, panel = plot.build_figure(result.data)
+    assert mc.to_rgba(panel.lower.get_facecolor()) == mc.to_rgba("white")
+    arrows = [a for a in figure.artists if isinstance(a, FancyArrowPatch)]
+    assert len(arrows) == 1
+    arrow = arrows[0]
+    assert mc.to_rgba(arrow.get_edgecolor()) == mc.to_rgba(panel_b.RANGE_ARROW)
+    assert arrow.get_linewidth() == pytest.approx(panel.lower.spines["left"].get_linewidth())
+    # Green by the author's deliberate exception (DECISIONS 2026-09-29), but still
+    # not a modality hue exactly, so no mark reads as a data series.
+    assert panel_b.RANGE_ARROW not in set(style.MODALITY_COLORS.values())
+    # The band's dashed rule is repeated at the top of the lower plot, where the
+    # arrow lands, at the same value.
+    lower_top = panel.lower.get_ylim()[1]
+    rules = [
+        line for line in panel.lower.get_lines()
+        if list(line.get_ydata()) == [lower_top, lower_top]
+        and mcolors.to_rgba(line.get_color()) == mcolors.to_rgba(panel_b.RANGE_RULE)
+    ]
+    assert len(rules) == 1 and rules[0].get_linestyle() == "--"
+
+    figure.canvas.draw()
+    renderer = figure.canvas.get_renderer()
+    box = arrow.get_window_extent(renderer)
+    upper = panel.upper.get_window_extent(renderer)
+    lower = panel.lower.get_window_extent(renderer)
+    # A bracket: left of both plots, from the band's top down to the lower plot's top.
+    assert box.x0 < upper.x0
+    # The head lands just inside the lower plot, clear of its tick labels.
+    assert upper.x0 < box.x1 < upper.x0 + 12
+    lower_top = panel.lower.get_ylim()[1]
+    band_top_px = panel.upper.transData.transform((0, lower_top))[1]
+    assert box.y1 == pytest.approx(band_top_px, abs=2)
+    assert box.y0 == pytest.approx(lower.y1, abs=4)
+    # It crosses no tick label or axis title: the upright runs left of every label
+    # in its height, and each arm clears every label it passes over.
+    upright_x = box.x0
+    arm_ys = (box.y1, box.y0)
+    for ax in panel.axes:
+        low, high = ax.get_ylim()
+        drawn = [
+            label for label, value in zip(ax.get_yticklabels(), ax.get_yticks())
+            if low <= value <= high           # matplotlib lays out, but never draws, the rest
+        ]
+        for text in drawn + [ax.yaxis.label]:
+            if not (text.get_text() and text.get_visible()):
+                continue
+            label = text.get_window_extent(renderer)
+            if label.y1 > box.y0 and label.y0 < box.y1:
+                assert label.x0 > upright_x + 2, text.get_text()
+            if label.x1 > upright_x:
+                for y in arm_ys:
+                    assert not (label.y0 < y < label.y1), text.get_text()
+    plt.close(figure)

@@ -114,7 +114,9 @@ def build_figure(
         Panel B drew.
     """
     figure = plt.figure(figsize=FIGURE_SIZE)
-    tails = panel_a.draw(figure, data.combinations, _PANEL_A_RECT, top_n=top_n, scale=scale)
+    tails = panel_a.draw(
+        figure, data.combinations, _PANEL_A_RECT, top_n=top_n, scale=scale, modality_key=True
+    )
     panel = panel_b.draw(figure, data.theme_years, _PANEL_B_RECT)
 
     # Panel letters: bold serif in ink, and the largest type on the page, per

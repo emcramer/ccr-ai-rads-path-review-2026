@@ -42,8 +42,9 @@ Foundation Models, Multimodal Integration, Digital Twins, Clinical Applications/
 
 Within a block:
 
-- **Matrix (upper region).** Rows are the fifteen modalities, in a fixed order used by every
-  block. Each column is one *combination* of modalities observed together in a paper. A
+- **Matrix (upper region).** Rows are the fourteen named modalities, in a fixed order used by every
+  block. `other` has no row (DECISIONS 2026-09-29): a combination containing it always joins
+  the remainder column. Each column is one *combination* of modalities observed together in a paper. A
   filled dot marks a modality present in that combination; dots in the same column are
   joined by a vertical line. Absent modalities are drawn as light grey dots, so the row
   grid stays readable.
@@ -145,6 +146,7 @@ One row per paper in the corpus.
 | `mod_<key>` | 0/1 | One column per modality, including `mod_other` |
 | `domain` | string | `radiology`, `pathology`, `both`, or `none`, derived from modality labels |
 | `is_primary_research` | 0/1 | 0 for reviews, perspectives, editorials, comments, letters, meta-analyses and the like. Panel A reads only the 1s; Panel B reads every row. |
+| `modality_determined` | 0/1 | 0 when `mod_other` was set only by the fallback, i.e. no modality could be identified. Panel A reads only the 1s; Panel B reads every row. See DECISIONS 2026-09-29. |
 
 `domain` derivation: `radiology` if any of MRI, CT, PET, ultrasound, mammography,
 radiography, radiology report;
@@ -206,7 +208,7 @@ Modalities (`mod_<key>` columns, and the members of `modality_set`), in figure r
 
 | Key | Display label | Type |
 |---|---|---|
-| `he_histology` | H&E / Histology | Imaging |
+| `he_histology` | H&E Histology | Imaging |
 | `ihc` | IHC | Imaging |
 | `spatial_proteomics` | Spatial Proteomics | Imaging |
 | `spatial_transcriptomics` | Spatial Transcriptomics | Imaging |
